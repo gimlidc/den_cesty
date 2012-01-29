@@ -7,7 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<ul class="hmenu">
+  <%= render 'devise/menu/login_items' %>
+</ul>
 <%= yield %>
 
 </body>

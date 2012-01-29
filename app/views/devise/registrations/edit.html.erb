@@ -3,8 +3,8 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :username %><br />
-	<%= f.text_field :username %></div>
+  <div><%= f.label :email %><br />
+	<%= f.email_field :email %></div>
 
   <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
 	<%= f.password_field :current_password %></div>
@@ -15,14 +15,14 @@
   <div><%= f.label :password_confirmation %><br />
 	<%= f.password_field :password_confirmation %></div>
 
+  <div><%= f.label :username %><br />
+	<%= f.text_field :username %></div>
+
   <div><%= f.label :name %><br />
 	<%= f.text_field :name %></div>
 
   <div><%= f.label :surname %><br />
 	<%= f.text_field :surname %></div>
-
-  <div><%= f.label :email %><br />
-	<%= f.email_field :email %></div>
 
   <div><%= f.label :year %><br />
 	<%= f.number_field :year %></div>
