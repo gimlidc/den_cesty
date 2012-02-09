@@ -1,0 +1,51 @@
+<% if walker_signed_in? && current_walker.username =="gimli" %>
+  <% if !@registration.nil? %>
+
+	Showing all registrations for Den cesty <%= $current_dc_id %>
+
+	<table>
+	  <tbody>
+		<tr>
+		  <th>jméno</th>
+		  <th>příjmení</th>
+		  <th>e-mail</th>
+		  <th>triko</th>
+		  <th>černobílá mapa</th>
+		  <th>barevná mapa</th>
+		  <th>cena</th>
+		  <th>cíl</th>
+		  <th>podpis</th>
+		</tr>
+		<% @registration.each do |reg| %>
+		  <tr>
+			<td><%= reg.walker.name %></td>
+			<td><%= reg.walker.surname %></td>
+			<td><%= reg.walker.email %></td>
+			<td><%= reg.shirt_size %></td>
+			<td><%= reg.bw_map %></td>
+			<td><%= reg.colour_map %></td>
+			<td><%= price(reg) %>&nbsp;Kč</td>
+			<td></td>
+			<td></td>
+		  </tr>
+
+		<% end %>
+	  </tbody>
+	</table>
+  <% else %>
+	No record found!
+  <%  end %>
+<% else %>
+  <% if !@reg.nil? %>
+	<table>
+	  <tbody>
+		<tr><td>registration fee</td><td></td><td><%= $reg_price %>&nbsp;Kč</td></tr>
+		<tr><td>shirt</td><td><%= @reg.shirt_size %></td><td><%= shirt_price(@reg.shirt_size) %>&nbsp;Kč</td></tr>
+		<tr><td>black and white map</td><td><%= @reg.bw_map %></td><td><%= bw_map_price(@reg.bw_map) %>&nbsp;Kč</td></tr>
+		<tr><td>colour map</td><td><%= @reg.colour_map %></td><td><%= colour_map_price(@reg.colour_map) %>&nbsp;Kč</td></tr>
+		<tr><td>price</td><td></td><td><%= price(@reg) %>&nbsp;Kč</td></tr>
+	  </tbody>
+	<% else %>
+	  Access denied! Please log in.
+	<% end %>
+  <% end %>

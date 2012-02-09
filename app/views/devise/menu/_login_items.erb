@@ -1,0 +1,8 @@
+<div id="walker_nav">
+    <% if walker_signed_in? %>
+        Signed in as <%= current_walker.username %>. Not you?
+        <%= link_to 'Log out', destroy_walker_session_path, :method => :delete %>
+    <% else %>
+        <%= link_to 'Register', new_walker_registration_path %> or <%= link_to 'Log in', new_walker_session_path %>
+    <% end %>
+</div>

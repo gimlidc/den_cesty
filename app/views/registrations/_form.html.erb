@@ -1,0 +1,17 @@
+<%= form_for(@registration, :url => { :action => @action }) do |f| %>
+
+  <%= f.hidden_field :walker_id, :value => current_walker[:id] %>
+  <%= f.hidden_field :dc_id, :value => $current_dc_id %>
+
+  <div><%= f.label :bw_map %>
+	<%= f.check_box :bw_map %></div>
+
+  <div><%= f.label :colour_map %>
+	<%= f.check_box :colour_map %></div>
+
+  <div><%= f.label :shirt_size %>
+	<%= f.select :shirt_size, options_for_select([["NO", "NO"], ["OWN", "OWN"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]],  f.object.shirt_size) %>
+  </div>
+
+  <div><%= f.submit @store_string %></div>
+<% end %>

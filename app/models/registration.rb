@@ -1,6 +1,11 @@
 class Registration < ActiveRecord::Base
 
-	$shirt_sizes = ["NO", "XS", "S", "M", "L", "XL", "XXL"]
+	$shirt_sizes = ["NO", "OWN", "XS", "S", "M", "L", "XL", "XXL"]
+	$reg_price = 30
+	$bw_map_price = 10
+	$colour_map_price = 50
+	$shirt_price = 300
+	$own_shirt_price = 150
 
 	belongs_to :walker
 

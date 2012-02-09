@@ -1,0 +1,14 @@
+<%#
+# Menu for logged users
+%>
+
+<% if (walker_signed_in?) %>
+  Den cesty <%= $current_dc_id %>:
+  <% if (is_registered == false) %>
+	<%=  link_to "Sign in", new_registration_path %>
+  <%  else %>
+	<%=  link_to "Edit registration", edit_registration_path %>
+	<%=  link_to "Sign out",  {:controller => "registrations", :action => "destroy"}, :method => "delete" %>
+  <% end %>
+<% end %>
+
