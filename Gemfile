@@ -7,6 +7,7 @@ gem 'rails', '3.1.3'
 
 gem 'pg'
 gem 'execjs'
+gem 'therubyracer'
 gem 'devise'
 gem 'simple-navigation'
 
