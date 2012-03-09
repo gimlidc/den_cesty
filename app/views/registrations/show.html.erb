@@ -34,7 +34,7 @@
 	</table>
   <% else %>
 	No record found!
-  <%  end %>
+  <% end %>
 <% else %>
   <% if !@reg.nil? %>
 	<table>
@@ -45,7 +45,8 @@
 		<tr><td>colour map</td><td><%= @reg.colour_map %></td><td><%= colour_map_price(@reg.colour_map) %>&nbsp;Kč</td></tr>
 		<tr><td>price</td><td></td><td><%= price(@reg) %>&nbsp;Kč</td></tr>
 	  </tbody>
-	<% else %>
-	  Access denied! Please log in.
-	<% end %>
+	</table>
+  <% else %>
+	Access denied! Please log in.
   <% end %>
+<% end %>

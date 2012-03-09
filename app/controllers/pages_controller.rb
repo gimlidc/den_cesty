@@ -2,8 +2,12 @@ class PagesController < ApplicationController
   def actual
   end
 
-	def pravidla
-		
+	def rules
+
+	end
+
+	def hall_of_glory
+
 	end
 
 end

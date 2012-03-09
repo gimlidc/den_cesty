@@ -1,0 +1,61 @@
+
+/*** ESSENTIAL STYLES ***/
+.sf-menu, .sf-menu * {
+	margin:			0px;
+	padding-left:	0px;
+	width:			auto;
+	list-style:		none;
+}
+
+.sf-menu ul {
+	position:		absolute;
+	height:			0em;
+	width:			10em; /* left offset of submenus need to match (see below) */
+}
+
+.sf-menu li {
+	background-color: black;
+	display:		block;
+	color:			#eeeeee;
+	float:			left;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	-moz-border-top-left-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	border:			2px ridge #77aa00;
+	border-bottom:  0px;
+	padding: 		.3em 1em;
+	text-decoration:none;
+	position:		relative;
+}
+
+.sf-menu li li {
+	display:		block;
+	border:			2px ridge #77aa00;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	-moz-border-top-left-radius: 0px;
+	-moz-border-top-right-radius: 0px;
+}
+
+.sf-menu li:hover {
+	color:			#ffffff;
+	background-color: #333;
+	border:			2px groove yellowgreen;
+	visibility:		inherit; /* fixes IE7 'sticky bug' */
+}
+
+.sf-menu a {
+	color:			#77aa00;
+	text-decoration: none;
+}
+
+.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
+	color:		yellowgreen;
+}
+
+.sf-menu li:hover ul,
+.sf-menu li.sfHover ul {
+	top:			1.88em; /* match top ul list item height */
+	z-index:		99;
+}

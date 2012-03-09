@@ -1,19 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DenCesty</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<div class="hmenu">
-  <%= render 'devise/menu/login_items' %>
-</div>
-<div class="hmenu">
-  <%= render 'registrations/menu' %>
-</div>
-<%= yield %>
+  <head>
+	<title>DenCesty</title>
+	<%= stylesheet_link_tag    "application" %>
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
 
-</body>
+	<script>
+
+	  $(document).ready(function(){
+		$("ul.sf-menu").superfish({
+		  delay:     700               // 1.2 second delay on mouseout
+		});
+	  });
+
+	</script>
+  </head>
+  <body bgcolor ="black">
+	<div class="hmenu">
+	  <%= render 'devise/menu/login_items' %>
+	</div>
+	<div class="hmenu">
+	  <%= render 'registrations/menu' %>
+	</div>
+
+	<div class="nav">
+	  <%=  render_navigation(:expand_all => true) %>
+	</div>
+	<div class="content">
+	  <div class="main-text">
+		<p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+
+		<%= yield %>
+	  </div>
+	</div>
+
+  </body>
 </html>

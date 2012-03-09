@@ -1,8 +1,10 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, :as => resource_name, :url => walker_session_path(resource_name)) do |f| %>
+<%= form_for(resource, :url => walker_session_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
+  <%= resource_name %>
+  <%= walker_session_path %>
   <div><%= f.label :email %><br />
 	<%= f.email_field :email %></div>
 

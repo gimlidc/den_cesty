@@ -1,6 +1,8 @@
 DenCesty::Application.routes.draw do
-  get "pages/actual"
-	get "pages/pravidla"
+	match 'rules' => 'pages#rules', :as => :pages_rules
+	match 'actual' => 'pages#actual', :as => :pages_actual
+	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
+	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations
 
   devise_for :walkers
 

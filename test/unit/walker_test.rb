@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class WalkerTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "create walker" do
+		walker = Walker.new
+		assert !Walker.save
+  end
 end
