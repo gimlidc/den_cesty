@@ -1,19 +1,26 @@
 <h1 color="red">Den Cesty - jaro 2012</h1>
 <h6 align="center">"Nejkrásnější Moravská ..."</h6>
 
+<p>Letos navrhoval trasu Tritas, Jeffer je stejně jako rok předchozí autorem itineráře a map. Martin navrhl nádherná trika.</p>
+
 <table cellspacing="5">
-<tbody><tr><th width="10%">Termín </th><td><%= $dc_date.strftime("%d/%m/%Y %H:%M") %></td></tr>
-<tr><th>Start: </th><td>Brno</td></tr>
-<tr><th>Pravidla:</th><td> </td></tr>
-<tr><th>Cesta: </th><td>Brno, Česká Třebová</td></tr>
-<tr><th>Podmínky:</th><td>Mladší 18 let potřebují <a href="../files/povoleniZZ.doc">potvrzení zákoného zástupce</a> (samozřejmě vyplněné).</td></tr>
+<tbody><tr><th class="title">Termín:</th><td><%= $dc_date.strftime("%d/%m/%Y %H:%M") %></td></tr>
+<tr><th class="title">Start:</th><td>Brno</td></tr>
+<tr><th class="title">Cesta:</th><td>Brno, Česká Třebová</td></tr>
+<tr><th class="title">Podmínky:</th><td>Mladší 18 let potřebují <a href="../files/povoleniZZ.doc">potvrzení zákoného zástupce</a> (samozřejmě vyplněné).</td></tr>
 
-<tr><th>Cesta domů:</th><td>Jízdní řád a podrobný itinerář</td></tr>
-<tr><th>Co s sebou:</th><td><a href="rady.php">rad</a>. Co nenajdete tam, můžete najít v guestbooku<a href="../guestbook/guestbook.php">fóru</a></td></tr>
+<tr><th class="title">Cesta domů:</th><td>Jízdní řád a podrobný itinerář</td></tr>
+<tr><th class="title">Co s sebou:</th><td>Za tu spoustu let jsme již nasbírali spoustu <%= link_to "rad", pages_recommendations_path %>, které by vám mohli přijít vhod. Co nenajdete tam, můžete najít v guestbooku<a href="../guestbook/guestbook.php">fóru</a></td></tr>
 
-<tr><th>Přihlášení:</th><td> </td></tr>
+<tr><th class="title">Přihlášení:</th><td>
+<% if !@walkers.nil? %>
+  <% @walkers.each do |walker| %>
+	<%= walker.username %>,
+  <% end %>
+<% end %>
+</td></tr>
 
- <tr><th>Plky: </th><td></td></tr>
+ <tr><th class="title">Plky: </th><td></td></tr>
 </tbody></table>
 
 

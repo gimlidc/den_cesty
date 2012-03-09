@@ -1,4 +1,4 @@
-<h2>Sign up</h2>
+<h2><%=  t 'Sign_up' %></h2>
 
 <%= form_for(resource, :as => resource_name, :url => walker_registration_path(@walker)) do |f| %>
   <%= devise_error_messages! %>
@@ -6,26 +6,26 @@
   <div><%= f.label :email %><br />
 	<%= f.email_field :email %></div>
 
-  <div><%= f.label :password %><br />
+  <div><%= f.label t 'password' %><br />
 	<%= f.password_field :password %></div>
 
-  <div><%= f.label :password_confirmation %><br />
+  <div><%= f.label t 'password_confirmation' %><br />
 	<%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :name %><br />
+  <div><%= f.label t 'name' %><br />
 	<%= f.text_field :name %></div>
 
-  <div><%= f.label :surname %><br />
+  <div><%= f.label t 'surname' %><br />
 	<%= f.text_field :surname %></div>
 
-  <div><%= f.label :username %><br />
+  <div><%= f.label t 'username' %><br />
 	<%= f.text_field :username %></div>
 
-  <div><%= f.label :year %><br />
+  <div><%= f.label t 'year_of_birth' %><br />
 	<%= f.number_field :year %></div>
 
 
-  <div><%= f.submit "Sign up" %></div>
+  <div><%= f.submit t 'register' %></div>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>

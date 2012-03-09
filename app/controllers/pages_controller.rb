@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def actual
+		@walkers = Walker.find(:all, :select => "username")
   end
 
 	def rules
