@@ -1,4 +1,7 @@
 en:
+  time:
+    formats:
+      date: "%m/%d"
   username: "nick"
   password: "password"
   password_confirmation: "password confirmation"
@@ -35,3 +38,16 @@ en:
   Are you sure to delete your account?: "Are you sure?"
   Are you sure?: "Are you sure?"
   Walkers: "Walkers"
+  Registrations: "Registrations"
+  shirt_size: "shirt size"
+  colour_map: "colour map"
+  bw_map: "monochrome map"
+  edit registration: "Walking day %{dc_id} editing %{user} registration"
+  change possible until: "Shirts available until %{deadline}!"
+  Registration summary: "Registration summary"
+  registration fee: "registration fee"
+  value: "value"
+  price: "price"
+  shirt: "shirt"
+  total price: "total price"
+  obligate: "obligate"

@@ -63,3 +63,16 @@ th.title {
 .red { color: red }
 .darkred { color: darkred }
 .darkorange { color: darkorange }
+
+.bottom_line {
+	border-collapse: collapse;
+	border-bottom: 1px solid black
+}
+
+.right {
+	text-align: right
+}
+
+.left {
+	text-align: left
+}

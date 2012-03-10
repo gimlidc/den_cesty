@@ -1,4 +1,7 @@
 cs:
+  time:
+    formats:
+      date: "%d/%m"
   username: "přezdívka"
   password: "heslo"
   password_confirmation: "heslo pro kontrolu"
@@ -36,3 +39,15 @@ cs:
   Are you sure?: "Opravdu?"
   Walkers: "Chodci"
   Registrations: "Přihlášení"
+  shirt_size: "velikost trika"
+  colour_map: "barevnou mapu"
+  bw_map: "černobílou mapu"
+  edit registration: "Úprava registrace pro %{dc_id}. Den cesty"
+  change possible until: "Trika možno objednávat pouze do %{deadline}!"
+  Registration summary: "Registrace: Přehled"
+  registration fee: "registrační poplatek"
+  value: "hodnota"
+  price: "cena"
+  total price: "cena celkem"
+  shirt: "triko"
+  obligate: "povinný"

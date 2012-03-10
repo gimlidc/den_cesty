@@ -1,4 +1,4 @@
-<h2>Editing registration of <%=  @walker.username %> for Den cesty <%= $current_dc_id %></h2>
+<h2><%= I18n.t('edit registration', :user => @walker.username, :dc_id => $current_dc_id) %></h2>
 <%= @notice  %>
 <br />
 
