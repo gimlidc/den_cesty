@@ -71,4 +71,28 @@ class RegistrationsController < ApplicationController
 			@notice = "Registration not found."
 		end
 	end
+
+	def unregister
+		if walker_signed_in? && current_walker.username =="gimli"
+
+			@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
+			@walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})
+			if !@reg.nil?
+				if @reg.delete
+					@notice = "Registration of " << @walker.username.to_s << " was cancelled."
+				else
+					@notice = "Delete failed."
+				end
+			else
+				@notice = "Registration not found."
+			end
+		else
+			@notice = "Operation unauthorized"
+			render :action => 'edit'
+		end
+
+		render :action => 'show'
+
+	end
+
 end

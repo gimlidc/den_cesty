@@ -52,9 +52,9 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    top.item :actual, 'Actual', pages_actual_path
-		top.item :rules, 'Rules', pages_rules_path
-		top.item :recommendations, 'Recomendations', pages_recommendations_path
+    top.item :actual, I18n.t('Actual'), pages_actual_path
+		top.item :rules, I18n.t('Rules'), pages_rules_path
+		top.item :recommendations, I18n.t('Recomendations'), pages_recommendations_path
 
     # Add an item which has a sub navigation (same params, but with block)
 #    top.item :reports, 'Reports', url, options do |reports|
@@ -69,9 +69,14 @@ SimpleNavigation::Configuration.run do |navigation|
 #    #primary.item :key_3, 'Admin', url, :class => 'special', :if => Proc.new { current_user.admin? }
 #    #primary.item :key_4, 'Account', url, :unless => Proc.new { logged_in? }
 #
-		top.item :results, 'Results', :class => 'sf-sub-indicator' do |results|
-			results.item :hall_of_glory, 'Hall of Glory', pages_hall_of_glory_path
+		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
+			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
 #			results.item :result_by_year, 'By year', results_by_year_path
+		end
+
+		if walker_signed_in? && current_walker.username =="gimli"
+			top.item :walkers, I18n.t('Walkers'), admin_walker_list_path
+			top.item :registrations, I18n.t('Registrations'), registration_path
 		end
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url

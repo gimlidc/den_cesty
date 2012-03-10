@@ -59,3 +59,7 @@ th.title {
 	margin-right: 10px;
 	width: 10%
 }
+
+.red { color: red }
+.darkred { color: darkred }
+.darkorange { color: darkorange }

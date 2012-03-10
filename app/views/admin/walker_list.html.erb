@@ -1,0 +1,38 @@
+<%#
+# @author gimli
+# @version Mar 10, 2012
+%>
+
+<%= @notice %>
+
+<% if @walkers.nil? %>
+  No record found
+<% else %>
+<table>
+  <tbody>
+	<tr>
+	  <th>přezdívka</th>
+	  <th>jméno</th>
+	  <th>příjmení</th>
+	  <th>e-mail</th>
+	  <th>rok narození</th>
+	  <th></th>
+	</tr>
+	<% @walkers.each do |walker| %>
+	  <%= form_for(walker, :url => { :controller => "admin", :action => "walker_update" }) do |f| %>
+		<tr>
+		  <%= f.hidden_field :id %>
+		  <td><%= f.text_field :username, :size => 10 %></td>
+		  <td><%= f.text_field :name, :size => 10 %></td>
+		  <td><%= f.text_field :surname, :size => 20 %></td>
+		  <td><%= f.email_field :email, :size => 20 %></td>
+		  <td><%= f.number_field :year, :size => 4 %></td>
+		  <td>
+			<%= f.submit "aktualizovat" %>/
+			<%= link_to "odstranit", {:controller => "admin", :action => "walker_destroy", :id => walker}, :method => "delete", :confirm => I18n.t("Are you sure?") %></td>
+		</tr>
+	  <% end %>
+	<% end %>
+  </tbody>
+</table>
+<% end %>

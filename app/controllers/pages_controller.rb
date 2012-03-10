@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def actual
-		@walkers = Walker.find(:all, :select => "username")
+		@registered_walkers = Registration.where(:dc_id => $current_dc_id).joins(:walker)
   end
 
 	def rules

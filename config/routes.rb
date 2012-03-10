@@ -12,6 +12,9 @@ DenCesty::Application.routes.draw do
 	match 'actual' => 'pages#actual', :as => :pages_actual
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
 	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations
+	match 'forum' => 'pages#forum', :as => :pages_forum
+	match 'admin/walker_list', :as => :admin_walker_list
+	match ':controller(/:action(/:id))'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
