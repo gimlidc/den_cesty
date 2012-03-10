@@ -15,6 +15,7 @@ DenCesty::Application.routes.draw do
 	match 'forum' => 'pages#forum', :as => :pages_forum
 	match 'admin/walker_list', :as => :admin_walker_list
 	match ':controller(/:action(/:id))'
+	match ':action' => 'static#:action'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

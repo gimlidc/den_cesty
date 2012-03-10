@@ -57,7 +57,8 @@ h1 {
 th.title {
 	text-align: right;
 	margin-right: 10px;
-	width: 10%
+	width: 20%;
+	vertical-align: top;
 }
 
 .red { color: red }
@@ -75,4 +76,25 @@ th.title {
 
 .left {
 	text-align: left
+}
+
+div#multicolumn1 {
+	-moz-column-count: 2;
+	-moz-column-gap: 20px;
+	-webkit-column-count: 2;
+	-webkit-column-gap: 20px;
+	column-count: 2;
+	column-gap: 20px;
+}
+
+table#summary {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #ddffcc;
+	border-spacing: 5px;
+	width: 95%;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+
 }

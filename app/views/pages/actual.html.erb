@@ -1,25 +1,83 @@
 <h1 color="red">Den Cesty - jaro 2012</h1>
 <h6 align="center">"Nejkrásnější Moravská ..."</h6>
 
-<table cellspacing="5">
-<tbody><tr><th class="title">Termín:</th><td><%= $dc_date.strftime("%d/%m/%Y %H:%M") %></td></tr>
-<tr><th class="title">Start:</th><td>Brno</td></tr>
-<tr><th class="title">Cesta:</th><td>Brno, Česká Třebová</td></tr>
-<tr><th class="title">Podmínky:</th><td>Mladší 18 let potřebují <a href="../files/povoleniZZ.doc">potvrzení zákoného zástupce</a> (samozřejmě vyplněné).</td></tr>
+<table>
+  <tr><td width="50%" valign="top">
+	  <table id="summary">
+		<tbody><tr><th class="title">Termín:</th><td><%= $dc_date.strftime("%d/%m/%Y %H:%M") %></td></tr>
+		  <tr><th class="title">Start:</th><td>Brno, Maloměřice</td></tr>
+		  <tr><th class="title">Podmínky:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td></tr>
 
-<tr><th class="title">Cesta domů:</th><td>Jízdní řád a podrobný itinerář</td></tr>
-<tr><th class="title">Co s sebou:</th><td>Za tu spoustu let jsme již nasbírali spoustu <%= link_to "rad", pages_recommendations_path %>, které by vám mohli přijít vhod. Co nenajdete tam, můžete najít na <%= link_to "fóru", pages_forum_path %></td></tr>
+		  <tr><th class="title">Cesta domů:</th><td>Jízdní řád a podrobný itinerář</td></tr>
+		  <tr><th class="title">Co s sebou:</th><td>Neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Co nenajdete tam, můžete najít na <%= link_to "fóru", pages_forum_path %>. A nebo v reportech účastníků.</td></tr>
 
-<tr><th class="title">Přihlášení:</th><td>
-<% if !@registered_walkers.nil? %>
-  <% @registered_walkers.each do |reg| %>
-	<%= reg.walker.username %>,
-  <% end %>
-<% end %>
-</td></tr>
+		  <tr><th class="title">Přihlášení:</th><td>
+			  <% if !@registered_walkers.nil? %>
+				<% @registered_walkers.each do |reg| %>
+				  <%= reg.walker.username %>,
+				<% end %>
+			  <% end %>
+			</td></tr>
 
- <tr><th class="title">Plky: </th><td>Letos navrhoval trasu Tritas, Jeffer je stejně jako rok předchozí autorem itineráře a map. Martin navrhl nádherná trika.</td></tr>
-</tbody></table>
-
+		  <tr><th class="title">Plky: </th><td>Letos navrhoval trasu Tritas, Jeffer je stejně jako rok předchozí autorem map. Martin autorem triček.</td></tr>
+		</tbody>
+	  </table>
+	  <%= image_tag "triko-navrh.png", :width => "95%" %>
+	</td>
+	<td><b>Itinerář:</b>(důležité body jsou tučně)
+	  <p>
+		<b>Brno</b>, <b>Maloměřice</b>, začátek červené TZ - <b>0.00</b><br />
+		Babice nad Svitavou, rozcestí (červená TZ) - 10.31<br />
+		Pod Máchovým památníkem (žlutá TZ) - 15.19<br />
+		Rudice, Hájce (červená TZ) - 19.59<br />
+		Vilémovice (červená TZ) - 24.59<br />
+		<b>Macocha</b> (červená TZ) - <b>27.50</b><br />
+		Pustý žleb, rozcestí (červená TZ) - 30.36<br />
+		<b>Vavřinec</b> (zelená TZ) - <b>33.36</b>, last exit 18.56 bus do Blanska (19.20), dále vlak<br />
+	  </p>
+	  <div align="center">Konec Dne Cesty pro výletníky</div>
+	  <hr/>
+	  <p>
+		Petrovice (žlutá TZ) - 35.43<br />
+		Kuničky, rozcestí (zelená TZ) - 38.29, last exit 17.01 bus, lze ale též sejít asi 6km do Doubravice nad Svitavou, vlak 19.16 (do Prahy pak Antonín Dvořák ve 20.40), 20.16 (do Prahy SA ve 22.00), 22.17 (do Prahy Metropol v 1.00)<br />
+		<b>Boskovice</b>, ŽST (zelená TZ) - <b>47.72</b>, last exit 20.29 (z Brna SA), resp. 18.59 (rychlík Svitava)<br />
+	  </p>
+	  <div align="center">Konec Dne Cesty pro jednodenní turisty</div>
+	  <hr/>
+	  <p>
+		Andělka, rekreační středisko (zelená TZ) - 59.36<br />
+		Kladoruby (modrá TZ) - 60.96. Zde lze seběhnout asi 3km po červeno-modré / odjet taxíkem do Letovic, odtud last exit 20.27 vlak<br />
+	  </p>
+	  <div align="center">Konec Dne Cesty pro rychlé jednodenní turisty</div>
+	  <hr/>
+	  <p>
+		Velké Opatovice (červená TZ) - 72.37, last exit ( :-) ) 20.04 vlak, first exit 4.42 bus<br />
+		<b>Jevíčko</b> (červená TZ) - <b>78.11</b>, first exit 4.31 bus<br />
+		Moravská Třebová, nám. (zelená TZ) - 95.61<br />
+		<b>Moravská Třebová</b>, ŽST (červená TZ) - <b>96.64</b>, odtud vlaky v 4.48, 6.56, 9.07, 11.07<br />
+	  </p>
+	  <div align="center">Konec Dne Cesty pro stovkaře KČT</div>
+	  <hr/>
+	  <p>
+		Dále po silnici k odbočce na Kunčinu (97.86) a odtud údolím po silničce přes Kunčinu (cca 101.5, zde staví všechny vlaky z Moravské Třebové, jedou sem 6 min) a Novou Ves nad Novou ves, na křížení s červenou TZ - rozcestí Nad Vískou, hájovna - 107.40<br />
+		Anenská studánka (červená TZ) - 114.10, exits 5.11, 7.18, 9.27, 11.27 vlaky, na ŽST je to asi 1.2 km<br />
+		Nad Damníkovskou hájovnou (červená TZ) - 121.20<br />
+		<b>Česká Třebová</b>, ŽST (zelená TZ) - <b>128.20</b>, vlaky pořád, např. 6.02, 7.02, 8.02, 9.02, 10.02, 11.02<br />
+	  </p>
+	  <div align="center">Konec Dne Cesty pro rekordmany</div>
+	  <hr/>
+	  <p>
+		(dále bez vlaků, jde se rámcově okolo hlavní trati)<br />
+		<br />
+		Pod Kozlovcem (zelená TZ) - 137.0 - odtud asi 800m do Dlouhé Třebové na vlak<br />
+		U zabitého (zelená TZ) - 140.8<br />
+		Ústí nad Orlicí, město (ŽST) (modrá TZ) - 142.5<br />
+		<b>Ústí nad Orlicí</b>, náměstí (modrá TZ) - <b>143.6</b><br />
+		Brandýs nad Orlicí, ŽST (červená TZ) - 156.8<br />
+		Choceň, most (červená TZ) - 163.2<br />
+		<b>Choceň</b>, ŽST (žlutá TZ) - <b>163.7</b><br />
+	  </p>
+	</td>
+</table>
 
 </body></html>
