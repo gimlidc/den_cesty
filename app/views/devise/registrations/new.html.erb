@@ -1,6 +1,6 @@
 <h2><%=  t 'Sign_up' %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => walker_registration_path(@walker)) do |f| %>
+<%= form_for @walker do |f| %>
   <%= devise_error_messages! %>
 
   <div><%= f.label :email %><br />

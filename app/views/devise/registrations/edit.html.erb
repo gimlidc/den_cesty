@@ -1,6 +1,6 @@
 <h2><%= t("Edit Account") %></h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(@walker, :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
    <div><%= f.label :email %><br />
@@ -32,6 +32,6 @@
 
 <h3><%= I18n.t("Cancel my account")  %></h3>
 
-<p><%= link_to I18n.t("Cancel my account"), registration_path(resource_name), :confirm => I18n.t("Are you sure to delete your account?"), :method => :delete %></p>
+<p><%= link_to I18n.t("Cancel my account"), walker_registration_path(resource_name), :confirm => I18n.t("Are you sure to delete your account?"), :method => :delete %></p>
 
 <%= link_to I18n.t("Back"), :back %>

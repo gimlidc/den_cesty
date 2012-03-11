@@ -3,7 +3,7 @@ DenCesty::Application.routes.draw do
   devise_for :walkers
 
 	namespace :walker do
-    root :to => "pages#actual"
+    root :controller => "pages", :action => "actual"
   end
 
 	resource :registration
