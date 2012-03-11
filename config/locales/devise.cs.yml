@@ -19,6 +19,10 @@ cs:
         other: "%{resource} nebyl uložen kvůli %{count} chybám:"
 
   devise:
+    walkers:
+      walker:
+        Update successful: 'Aktualizace údajů proběhla správně'
+        Update failed: 'Aktualizace údajů se nezdařila'
     failure:
       unauthenticated: 'Musíte se zaregistrovat nebo přihlásit, pak můžete pokračovat.'
       unconfirmed: 'Musíte potvrdit svůj účet, pak můžete pokračovat.'
@@ -39,7 +43,9 @@ cs:
       confirmed: 'Váš účet byl úspěšně potvrzen. Nyní jste přihlášen(a).'
     registrations:
       signed_up: 'Vítejte! Registrace byla úspěšná.'
-      inactive_signed_up: 'Registrace byla úspěšná. Nicméně, nemůžete se přihlásit, protože: "%{reason}".'
+      signed_up_but_unconfirmed: 'Zpráva byla zaslána na váš email. Postupujte dále podle instrukcí.'
+      signed_up_but_inactive: 'Příhlášení úspěšné, ale účet není dosud aktivován!'
+      signed_up_but_locked: 'Účet je blokován, kontaktujte administrátora'
       updated: 'Váš účet byl úspěšně aktualizován.'
       destroyed: 'Nashle! Váš účet byl úspěšně zrušen. Doufáme, že se brzy opět uvidíme.'
     unlocks:

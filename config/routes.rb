@@ -1,21 +1,19 @@
 DenCesty::Application.routes.draw do
 
-  devise_for :walkers
-
-	namespace :walker do
-    root :controller => "pages", :action => "actual"
-  end
+  devise_for :walkers, :controllers => { :registrations => "walkers" }
 
 	resource :registration
 
+	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
-	match 'actual' => 'pages#actual', :as => :pages_actual
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
 	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations
 	match 'forum' => 'pages#forum', :as => :pages_forum
 	match 'admin/walker_list', :as => :admin_walker_list
+	match 'profile' => "walkers#profile", :as => :walker_profile
 	match ':controller(/:action(/:id))'
 	match ':action' => 'static#:action'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -66,7 +64,7 @@ DenCesty::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'pages#actual'
+	root :to => 'pages#actual'
 
   # See how all your routes lay out with "rake routes"
 
