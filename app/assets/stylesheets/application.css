@@ -100,6 +100,9 @@ table#summary {
 
 .notice {
 	color: red;
+}
+
+.alert {
+	color: red;
 	font-weight: bold;
-	position: fixed;
 }

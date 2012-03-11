@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
 	$current_dc_id = 16
-	$dc_date = Time.local(2012, 4, 21, 9, 00, 00, 00);
+	$dc_date = Time.local(2012, 4, 21, 10, 00, 00, 00);
 	$shirt_deadline = Time.local(2012, 4, 1, 00, 00, 00, 00);
 
 	before_filter :set_locale
@@ -15,5 +15,4 @@ class ApplicationController < ActionController::Base
 		logger.debug "default_url_options is passed options: #{options.inspect}\n"
 		{ :locale => I18n.locale }
 	end
-
 end
