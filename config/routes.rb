@@ -1,13 +1,10 @@
 DenCesty::Application.routes.draw do
 
-  devise_for :walkers
-
-	namespace :walker do
-    root :controller => "pages", :action => "actual"
-  end
+  devise_for :walkers, :singular => :walker
 
 	resource :registration
 
+	match '/actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
 	match 'actual' => 'pages#actual', :as => :pages_actual
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
@@ -66,7 +63,7 @@ DenCesty::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'pages#actual'
+	root :to => 'pages#actual'
 
   # See how all your routes lay out with "rake routes"
 
