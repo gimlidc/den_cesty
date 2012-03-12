@@ -1,5 +1,9 @@
-<p>Welcome <%= @resource.email %>!</p>
+<p>Ahoj, <br />
+  Tento mail byl vygenerován na základě registrace na portálu dencesty.cz. Pro dokončení registrace klikni na následující odkaz:<br />
+  <br />
+  <%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+</p>
 
-<p>You can confirm your account through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p>Pokud se jedná o nevyžádanou poštu, omlouváme se.<br />
+  Team Den cesty
+</p>
