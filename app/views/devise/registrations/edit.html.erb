@@ -29,9 +29,3 @@
 
   <div><%= f.submit t "Update" %></div>
 <% end %>
-
-<h3><%= I18n.t("Cancel my account")  %></h3>
-
-<p><%= link_to I18n.t("Cancel my account"), walker_registration_path(resource), :confirm => I18n.t("Are you sure to delete your account?"), :method => :delete %></p>
-
-<%= link_to I18n.t("Back"), :back %>
