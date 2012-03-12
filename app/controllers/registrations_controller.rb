@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
 			redirect_to :action => :edit, :notice => "You are already registered."
 		end
 		@registration = Registration.new
-		@store_string = I18n.t("Register")
+		@store_string = I18n.t("sign_up_dc")
 		@action = "create"
 	end
 
