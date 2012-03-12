@@ -1,6 +1,6 @@
 DenCesty::Application.routes.draw do
 
-  devise_for :walkers, :controllers => { :registrations => "walkers" }
+  devise_for :walkers
 
 	resource :registration
 
