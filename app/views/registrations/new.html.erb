@@ -1,5 +1,6 @@
-<h2>Sign up for Den cesty <%= $current_dc_id %></h2>
+<h2>Přihlášení k účasti na <%= $current_dc_id %>. Dni cesty </h2>
 <%= @notice  %>
-<br />
-
+<p>Obě verze mapy se před startem objeví na stránkách ke stažení. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Vyčkáte-li budete mít možnost si mapu vytisknout sami.</p>
+<p>Návrh trika můžete vidět na <%= link_to "titulní straně", root_path %>. Jedná se o negativ (trička budou černá s šedým potiskem (jako obvykle). Pokud máte svoje vlastní triko, které si chcete nechat potisknout, tak i to je možné. V nabídce zaškrtněte možnost <i>OWN</i> a vyčkejte na doručení mailu s instrukcemi.</p>
+<p class="red">Přihlášením souhlasíte s <%= link_to "pravidly", pages_rules_path %> závodu.</p>
 <%= render 'form' %>

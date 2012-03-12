@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
 			redirect_to :action => :edit, :notice => "You are already registered."
 		end
 		@registration = Registration.new
-		@store_string = "Register"
+		@store_string = I18n.t("Register")
 		@action = "create"
 	end
 
@@ -31,7 +31,7 @@ class RegistrationsController < ApplicationController
 		end
 		@registration = @reg
 		@walker = Walker.find(current_walker[:id])
-		@store_string = "Save"
+		@store_string = I18n.t("Save")
 		@action = "update"
 	end
 
