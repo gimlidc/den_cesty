@@ -11,7 +11,7 @@ class WalkersController < Devise::RegistrationsController
     respond_with resource
   end
 
-  # POST /resource
+   # POST /resource
   def create
     build_resource
 
