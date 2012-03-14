@@ -29,7 +29,7 @@
 		  <td><%= f.number_field :year, :size => 4 %></td>
 		  <td>
 			<%= f.submit "aktualizovat" %>/
-			<%= link_to "odstranit", {:controller => "admin", :action => "walker_destroy", :id => walker}, :method => "delete", :confirm => I18n.t("Are you sure?") %></td>
+			<%= link_to "odstranit", {:controller => "admin", :action => "walker_destroy", :id => walker}, :method => "delete", :confirm => "Opravdu smazat uživatele: ".concat(walker.surname) %></td>
 		</tr>
 	  <% end %>
 	<% end %>

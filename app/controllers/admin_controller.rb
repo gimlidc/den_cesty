@@ -2,7 +2,7 @@ class AdminController < ApplicationController
 
 	def walker_list
 		if walker_signed_in? && current_walker.username =="gimli"
-			@walkers = Walker.all
+			@walkers = Walker.find(:all, :order => "surname")
 		else
 			redirect_to :action => 'unauthorized'
 		end
@@ -10,7 +10,7 @@ class AdminController < ApplicationController
 
 	def walker_update
 		if walker_signed_in? && current_walker.username =="gimli"
-			walker = Walker.find(:first, params[:walker][:id])
+			walker = Walker.find(params[:walker][:id])
 
 			if walker.nil?
 				@notice = "Walker not found."
@@ -38,7 +38,7 @@ class AdminController < ApplicationController
 
 	def walker_destroy
 		if walker_signed_in? && current_walker.username =="gimli"
-			@walker = Walker.find(:first, "#{params[:id]}")
+			@walker = Walker.find(params[:id])
 			if !@walker.nil? && @walker.destroy
 				@notice = "Destroy successful"
 			else
