@@ -73,7 +73,7 @@ class RegistrationsController < ApplicationController
 	end
 
 	def unregister
-		if walker_signed_in? && current_walker.username =="gimli"
+		if walker_signed_in? && current_walker.username == $admin_name
 
 			@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
 			@walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})

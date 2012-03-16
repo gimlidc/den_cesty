@@ -10,6 +10,7 @@ DenCesty::Application.routes.draw do
 	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations
 	match 'forum' => 'pages#forum', :as => :pages_forum
 	match 'admin/walker_list', :as => :admin_walker_list
+	match 'admin/results_setting.:id' => 'admin#results_setting', :as => :admin_results_setting
 	match 'profile' => "walkers#profile", :as => :walker_profile
 	match ':controller(/:action(/:id))'
 	match ':action' => 'static#:action'

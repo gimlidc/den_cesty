@@ -77,6 +77,7 @@ SimpleNavigation::Configuration.run do |navigation|
 		if walker_signed_in? && current_walker.username =="gimli"
 			top.item :walkers, I18n.t('Walkers'), admin_walker_list_path
 			top.item :registrations, I18n.t('Registrations'), registration_path
+			top.item :results, I18n.t('Results setting'), admin_results_setting_path
 		end
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url

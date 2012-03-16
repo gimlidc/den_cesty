@@ -1,7 +1,24 @@
 class AdminController < ApplicationController
 
+	def results_update
+		if walker_signed_in? && current_walker.username == $admin_name
+		else
+			rediredct_to :action => 'unauthorized'
+		end
+	end
+
+	def results_setting
+		if walker_signed_in? && current_walker.username == $admin_name
+			@walkers = Walker.find(:all, :order => "surname");
+			@results = Result.find(:all, :order => "walker_id, dc_id")
+			@set_dc = Integer("#{params[:id]}")
+		else
+			rediredct_to :action => 'unauthorized'
+		end
+	end
+
 	def walker_list
-		if walker_signed_in? && current_walker.username =="gimli"
+		if walker_signed_in? && current_walker.username == $admin_name
 			@walkers = Walker.find(:all, :order => "surname")
 		else
 			redirect_to :action => 'unauthorized'
@@ -9,7 +26,7 @@ class AdminController < ApplicationController
 	end
 
 	def walker_update
-		if walker_signed_in? && current_walker.username =="gimli"
+		if walker_signed_in? && current_walker.username == $admin_name
 			walker = Walker.find(params[:walker][:id])
 
 			if walker.nil?
@@ -37,7 +54,7 @@ class AdminController < ApplicationController
 	end
 
 	def walker_destroy
-		if walker_signed_in? && current_walker.username =="gimli"
+		if walker_signed_in? && current_walker.username == $admin_name
 			@walker = Walker.find(params[:id])
 			if !@walker.nil? && @walker.destroy
 				@notice = "Destroy successful"
