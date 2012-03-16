@@ -11,7 +11,11 @@ class AdminController < ApplicationController
 		if walker_signed_in? && current_walker.username == $admin_name
 			@walkers = Walker.find(:all, :order => "surname");
 			@results = Result.find(:all, :order => "walker_id, dc_id")
-			@set_dc = Integer("#{params[:id]}")
+			if params[:id].nil?
+				@set_dc = $current_dc_id
+			else
+				@set_dc = Integer("#{params[:id]}")
+			end
 		else
 			rediredct_to :action => 'unauthorized'
 		end
