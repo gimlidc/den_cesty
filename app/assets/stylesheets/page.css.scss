@@ -1,3 +1,16 @@
 // Place all the styles related to the page controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ .dc-part-name {
+	margin-bottom: -15px;
+	margin-right: 20px;
+	text-align: right;
+	color: darkgreen
+}
+
+.dc-part {
+	border-radius: 15px;
+	border: 1px dashed yellowgreen;
+	padding: 10px;
+}
