@@ -11,7 +11,7 @@
 		  <tr><th class="title">Návrat:</th><td>Jízdní řád zde bude ke stažení (orientační spoje zmíněné v itineráři). Jízdní řád i itinerář dostanete při prezenci na startu.</td></tr>
 		  <tr><th class="title">Co s sebou:</th><td>Neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Co nenajdete tam, můžete najít na <%= link_to "fóru", pages_forum_path %>. A nebo v reportech účastníků.</td></tr>
 
-		  <tr><th class="title">Přihlášení:</th><td>
+		  <tr><th class="title">Přihlášení&nbsp;(<%= @registered_walkers.size %>):</th><td>
 			  <% if !@registered_walkers.nil? %>
 				<% @registered_walkers.each do |reg| %>
 				  <%= reg.walker.username %>,

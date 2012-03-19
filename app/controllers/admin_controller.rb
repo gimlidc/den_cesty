@@ -49,9 +49,27 @@ class AdminController < ApplicationController
 		end
 	end
 
+	def walker_create
+		if walker_signed_in? && current_walker.username == $admin_name
+			@walkers = Walker.find(:all, :conditions => {:name => params[:walker][:name], :surname => params[:walker][:surname]})
+			if @walkers.empty?
+				walker = Walker.new(params[:walker])
+				if walker.save(:validate => false)
+					flash[:notice] = "Walker created"
+				else
+					flash[:notice] = "Walker creation failed"
+				end
+			else
+				flash[:alert] = "Walker with the same name exist!"
+			end
+		end
+		redirect_to :action => 'walker_list'
+	end
+
 	def walker_list
 		if walker_signed_in? && current_walker.username == $admin_name
 			@walkers = Walker.find(:all, :order => "surname")
+			@new_walker = Walker.new
 		else
 			redirect_to :action => 'unauthorized'
 		end
