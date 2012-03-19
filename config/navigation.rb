@@ -78,7 +78,7 @@ SimpleNavigation::Configuration.run do |navigation|
 			top.item :management, I18n.t('Management'), :class => 'sf-sub-indicator' do |manages|
 				manages.item :walkers, I18n.t('Walkers'), admin_walker_list_path
 				manages.item :registrations, I18n.t('Registrations'), registration_path
-				manages.item :result_setting, I18n.t('Results setting'), admin_results_setting_path, id => $current_dc_id
+				manages.item :result_setting, I18n.t('Results setting'), admin_results_setting_path
 			end
 		end
 #		top.item :routes, 'Routes', url
