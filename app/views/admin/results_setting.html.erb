@@ -7,7 +7,7 @@
   No record found
 <% else %>
   <% res = 0 %>
-  <%= form_tag("/results_update") %>
+  <%= form_tag("results_update") %>
   <%= hidden_field_tag :dc_id, @set_dc %>
   <table>
 	<tbody>
@@ -31,18 +31,23 @@
 		  <td><%= walker.surname %></td>
 		  <td><%= walker.year %></td>
 		  <% (1..$current_dc_id).each do |dc_id| %>
-		  <% if !@results.nil? && !@results[res].nil? && @results[res][:dc_id] == dc_id && @results[res][:walker_id] == walker.id %>
-		  <% result = @results[res] %>
-		  <% else %>
-		  <% result = Result.new %>
-		  <% end %>
-		  <td>
-			  <% if @set_dc == dc_id %>
-				<%= number_field_tag walker.id, result.distance, :size => 4 %>
+			<% if !@results.nil? && !@results[res].nil? && @results[res][:dc_id] == dc_id && @results[res][:walker_id] == walker.id %>
+			  <% result = @results[res] %>
+			  <% res += 1 %>
+			<% end %>
+			<td>
+			  <% if @set_dc == dc_id%>
+				<% if !result.nil? %>
+				  <%= number_field_tag walker.id, result.distance, :size => 4 %>
+				<% else %>
+				  <%= number_field_tag walker.id, "", :size => 4 %>
+				<% end %>
 			  <% else %>
-				<%= result.distance %>
+				<% if !result.nil? %>
+				  <%=  result.distance %>
+				<% end %>
 			  <% end %>
-		  </td>
+			</td>
 		  <% end %>
 		</tr>
 	  <% end %>
