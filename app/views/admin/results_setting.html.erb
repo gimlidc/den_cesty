@@ -1,0 +1,65 @@
+<%#
+# @author gimli
+# @version Mar 15, 2012
+%>
+
+<% if @walkers.nil? %>
+  No record found
+<% else %>
+  <% res = 0 %>
+  <%= form_tag("results_update") %>
+  <%= hidden_field_tag :dc_id, @set_dc %>
+  <table>
+	<tbody>
+	  <tr>
+		<th>jmeno</th>
+		<th>příjmení</th>
+		<th>rok</th>
+		<% (1..$current_dc_id).each do |dc_id| %>
+		  <th>
+			<% if @set_dc == dc_id %>
+			  <%= dc_id %>
+			<% else %>
+			  <%= link_to dc_id, admin_results_setting_path(dc_id) %>
+			<% end %>
+		  </th>
+		<% end %>
+	  </tr>
+	  <% @walkers.each do |walker| %>
+		<tr>
+		  <td><%= walker.name %></td>
+		  <td><%= walker.surname %></td>
+		  <td><%= walker.year %></td>
+		  <% (1..$current_dc_id).each do |dc_id| %>
+			<% if !@results.nil? && !@results[res].nil? && @results[res][:dc_id] == dc_id && @results[res][:walker_id] == walker.id %>
+			  <% result = @results[res] %>
+			  <% res += 1 %>
+			<% end %>
+			<td>
+			  <% if @set_dc == dc_id%>
+				<% if !result.nil? %>
+				  <%= number_field_tag walker.id, result.distance, :size => 4 %>
+				<% else %>
+				  <%= number_field_tag walker.id, "", :size => 4 %>
+				<% end %>
+			  <% else %>
+				<% if !result.nil? %>
+				  <%=  result.distance %>
+				<% end %>
+			  <% end %>
+			</td>
+		  <% end %>
+		</tr>
+	  <% end %>
+	  <tr>
+		<td></td><td></td><td></td><% (1..$current_dc_id).each do |dc_id| %>
+		  <td>
+			<% if @set_dc == dc_id %>
+			  <%= submit_tag "save" %>
+			<% end %>
+		  </td>
+		<% end %>
+	  </tr>
+	</tbody>
+  </table>
+<% end %>
