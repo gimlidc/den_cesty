@@ -54,6 +54,8 @@ class AdminController < ApplicationController
 			@walkers = Walker.find(:all, :conditions => {:name => params[:walker][:name], :surname => params[:walker][:surname]})
 			if @walkers.empty?
 				walker = Walker.new(params[:walker])
+				walker.email = "#{walker.id}@#{walker.name}.#{walker.surname}"
+				walker.sex = params[:walker][:sex]
 				if walker.save(:validate => false)
 					flash[:notice] = "Walker created"
 				else
@@ -68,7 +70,7 @@ class AdminController < ApplicationController
 
 	def walker_list
 		if walker_signed_in? && current_walker.username == $admin_name
-			@walkers = Walker.find(:all, :order => "surname")
+			@walkers = Walker.find(:all, :order => "surname, name")
 			@new_walker = Walker.new
 		else
 			redirect_to :action => 'unauthorized'
@@ -82,12 +84,17 @@ class AdminController < ApplicationController
 			if walker.nil?
 				@notice = "Walker not found."
 			else
-				walker.username = params[:walker][:username]
+				if (params[:walker][:username].nil?)
+					validate = false
+				else
+					walker.username = params[:walker][:username]
+					walker.email = params[:walker][:email]
+				end
 				walker.name = params[:walker][:name]
 				walker.surname = params[:walker][:surname]
-				walker.email = params[:walker][:email]
+				walker.sex = params[:walker][:sex]
 				walker.year = params[:walker][:year]
-				if walker.save
+				if walker.save(:validate => validate)
 					@notice = "Update successful"
 				else
 					@notice = "Walker not updated."

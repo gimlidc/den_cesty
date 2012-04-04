@@ -15,6 +15,7 @@
 		<th>jméno</th>
 		<th>příjmení</th>
 		<th>e-mail</th>
+		<th>kategorie</th>
 		<th>rok narození</th>
 		<th></th>
 	  </tr>
@@ -22,10 +23,21 @@
 		<%= form_for(walker, :url => { :controller => "admin", :action => "walker_update" }) do |f| %>
 		  <tr>
 			<%= f.hidden_field :id %>
-			<td><%= f.text_field :username, :size => 10 %></td>
+			<td>
+			  <% if !walker.username.nil? -%>
+				<%= f.text_field :username, :size => 10 %>
+			  <%- end %>
+			</td>
 			<td><%= f.text_field :name, :size => 10 %></td>
 			<td><%= f.text_field :surname, :size => 20 %></td>
-			<td><%= f.email_field :email, :size => 20 %></td>
+			<td>
+			  <% if !walker.username.nil? -%>
+				<%= f.email_field :email, :size => 20 %>
+			  <%- end %>
+			</td>
+			<td>
+				<%= f.select :sex, options_for_select($sex_options,  f.object.sex), {}%>
+			</td>
 			<td><%= f.number_field :year, :size => 4 %></td>
 			<td>
 			  <%= f.submit "aktualizovat" %>/
@@ -38,6 +50,9 @@
 		  <td><%= f.text_field :name, :size => 10 %></td>
 		  <td><%= f.text_field :surname, :size => 20 %></td>
 		  <td></td>
+		  <td>
+			<%= f.select :sex, options_for_select($sex_options,  f.object.sex), {}%>
+		  </td>
 		  <td><%= f.number_field :year, :size => 4 %></td>
 		  <td>
 			<%= f.submit "vytvořit" %></td>

@@ -11,6 +11,6 @@ class Walker < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
 	validate :username, :surname, :year, :name, :email, :presence => true
-  attr_accessible :email, :name, :surname, :year, :username, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :name, :surname, :year, :username, :password, :password_confirmation, :remember_me, :sex
 
 end
