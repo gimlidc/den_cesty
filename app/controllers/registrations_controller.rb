@@ -39,7 +39,11 @@ class RegistrationsController < ApplicationController
 		if !reg.nil?
 			reg.bw_map = params[:registration][:bw_map]
 			reg.colour_map = params[:registration][:colour_map]
-			reg.shirt_size = params[:registration][:shirt_size]
+			if params[:registration][:shirt_size].nil?
+				reg.shirt_size = "NO"
+			else
+				reg.shirt_size = params[:registration][:shirt_size]
+			end
 			if reg.save
 				@notice = "Registration details sucessfully stored."
 				redirect_to :action => 'show'
