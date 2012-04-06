@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120326155547) do
+ActiveRecord::Schema.define(:version => 20120406123136) do
 
   create_table "posts", :force => true do |t|
     t.datetime "created_at"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20120326155547) do
     t.string   "shirt_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "canceled",   :default => false
   end
 
   create_table "reports", :force => true do |t|

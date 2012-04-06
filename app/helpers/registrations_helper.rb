@@ -33,7 +33,7 @@ module RegistrationsHelper
 
 	def is_registered
 		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
-		if @reg.nil? || @reg.empty?
+		if @reg.nil? || @reg.empty? || @reg[0].canceled == true
 			return false
 		else
 			return true

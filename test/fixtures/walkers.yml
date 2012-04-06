@@ -1,11 +1,30 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# demo poutníci
+elis:
+  email: elis@pomerancova.cz
+  name: Eliška
+  surname: Pomořanská
+  year: 1320
+  username: elis
+  sex: female
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+jenda:
+  email: zizka@tabor.cz
+  name: Jan
+  surname: Žižka z Trocnova
+  year: 1356
+  username: jednoočko
+  sex: male
+
+kase:
+  name: Rudolf
+  surname: Habsburský
+  year: 1280
+  username: kaše
+  sex: male
+
+henry:
+  email: oscar@wilde.en
+  name: Oscar
+  surname: Wild
+  year: 1854
+  username: lord henry

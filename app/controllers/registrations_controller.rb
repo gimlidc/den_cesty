@@ -19,7 +19,7 @@ class RegistrationsController < ApplicationController
 
 	def show
 		if (walker_signed_in?)
-			@registration = Registration.joins(:walker)
+			@registration = Registration.joins(:walker).where(:canceled => false)
 			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
 		end
 	end
@@ -39,6 +39,7 @@ class RegistrationsController < ApplicationController
 		if !reg.nil?
 			reg.bw_map = params[:registration][:bw_map]
 			reg.colour_map = params[:registration][:colour_map]
+			reg.canceled = false
 			if params[:registration][:shirt_size].nil?
 				reg.shirt_size = "NO"
 			else
@@ -48,7 +49,6 @@ class RegistrationsController < ApplicationController
 				@notice = "Registration details sucessfully stored."
 				redirect_to :action => 'show'
 			else
-				@notice = @reg.errors.full_messages[0]
 				@registration = reg
 				render :action => 'edit'
 			end
@@ -66,10 +66,11 @@ class RegistrationsController < ApplicationController
 		@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
 
 		if !@reg.nil?
-			if @reg.delete
+			@reg.canceled = true
+			if @reg.save
 				@notice = "Registration was cancelled."
 			else
-				@notice = "Delete failed."
+				@notice = "Unregistration failed."
 			end
 		else
 			@notice = "Registration not found."
@@ -82,20 +83,21 @@ class RegistrationsController < ApplicationController
 			@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
 			@walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})
 			if !@reg.nil?
-				if @reg.delete
-					@notice = "Registration of " << @walker.username.to_s << " was cancelled."
+				@reg.canceled = true
+				if @reg.save
+					flash.notice = "Registration of " << @walker.username.to_s << " was cancelled."
 				else
-					@notice = "Delete failed."
+					flash.notice = "Delete failed."
 				end
 			else
-				@notice = "Registration not found."
+				flash.notice = "Registration not found."
 			end
 		else
-			@notice = "Operation unauthorized"
-			render :action => 'edit'
+			flash.notice = "Operation unauthorized"
+			redirect_to :action => 'edit'
 		end
 
-		render :action => 'show'
+		redirect_to :action => 'show'
 
 	end
 
