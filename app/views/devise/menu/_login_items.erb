@@ -1,4 +1,4 @@
-<div id="walker_nav">
+<div id="walker_nav" name="walker_nav">
     <% if walker_signed_in? %>
         <%=  I18n.t("Signed in as")%> <%= current_walker.username %>. <%=  I18n.t("Not you?") %>
         <%= link_to I18n.t('Log out'), destroy_walker_session_path, :method => :delete %>

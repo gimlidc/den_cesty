@@ -11,5 +11,5 @@ class Registration < ActiveRecord::Base
 
 	validates_inclusion_of :shirt_size, :in => $shirt_sizes
 	validate :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :presence => true
-	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size
+	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :canceled
 end

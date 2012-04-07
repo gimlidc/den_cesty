@@ -16,6 +16,5 @@
 	  :disabled => (Time.now > $shirt_deadline) %>
 	<i><%= t 'change possible until', :deadline => I18n.l($shirt_deadline, :format => :date) %></i>
   </div>
-
   <div><%= f.submit @store_string %></div>
 <% end %>
