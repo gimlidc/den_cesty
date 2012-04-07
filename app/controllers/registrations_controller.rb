@@ -3,7 +3,10 @@ class RegistrationsController < ApplicationController
 	def new
 		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
 		if !@reg.nil? && !@reg.empty?
-			redirect_to :action => :edit, :notice => "You are already registered."
+			if (!@reg[0].canceled)
+				flash.notice = "You are already registered."
+			end
+			redirect_to :action => :edit
 		end
 		@registration = Registration.new
 		@store_string = I18n.t("sign_up_dc")
@@ -40,20 +43,25 @@ class RegistrationsController < ApplicationController
 			reg.bw_map = params[:registration][:bw_map]
 			reg.colour_map = params[:registration][:colour_map]
 			reg.canceled = false
-			if params[:registration][:shirt_size].nil?
-				reg.shirt_size = "NO"
+
+			# field for shirt selection is missing
+			if (Time.now > $shirt_deadline)
+				if reg.shirt_size.nil?
+					reg.shirt_size = "NO"
+				end
 			else
 				reg.shirt_size = params[:registration][:shirt_size]
 			end
+
 			if reg.save
-				@notice = "Registration details sucessfully stored."
+				flash.notice = "Registration details sucessfully stored."
 				redirect_to :action => 'show'
 			else
 				@registration = reg
 				render :action => 'edit'
 			end
 		else
-			@notice = "Registration not found, try to create new."
+			flash.notice = "Registration not found, try to create new."
 		end
 	end
 
@@ -68,13 +76,15 @@ class RegistrationsController < ApplicationController
 		if !@reg.nil?
 			@reg.canceled = true
 			if @reg.save
-				@notice = "Registration was cancelled."
+				flash.notice = "Registration was cancelled."
 			else
-				@notice = "Unregistration failed."
+				flash.notice = "Unregistration failed."
 			end
 		else
-			@notice = "Registration not found."
+			flash.notice = "Registration not found."
 		end
+
+		redirect_to :controller => 'pages', :action => 'actual'
 	end
 
 	def unregister

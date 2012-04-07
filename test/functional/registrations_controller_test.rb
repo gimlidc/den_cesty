@@ -7,23 +7,32 @@ class RegistrationsControllerTest < ActionController::TestCase
 	include Devise::TestHelpers
 
 	def setup_admin
-    @request.env["devise.mapping"] = Devise.mappings[:admin]
-    sign_in Factory.create(:admin)
+    @request.env["devise.mapping"] = Devise.mappings[:walker]
+    sign_in walkers(:gimli)
   end
 
 	def setup_walker
-    @request.env["devise.mapping"] = Devise.mappings[:elis]
-    sign_in Factory.create(:elis)
+    @request.env["devise.mapping"] = Devise.mappings[:walker]
+    sign_in walkers(:elis)
   end
 
   test "new without login" do
-		setup_walker
-		get :new
-    assert_response :fail, "Registration page is accessible without login"
-		assert_select "#walker_nav", "#{I18n.t("Register")} #{I18n.t("or")} #{I18n.t("Sign_in")}"
+    assert_raise(NoMethodError) {
+			get :new
+			"Registration page is accessible without login"
+		}
+
+		assert_raise(NoMethodError) {
+			get(:new, {:id => 1})
+			"Registration page is accessible without login"
+		}
 	end
 
 	test "new of logged walker before shirt deadline" do
+		setup_walker
+		get :new
+		assert_response :success, "New registration form for elis not generated"
+		#assert_select 'select'
 	end
 
 	test "new of logged walker after shirt deadline" do
