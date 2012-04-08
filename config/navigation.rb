@@ -74,13 +74,8 @@ SimpleNavigation::Configuration.run do |navigation|
 #			results.item :result_by_year, 'By year', results_by_year_path
 		end
 
-		if walker_signed_in? && current_walker.username == $admin_name
-			top.item :management, I18n.t('Management'), :class => 'sf-sub-indicator' do |manages|
-				manages.item :walkers, I18n.t('Walkers'), admin_walker_list_path
-				manages.item :registrations, I18n.t('Registrations'), registration_path
-				manages.item :result_setting, I18n.t('Results setting'), admin_results_setting_path
-			end
-		end
+		top.item :reports, link_to(I18n.t('Reports'), {:controller => "report", :action => "list"})
+
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url
 #		top.item :gallery, 'Gallery', url

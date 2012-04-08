@@ -4,6 +4,9 @@ DenCesty::Application.routes.draw do
 
 	resource :registration
 
+	match 'report/new' => "report#new", :as => :new_report
+	match 'report/edit' => "report#edit", :as => :edit_report
+	match 'report/show' => "report#show", :as => :show_report
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
@@ -15,7 +18,6 @@ DenCesty::Application.routes.draw do
 	match 'profile' => "walkers#profile", :as => :walker_profile
 	match ':controller(/:action(/:id))'
 	match ':action' => 'static#:action'
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

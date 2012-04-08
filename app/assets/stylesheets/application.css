@@ -129,3 +129,19 @@ table#summary {
 	width:100%;
 	border-top:1px solid #000;
 }
+
+.report-input {
+	width: 100%
+}
+
+.justify {
+	background-color: white;
+	text-align: justify;
+	padding: 10px
+}
+
+.report {
+	background-color: lightgrey;
+	border-radius: 3px;
+	border: 1px dashed yellowgreen;
+}

@@ -12,6 +12,9 @@
 		$("ul.sf-menu").superfish({
 		  delay:     700               // 1.2 second delay on mouseout
 		});
+		$("ul.walker-nav").superfish({
+		  delay:     700               // 1.2 second delay on mouseout
+		});
 	  });
 
 	</script>
@@ -19,9 +22,6 @@
   <body bgcolor ="black">
 	<div class="hmenu">
 	  <%= render 'devise/menu/login_items' %>
-	</div>
-	<div class="hmenu">
-	  <%= render 'registrations/menu' %>
 	</div>
 
 	<div class="nav">
