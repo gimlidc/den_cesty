@@ -6,13 +6,27 @@
  *= require_tree .
 */
 
+.main-column {
+	position:relative;	/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float:left;
+	width:100%;			/* width of whole page */
+	overflow:hidden;		/* This chops off any overhanging divs */
+}
+
+main-content {
+	float:right;
+	position:relative;
+}
+
 .content {
-	width:		75%;
-	margin-left: auto;
-	margin-right: auto;
+	float:left;
+	position:relative;
+	overflow:hidden;
+	width: 71%;
 	background: white;
-	margin-top: 2em;
 	border-left: 14px groove yellowgreen;
+	min-height: 15em;
 }
 
 .main-text {
@@ -21,7 +35,8 @@
 }
 
 .nav {
-	width: 75%;
+	width: 100%;
+	padding-left: 15%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -105,4 +120,12 @@ table#summary {
 .alert {
 	color: red;
 	font-weight: bold;
+}
+
+#footer {
+	bottom: 0px;
+	clear:both;
+	float:left;
+	width:100%;
+	border-top:1px solid #000;
 }

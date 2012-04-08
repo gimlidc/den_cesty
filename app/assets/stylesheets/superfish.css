@@ -1,6 +1,7 @@
 
 /*** ESSENTIAL STYLES ***/
 .sf-menu, .sf-menu * {
+	position:		relative;
 	margin:			0px;
 	padding-left:	0px;
 	width:			auto;
@@ -23,7 +24,7 @@
 	-moz-border-top-left-radius: 10px;
 	-moz-border-top-right-radius: 10px;
 	border:			2px ridge #77aa00;
-	border-bottom:  0px;
+	border-bottom:  2px solid black;
 	padding: 		.3em 1em;
 	text-decoration:none;
 	position:		relative;
@@ -31,6 +32,8 @@
 
 .sf-menu li li {
 	display:		block;
+	text-align:		center;
+	width:			7.3em;
 	border:			2px ridge #77aa00;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
