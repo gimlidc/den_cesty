@@ -1,3 +1,4 @@
+# encoding: utf-8
 module PageHelper
 
 	def time_remaining_to_now_in_czech(timestamp)
