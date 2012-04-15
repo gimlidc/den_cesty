@@ -27,14 +27,25 @@
 	<div class="nav">
 	  <%=  render_navigation(:expand_all => true) %>
 	</div>
-	<div class="content">
-	  <div class="main-text">
-		<p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+	<div class="main-column">
+	  <div class="main-content">
+		<div class="walker-nav">
+		  <% if walker_signed_in? %>
+			<%=  render_navigation(:context=> 'walker', :expand_all => true) %>
+		  <% else %>
+		  <ul>
+		  </ul>
+		  <% end %>
+		</div>
+		<div class="content">
+		  <div class="main-text">
+			<p class="notice"><%= notice %></p>
+			<p class="alert"><%= alert %></p>
 
-		<%= yield %>
+			<%= yield %>
+		  </div>
+		</div>
 	  </div>
 	</div>
-
   </body>
 </html>
