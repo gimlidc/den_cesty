@@ -24,8 +24,7 @@ class ApplicationController < ActionController::Base
 		"jaro 2011 - Blaník",
 		"podzim 2011 - Do stříbrného města II",
 		"jaro 2012 - Nejkrásnější Moravská",
-		"podzim 2012 - Nejkrásnější Moravská II",
-	]
+		"podzim 2012 - Nejkrásnější Moravská II"]
 
 	before_filter :set_locale
 
