@@ -2,11 +2,15 @@
 # @author gimli
 # @version Mar 15, 2012
 %>
-
 <% if @walkers.nil? %>
   No record found
 <% else %>
-  <% res = 0 %>
+  <h2>Výsledky <%= @set_dc %>. dne cesty</h2>
+  <%= form_tag('results_setting') do -%>
+	<%=  select_tag("id", dc_select.html_safe, :include_blank => true) %>
+	<%= submit_tag "vybrat" %>
+  <%- end %>
+
   <%= form_tag("results_update") %>
   <%= hidden_field_tag :dc_id, @set_dc %>
   <table>
@@ -15,50 +19,26 @@
 		<th>jmeno</th>
 		<th>příjmení</th>
 		<th>rok</th>
-		<% (1..$current_dc_id).each do |dc_id| %>
-		  <th>
-			<% if @set_dc == dc_id %>
-			  <%= dc_id %>
-			<% else %>
-			  <%= link_to dc_id, admin_results_setting_path(dc_id) %>
-			<% end %>
-		  </th>
-		<% end %>
+		<th>výkon</th>
 	  </tr>
+	  <% odd = true %>
 	  <% @walkers.each do |walker| %>
-		<tr>
+		<%= walker.dc_id %>
+		<% odd = !odd %>
+	  <tr class="<%= if odd
+  "odd-table-line"
+	  else
+		"even-table-line"
+	  end
+%>">
 		  <td><%= walker.name %></td>
 		  <td><%= walker.surname %></td>
 		  <td><%= walker.year %></td>
-		  <% (1..$current_dc_id).each do |dc_id| %>
-			<% if !@results.nil? && !@results[res].nil? && @results[res][:dc_id] == dc_id && @results[res][:walker_id] == walker.id %>
-			  <% result = @results[res] %>
-			  <% res += 1 %>
-			<% end %>
-			<td>
-			  <% if @set_dc == dc_id%>
-				<% if !result.nil? %>
-				  <%= number_field_tag walker.id, result.distance, :size => 4 %>
-				<% else %>
-				  <%= number_field_tag walker.id, "", :size => 4 %>
-				<% end %>
-			  <% else %>
-				<% if !result.nil? %>
-				  <%=  result.distance %>
-				<% end %>
-			  <% end %>
-			</td>
-		  <% end %>
+		  <td><%= number_field_tag walker.id, walker.distance, :size => 4 %></td>
 		</tr>
-	  <% end %>
-	  <tr>
-		<td></td><td></td><td></td><% (1..$current_dc_id).each do |dc_id| %>
-		  <td>
-			<% if @set_dc == dc_id %>
-			  <%= submit_tag "save" %>
-			<% end %>
-		  </td>
-		<% end %>
+	  <%  end %>
+	  <tr> <!-- last line contains only submit button //-->
+		<td></td><td></td><td></td><td><%= submit_tag "save" %></td>
 	  </tr>
 	</tbody>
   </table>

@@ -145,3 +145,7 @@ table#summary {
 	border-radius: 3px;
 	border: 1px dashed yellowgreen;
 }
+
+tr.even-table-line {
+	background-color: lightgrey;
+}

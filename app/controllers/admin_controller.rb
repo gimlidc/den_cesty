@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 	def results_update
 		if walker_signed_in? && current_walker.username == $admin_name
 			dc_id = Integer("#{params[:dc_id]}")
-			@walkers = Walker.find(:all, :order => "id");
+			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id) AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id")
 			@results = Result.where(:dc_id => dc_id).order(:walker_id)
 			res = 0
 			@walkers.each do |walker|
@@ -17,7 +17,7 @@ class AdminController < ApplicationController
 				end
 
 				distance = params["#{walker.id}"]
-				if distance != ""
+				if !distance.nil? && distance != ""
 					result.distance = distance
 
 					if (!result.save)
@@ -42,11 +42,14 @@ class AdminController < ApplicationController
 			else
 				@set_dc = Integer("#{params[:id]}")
 			end
-			@walkers = Walker.find(:all, :order => "surname");
-			@results = Result.joins(:walker).order('walkers.surname', 'dc_id')
+			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id) AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id")
 		else
 			rediredct_to :action => 'unauthorized'
 		end
+	end
+
+	def results_list
+
 	end
 
 	def walker_create
