@@ -26,7 +26,7 @@ class ReportController < ApplicationController
 
 		@dc_select=""
 		for i in 1..$current_dc_id do
-			if i == Integer(@dc_id)
+			if @dc_id != nil && i == Integer(@dc_id)
 				@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
 			else
 				@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
