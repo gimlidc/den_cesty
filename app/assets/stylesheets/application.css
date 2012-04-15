@@ -35,7 +35,6 @@ main-content {
 }
 
 .nav {
-	width: 100%;
 	padding-left: 15%;
 	margin-left: auto;
 	margin-right: auto;
@@ -128,4 +127,24 @@ table#summary {
 	float:left;
 	width:100%;
 	border-top:1px solid #000;
+}
+
+.report-input {
+	width: 100%
+}
+
+.justify {
+	background-color: white;
+	text-align: justify;
+	padding: 10px
+}
+
+.report {
+	background-color: lightgrey;
+	border-radius: 3px;
+	border: 1px dashed yellowgreen;
+}
+
+tr.even-table-line {
+	background-color: lightgrey;
 }

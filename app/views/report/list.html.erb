@@ -1,0 +1,33 @@
+<%#
+# @author gimli
+# @version Apr 8, 2012
+%>
+
+<%= form_tag('/report/list') do -%>
+  <table>
+	<tr>
+	  <td><b>autor:</b><%= select_tag("author", options_from_collection_for_select(@walkers, "walker_id", "username"), :include_blank => true) %></td>
+	  <td><b>rok:</b><%= select_tag("id", @dc_select.html_safe, :include_blank => true) %></td>
+	  <td><%= submit_tag "vyhledat" %></td>
+	</tr>
+  </table>
+<%- end %>
+
+<% if @dc_id.nil? && @author.nil? %>
+  <h4>Všechny dostupné reporty. Pro vyhledání využijte formulář výše.</h4>
+<% else %>
+  <% if !@dc_id.nil? %>
+	<h2>Reporty z <%= @dc_id %>. dne cesty</h2>
+  <% else # !@author.nil? %>
+	<h2>Reporty od <%= @author.username %></h2>
+  <% end %>
+<% end %>
+<% for report in @reports %>
+  <div class="report">
+	<b>&nbsp;autor:&nbsp;</b><%= report.walker.username %>, <%= dc_name(report.dc_id) %>
+	<div class="justify">
+	  <%= format(report.report_html).html_safe %>
+	</div>
+  </div>
+  <br />
+<% end %>

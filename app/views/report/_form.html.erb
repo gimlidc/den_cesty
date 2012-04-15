@@ -1,0 +1,27 @@
+<%#
+# @author gimli
+# @version Apr 8, 2012
+%>
+
+<h2>Report:</h2>
+Aplikace pro zadávání není ještě nejdokonalejší, proto využijte váš oblíbený textový editor
+a teprve nakonec sem report vložte. Předejdete možnému roztrpčení ze ztracené práce.
+<ul>
+<li>Report můžete zadávat do <%= I18n.l($report_deadline, :format => :date) %>. Poté nebude možné report měnit.</li>
+<li>Můžete používat následující formátovací html značky
+  <ol type="i">
+	<li>&lt;i&gt;<i>text kurzívou</i>&lt;/i&gt;</li>
+	<li>&lt;b&gt;<b>text tučně</b>&lt;/b&gt;</li>
+	<li>&lt;center&gt;<i>text zarovnaný na střed</i>&lt;/center&gt;</li>
+  </ol>
+  ostatní nepoužívejte, dokumenty budou naformátovány jednotně.
+  <li>Pro odstavec vložte prázdný řádek</li>
+</li>
+<li>Limit na dokument je 10kB. Budete-li chtít přispět něčím delším, dejte mi vědět, nějak to uděláme.</li>
+</ul>
+
+<%= form_for(@report, :url => { :action => 'save' }) do |f|%>
+  <%= f.text_area :report_html, :class => 'report-input', :maxlength => 10000 %>
+  <br />
+  <%= f.submit I18n.t("Save") %>
+<% end %>
