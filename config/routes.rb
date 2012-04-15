@@ -1,6 +1,8 @@
 DenCesty::Application.routes.draw do
 
-  devise_for :walkers
+	devise_for :walkers do
+		get 'walkers', :to => 'walkers#show', :as => :show_walker # Rails 3
+	end
 
 	resource :registration
 

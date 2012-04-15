@@ -26,7 +26,7 @@ class ReportController < ApplicationController
 
 		@dc_select=""
 		for i in 1..$current_dc_id do
-			if i == @dc_id
+			if i == Integer(@dc_id)
 				@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
 			else
 				@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
@@ -36,6 +36,10 @@ class ReportController < ApplicationController
 	end
 
 	def new
+		if !report_accessible?
+			redirect_to :action => :list
+		end
+
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
 		end
@@ -49,6 +53,10 @@ class ReportController < ApplicationController
 	end
 
 	def edit
+		if !report_accessible?
+			redirect_to :action => :list
+		end
+
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
 		end
@@ -102,6 +110,10 @@ class ReportController < ApplicationController
 	def has_report?
 		@report = Report.all(:conditions => {:dc_id => $current_dc_id, :walker_id => current_walker[:id] })
 		return !@report.nil? && !@report.empty?
+	end
+
+	def report_accessible?
+		return Time.now > $dc_date && Time.now < $report_deadline
 	end
 
 end

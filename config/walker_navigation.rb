@@ -23,11 +23,11 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
 
 
-		
+
     #nav.item :walker_results, I18n.t('My results'),  root_path
 		nav.item :edit, I18n.t('Manage account'), edit_walker_registration_path
 
-		if Time.now < $dc_date
+		if Time.now < $registration_deadline
 			nav.item :registration, I18n.t('Registration') do |registration|
 				if is_registered
 					registration.item :edit_registration, I18n.t('Show registration'), registration_path
@@ -39,7 +39,7 @@ SimpleNavigation::Configuration.run do |navigation|
 			end
 		end
 
-		if is_registered
+		if is_registered && Time.now > $dc_date && Time.now < $report_deadline
 			if has_report
 				nav.item :report, I18n.t('Reports') do |reports|
 					reports.item :edit_report, I18n.t('Edit report'), edit_report_path

@@ -36,6 +36,9 @@ class WalkersController < Devise::RegistrationsController
     render :edit
   end
 
+	def show
+  end
+
   # PUT /resource
   # We need to use a copy of the resource because we don't want to change
   # the current user in place.
@@ -56,7 +59,6 @@ class WalkersController < Devise::RegistrationsController
 			@notice = "Update failed"
     end
 		set_flash_message :notice, @notice
-		render :edit
   end
 
   # DELETE /resource
@@ -102,7 +104,7 @@ class WalkersController < Devise::RegistrationsController
   # this method in your own RegistrationsController.
   def after_update_path_for(resource)
 #    signed_in_root_path(resource)
-		:edit
+		redirect_to root_path
   end
 
   # Authenticates the current scope and gets the current resource from the session.

@@ -39,29 +39,34 @@ class RegistrationsController < ApplicationController
 	end
 
 	def update_db(reg)
-		if !reg.nil?
-			reg.bw_map = params[:registration][:bw_map]
-			reg.colour_map = params[:registration][:colour_map]
-			reg.canceled = false
+		if (Time.now > $registration_deadline)
+			flash.notice = "It's after deadline for registration, changes was not accepted."
+			redirect_to :action => :show
+		else
+			if !reg.nil?
+				reg.bw_map = params[:registration][:bw_map]
+				reg.colour_map = params[:registration][:colour_map]
+				reg.canceled = false
 
-			# field for shirt selection is missing
-			if (Time.now > $shirt_deadline)
-				if reg.shirt_size.nil?
-					reg.shirt_size = "NO"
+				# field for shirt selection is missing
+				if (Time.now > $shirt_deadline)
+					if reg.shirt_size.nil?
+						reg.shirt_size = "NO"
+					end
+				else
+					reg.shirt_size = params[:registration][:shirt_size]
+				end
+
+				if reg.save
+					flash.notice = "Registration details sucessfully stored."
+					redirect_to :action => 'show'
+				else
+					@registration = reg
+					render :action => 'edit'
 				end
 			else
-				reg.shirt_size = params[:registration][:shirt_size]
+				flash.notice = "Data of registration is missing, illegal access?!"
 			end
-
-			if reg.save
-				flash.notice = "Registration details sucessfully stored."
-				redirect_to :action => 'show'
-			else
-				@registration = reg
-				render :action => 'edit'
-			end
-		else
-			flash.notice = "Registration not found, try to create new."
 		end
 	end
 

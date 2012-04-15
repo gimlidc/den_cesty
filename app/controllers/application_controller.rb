@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 	$current_dc_id = 16
 	$dc_date = Time.local(2012, 4, 21, 10, 00, 00, 00);
 	$shirt_deadline = Time.local(2012, 4, 1, 00, 00, 00, 00);
+	$registration_deadline = Time.local(2012, 4, 18, 12, 00, 00, 00);
 	$admin_name = "gimli"
 	$sex_options = [["male", I18n.t('male')], ["female", I18n.t('female')]]
 	$report_deadline = Time.local(2012, 5, 21, 00, 00, 00, 00);
