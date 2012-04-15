@@ -25,7 +25,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
 
     #nav.item :walker_results, I18n.t('My results'),  root_path
-		nav.item :edit, I18n.t('Manage account'), edit_walker_registration_path
+		#nav.item :edit, I18n.t('Manage account'), edit_walker_registration_path
 
 		if Time.now < $registration_deadline
 			nav.item :registration, I18n.t('Registration') do |registration|
