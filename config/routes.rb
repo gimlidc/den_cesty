@@ -12,6 +12,7 @@ DenCesty::Application.routes.draw do
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
 	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations
 	match 'forum' => 'pages#forum', :as => :pages_forum
+	match 'admin/print_list', :as => :admin_print_list
 	match 'admin/walker_list', :as => :admin_walker_list
 	match 'admin/results_update', :as => :admin_results_update
 	match 'admin/results_setting(.:id)' => 'admin#results_setting', :as => :admin_results_setting
