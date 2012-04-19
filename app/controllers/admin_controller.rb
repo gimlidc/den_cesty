@@ -1,5 +1,11 @@
 class AdminController < ApplicationController
 
+	def print_list
+		if (walker_signed_in? && current_walker.username == $admin_name)
+			@registration = Registration.joins(:walker).where(:canceled => false)
+		end
+	end
+
 	def results_update
 		if walker_signed_in? && current_walker.username == $admin_name
 			dc_id = Integer("#{params[:dc_id]}")

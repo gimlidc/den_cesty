@@ -4,8 +4,8 @@ class Registration < ActiveRecord::Base
 	$reg_price = 30
 	$bw_map_price = 10
 	$colour_map_price = 50
-	$shirt_price = 300
-	$own_shirt_price = 150
+	$shirt_price = 250
+	$own_shirt_price = 125
 
 	belongs_to :walker
 
