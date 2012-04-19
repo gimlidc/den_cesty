@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def actual
-		@registered_walkers = Registration.where(:dc_id => $current_dc_id).joins(:walker).order(:username)
+		@registered_walkers = Registration.where(:dc_id => $current_dc_id, :canceled => false).joins(:walker).order(:username)
   end
 
 	def rules
