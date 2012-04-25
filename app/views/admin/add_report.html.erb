@@ -1,0 +1,13 @@
+<%#
+# @author gimli
+# @version Apr 25, 2012
+%>
+
+<%= form_tag('save_report') do %>
+  <%= select_tag("walker_id", @walker_select.html_safe, :include_blank => true)  %>
+  <%= select_tag("dc_id", @dc_select.html_safe, :include_blank => true)  %>
+  <br />
+  <%= text_area_tag("report_html", nil, :class => 'report-input', :maxlength => 10000, :rows => 30) %>
+  <br />
+  <%= submit_tag %>
+<% end %>
