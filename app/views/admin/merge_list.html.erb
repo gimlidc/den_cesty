@@ -1,0 +1,12 @@
+<%#
+# @author gimli
+# @version Apr 19, 2012
+%>
+
+<%= form_tag('merge') do %>
+Will be changed:
+<%= select_tag("walkerA", @options.html_safe, :include_blank => true)  %>
+No change:
+<%= select_tag("walkerB", @options.html_safe, :include_blank => true)  %>
+<%= submit_tag "merge" %>
+<% end %>
