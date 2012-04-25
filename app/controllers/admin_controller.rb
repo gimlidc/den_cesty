@@ -1,5 +1,51 @@
 class AdminController < ApplicationController
 
+	def add_report
+		@walkers = Walker.all
+
+		@dc_select = ""
+		for i in 1..$current_dc_id do
+			if @dc_id != nil && i == Integer(@dc_id)
+				@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
+			else
+				@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
+			end
+		end
+
+		@walker_select = ""
+		@walkers.each do |walker|
+			@walker_select+="<option value=#{walker.id}>#{walker.name} #{walker.surname} (#{walker.year})</option>\n"
+		end
+	end
+
+	def save_report
+		@report = Report.find(:first, :conditions => { :walker_id => params[:walker_id], :dc_id => params[:dc_id]})
+		@walker = Walker.find(:first, :conditions => { :id => params[:walker_id]})
+
+		if @report.nil?	&& !@walker.nil?
+			@dc_id = Integer("#{params[:dc_id]}")
+
+			report = Report.new
+			report.dc_id = @dc_id
+			report.walker_id = Integer("#{params[:walker_id]}")
+			report.report_html = params[:report_html]
+
+			if report.save
+				flash[:notice] = "Report successfully stored #{report.walker_id}, #{report.dc_id}"
+			else
+				flash[:alert] = "Report save failed"
+			end
+		else
+			if !@walker.nil?
+				flash[:alert] = "You are trying to rewrite existing report. Action was canceled."
+			else
+				flash[:alert] = "Unknown walker id."
+			end
+		end
+
+		redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
+	end
+
 	def merge
 		@walker_a = Walker.find(:first, :conditions => { :id => params[:walkerA]})
 		@walker_b = Walker.find(:first, :conditions => { :id => params[:walkerB]})
