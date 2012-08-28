@@ -1,4 +1,4 @@
-<% if walker_signed_in? && current_walker.username =="gimli" %>
+<% if walker_signed_in? && current_walker.username == $admin_name %>
   <% if !@registration.nil? %>
 
 	Showing all registrations for Den cesty <%= $current_dc_id %>

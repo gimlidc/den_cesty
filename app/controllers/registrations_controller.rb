@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
 
 	def show
 		if (walker_signed_in?)
-			@registration = Registration.joins(:walker).where(:canceled => false)
+			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $current_dc_id)
 			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
 		end
 	end
