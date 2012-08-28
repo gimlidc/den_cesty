@@ -132,7 +132,7 @@ class AdminController < ApplicationController
 
 	def print_list
 		if (walker_signed_in? && current_walker.username == $admin_name)
-			@registration = Registration.joins(:walker).where(:canceled => false).order(:surname)
+			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $current_dc_id).order(:surname)
 		end
 	end
 
