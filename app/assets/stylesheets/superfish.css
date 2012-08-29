@@ -18,13 +18,13 @@
 .sf-menu li {
 	background-color: black;
 	display:		block;
-	color:			#eeeeee;
+	color:			#ab7b00; /*#eeeeee;*/
 	float:			left;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 	-moz-border-top-left-radius: 10px;
 	-moz-border-top-right-radius: 10px;
-	border:			2px ridge #77aa00;
+	border:			2px ridge #ab7b00;
 	border-bottom:  2px solid black;
 	padding: 		.3em 1em;
 	text-decoration:none;
@@ -35,7 +35,7 @@
 	display:		block;
 	text-align:		center;
 	width:			7.3em;
-	border:			2px ridge #77aa00;
+	border:			2px ridge #ab7b00/*77aa00*/;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
 	-moz-border-top-left-radius: 0px;
@@ -43,22 +43,23 @@
 }
 
 .sf-menu li:hover {
-	color:			#ffffff;
+	color:			#ffb700; /*puvodne #ffffff*/
 	background-color: #333;
-	border:			2px groove yellowgreen;
+	border:			2px groove #ffb700; /*yellowgreen;*/
 	visibility:		inherit; /* fixes IE7 'sticky bug' */
 }
 
+
 .sf-menu a {
-	color:			#77aa00;
+	color:			#ab7b00/*77aa00*/;
 	text-decoration: none;
 }
 
 .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
-	color:		yellowgreen;
+	color:		#ffb700;/*yellowgreen;*/
 }
 
-.sf-menu li:hover ul,
+/*.sf-menu li:hover ul,*/
 .sf-menu li.sfHover ul {
 	top:			1.88em; /* match top ul list item height */
 	z-index:		99;
