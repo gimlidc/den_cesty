@@ -25,7 +25,7 @@ main-content {
 	overflow:hidden;
 	width: 71%;
 	background: white;
-	border-left: 14px groove yellowgreen;
+	border-left: 14px groove #ffb700; /*green*/
 	min-height: 15em;
 }
 
@@ -49,19 +49,19 @@ main-content {
 }
 
 a {
-	color: green;
+	color: #956f0e; /*green;*/
 }
 
 a:active {
-	color: limegreen;
+	color: #e2a91a; /*limegreen;*/
 }
 
 a:hover {
-	color: yellowgreen;
+	color: #e2a91a;/* yellowgreen;*/
 }
 
 a:visited {
-	color: #77aa00;
+	color: #c89000; /*#77aa00;*/
 }
 
 h1 {
@@ -104,7 +104,8 @@ div#multicolumn1 {
 table#summary {
 	padding-top: 5px;
 	padding-bottom: 5px;
-	background-color: #dec;
+/*background: url('/podzim_pozadi.jpg');*/
+	background-color: #ffe8ac;/*#dec;*/
 	border-spacing: 5px;
 	width: 95%;
 	-webkit-border-radius: 25px;
@@ -142,7 +143,7 @@ table#summary {
 .report {
 	background-color: lightgrey;
 	border-radius: 3px;
-	border: 1px dashed yellowgreen;
+	border: 1px dashed #ffb700 /*yellowgreen;*/
 }
 
 tr.even-table-line {

@@ -43,7 +43,7 @@ div.walker-nav ul li {
 	border-bottom-left-radius: 10px;
 	-moz-border-top-left-radius: 10px;
 	-moz-border-bottom-left-radius: 10px;
-	border:	2px ridge #77aa00;
+	border:	2px ridge #a6550 /*77aa00*/;
 	border-right:  1px solid black;
 	text-decoration:none;
 	color:			#eeeeee;
@@ -56,7 +56,7 @@ div.walker-nav ul ul li {
 	-moz-border-top-left-radius: 0px;
 	-moz-border-bottom-left-radius: 0px;
 	text-align:		center;
-	border:			2px ridge #77aa00;
+	border:			2px ridge #a6550 /*77aa00*/;
 	width: 7.3em;
 }
 
@@ -64,12 +64,12 @@ div.walker-nav ul li:hover {
 	color:			#ffffff;
 	background-color: #333;
 	border:			2px groove yellowgreen;
-	border-right:   1px solid #77aa00;
+	border-right:   1px solid #a6550 /*77aa00*/;
 	visibility:		inherit; /* fixes IE7 'sticky bug' */
 }
 
 .walker-nav a {
-	color:			#77aa00;
+	color:			#a6550 /*77aa00*/;
 	text-decoration: none;
 }
 
