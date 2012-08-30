@@ -71,12 +71,10 @@ SimpleNavigation::Configuration.run do |navigation|
 #
 
 
-#		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
-#			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
-#			results.item :result_by_year, 'By year', results_by_year_path
-#		end
-
-		top.item :results, I18n.t('Results'), pages_hall_of_glory_path
+		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
+			results.item :jar12_16, I18n.t('Spring 2012'), pages_jar12_16_path
+			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
+		end
 
 		top.item :reports, link_to(I18n.t('Reports'), {:controller => "report", :action => "list"})
 
