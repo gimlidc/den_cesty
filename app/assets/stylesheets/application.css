@@ -6,7 +6,6 @@
  *= require_tree .
 */
 
-/* zakladni barva podzimu #ff8300*/
 .main-column {
 	position:relative;	/* This fixes the IE7 overflow hidden bug */
 	clear:both;
@@ -50,19 +49,19 @@ main-content {
 }
 
 a {
-	color: #7d5a00; /*green;*/
+	color: #956f0e; /*green;*/
 }
 
 a:active {
-	color: #ffb700; /*limegreen;*/
+	color: #e2a91a; /*limegreen;*/
 }
 
 a:hover {
-	color: #ffb700; /*yellowgreen;*/
+	color: #e2a91a;/* yellowgreen;*/
 }
 
 a:visited {
-	color: #edaa00 /*77aa00*/; /*#77aa00;*/
+	color: #c89000; /*#77aa00;*/
 }
 
 h1 {
@@ -105,7 +104,8 @@ div#multicolumn1 {
 table#summary {
 	padding-top: 5px;
 	padding-bottom: 5px;
-	background-color: #be9630;/*#dec;*/
+/*background: url('/podzim_pozadi.jpg');*/
+	background-color: #ffe8ac;/*#dec;*/
 	border-spacing: 5px;
 	width: 95%;
 	-webkit-border-radius: 25px;
@@ -143,7 +143,7 @@ table#summary {
 .report {
 	background-color: lightgrey;
 	border-radius: 3px;
-	border: 1px dashed #a6550 /*77aa00*/;/*yellowgreen;*/
+	border: 1px dashed #ffb700 /*yellowgreen;*/
 }
 
 tr.even-table-line {

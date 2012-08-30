@@ -69,10 +69,14 @@ SimpleNavigation::Configuration.run do |navigation|
 #    #primary.item :key_3, 'Admin', url, :class => 'special', :if => Proc.new { current_user.admin? }
 #    #primary.item :key_4, 'Account', url, :unless => Proc.new { logged_in? }
 #
-		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
-			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
+
+
+#		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
+#			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
 #			results.item :result_by_year, 'By year', results_by_year_path
-		end
+#		end
+
+		top.item :results, I18n.t('Results'), pages_hall_of_glory_path
 
 		top.item :reports, link_to(I18n.t('Reports'), {:controller => "report", :action => "list"})
 
