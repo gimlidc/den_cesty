@@ -43,10 +43,10 @@ div.walker-nav ul li {
 	border-bottom-left-radius: 10px;
 	-moz-border-top-left-radius: 10px;
 	-moz-border-bottom-left-radius: 10px;
-	border:	2px ridge #a6550 /*77aa00*/;
+	border:	2px ridge #b4850f /*77aa00*/;
 	border-right:  1px solid black;
 	text-decoration:none;
-	color:			#eeeeee;
+	color:			#b4850f /*white*/;
 	padding: .3em .3em;
 }
 
@@ -56,25 +56,25 @@ div.walker-nav ul ul li {
 	-moz-border-top-left-radius: 0px;
 	-moz-border-bottom-left-radius: 0px;
 	text-align:		center;
-	border:			2px ridge #a6550 /*77aa00*/;
+	border:			2px ridge #b4850f /*77aa00*/;
 	width: 7.3em;
 }
 
 div.walker-nav ul li:hover {
-	color:			#ffffff;
+	color:			#e2a91a;/*#ffffff;*/
 	background-color: #333;
-	border:			2px groove yellowgreen;
-	border-right:   1px solid #a6550 /*77aa00*/;
+	border:			2px groove #e2a91a;
+	border-right:   1px solid #ab7b00; /*77aa00*/;
 	visibility:		inherit; /* fixes IE7 'sticky bug' */
 }
 
 .walker-nav a {
-	color:			#a6550 /*77aa00*/;
+	color:			#b4850f; /*77aa00*/;
 	text-decoration: none;
 }
 
 .walker-nav a:focus, .walker-nav a:hover, .walker-nav a:active {
-	color:		yellowgreen;
+	color:		#e2a91a;
 }
 
 div.walker-nav ul li:hover > ul {
