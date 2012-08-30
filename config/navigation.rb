@@ -80,6 +80,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
 		top.item :reports, link_to(I18n.t('Reports'), {:controller => "report", :action => "list"})
 
+		top.item :contacts, link_to(I18n.t('Contacts'), {:controller => "pages", :action => "contacts"})
+
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url
 #		top.item :gallery, 'Gallery', url

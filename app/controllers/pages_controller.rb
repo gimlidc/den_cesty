@@ -12,4 +12,7 @@ class PagesController < ApplicationController
 
 	end
 
+	def contacts
+		
+	end
 end
