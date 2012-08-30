@@ -7,6 +7,7 @@ DenCesty::Application.routes.draw do
 	match 'report/new' => "report#new", :as => :new_report
 	match 'report/edit' => "report#edit", :as => :edit_report
 	match 'report/show' => "report#show", :as => :show_report
+	match 'contacts' => 'pages#contacts', :as => :pages_contacts
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
