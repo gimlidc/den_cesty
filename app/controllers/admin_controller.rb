@@ -1,132 +1,148 @@
 class AdminController < ApplicationController
 
 	def add_report
-		@walkers = Walker.all
+		if walker_signed_in? && current_walker.username == $admin_name
+			@walkers = Walker.all
 
-		@dc_select = ""
-		for i in 1..$current_dc_id do
-			if @dc_id != nil && i == Integer(@dc_id)
-				@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
-			else
-				@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
+			@dc_select = ""
+			for i in 1..$current_dc_id do
+				if @dc_id != nil && i == Integer(@dc_id)
+					@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
+				else
+					@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
+				end
 			end
-		end
 
-		@walker_select = ""
-		@walkers.each do |walker|
-			@walker_select+="<option value=#{walker.id}>#{walker.name} #{walker.surname} (#{walker.year})</option>\n"
+			@walker_select = ""
+			@walkers.each do |walker|
+				@walker_select+="<option value=#{walker.id}>#{walker.name} #{walker.surname} (#{walker.year})</option>\n"
+			end
+		else
+			redirect_to :action => 'unauthorized'
 		end
 	end
 
 	def save_report
-		@report = Report.find(:first, :conditions => { :walker_id => params[:walker_id], :dc_id => params[:dc_id]})
-		@walker = Walker.find(:first, :conditions => { :id => params[:walker_id]})
+		if walker_signed_in? && current_walker.username == $admin_name
+			@report = Report.find(:first, :conditions => { :walker_id => params[:walker_id], :dc_id => params[:dc_id]})
+			@walker = Walker.find(:first, :conditions => { :id => params[:walker_id]})
 
-		if @report.nil?	&& !@walker.nil?
-			@dc_id = Integer("#{params[:dc_id]}")
+			if @report.nil?	&& !@walker.nil?
+				@dc_id = Integer("#{params[:dc_id]}")
 
-			report = Report.new
-			report.dc_id = @dc_id
-			report.walker_id = Integer("#{params[:walker_id]}")
-			report.report_html = params[:report_html]
+				report = Report.new
+				report.dc_id = @dc_id
+				report.walker_id = Integer("#{params[:walker_id]}")
+				report.report_html = params[:report_html]
 
-			if report.save
-				flash[:notice] = "Report successfully stored #{report.walker_id}, #{report.dc_id}"
+				if report.save
+					flash[:notice] = "Report successfully stored #{report.walker_id}, #{report.dc_id}"
+				else
+					flash[:alert] = "Report save failed"
+				end
 			else
-				flash[:alert] = "Report save failed"
+				if !@walker.nil?
+					flash[:alert] = "You are trying to rewrite existing report. Action was canceled."
+				else
+					flash[:alert] = "Unknown walker id."
+				end
 			end
+
+			redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
 		else
-			if !@walker.nil?
-				flash[:alert] = "You are trying to rewrite existing report. Action was canceled."
-			else
-				flash[:alert] = "Unknown walker id."
-			end
+			redirect_to :action => 'unauthorized'
 		end
-
-		redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
 	end
 
 	def merge
-		@walker_a = Walker.find(:first, :conditions => { :id => params[:walkerA]})
-		@walker_b = Walker.find(:first, :conditions => { :id => params[:walkerB]})
-		if !@walker_a.nil? && !@walker_b.nil?
-			@results_a = Result.where(:walker_id => @walker_a.id).order(:dc_id)
-			@results_b = Result.where(:walker_id => @walker_b.id).order(:dc_id)
+		if walker_signed_in? && current_walker.username == $admin_name
+			@walker_a = Walker.find(:first, :conditions => { :id => params[:walkerA]})
+			@walker_b = Walker.find(:first, :conditions => { :id => params[:walkerB]})
+			if !@walker_a.nil? && !@walker_b.nil?
+				@results_a = Result.where(:walker_id => @walker_a.id).order(:dc_id)
+				@results_b = Result.where(:walker_id => @walker_b.id).order(:dc_id)
 
-			# check problems in results
-			a=0
-			b=0
-			for i in 1..$current_dc_id
-				while(!@results_a[a].nil? && @results_a[a].dc_id < i)
-					a += 1
-				end
-				while(!@results_b[b].nil? && @results_b[b].dc_id < i)
-					b += 1
-				end
+				# check problems in results
+				a=0
+				b=0
+				for i in 1..$current_dc_id
+					while(!@results_a[a].nil? && @results_a[a].dc_id < i)
+						a += 1
+					end
+					while(!@results_b[b].nil? && @results_b[b].dc_id < i)
+						b += 1
+					end
 
-				if (!@results_b[b].nil? && @results_a[a] == @results_b[b])
-					flash[:alert] = "Conflict in results: #{@results_a[a]}, double record! Merge failed"
-					redirect_to :action => 'merge_list'
-					return
-				end
-			end
-
-			@reports_a = Report.where(:walker_id => @walker_a.id).order(:dc_id)
-			@reports_b = Report.where(:walker_id => @walker_b.id).order(:dc_id)
-
-			# check problems in reports
-			a=0
-			b=0
-			for i in 1..$current_dc_id
-				while(!@reports_a[a].nil? && @reports_a[a].dc_id < i)
-					a += 1
-				end
-				while(!@reports_b[b].nil? && @reports_b[b].dc_id < i)
-					b += 1
-				end
-
-				if (!@reports_a[a].nil? && @reports_a[a] == @reports_b[b])
-					flash[:alert] = "Conflict in reports: #{@reports_a[a]}, double record! Merge failed"
-					redirect_to :action => 'merge_list'
-					return
-				end
-			end
-
-			#everything seems to be OK
-			if !@results_a.nil? && !@results_a.empty?
-				@results_a.each do |result|
-					result.walker_id = @walker_b.id
-					if !result.save
-						flash[:alert] = "Result #{result.id} rewrite walker_id failed. Please do it manually\n"
+					if (!@results_b[b].nil? && @results_a[a] == @results_b[b])
+						flash[:alert] = "Conflict in results: #{@results_a[a]}, double record! Merge failed"
+						redirect_to :action => 'merge_list'
+						return
 					end
 				end
-			end
 
-			if !@reports_a.nil? && !@reports_a.empty?
-				@reports_a.each do |report|
-					report.walker_id = @walker_b.id
-					if !result.save
-						flash[:alert] = "Result #{result.id} rewrite walker_id failed. Please do it manually\n"
+				@reports_a = Report.where(:walker_id => @walker_a.id).order(:dc_id)
+				@reports_b = Report.where(:walker_id => @walker_b.id).order(:dc_id)
+
+				# check problems in reports
+				a=0
+				b=0
+				for i in 1..$current_dc_id
+					while(!@reports_a[a].nil? && @reports_a[a].dc_id < i)
+						a += 1
+					end
+					while(!@reports_b[b].nil? && @reports_b[b].dc_id < i)
+						b += 1
+					end
+
+					if (!@reports_a[a].nil? && @reports_a[a] == @reports_b[b])
+						flash[:alert] = "Conflict in reports: #{@reports_a[a]}, double record! Merge failed"
+						redirect_to :action => 'merge_list'
+						return
 					end
 				end
-			end
 
-			if !@walker_a.delete
-				flash[:alert] = "Merged walker #{@walker_b.id} cannot be deleted. Do it manually.\n"
+				#everything seems to be OK
+				if !@results_a.nil? && !@results_a.empty?
+					@results_a.each do |result|
+						result.walker_id = @walker_b.id
+						if !result.save
+							flash[:alert] = "Result #{result.id} rewrite walker_id failed. Please do it manually\n"
+						end
+					end
+				end
+
+				if !@reports_a.nil? && !@reports_a.empty?
+					@reports_a.each do |report|
+						report.walker_id = @walker_b.id
+						if !result.save
+							flash[:alert] = "Result #{result.id} rewrite walker_id failed. Please do it manually\n"
+						end
+					end
+				end
+
+				if !@walker_a.delete
+					flash[:alert] = "Merged walker #{@walker_b.id} cannot be deleted. Do it manually.\n"
+				else
+					flash[:notice] = "Merge successful\n"
+				end
 			else
-				flash[:notice] = "Merge successful\n"
+				flash[:alert] = "Walkers not found"
 			end
+			redirect_to :action => 'merge_list'
 		else
-			flash[:alert] = "Walkers not found"
+			redirect_to :action => 'unauthorized'
 		end
-		redirect_to :action => 'merge_list'
 	end
 
 	def merge_list
-		@walkers = Walker.find(:all, :order => "surname, name")
-		@options = ""
-		@walkers.each do |walker|
-			@options += "<option value=\"#{walker.id}\">#{walker.surname} #{walker.name}, #{walker.year}</option>\n"
+		if walker_signed_in? && current_walker.username == $admin_name
+			@walkers = Walker.find(:all, :order => "surname, name")
+			@options = ""
+			@walkers.each do |walker|
+				@options += "<option value=\"#{walker.id}\">#{walker.surname} #{walker.name}, #{walker.year}</option>\n"
+			end
+		else
+			redirect_to :action => 'unauthorized'
 		end
 	end
 
