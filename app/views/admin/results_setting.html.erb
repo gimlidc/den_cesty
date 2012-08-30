@@ -34,7 +34,7 @@
 		  <td><%= walker.name %></td>
 		  <td><%= walker.surname %></td>
 		  <td><%= walker.year %></td>
-		  <td><%= number_field_tag walker.id, walker.distance, :size => 4 %></td>
+		  <td><%= number_field_tag walker.id, walker.distance, :size => 4, :step => 0.5 %></td>
 		</tr>
 	  <%  end %>
 	  <tr> <!-- last line contains only submit button //-->
