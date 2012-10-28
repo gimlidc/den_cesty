@@ -72,7 +72,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
 
 		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
-			results.item :jar12_16, I18n.t('Spring 2012'), pages_jar12_16_path
+			results.item :pod12_17, I18n.t('Autumn 2012'), pages_pod12_17_path
+      results.item :jar12_16, I18n.t('Spring 2012'), pages_jar12_16_path
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
 		end
 
