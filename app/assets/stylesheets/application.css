@@ -14,6 +14,13 @@
 	overflow:hidden;		/* This chops off any overhanging divs */
 }
 
+.sponsors {
+	width: 50%;
+	color: lightgray;
+	padding: 10px;
+	border: 8px solid lightgray;
+}
+
 main-content {
 	float:right;
 	position:relative;
