@@ -8,7 +8,9 @@ cs:
   year_of_birth: "rok narození"
   register: "založit účet"
   Register: "Založit účet"
-  Sign_up: "Registrace nového chodce"
+  signUp:
+      title: "Registrace nového chodce"
+      help: "Tento krok je nutný pro tvorbu nového účtu na stránkách Dne cesty. Účet je použit pro tvorbu a výpočet statistik v Síni slávy během plynoucích ročníků. Založení účtu v sobě NEZAHRNUJE registraci na konkrétní závod. Na závod se můžete registrovat po přihlášení do vašeho (nového) účtu."
   name: "jméno"
   surname: "příjmení"
   Sign_in: "Příhlásit"
@@ -73,3 +75,14 @@ cs:
   Contacts: "Kontakty"
   Spring 2012: "Jaro 2012"
   Autumn 2012: "Podzim 2012"
+  actual:
+      introduction: "Den cesty je extrémní závod na 24 hodin. Cílem je pěšky (chůzí nebo během), zdolat za jeden den co největší vzdálenost po vyznačené trase. Neběhá se na oválu, ale přírodou, o kopce a bloudění tedy není nouze. Pokud Vás navíc neláká běhání v kruzích, ale chcete se dostat od někud někam ... je DC závod přesně pro Vás."
+      date: "Termín"
+      where: "Start"
+      conditions: "Podmínky"
+      equipment: "Co s sebou"
+      route: "Trasa"
+      registered: "Přihlášení"
+      itinerary: "Předběžný itinerář"
+  commertial:
+    title: "Sponzoři a partneři závodu"
