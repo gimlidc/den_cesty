@@ -18,7 +18,14 @@
 	width: 50%;
 	color: lightgray;
 	padding: 10px;
-	border: 8px solid lightgray;
+	border: 5px groove #ffda80;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+}
+
+.sponsors img {
+	vertical-align: middle;
 }
 
 main-content {
