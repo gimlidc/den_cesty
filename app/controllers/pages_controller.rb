@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   end
 
 	def rules
-		if I18n.locale == "cs"
+		if I18n.locale == :cs
 			render "pravidla.html.erb"
 		else
 			render "rules.html.erb"
@@ -17,7 +17,7 @@ class PagesController < ApplicationController
 	end
 
 	def contacts
-		if I18n.locale == "cs"
+		if I18n.locale == :cs
 			render "kontakty.html.erb"
 		else
 			render "contacts.html.erb"
