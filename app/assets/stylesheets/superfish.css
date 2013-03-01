@@ -12,7 +12,7 @@
 	position:		absolute;
 	margin-left:	-1em;
 	height:			0em;
-	width:			10em; /* left offset of submenus need to match (see below) */
+	width:			10em; /* left offset of submenus need to match (see below) */	
 }
 
 .sf-menu li {
@@ -40,6 +40,7 @@
 	border-top-right-radius: 0px;
 	-moz-border-top-left-radius: 0px;
 	-moz-border-top-right-radius: 0px;
+	z-index: 100;
 }
 
 .sf-menu li:hover {
