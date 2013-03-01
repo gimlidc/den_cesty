@@ -77,9 +77,9 @@ SimpleNavigation::Configuration.run do |navigation|
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
 		end
 
-		top.item :reports, link_to(I18n.t('Reports'), {:controller => "report", :action => "list"})
+		top.item :reports, I18n.t('Reports'), report_list_path
 
-		top.item :contacts, link_to(I18n.t('Contacts'), {:controller => "pages", :action => "contacts"})
+		top.item :contacts, I18n.t('Contacts'), pages_contacts_path
 
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url

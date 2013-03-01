@@ -1,0 +1,21 @@
+<%#
+# @author gimli
+# @version Apr 8, 2012
+%>
+
+<h2>Den cesty:</h2>
+Založení DC. Všechna pole jsou povinná
+
+<%= form_for @dc do |f|%>
+  Jméno česky: <%= f.name_cs %><br />
+  Jméno anglicky: <%= f.name_en %><br />
+  Popis trasy jako HTML (itinerář): <%= f.name_description %><br />
+  Verze pravidel: <%= f.rules_id %><br />
+  Start: <%= f.start_time %><br />
+  Cena (registrace): <%= f.reg_price %><br />
+  Cena mapy BW: <%= f.bw_map_price %><br />
+  Cena barevné mapy: <%= f.colour_map_price %><br />
+  Cena triček: <%= f.shirt_price %><br />
+  Cena vlastních triček: <%= f.own_shirt_price %><br />
+  <%= f.submit I18n.t("Save") %>
+<% end %>

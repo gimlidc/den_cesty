@@ -5,10 +5,13 @@ DenCesty::Application.routes.draw do
 	devise_for :walkers
 
 	resource :registration
+	
+	resource :dc
 
 	match 'report/new' => "report#new", :as => :new_report
 	match 'report/edit' => "report#edit", :as => :edit_report
 	match 'report/show' => "report#show", :as => :show_report
+	match 'report/list' => "report#list", :as => :report_list
 	match 'contacts' => 'pages#contacts', :as => :pages_contacts
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
@@ -21,7 +24,7 @@ DenCesty::Application.routes.draw do
 	match 'admin/print_list', :as => :admin_print_list
 	match 'admin/walker_list', :as => :admin_walker_list
 	match 'admin/results_update', :as => :admin_results_update
-	match 'admin/results_setting(.:id)' => 'admin#results_setting', :as => :admin_results_setting
+	match 'admin/results_setting(.:id)' => 'admin#results_setting', :as => :admin_results_setting	
 	match 'profile' => "walkers#profile", :as => :walker_profile
 	match ':controller(/:action(/:id))'
 	match ':action' => 'static#:action'

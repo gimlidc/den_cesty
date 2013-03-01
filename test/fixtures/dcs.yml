@@ -1,25 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name_cs: MyString
-  name_en: MyString
-  description: 
+  name_cs: Nejkrásnější moravská II
+  name_en: The moravien most buitiful II
+  start_time: 2012-10-27 18:30:00
+  description: Cesta povede lesem zase
   rules_id: 1
-  start_time: 2013-03-01 18:00:38
-  shirt_price: 1
-  own_shirt_price: 1
-  reg_price: 1
-  map_bw_price: 1
-  map_color_price: 1
+  reg_price: 35
+  bw_map_price: 10
+  colour_map_price: 60
+  shirt_price: 300
+  own_shirt_price: 200
 
 two:
-  name_cs: MyString
-  name_en: MyString
-  description: 
+  name_cs: Nejkrásnější moravská I
+  name_en: The moravien most buitiful I
+  start_time: 2012-04-27 09:30:00
+  description: Cesta povede lesem
   rules_id: 1
-  start_time: 2013-03-01 18:00:38
-  shirt_price: 1
-  own_shirt_price: 1
-  reg_price: 1
-  map_bw_price: 1
-  map_color_price: 1
+  reg_price: 30
+  bw_map_price: 5
+  colour_map_price: 50
+  shirt_price: 250
+  own_shirt_price: 150
