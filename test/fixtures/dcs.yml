@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name_cs: MyString
+  name_en: MyString
+  description: 
+  rules_id: 1
+  start_time: 2013-03-01 18:00:38
+  shirt_price: 1
+  own_shirt_price: 1
+  reg_price: 1
+  map_bw_price: 1
+  map_color_price: 1
+
+two:
+  name_cs: MyString
+  name_en: MyString
+  description: 
+  rules_id: 1
+  start_time: 2013-03-01 18:00:38
+  shirt_price: 1
+  own_shirt_price: 1
+  reg_price: 1
+  map_bw_price: 1
+  map_color_price: 1

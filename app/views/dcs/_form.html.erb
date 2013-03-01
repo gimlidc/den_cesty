@@ -1,0 +1,57 @@
+<%= form_for(@dc) do |f| %>
+  <% if @dc.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dc.errors.count, "error") %> prohibited this dc from being saved:</h2>
+
+      <ul>
+      <% @dc.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name_cs %><br />
+    <%= f.text_field :name_cs %>
+  </div>
+  <div class="field">
+    <%= f.label :name_en %><br />
+    <%= f.text_field :name_en %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :rules_id %><br />
+    <%= f.number_field :rules_id %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %><br />
+    <%= f.datetime_select :start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :shirt_price %><br />
+    <%= f.number_field :shirt_price %>
+  </div>
+  <div class="field">
+    <%= f.label :own_shirt_price %><br />
+    <%= f.number_field :own_shirt_price %>
+  </div>
+  <div class="field">
+    <%= f.label :reg_price %><br />
+    <%= f.number_field :reg_price %>
+  </div>
+  <div class="field">
+    <%= f.label :map_bw_price %><br />
+    <%= f.number_field :map_bw_price %>
+  </div>
+  <div class="field">
+    <%= f.label :map_color_price %><br />
+    <%= f.number_field :map_color_price %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

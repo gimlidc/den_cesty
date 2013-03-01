@@ -1,5 +1,7 @@
 DenCesty::Application.routes.draw do
 
+  resources :dcs
+
 	devise_for :walkers
 
 	resource :registration

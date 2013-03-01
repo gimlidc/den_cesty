@@ -1,0 +1,41 @@
+<h1>Listing dcs</h1>
+
+<table>
+  <tr>
+    <th>Name cs</th>
+    <th>Name en</th>
+    <th>Description</th>
+    <th>Rules</th>
+    <th>Start time</th>
+    <th>Shirt price</th>
+    <th>Own shirt price</th>
+    <th>Reg price</th>
+    <th>Map bw price</th>
+    <th>Map color price</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dcs.each do |dc| %>
+  <tr>
+    <td><%= dc.name_cs %></td>
+    <td><%= dc.name_en %></td>
+    <td><%= dc.description %></td>
+    <td><%= dc.rules_id %></td>
+    <td><%= dc.start_time %></td>
+    <td><%= dc.shirt_price %></td>
+    <td><%= dc.own_shirt_price %></td>
+    <td><%= dc.reg_price %></td>
+    <td><%= dc.map_bw_price %></td>
+    <td><%= dc.map_color_price %></td>
+    <td><%= link_to 'Show', dc %></td>
+    <td><%= link_to 'Edit', edit_dc_path(dc) %></td>
+    <td><%= link_to 'Destroy', dc, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dc', new_dc_path %>
