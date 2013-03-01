@@ -87,3 +87,9 @@ cs:
       itinerary: "Předběžný itinerář"
   commertial:
     title: "Sponzoři a partneři závodu"
+  date:
+    order:
+      - :day
+      - :month
+      - :year
+    month_names: [ "leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec" ] 

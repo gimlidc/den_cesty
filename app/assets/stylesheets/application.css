@@ -6,13 +6,22 @@
  *= require_tree .
 */
 
-.main-column {	
+html {
+	margin: 0px;
+	background-color: black;
+}
+
+.main-column {
+	background-color: black;
 	border-width: 0px;
 	padding: 0px;
 	margin: 0px;
 	position:relative;	/* This fixes the IE7 overflow hidden bug */
 	clear:both;
 	width:100%;			/* width of whole page */
+}
+
+.main-content {
 }
 
 .sponsors {
@@ -65,19 +74,19 @@
 	text-align: right;
 }
 
-a {
+.hmenu a, a {
 	color: #956f0e; /*green;*/
 }
 
-a:active {
+.hmenu a:active, a:active {
 	color: #e2a91a; /*limegreen;*/
 }
 
-a:hover {
+.hmenu a:hover, a:hover {
 	color: #e2a91a;/* yellowgreen;*/
 }
 
-a:visited {
+.hmenu a:visited, a:visited {
 	color: #c89000; /*#77aa00;*/
 }
 

@@ -1,5 +1,6 @@
 class DcsController < ApplicationController
   
+  before_filter :authenticate_walker!
   
   # GET /dcs
   # GET /dcs.json
