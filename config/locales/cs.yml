@@ -13,6 +13,7 @@ cs:
       help: "Tento krok je nutný pro tvorbu nového účtu na stránkách Dne cesty. Účet je použit pro tvorbu a výpočet statistik v Síni slávy během plynoucích ročníků. Založení účtu v sobě NEZAHRNUJE registraci na konkrétní závod. Na závod se můžete registrovat po přihlášení do vašeho (nového) účtu."
   name: "jméno"
   surname: "příjmení"
+  Sign_up: "Vytvořit účet"
   Sign_in: "Příhlásit"
   Forgot your password?: "Zapomenuté heslo?"
   Didn't receive confirmation instructions?: "Potvrzovací email nedorazil?"
