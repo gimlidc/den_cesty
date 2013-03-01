@@ -1,6 +1,6 @@
-class DcsController < ApplicationController
+class DcsController < ApplicationController  
   
-  before_filter :authenticate_walker!
+  before_filter :check_admin
   
   # GET /dcs
   # GET /dcs.json
@@ -83,4 +83,5 @@ class DcsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
 end
