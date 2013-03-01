@@ -23,4 +23,9 @@ class PagesController < ApplicationController
 			render "contacts.html.erb"
 		end
 	end
+	
+	def unauthorized
+	  
+	end
+	
 end

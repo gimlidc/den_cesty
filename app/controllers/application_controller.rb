@@ -52,8 +52,8 @@ class ApplicationController < ActionController::Base
       redirect_to :controller => "walkers", :action => "sign_in"
     else
       if current_walker.username != $admin_name
-        flash.notice = "Access only for admin for this page"
-        redirect_to :controller => "admin", :action => "unauthorized"
+        flash.notice = "Sorry you are not ADMINISTRATOR"
+        redirect_to :controller => "pages", :action => "unauthorized"
       end
     end
   end
