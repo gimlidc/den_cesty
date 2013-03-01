@@ -6,17 +6,18 @@
  *= require_tree .
 */
 
-.main-column {
+.main-column {	
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
 	position:relative;	/* This fixes the IE7 overflow hidden bug */
 	clear:both;
-	float:left;
 	width:100%;			/* width of whole page */
-	overflow:hidden;		/* This chops off any overhanging divs */
 }
 
 .sponsors {
 	width: 50%;
-	color: lightgray;
+	color: light-gray;
 	padding: 10px;
 	border: 5px groove #ffda80;
 	-webkit-border-radius: 25px;
@@ -28,19 +29,15 @@
 	vertical-align: middle;
 }
 
-main-content {
-	float:right;
-	position:relative;
-}
-
 .content {
-	float:left;
 	position:relative;
-	overflow:hidden;
+	overflow:hidden;	
 	width: 71%;
+	min-width: 800px;
 	background: white;
 	border-left: 14px groove #ffb700; /*green*/
 	min-height: 15em;
+	z-index: 1;
 }
 
 .main-text {
@@ -49,16 +46,22 @@ main-content {
 }
 
 .nav {
+	display: inline-block;
 	padding-left: 15%;
+	min-width: 800px;
+	width: 71%;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .hmenu {
-	width: 75%;
+	width: 71%;
+	min-width: 800px;
 	color: white;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
 	text-align: right;
 }
 

@@ -30,12 +30,13 @@
 	</script>
   </head>
   <body bgcolor ="black">
-	<div class="hmenu">
-	  <%= render 'devise/menu/login_items' %>
-	</div>
-
-	<div class="nav">
-	  <%=  render_navigation(:expand_all => true) %>
+  	<div class="main-column">
+		<div class="hmenu">
+			<%= render 'devise/menu/login_items' %>
+		</div>
+		<div class="nav">
+			<%= render_navigation(:expand_all => true) %>
+		</div>
 	</div>
 	<div class="main-column">
 	  <div class="main-content">

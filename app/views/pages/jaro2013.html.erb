@@ -1,6 +1,6 @@
-<table>
+<table class="article">
   <tr>
-	<td rowspan="2">
+	<td valign="top">
 	  <h1 color="red"><%= $current_dc_id %>. Den cesty</h1>
 	  <h6 align="center">revoluční</h6>
 	  <%= t 'actual.introduction' %>
@@ -17,7 +17,26 @@
 	</td>
 	<td class="sponsors"><%= render :file => "pages/commertial.html.erb" %></td>
   </tr>
-  <tr><td rowspan="2">
+  <tr>
+  	<td width="40%" valign="top">
+	  <table id="summary">
+		<tbody><tr><th class="title"><%= t 'actual.date' %>:</th><td><%= $dc_date.strftime("%d/%m/%Y v %H:%M") %></td></tr>
+		  <tr><th class="title"><%= t 'actual.where' %>:</th><td>Poděbrady cca 9:30</td></tr>
+		  <tr><th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td></tr>
+		  <tr><th class="title"><%= t 'actual.equipment' %>:</th><td>DC není jako ostatní extrémní ultra-trailové závody a to zejména kvůli časovému limitu (oproti vzdálenostnímu, který je běžnější). Nejde tedy jaksi doběhnout dřív, nejde se těšit na poslední kontrolu (žádná taková totiž není). Chtě nechtě, čeká Vás 24 hodit (a to je zatraceně hodně). Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a></td></tr>
+		  <tr><th class="title"><%= t 'actual.route' %>:</th><td>Zatím trasa není 100% určena, ale můžete se těšit na něco jako toto: <a href="http://mapy.cz/s/5O9Q">(betaverze)</a>. Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td></tr>
+		  <tr><th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>):</th><td>
+			  <% if !@registered_walkers.nil? %>
+				<% @registered_walkers.each do |reg| %>
+				  <%= reg.walker.username %>,
+				<% end %>
+			  <% end %>
+			</td>
+		  </tr>
+		</tbody>
+	  </table>
+	</td>
+  	  <td valign="bottom">
 	  <%= t 'actual.itinerary' %>:
 	  <table>
 		<tr><th>vzdálenost</th><th></th><th>barva</th><th>místo</th><th>celkem (km)</th></tr>
@@ -135,26 +154,5 @@
 
 	  </table>
 	</td>
-  </tr>
-  <tr>
-	<td width="40%" valign="top">
-	  <table id="summary">
-		<tbody><tr><th class="title"><%= t 'actual.date' %>:</th><td><%= $dc_date.strftime("%d/%m/%Y v %H:%M") %></td></tr>
-		  <tr><th class="title"><%= t 'actual.where' %>:</th><td>Poděbrady cca 9:30</td></tr>
-		  <tr><th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td></tr>
-		  <tr><th class="title"><%= t 'actual.equipment' %>:</th><td>DC není jako ostatní extrémní ultra-trailové závody a to zejména kvůli časovému limitu (oproti vzdálenostnímu, který je běžnější). Nejde tedy jaksi doběhnout dřív, nejde se těšit na poslední kontrolu (žádná taková totiž není). Chtě nechtě, čeká Vás 24 hodit (a to je zatraceně hodně). Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a></td></tr>
-		  <tr><th class="title"><%= t 'actual.route' %>:</th><td>Zatím trasa není 100% určena, ale můžete se těšit na něco jako toto: <a href="http://mapy.cz/s/5O9Q">(betaverze)</a>. Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td></tr>
-		  <tr><th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>):</th><td>
-			  <% if !@registered_walkers.nil? %>
-				<% @registered_walkers.each do |reg| %>
-				  <%= reg.walker.username %>,
-				<% end %>
-			  <% end %>
-			</td>
-		  </tr>
-		</tbody>
-	  </table>
-	</td>
-
-  </tr>
+  </tr>  
 </table>
