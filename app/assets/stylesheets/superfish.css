@@ -9,9 +9,7 @@
 }
 
 .sf-menu ul {
-	position:		absolute;
-	margin-left:	-1em;
-	height:			0em;
+	position:		absolute;	
 	width:			10em; /* left offset of submenus need to match (see below) */	
 }
 
@@ -29,6 +27,8 @@
 	padding: 		.3em 1em;
 	text-decoration:none;
 	position:		relative;
+	font-size: 13pt;
+	margin-bottom: -0.2em;
 }
 
 .sf-menu li li {
@@ -61,6 +61,7 @@
 
 /*.sf-menu li:hover ul,*/
 .sf-menu li.sfHover ul {
-	top:			1.88em; /* match top ul list item height */
+	left:			0em;
+	top:			2.3em; /* match top ul list item height */
 	z-index:		99;
 }

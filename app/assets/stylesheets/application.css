@@ -61,6 +61,7 @@ html {
 	width: 71%;
 	margin-left: auto;
 	margin-right: auto;
+	
 }
 
 .hmenu {
@@ -72,6 +73,7 @@ html {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	text-align: right;
+	font-size: 12pt; 
 }
 
 .hmenu a, a {

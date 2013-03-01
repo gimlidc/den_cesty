@@ -13,7 +13,7 @@
 
 div.walker-nav {
 	float:left;
-	position:relative;
+	position:relative;	
 	width:15%;			/* right column content width */
 }
 
@@ -24,16 +24,16 @@ ul.walker-menu {
 
 div.walker-nav ul {
 	list-style-type: none;
+	font-size: 13pt;	
 }
 
 div.walker-nav ul li ul {
 	display: none;
 	visibility: hidden;
 	list-style:		none;
-	position: absolute;
-
-	left: 76%;
-	margin-top: -1.7em;
+	position: absolute;	
+	left: 84%;
+	margin-top: -1.48em;
 }
 
 div.walker-nav ul li {
@@ -47,7 +47,7 @@ div.walker-nav ul li {
 	border-right:  1px solid black;
 	text-decoration:none;
 	color:			#b4850f /*white*/;
-	padding: .3em .3em;
+	padding: .3em .3em;	
 }
 
 div.walker-nav ul ul li {
@@ -57,7 +57,7 @@ div.walker-nav ul ul li {
 	-moz-border-bottom-left-radius: 0px;
 	text-align:		center;
 	border:			2px ridge #b4850f /*77aa00*/;
-	width: 7.3em;
+	width: 7.3em;	
 }
 
 div.walker-nav ul li:hover {

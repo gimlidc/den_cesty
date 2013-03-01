@@ -6,7 +6,7 @@
 .sf-vertical li:hover ul,
 .sf-vertical li.sfHover ul {
 	left:	10em; /* match ul width */
-	top:	0;
+	top:	0;	
 }
 
 /*** alter arrow directions ***/
