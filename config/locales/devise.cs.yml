@@ -10,7 +10,7 @@
 
 cs:
   errors:
-    messages:
+    messages:      
       not_found: "nenalezen"
       already_confirmed: "byl již potvrzen, prosím, zkuste se přihlásit"
       not_locked: "nebyl uzamčen"
@@ -61,3 +61,27 @@ cs:
         subject: 'Instrukce k nastavení nového hesla'
       unlock_instructions:
         subject: 'Instrukce k odemknutí účtu'
+  activerecord:
+    attributes:
+      walker:
+        password: "Heslo"
+        username: "Přezdívka"
+        surname: "Příjmení"
+        name: "Jméno"
+        year: "Rok"
+    errors:
+      models:
+        walker:
+          attributes:
+            password:
+              too_short: "je příliš krátké (minimum jsou 2 znaky)"
+            username:
+              blank: " nemůže být prázdná. Použij alespoň svoje jméno."
+              taken: " je již obsazena."
+            surname:
+              blank: " nemůže být prázdné. Slouží pro výsledkové listiny."
+            year:
+              blank: " narození nemůže být prázdný. Určuje kategorii pro hodnocení."
+              invalid: " musí být ve formátu YYYY."
+            name:
+              blank: " nemůže být prázdné. Slouží pro výsledkové listiny."
