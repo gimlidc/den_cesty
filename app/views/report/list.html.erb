@@ -7,7 +7,7 @@
   <table>
 	<tr>
 	  <td><b>autor:</b>
-	  	<%= collection_select(:walker, @author, @walkers, :id, :username, :include_blank => true) %>
+	  	<%= collection_select(:walker, @author, @walkers, :id, :username, {:include_blank => true}, {:id => "walker", :name => "walker"}) %>
 	  </td>
 	  <td><b>rok:</b><%= select_tag("id", @dc_select.html_safe, :include_blank => true) %></td>
 	  <td><%= submit_tag "vyhledat" %></td>
