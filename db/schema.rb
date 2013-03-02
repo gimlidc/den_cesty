@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406123136) do
+ActiveRecord::Schema.define(:version => 20130301170038) do
+
+  create_table "dcs", :force => true do |t|
+    t.string   "name_cs"
+    t.string   "name_en"
+    t.text     "description"
+    t.integer  "rules_id"
+    t.datetime "start_time"
+    t.integer  "shirt_price"
+    t.integer  "own_shirt_price"
+    t.integer  "reg_price"
+    t.integer  "map_bw_price"
+    t.integer  "map_color_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "posts", :force => true do |t|
     t.datetime "created_at"

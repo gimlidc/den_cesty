@@ -1,25 +1,36 @@
 class ReportController < ApplicationController
 
+  skip_before_filter :check_admin?
+  skip_before_filter :check_logged_in?, :only => [:list] 
+  
 	def list
+	  # 
 		@dc_id = (params[:id].nil? || params[:id] == "") ? nil : params[:id]
-		@author = (params[:author].nil? || params[:author] == "") ? nil : Walker.find(:all, :conditions => { :id => params[:author] })[0]
+		@author = (params[:walker].nil? || params[:walker] == "") ? nil :  Walker.where(:id => params[:walker]).first
 
+    # user does not select nothing
 		if (@dc_id == nil && @author == nil)
 			@reports = Report.joins(:walker).find(:all)
-			@walkers = Report.joins(:walker).select("username, walker_id").uniq
+			publishers = Report.select("walker_id")
+			@walkers = Walker.where(:id => publishers).select(["username", "id"])
 		else
+		  # user selects Den Cesty
 			if (@author == nil)
 				@dc_id = params[:id]
 				@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id})
-				@walkers = Report.joins(:walker).where(:dc_id => @dc_id).select("username, walker_id").uniq
+				publishers = Report.where(:dc_id => @dc_id).select("walker_id")
+        @walkers = Walker.where(:id => publishers).select(["username", "id"])
+			# user selects Author
 			else
+			  # Den Cesty is also defined
 				if (@dc_id == nil)
-					@reports = Report.joins(:walker).find(:all, :conditions => {:walker_id => params[:author]})
-					@walkers = Report.joins(:walker).select("username, walker_id").uniq
+					@reports = Report.joins(:walker).find(:all, :conditions => {:walker_id => params[:walker]})
+					@walkers = Walker.where(:id => @author).select(["username", "id"])
+				# wtf?
 				else
 					@dc_id = params[:id]
-					@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id, :walker_id => params[:author]})
-					@walkers = Report.joins(:walker).where(:dc_id => @dc_id).select("username, walker_id").uniq
+					@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id, :walker_id => params[:walker]})
+					@walkers = Walker.where(:id => @author).select(["username", "id"])
 				end
 			end
 		end
@@ -38,15 +49,18 @@ class ReportController < ApplicationController
 	def new
 		if !report_accessible?
 			redirect_to :action => :list
+			return
 		end
 
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
+			return
 		end
 
 		if has_report?
 			flash[:notice] = "Report already exist, redirected to editing report."
 			redirect_to :action => :edit
+			return
 		end
 
 		@report = Report.new
@@ -55,15 +69,18 @@ class ReportController < ApplicationController
 	def edit
 		if !report_accessible?
 			redirect_to :action => :list
+			return
 		end
 
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
+			return
 		end
 
 		if !has_report?
 			flash[:notice] = "No report found, redirected to new report."
 			redirect_to :action => :new
+			return
 		end
 
 		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
@@ -80,6 +97,7 @@ class ReportController < ApplicationController
 	def save
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
+			return
 		end
 
 		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})

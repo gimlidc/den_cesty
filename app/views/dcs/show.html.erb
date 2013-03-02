@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name cs:</b>
+  <%= @dc.name_cs %>
+</p>
+
+<p>
+  <b>Name en:</b>
+  <%= @dc.name_en %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @dc.description %>
+</p>
+
+<p>
+  <b>Rules:</b>
+  <%= @dc.rules_id %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%= @dc.start_time %>
+</p>
+
+<p>
+  <b>Shirt price:</b>
+  <%= @dc.shirt_price %>
+</p>
+
+<p>
+  <b>Own shirt price:</b>
+  <%= @dc.own_shirt_price %>
+</p>
+
+<p>
+  <b>Reg price:</b>
+  <%= @dc.reg_price %>
+</p>
+
+<p>
+  <b>Map bw price:</b>
+  <%= @dc.map_bw_price %>
+</p>
+
+<p>
+  <b>Map color price:</b>
+  <%= @dc.map_color_price %>
+</p>
+
+
+<%= link_to 'Edit', edit_dc_path(@dc) %> |
+<%= link_to 'Back', dcs_path %>

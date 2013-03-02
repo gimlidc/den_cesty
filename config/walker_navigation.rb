@@ -56,6 +56,7 @@ SimpleNavigation::Configuration.run do |navigation|
 				manages.item :registrations, I18n.t('Registrations'), registration_path
 				manages.item :result_setting, I18n.t('Results setting'), admin_results_setting_path
 				manages.item :result_setting, I18n.t('Presentation list'), admin_print_list_path
+				manages.item :dcs, "Přehled DC", dcs_path 
 			end
 		end
 

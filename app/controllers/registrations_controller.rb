@@ -1,5 +1,7 @@
 class RegistrationsController < ApplicationController
 
+  skip_before_filter :check_admin?, :except => [:unregister]
+
 	def new
 		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
 		if !@reg.nil? && !@reg.empty?
@@ -92,25 +94,19 @@ class RegistrationsController < ApplicationController
 		redirect_to :controller => 'pages', :action => 'actual'
 	end
 
-	def unregister
-		if walker_signed_in? && current_walker.username == $admin_name
-
-			@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
-			@walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})
-			if !@reg.nil?
-				@reg.canceled = true
-				if @reg.save
-					flash.notice = "Registration of " << @walker.username.to_s << " was cancelled."
-				else
-					flash.notice = "Delete failed."
-				end
-			else
-				flash.notice = "Registration not found."
-			end
-		else
-			flash.notice = "Operation unauthorized"
-			redirect_to :action => 'edit'
-		end
+	def unregister		
+		@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
+    @walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})
+    if !@reg.nil?
+      @reg.canceled = true
+      if @reg.save
+        flash.notice = "Registration of " << @walker.username.to_s << " was cancelled."
+      else
+        flash.notice = "Delete failed."
+      end
+    else
+      flash.notice = "Registration not found."
+    end		
 
 		redirect_to :action => 'show'
 

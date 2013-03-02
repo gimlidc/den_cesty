@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
 
 	def add_report
-		if walker_signed_in? && current_walker.username == $admin_name
 			@walkers = Walker.all
 
 			@dc_select = ""
@@ -17,13 +16,9 @@ class AdminController < ApplicationController
 			@walkers.each do |walker|
 				@walker_select+="<option value=#{walker.id}>#{walker.name} #{walker.surname} (#{walker.year})</option>\n"
 			end
-		else
-			redirect_to :action => 'unauthorized'
-		end
 	end
 
 	def save_report
-		if walker_signed_in? && current_walker.username == $admin_name
 			@report = Report.find(:first, :conditions => { :walker_id => params[:walker_id], :dc_id => params[:dc_id]})
 			@walker = Walker.find(:first, :conditions => { :id => params[:walker_id]})
 
@@ -49,13 +44,9 @@ class AdminController < ApplicationController
 			end
 
 			redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
-		else
-			redirect_to :action => 'unauthorized'
-		end
 	end
 
-	def merge
-		if walker_signed_in? && current_walker.username == $admin_name
+	def merge		
 			@walker_a = Walker.find(:first, :conditions => { :id => params[:walkerA]})
 			@walker_b = Walker.find(:first, :conditions => { :id => params[:walkerB]})
 			if !@walker_a.nil? && !@walker_b.nil?
@@ -128,32 +119,23 @@ class AdminController < ApplicationController
 			else
 				flash[:alert] = "Walkers not found"
 			end
-			redirect_to :action => 'merge_list'
-		else
-			redirect_to :action => 'unauthorized'
-		end
+			redirect_to :action => 'merge_list'		
 	end
 
 	def merge_list
-		if walker_signed_in? && current_walker.username == $admin_name
 			@walkers = Walker.find(:all, :order => "surname, name")
 			@options = ""
 			@walkers.each do |walker|
 				@options += "<option value=\"#{walker.id}\">#{walker.surname} #{walker.name}, #{walker.year}</option>\n"
-			end
-		else
-			redirect_to :action => 'unauthorized'
-		end
+			end		
 	end
 
 	def print_list
-		if (walker_signed_in? && current_walker.username == $admin_name)
-			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $current_dc_id).order(:surname)
-		end
+		@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $current_dc_id).order(:surname)
+		
 	end
 
 	def results_update
-		if walker_signed_in? && current_walker.username == $admin_name
 			dc_id = Integer("#{params[:dc_id]}")
 			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id) AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id")
 			@results = Result.where(:dc_id => dc_id).order(:walker_id)
@@ -182,22 +164,17 @@ class AdminController < ApplicationController
 				end
 			end
 			redirect_to :action => "results_setting", :id => dc_id
-		else
-			redirect_to :action => 'unauthorized'
-		end
+		
 	end
 
 	def results_setting
-		if walker_signed_in? && current_walker.username == $admin_name
 			if params[:id].nil?
 				@set_dc = $current_dc_id
 			else
 				@set_dc = Integer("#{params[:id]}")
 			end
 			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc}) AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id")
-		else
-			rediredct_to :action => 'unauthorized'
-		end
+		
 	end
 
 	def results_list
@@ -205,7 +182,6 @@ class AdminController < ApplicationController
 	end
 
 	def walker_create
-		if walker_signed_in? && current_walker.username == $admin_name
 			@walkers = Walker.find(:all, :conditions => {:name => params[:walker][:name], :surname => params[:walker][:surname]})
 			if @walkers.empty?
 				walker = Walker.new(params[:walker])
@@ -219,21 +195,15 @@ class AdminController < ApplicationController
 			else
 				flash[:alert] = "Walker with the same name exist!"
 			end
-		end
 		redirect_to :action => 'walker_list'
 	end
 
-	def walker_list
-		if walker_signed_in? && current_walker.username == $admin_name
+	def walker_list		
 			@walkers = Walker.find(:all, :order => "surname, name")
-			@new_walker = Walker.new
-		else
-			redirect_to :action => 'unauthorized'
-		end
+			@new_walker = Walker.new		
 	end
 
 	def walker_update
-		if walker_signed_in? && current_walker.username == $admin_name
 			walker = Walker.find(params[:walker][:id])
 
 			if walker.nil?
@@ -259,14 +229,10 @@ class AdminController < ApplicationController
 			walker_list
 
 			render :action => 'walker_list'
-
-		else
-			redirect_to :action => 'unauthorized'
-		end
 	end
 
 	def walker_destroy
-		if walker_signed_in? && current_walker.username == $admin_name
+		
 			@walker = Walker.find(params[:id])
 			if !@walker.nil? && @walker.destroy
 				@notice = "Destroy successful"
@@ -274,11 +240,7 @@ class AdminController < ApplicationController
 				@notice = "Walker not destroyed."
 			end
 
-			redirect_to :action => 'walker_list'
-
-		else
-			redirect_to :action => 'unauthorized'
-		end
+			redirect_to :action => 'walker_list'		
 	end
 
 	def unauthorized
