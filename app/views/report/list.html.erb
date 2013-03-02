@@ -6,7 +6,9 @@
 <%= form_tag('/report/list') do -%>
   <table>
 	<tr>
-	  <td><b>autor:</b><%= select_tag("author", options_from_collection_for_select(@walkers, "walker_id", "username"), :include_blank => true) %></td>
+	  <td><b>autor:</b>
+	  	<%= collection_select(:walker, @author, @walkers, :id, :username, :include_blank => true) %>
+	  </td>
 	  <td><b>rok:</b><%= select_tag("id", @dc_select.html_safe, :include_blank => true) %></td>
 	  <td><%= submit_tag "vyhledat" %></td>
 	</tr>
@@ -18,7 +20,7 @@
 <% else %>
   <% if !@dc_id.nil? %>
 	<h2>Reporty z <%= @dc_id %>. dne cesty</h2>
-  <% else # !@author.nil? %>
+  <% else %>
 	<h2>Reporty od <%= @author.username %></h2>
   <% end %>
 <% end %>

@@ -8,8 +8,15 @@
 
 html {
 	margin: 0px;
-	background-color: black;
+	background-color: black;	
 }
+
+body {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; 
+}
+
 
 .main-column {
 	background-color: black;

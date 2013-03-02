@@ -62,6 +62,6 @@
 /*.sf-menu li:hover ul,*/
 .sf-menu li.sfHover ul {
 	left:			0em;
-	top:			2.3em; /* match top ul list item height */
+	top:			1.8em; /* match top ul list item height */
 	z-index:		99;
 }
