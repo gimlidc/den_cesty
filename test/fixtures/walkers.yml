@@ -28,3 +28,12 @@ henry:
   surname: Wild
   year: 1854
   username: lord henry
+  encrypted_password: <%= BCrypt::Password.create('heslíčko') %>
+  
+gimli:
+  email: gimliho@email.cz
+  name: Gimli
+  surname: Syn Glóinův
+  year: 1024
+  username: gimli
+  encrypted_password: <%= BCrypt::Password.create('heslo') %>

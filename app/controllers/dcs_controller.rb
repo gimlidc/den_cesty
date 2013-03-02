@@ -1,6 +1,4 @@
-class DcsController < ApplicationController  
-  
-  before_filter :check_admin
+class DcsController < ApplicationController    
   
   # GET /dcs
   # GET /dcs.json

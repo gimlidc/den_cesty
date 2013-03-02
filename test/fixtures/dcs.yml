@@ -7,8 +7,8 @@ one:
   description: Cesta povede lesem zase
   rules_id: 1
   reg_price: 35
-  bw_map_price: 10
-  colour_map_price: 60
+  map_bw_price: 10
+  map_color_price: 60
   shirt_price: 300
   own_shirt_price: 200
 
@@ -19,7 +19,7 @@ two:
   description: Cesta povede lesem
   rules_id: 1
   reg_price: 30
-  bw_map_price: 5
-  colour_map_price: 50
+  map_bw_price: 5
+  map_color_price: 50
   shirt_price: 250
   own_shirt_price: 150

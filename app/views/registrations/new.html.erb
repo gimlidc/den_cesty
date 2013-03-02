@@ -1,11 +1,17 @@
 <h2>Přihlášení k účasti na <%= $current_dc_id %>. Dni cesty </h2>
 <% if $registration_starts %>
-<p>Obě verze mapy se před startem objeví na stránkách ke stažení. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Vyčkáte-li budete mít možnost si mapu vytisknout sami.</p>
-<p>Návrh trika můžete vidět na <%= link_to "titulní straně", root_path %>. Jedná se o negativ (trička budou černá s šedým potiskem (jako obvykle). Pokud máte svoje vlastní triko, které si chcete nechat potisknout, tak i to je možné. V nabídce zaškrtněte možnost <i>OWN</i> a vyčkejte na doručení mailu s instrukcemi.</p>
-<p class="red">Přihlášením souhlasíte s <%= link_to "pravidly", pages_rules_path %> závodu.</p>
+<p>
+	Obě verze mapy se před startem objeví na stránkách ke stažení. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Vyčkáte-li budete mít možnost si mapu vytisknout sami.
+</p>
+<p>
+	Návrh trika je zatím ve vývoji. Pokud jste zvědavi na návrh dříve než si jej objednáte (což naprosto chápu) registrujte se a až bude návrh hotov ozveme se. Pokud chcete potisknout svoje vlastní triko, tak i to je možné. V nabídce zaškrtněte možnost <i>OWN</i> a vyčkejte na doručení mailu s instrukcemi. Upozorňujeme, že trika musí být nová nesepraná (jinak kvalitu potisku nelze zaručit).
+</p>
+<p class="red">
+	Přihlášením souhlasíte s <%= link_to "pravidly", pages_rules_path %> závodu.
+</p>
 <%= render 'form' %>
 <% else %>
 <p>
-  Registrace ještě nezačala, upozornění přijde Ti emailem.
+	Registrace ještě nezačala, upozornění přijde Ti emailem.
 </p>
 <% end %>

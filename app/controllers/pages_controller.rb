@@ -1,4 +1,8 @@
 class PagesController < ApplicationController
+
+  skip_before_filter :check_admin?
+  skip_before_filter :check_logged_in?
+
   def actual
 		@registered_walkers = Registration.where(:dc_id => $current_dc_id, :canceled => false).joins(:walker).order(:username)
 		render "jaro2013.html.erb"

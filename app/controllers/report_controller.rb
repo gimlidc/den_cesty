@@ -1,5 +1,8 @@
 class ReportController < ApplicationController
 
+  skip_before_filter :check_admin?
+  skip_before_filter :check_logged_in?, :only => [:list] 
+  
 	def list
 	  # 
 		@dc_id = (params[:id].nil? || params[:id] == "") ? nil : params[:id]
@@ -44,15 +47,18 @@ class ReportController < ApplicationController
 	def new
 		if !report_accessible?
 			redirect_to :action => :list
+			return
 		end
 
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
+			return
 		end
 
 		if has_report?
 			flash[:notice] = "Report already exist, redirected to editing report."
 			redirect_to :action => :edit
+			return
 		end
 
 		@report = Report.new
@@ -61,15 +67,18 @@ class ReportController < ApplicationController
 	def edit
 		if !report_accessible?
 			redirect_to :action => :list
+			return
 		end
 
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
+			return
 		end
 
 		if !has_report?
 			flash[:notice] = "No report found, redirected to new report."
 			redirect_to :action => :new
+			return
 		end
 
 		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
@@ -86,6 +95,7 @@ class ReportController < ApplicationController
 	def save
 		if !walker_signed_in?
 			redirect_to :action => :unauthorized
+			return
 		end
 
 		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})

@@ -2,6 +2,8 @@
 # @version Mar 11, 2012
 class WalkersController < Devise::RegistrationsController
 
+  skip_before_filter :check_admin?
+  skip_before_filter :check_logged_in?
 	prepend_before_filter :require_no_authentication, :only => [ :new, :create, :cancel ]
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy]
 
@@ -29,15 +31,7 @@ class WalkersController < Devise::RegistrationsController
       clean_up_passwords resource
       respond_with resource
     end
-  end
-
-  # GET /resource/edit
-  def edit
-    render :edit
-  end
-
-	def show
-  end
+  end  
 
   # PUT /resource
   # We need to use a copy of the resource because we don't want to change
