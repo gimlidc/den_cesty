@@ -54,6 +54,12 @@ module DenCesty
       Devise::SessionsController.skip_before_filter :check_logged_in?
       Devise::RegistrationsController.skip_before_filter :check_admin?
       Devise::RegistrationsController.skip_before_filter :check_logged_in?
+      Devise::ConfirmationsController.skip_before_filter :check_admin?
+      Devise::ConfirmationsController.skip_before_filter :check_logged_in?
+      Devise::PasswordsController.skip_before_filter :check_admin?
+      Devise::PasswordsController.skip_before_filter :check_logged_in?
+      Devise::OmniauthCallbacksController.skip_before_filter :check_admin?
+      Devise::OmniauthCallbacksController.skip_before_filter :check_logged_in?
     end
 				
   end  
