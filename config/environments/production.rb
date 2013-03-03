@@ -59,4 +59,7 @@ DenCesty::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Configure timezone
+  config.time_zone = "Prague"
 end

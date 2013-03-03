@@ -52,6 +52,8 @@ module DenCesty
 		config.to_prepare do
       Devise::SessionsController.skip_before_filter :check_admin?
       Devise::SessionsController.skip_before_filter :check_logged_in?
+      Devise::RegistrationsController.skip_before_filter :check_admin?
+      Devise::RegistrationsController.skip_before_filter :check_logged_in?
     end
 				
   end  
