@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   $registration_deadline = Time.local(2013, 4, 23, 23, 59, 00, 00)
   $registration_starts = true
   $report_deadline = Time.local(2013, 5, 14, 00, 00, 00, 00)
+  $race_limit = 100
 
   $admin_name = "gimli"
   $sex_options = [["male", I18n.t('male')], ["female", I18n.t('female')]]

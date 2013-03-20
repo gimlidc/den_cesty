@@ -1,4 +1,7 @@
 <h2><%= I18n.t('edit registration', :user => @walker.username, :dc_id => $current_dc_id) %></h2>
 <br />
-
-<%= render  'form' %>
+<% if !isLimit %>
+	<%= render  'form' %>
+<% else%>
+	<%= render 'fullRaceNotification' %>
+<% end%>

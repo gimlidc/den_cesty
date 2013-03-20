@@ -39,5 +39,9 @@ module RegistrationsHelper
 			return true
 		end
 	end
+	
+	def isLimit
+    Registration.find(:all, :conditions => {:dc_id => $current_dc_id, :canceled => false}).count > $race_limit
+  end
 
 end

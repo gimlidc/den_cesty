@@ -1,158 +1,114 @@
-<table class="article">
-  <tr>
-	<td valign="top">
-	  <h1 color="red"><%= $current_dc_id %>. Den cesty</h1>
-	  <h6 align="center">revoluční</h6>
-	  <%= t 'actual.introduction' %>
-	  <br />
-	  <%
-	  remains = $registration_deadline - Time.now
-	  if  remains < 60 * 60 * 24 * 7 && remains > 0
-	  %>
-		<h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
-	  <% else if remains < 0 %>
-		  <h4>Registrace byla ukončena</h4>
-		<% end %>
-	  <% end %>
-	</td>
-	<td class="sponsors"><%= render :file => "pages/commertial.html.erb" %></td>
-  </tr>
-  <tr>
-  	<td width="40%" valign="top">
-	  <table id="summary">
-		<tbody><tr><th class="title"><%= t 'actual.date' %>:</th><td><%= $dc_date.strftime("%d/%m/%Y v %H:%M") %></td></tr>
-		  <tr><th class="title"><%= t 'actual.where' %>:</th><td>Poděbrady cca 9:30</td></tr>
-		  <tr><th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td></tr>
-		  <tr><th class="title"><%= t 'actual.equipment' %>:</th><td>DC není jako ostatní extrémní ultra-trailové závody a to zejména kvůli časovému limitu (oproti vzdálenostnímu, který je běžnější). Nejde tedy jaksi doběhnout dřív, nejde se těšit na poslední kontrolu (žádná taková totiž není). Chtě nechtě, čeká Vás 24 hodit (a to je zatraceně hodně). Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a></td></tr>
-		  <tr><th class="title"><%= t 'actual.route' %>:</th><td>Zatím trasa není 100% určena, ale můžete se těšit na něco jako toto: <a href="http://mapy.cz/s/5O9Q">(betaverze)</a>. Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td></tr>
-		  <tr><th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>):</th><td>
-			  <% if !@registered_walkers.nil? %>
-				<% @registered_walkers.each do |reg| %>
-				  <%= reg.walker.username %>,
-				<% end %>
-			  <% end %>
-			</td>
-		  </tr>
-		</tbody>
-	  </table>
-	</td>
-  	  <td valign="bottom">
-	  <%= t 'actual.itinerary' %>:
-	  <table>
-		<tr><th>vzdálenost</th><th></th><th>barva</th><th>místo</th><th>celkem (km)</th></tr>
-		<tr><td></td><td></td><td></td><td>Poděbrady, okres Nymburk</td><td>START</td></tr>
-		<tr><td align="right">446</td><td>m</td><td>bez značení</td><td> rovně po pěší zóně nám. T. G. Masaryka</td><td>0.446</td></tr>
-		<tr><td align="right">312</td><td>m</td><td>bez značení</td><td> rovně po zpevněné cestě Divadelní</td><td>0.758</td></tr>
-		<tr class="bold"><td align="right">8.4</td><td>km</td><td>červená</td><td>po červené  na rozcestník Nymburk - nám.</td><td>9.158</td></tr>
-		<tr><td align="right">71</td><td>m</td><td>červená</td><td>na rozcestník  Poděbrady</td><td>0.829</td></tr>
-		<tr><td align="right">7.9</td><td>km</td><td>červená</td><td>na rozcestník  Nymburk - U jezu</td><td>8.729</td></tr>
-		<tr><td align="right">509</td><td>m</td><td>červená</td><td>na rozcestník  Nymburk - nám.</td><td>9.238</td></tr>
-		<tr><td align="right">719</td><td>m</td><td>modrá</td><td> vpravo po modré </td><td>9.957</td></tr>
-		<tr><td align="right">529</td><td>m</td><td>bez značení</td><td> vlevo po ulici V Kolonii</td><td>10.486</td></tr>
-		<tr><td align="right">5.4</td><td>km</td><td>bez značení</td><td> rovně po silnici III. třídy 3323</td><td>15.886</td></tr>
-		<tr><td align="right">2.3</td><td>km</td><td>bez značení</td><td> rovně po silnici III. třídy 3323</td><td>18.186</td></tr>
-		<tr><td align="right">382</td><td>m</td><td>bez značení</td><td> vpravo po silnici II. třídy 332</td><td>18.568</td></tr>
-		<tr><td align="right">2.5</td><td>km</td><td>bez značení</td><td> vlevo po silnici III. třídy 3325</td><td>21.068</td></tr>
-		<tr class="bold"><td align="right">6.8</td><td>km</td><td>červená</td><td>po červené </td><td>27.868</td></tr>
-		<tr><td align="right">465</td><td>m</td><td>červená</td><td>na rozcestník  Všejany - žst.</td><td>21.533</td></tr>
-		<tr><td align="right">3.5</td><td>km</td><td>červená</td><td>na rozcestník  Jívák - rybník</td><td>25.033</td></tr>
-		<tr><td align="right">2.7</td><td>km</td><td>červená</td><td>na rozcestník  Loučeň - bus</td><td>27.733</td></tr>
-		<tr><td align="right">194</td><td>m</td><td>červená</td><td> rovně</td><td>27.927</td></tr>
-		<tr><td align="right">69</td><td>m</td><td>bez značení</td><td> vpravo po silnici III. třídy 27518</td><td>27.996</td></tr>
-		<tr><td align="right">69</td><td>m</td><td>bez značení</td><td> zpět po silnici III. třídy 27518</td><td>28.065</td></tr>
-		<tr class="bold"><td align="right">1.3</td><td>km</td><td>červená</td><td>po červené </td><td>29.365</td></tr>
-		<tr><td align="right">1.3</td><td>km</td><td>červená</td><td>na rozcestník  Loučeňská myslivna</td><td>29.365</td></tr>
-		<tr><td align="right">44</td><td>m</td><td>červená</td><td> vpravo</td><td>29.409</td></tr>
-		<tr class="bold"><td align="right">21</td><td>km</td><td>červená</td><td>po červené  na rozcestník Mladá Boleslav - Komenského nám.</td><td>50.409</td></tr>
-		<tr><td align="right">767</td><td>m</td><td>červená</td><td>na rozcestník  Dobrá Voda - studánka</td><td>30.176</td></tr>
-		<tr><td align="right">1.3</td><td>km</td><td>červená</td><td>na rozcestník  Pod Květníkem</td><td>31.476</td></tr>
-		<tr><td align="right">1.4</td><td>km</td><td>červená</td><td>na rozcestník  Jabkenice - muzeum</td><td>32.876</td></tr>
-		<tr><td align="right">616</td><td>m</td><td>červená</td><td>na rozcestník  Jabkenice - bus</td><td>33.492</td></tr>
-		<tr><td align="right">2.8</td><td>km</td><td>červená</td><td>na rozcestník  Pěčice</td><td>36.292</td></tr>
-		<tr><td align="right">4.9</td><td>km</td><td>červená</td><td>na rozcestník  Dobrovice</td><td>41.192</td></tr>
-		<tr><td align="right">3.4</td><td>km</td><td>červená</td><td>na rozcestník  Chloumek</td><td>44.592</td></tr>
-		<tr><td align="right">2.6</td><td>km</td><td>červená</td><td>na rozcestník  Pod Chlumem</td><td>47.192</td></tr>
-		<tr><td align="right">2.1</td><td>km</td><td>červená</td><td>na rozcestník  Štěpánka</td><td>49.292</td></tr>
-		<tr><td align="right">1.5</td><td>km</td><td>červená</td><td>na rozcestník  Mladá Boleslav - Komenského nám.</td><td>50.792</td></tr>
-		<tr><td align="right">2.4</td><td>km</td><td>modrá</td><td>po modré  na rozcestník  Radouč - zahrádky</td><td>53.192</td></tr>
-		<tr><td align="right">995</td><td>m</td><td>žlutá</td><td>po žluté  na rozcestník Michalovice</td><td>54.187</td></tr>
-		<tr class="bold"><td align="right">3.3</td><td>km</td><td>červená</td><td>po červené  na rozcestník Zadní důl</td><td>57.487</td></tr>
-		<tr><td align="right">1.3</td><td>km</td><td>červená</td><td>na rozcestník  Debř</td><td>55.487</td></tr>
-		<tr><td align="right">2</td><td>km</td><td>červená</td><td>na rozcestník  Zadní důl</td><td>57.487</td></tr>
-		<tr class="bold"><td align="right">17</td><td>km</td><td>modrá</td><td>po modré  na rozcestník Bezděz-obec</td><td>74.487</td></tr>
-		<tr><td align="right">2</td><td>km</td><td>modrá</td><td>na rozcestník  Myslivna Důl</td><td>59.487</td></tr>
-		<tr><td align="right">3.7</td><td>km</td><td>modrá</td><td>na rozcestník  Plužná</td><td>63.187</td></tr>
-		<tr><td align="right">2.8</td><td>km</td><td>modrá</td><td>na rozcestník  Březinka - U Vodojemu</td><td>65.987</td></tr>
-		<tr><td align="right">2.6</td><td>km</td><td>modrá</td><td>na rozcestník  U Maršů</td><td>68.587</td></tr>
-		<tr><td align="right">1.1</td><td>km</td><td>modrá</td><td>na rozcestník  Valdštejnsko</td><td>69.687</td></tr>
-		<tr><td align="right">278</td><td>m</td><td>modrá</td><td>na rozcestník  Valdštejnsko</td><td>69.965</td></tr>
-		<tr><td align="right">2.9</td><td>km</td><td>modrá</td><td>na rozcestník  Bezděz - žst., odb.</td><td>72.865</td></tr>
-		<tr><td align="right">2</td><td>km</td><td>modrá</td><td>na rozcestník  Bezděz-obec</td><td>74.865</td></tr>
-		<tr class="bold"><td align="right">7</td><td>m</td><td>červená</td><td>po červené </td><td>74.872</td></tr>
-		<tr><td align="right">7</td><td>m</td><td>červená</td><td> vpravo</td><td>74.872</td></tr>
-		<tr class="bold"><td align="right">5.6</td><td>km</td><td>červená</td><td>po červené  na rozcestník Doksy - tur. ubytovna</td><td>80.472</td></tr>
-		<tr><td align="right">232</td><td>m</td><td>červená</td><td>na rozcestník  Bezděz - pod hradem</td><td>75.104</td></tr>
-		<tr><td align="right">744</td><td>m</td><td>červená</td><td>na rozcestník  Malý Bezděz - háj.</td><td>75.848</td></tr>
-		<tr><td align="right">4.7</td><td>km</td><td>červená</td><td>na rozcestník  Doksy - tur. ubytovna</td><td>80.548</td></tr>
-		<tr class="bold"><td align="right">3</td><td>km</td><td>žlutá</td><td>po žluté </td><td>83.548</td></tr>
-		<tr><td align="right">1.6</td><td>km</td><td>žlutá</td><td>na rozcestník  Králův stolec - odb.</td><td>82.148</td></tr>
-		<tr><td align="right">1.4</td><td>km</td><td>žlutá</td><td> mírně vlevo</td><td>83.548</td></tr>
-		<tr class="bold"><td align="right">5</td><td>m</td><td>žlutá</td><td>po žluté  na rozcestník  Břehyně - rybník</td><td>83.553</td></tr>
-		<tr><td align="right">5</td><td>m</td><td>žlutá</td><td>na rozcestník  Břehyně - rybník</td><td>83.553</td></tr>
-		<tr><td align="right">3.7</td><td>km</td><td>zelený pruh</td><td>po naučné stezce  na rozcestník Pod Borným</td><td>87.253</td></tr>
-		<tr><td align="right">1.6</td><td>km</td><td>žlutá</td><td>po žluté  na rozcestník  U parkoviště</td><td>88.853</td></tr>
-		<tr><td align="right">280</td><td>m</td><td>modrá ostře vpravo</td><td> ostře vpravo po modré </td><td>89.133</td></tr>
-		<tr><td align="right">42</td><td>m</td><td>bez značení</td><td> vlevo po ulici</td><td>89.175</td></tr>
-		<tr><td align="right">728</td><td>m</td><td>bez značení</td><td> vlevo po silnici III. třídy 0381</td><td>89.903</td></tr>
-		<tr><td align="right">866</td><td>m</td><td>bez značení</td><td> vpravo po zpevněné cestě</td><td>90.769</td></tr>
-		<tr class="bold"><td align="right">5.5</td><td>km</td><td>modrá</td><td>po modré  na rozcestník Karasy - rozc.</td><td>96.269</td></tr>
-		<tr><td align="right">3</td><td>km</td><td>modrá</td><td>na rozcestník  Jestřebí - žst.</td><td>93.769</td></tr>
-		<tr><td align="right">2.5</td><td>km</td><td>modrá</td><td>na rozcestník  Karasy - rozc.</td><td>96.269</td></tr>
-		<tr class="bold"><td align="right">4.4</td><td>km</td><td>žlutá</td><td>po žluté  na rozcestník Zahrádky - zámek</td><td>100.669</td></tr>
-		<tr><td align="right">1.6</td><td>km</td><td>žlutá</td><td>na rozcestník  Karasy - Novozámecký rybník</td><td>97.869</td></tr>
-		<tr><td align="right">2.8</td><td>km</td><td>žlutá</td><td>na rozcestník  Zahrádky - zámek</td><td>100.669</td></tr>
-		<tr class="bold"><td align="right">11</td><td>km</td><td>modrá</td><td>po modré  na rozcestník  Nad Kravími doly</td><td>111.669</td></tr>
-		<tr><td align="right">2.4</td><td>km</td><td>modrá</td><td>na rozcestník  Sádky - odb.</td><td>103.069</td></tr>
-		<tr><td align="right">972</td><td>m</td><td>modrá</td><td>na rozcestník  Holany</td><td>104.041</td></tr>
-		<tr><td align="right">3.5</td><td>km</td><td>modrá</td><td>na rozcestník  Vlhošť - býv. hájovna</td><td>107.541</td></tr>
-		<tr><td align="right">949</td><td>m</td><td>modrá</td><td>na rozcestník  Sedlo pod Vlhoštěm</td><td>108.49</td></tr>
-		<tr><td align="right">545</td><td>m</td><td>modrá</td><td>na rozcestník  Vlhošťský důl</td><td>109.035</td></tr>
-		<tr><td align="right">2.2</td><td>km</td><td>modrá</td><td>na rozcestník  Nad Kravími doly</td><td>111.235</td></tr>
-		<tr class="bold"><td align="right">4.6</td><td>km</td><td>žlutá</td><td>po žluté </td><td>115.835</td></tr>
-		<tr><td align="right">2.2</td><td>km</td><td>žlutá</td><td>na rozcestník  Skalka - bus</td><td>113.435</td></tr>
-		<tr><td align="right">1.7</td><td>km</td><td>žlutá</td><td>na rozcestník  Hrádecký důl</td><td>115.135</td></tr>
-		<tr><td align="right">760</td><td>m</td><td>žlutá</td><td>na rozcestník  Helfenburk - zříc.</td><td>115.895</td></tr>
-		<tr><td align="right">15</td><td>m</td><td>žlutá</td><td> mírně vpravo</td><td>115.91</td></tr>
-		<tr><td align="right">968</td><td>m</td><td>žlutá</td><td>po žluté  na rozcestník  Ptačí důl</td><td>116.878</td></tr>
-		<tr><td align="right">968</td><td>m</td><td>žlutá</td><td>na rozcestník  Ptačí důl</td><td>117.846</td></tr>
-		<tr><td align="right">4.4</td><td>km</td><td>žlutá</td><td>po žluté  na rozcestník  Úštěk - nám.</td><td>122.246</td></tr>
-		<tr class="bold"><td align="right">7.6</td><td>km</td><td>červená</td><td>po červené  na rozcestník  Pod Malým Sedlem</td><td>129.846</td></tr>
-		<tr><td align="right">581</td><td>m</td><td>červená</td><td>na rozcestník  Úštěk - žst.</td><td>122.827</td></tr>
-		<tr><td align="right">2.8</td><td>km</td><td>červená</td><td>na rozcestník  Habřina</td><td>125.627</td></tr>
-		<tr><td align="right">1.8</td><td>km</td><td>červená</td><td>na rozcestník  Srdov</td><td>127.427</td></tr>
-		<tr><td align="right">2.5</td><td>km</td><td>červená</td><td>na rozcestník  Pod Malým Sedlem</td><td>129.927</td></tr>
-		<tr><td align="right">1.4</td><td>km</td><td>žlutá</td><td>po žluté  na rozcestník  Nad Lovečkovicemi</td><td>131.327</td></tr>
-		<tr class="bold"><td align="right">7.3</td><td>km</td><td>zelená</td><td>po zelené  na rozcestník  Pláň</td><td>138.627</td></tr>
-		<tr><td align="right">1.4</td><td>km</td><td>zelená</td><td>na rozcestník  Přední Nezly</td><td>132.727</td></tr>
-		<tr><td align="right">2.1</td><td>km</td><td>zelená</td><td>na rozcestník  Hlupnice</td><td>134.827</td></tr>
-		<tr><td align="right">1.9</td><td>km</td><td>zelená</td><td>na rozcestník  Bláhov</td><td>136.727</td></tr>
-		<tr><td align="right">1.8</td><td>km</td><td>zelená</td><td>na rozcestník  Pláň</td><td>138.527</td></tr>
-		<tr class="bold"><td align="right">2.9</td><td>km</td><td>červená</td><td>po červené  na rozcestník Zubrnice - bus</td><td>141.427</td></tr>
-		<tr><td align="right">2.9</td><td>km</td><td>červená</td><td>na rozcestník  Zubrnice - bus</td><td>141.427</td></tr>
-		<tr><td align="right">3.3</td><td>km</td><td>zelená</td><td> vpravo po zelené </td><td>144.727</td></tr>
-		<tr><td align="right">125</td><td>m</td><td>modrá</td><td>po modré  na rozcestník  Vitín - rozc.</td><td>144.852</td></tr>
-		<tr class="bold"><td align="right">16</td><td>km</td><td>červená</td><td>po červené </td><td>160.852</td></tr>
-		<tr><td align="right">4.7</td><td>km</td><td>červená</td><td>na rozcestník  Těchlovice - žst.</td><td>149.552</td></tr>
-		<tr><td align="right">1.9</td><td>km</td><td>červená</td><td>na rozcestník  Vrabinec - zříc.</td><td>151.452</td></tr>
-		<tr><td align="right">3.1</td><td>km</td><td>červená</td><td>na rozcestník  Lesná - obec</td><td>154.552</td></tr>
-		<tr><td align="right">3.6</td><td>km</td><td>červená</td><td>na rozcestník  Chlum</td><td>158.152</td></tr>
-		<tr><td align="right">3</td><td>km</td><td>červená</td><td> rovně</td><td>161.152</td></tr>
-		<tr><td align="right">1</td><td>km</td><td>červená</td><td> vlevo po chodníku</td><td>162.152</td></tr>
-		<tr><td align="right">1.1</td><td>km</td><td>červená</td><td> vlevo po silnici I. třídy Podmokelská</td><td>163.252</td></tr>
-		<tr><td align="right">95</td><td>m</td><td>červená</td><td> vlevo po silnici I. třídy Poštovní</td><td>163.347</td></tr>
-		<tr><td align="right"></td><td></td><td></td><td>Děčín, okres Děčín</td><td>163.347</td></tr>
+<div class="left-column">
+    <h1 color="red"><%= $current_dc_id %>. Den cesty</h1>
+    <h6 align="center">revoluční</h6>
+    <p>
+        <%= t 'actual.introduction' %>
+    </p>
+    <p>
+        <%= t 'actual.limit'%>
+    </p>    
+    <br />
+    <%
+    remains = $registration_deadline - Time.now
+    if  remains < 60 * 60 * 24 * 7 && remains > 0
+    %>
+    <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
+    <% else if remains < 0 %>
+    <h4>Registrace byla ukončena</h4>
+    <% end %>
+    <% end %>
 
-	  </table>
-	</td>
-  </tr>  
-</table>
+    <table id="summary">
+        <tbody>
+            <tr>
+                <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc_date.strftime("%d/%m/%Y v %H:%M") %></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.where' %>:</th><td>Poděbrady cca 9:30</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.equipment' %>:</th><td>DC není jako ostatní extrémní ultra-trailové závody a to zejména kvůli časovému limitu (oproti vzdálenostnímu, který je běžnější). Nejde tedy jaksi doběhnout dřív, nejde se těšit na poslední kontrolu (žádná taková totiž není). Chtě nechtě, čeká Vás 24 hodit (a to je zatraceně hodně). Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.route' %>:</th><td>Až na drobné odchylky trasa bude vypadat takto: <a href="http://www.mapy.cz/s/6BKp">TRASA</a>. Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red">100</span>):</th><td> <% if !@registered_walkers.nil? %>
+                <% @registered_walkers.each do |reg| %>
+                <%= reg.walker.username %>,
+                <% end %>
+                <% end %> </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <%= render :file => "pages/commertial.html.erb" %>    
+</div>
+<div class="right-column">
+	<p>Potisk letošních triček:</p>
+	<p>
+    	<%= image_tag "trikot-small-web.png", :width => "400"%>
+    </p>
+    <p>
+    	<b><%= t 'actual.itinerary' %>:</b>
+    </p>
+    <table class="itinerary">
+    	<tr>
+    		<th>Místo</th><th>km</th><th>značka</th>
+    	</tr>
+    	<tr>
+    		<td>Poděbrady žst.</td><td>0</td><td>bez značení</td>
+    	</tr>
+    	<tr>
+    		<td>Poděbrady nám.</td><td>0,84</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Nymburk nám.</td><td>9,3</td><td>modrá</td>
+    	</tr>
+    	<tr>
+    		<td>Dražice</td><td>46</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Sedlo pod Maršovickým vrchem</td><td>99</td><td>žlutá</td>
+    	</tr>
+    	<tr>
+    		<td>Chlum bus</td><td>100,5</td><td>bez značení</td>
+    	</tr>
+    	<tr>
+    		<td>Dřevčice</td><td>107</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>Velká Řebčice</td><td>109</td><td>žlutá</td>
+    	</tr>
+    	<tr>
+    		<td>Úštěk nám.</td><td>124</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Pod Malým sedlem</td><td>131</td><td>žlutá</td>
+    	</tr>
+    	<tr>
+    		<td>Nad Lovečkovicemi</td><td>133</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>Pláň</td><td>140</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>křižovatka zelené a červené tur. značky</td><td>146</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>křižovatka zelené a modré tur. značky</td><td>146,08</td><td>modrá</td>
+    	</tr>
+    	<tr>
+    		<td>Vitín rozc.</td><td>146,12</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Děčín - Staré město</td><td>163</td><td>bez značení</td>
+    	</tr>
+    	<tr>
+    		<td>Děčín hl.n.</td><td>165</td><td>-</td>
+    	</tr>
+    </table>
+</div>
