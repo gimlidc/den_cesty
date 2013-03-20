@@ -12,7 +12,7 @@ class RegistrationsController < ApplicationController
 		end
 		@registration = Registration.new
 		@store_string = I18n.t("sign_up_dc")
-		@action = "create"
+		@action = "create"		
 	end
 
 	def create

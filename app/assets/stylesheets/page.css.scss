@@ -18,3 +18,45 @@
 .bold {
 	font-weight: bold;
 }
+
+.left-column {  
+  width: 49%;
+  display: inline-block;
+  float: left;
+}
+
+.right-column { 
+  width: 49%;
+  display: inline-block;
+  float: right;
+}
+
+.right-column img {
+  width: 100%;
+}
+
+.sponsors img {
+  vertical-align: middle;
+}
+
+.sponsors {
+  clear: both;  
+  color: light-gray;
+  padding: 10px; 
+}
+
+.itinerary {
+  margin: 20px;
+  width: 90%;
+  border: 1px solid gray;
+}
+
+.itinerary th {
+  border: 1px solid gray;
+  padding: 3px;
+}
+
+.itinerary td {
+  padding: 3px;
+  border: 1px solid gray;
+}
