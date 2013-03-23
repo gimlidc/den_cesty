@@ -7,7 +7,7 @@ class DcsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @dcs }
+      format.json { render :json => @dcs }
     end
   end
 
@@ -18,7 +18,7 @@ class DcsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @dc }
+      format.json { render :json => @dc }
     end
   end
 
@@ -29,7 +29,7 @@ class DcsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @dc }
+      format.json { render :json => @dc }
     end
   end
 
@@ -45,11 +45,11 @@ class DcsController < ApplicationController
 
     respond_to do |format|
       if @dc.save
-        format.html { redirect_to @dc, notice: 'Dc was successfully created.' }
-        format.json { render json: @dc, status: :created, location: @dc }
+        format.html { redirect_to @dc, :notice => 'Dc was successfully created.' }
+        format.json { render :json => @dc, :status => :created, :location => @dc }
       else
-        format.html { render action: "new" }
-        format.json { render json: @dc.errors, status: :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.json { render :json => @dc.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -61,11 +61,11 @@ class DcsController < ApplicationController
 
     respond_to do |format|
       if @dc.update_attributes(params[:dc])
-        format.html { redirect_to @dc, notice: 'Dc was successfully updated.' }
+        format.html { redirect_to @dc, :notice => 'Dc was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @dc.errors, status: :unprocessable_entity }
+        format.html { render :action => "edit" }
+        format.json { render :json => @dc.errors, :status => :unprocessable_entity }
       end
     end
   end

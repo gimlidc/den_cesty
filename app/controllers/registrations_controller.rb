@@ -34,7 +34,7 @@ class RegistrationsController < ApplicationController
 		if @reg.nil? || @reg.empty?
 			redirect_to :action => :new
 		end
-		@registration = @reg
+		@registration = @reg.first
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("Save")
 		@action = "update"
