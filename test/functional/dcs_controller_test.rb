@@ -24,7 +24,7 @@ class DcsControllerTest < ActionController::TestCase
 
   test "should create dc" do
     assert_difference('Dc.count') do
-      @dcNew = Dc.new(:name_cs => "Testovac�� DC name", :name_en => "Testing DC name", :start_time => "2012-04-27 09:30:00",  :description => "toto je popisek cesty", :rules_id => 1, :reg_price => 30, :map_bw_price => 5, :map_color_price => 50, :shirt_price => 250, :own_shirt_price => 150)       
+      @dcNew = Dc.new(:name_cs => "Testovací DC name", :name_en => "Testing DC name", :start_time => "2012-04-27 09:30:00",  :description => "toto je popisek cesty", :rules_id => 1, :reg_price => 30, :map_bw_price => 5, :map_color_price => 50, :shirt_price => 250, :own_shirt_price => 150)       
       post :create, :dc => @dcNew.attributes
     end
 
