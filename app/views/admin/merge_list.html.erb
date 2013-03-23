@@ -4,9 +4,14 @@
 %>
 
 <%= form_tag('merge') do %>
-Will be changed:
-<%= select_tag("walkerA", @options.html_safe, :include_blank => true)  %>
-No change:
-<%= select_tag("walkerB", @options.html_safe, :include_blank => true)  %>
+<table>
+<tr>
+<th>To the real walker:
+	<%= collection_select("walker", :id, @walkers, :id, :nameSurnameYear, :include_blank => true)  %>
+</th>
+<th>will be merged:
+<%= collection_select("walker_virtual", :id, @walkers_virtual, :id, :nameSurnameYear, :include_blank => true)  %></th></tr>
+<tr><td><div id="walker_overview"></div></td><td><div id="walker-virtual-overview"></div></td></tr>
+</table>
 <%= submit_tag "merge" %>
 <% end %>

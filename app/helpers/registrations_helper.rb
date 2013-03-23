@@ -32,7 +32,7 @@ module RegistrationsHelper
 	end
 
 	def is_registered
-		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		if @reg.nil? || @reg.empty? || @reg[0].canceled == true
 			return false
 		else
@@ -41,7 +41,7 @@ module RegistrationsHelper
 	end
 	
 	def isLimit
-    Registration.find(:all, :conditions => {:dc_id => $current_dc_id, :canceled => false}).count > $race_limit
+    Registration.find(:all, :conditions => {:dc_id => $dc.id, :canceled => false}).count > $race_limit
   end
 
 end

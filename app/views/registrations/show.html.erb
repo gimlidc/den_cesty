@@ -1,7 +1,24 @@
 <% if walker_signed_in? && current_walker.username == $admin_name %>
   <% if !@registration.nil? %>
 
-	Showing all registrations for Den cesty <%= $current_dc_id %>
+	<p>Summary:
+		<ul>
+			<li>BW maps:<%=  @registration.where(:bw_map => true, :canceled =>false).count %></li>
+			<li>Color maps:<%=  @registration.where(:colour_map => true, :canceled =>false).count %></li>
+			<li>Trika:
+				<ul>
+					<li>XS - <%=  @registration.where(:shirt_size => "XS", :canceled =>false).count %></li>
+					<li>S - <%=  @registration.where(:shirt_size => "S", :canceled =>false).count %></li>
+					<li>M - <%=  @registration.where(:shirt_size => "M", :canceled =>false).count %></li>
+					<li>L - <%=  @registration.where(:shirt_size => "L", :canceled =>false).count %></li>
+					<li>XL - <%=  @registration.where(:shirt_size => "XL", :canceled =>false).count %></li>
+					<li>XXL - <%=  @registration.where(:shirt_size => "XXL", :canceled =>false).count %></li>
+				</ul>
+			</li>
+		</ul>
+	</p>
+
+	Showing all registrations for Den cesty <%= $dc.id %>
 
 	<table>
 	  <tbody>

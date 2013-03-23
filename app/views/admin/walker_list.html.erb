@@ -5,6 +5,8 @@
 
 <%= @notice %>
 
+<p>Databáze obsahuje <span class="red"><%= @walkers.count %></span> registrovaných chodců. <span class="red">Červeně</span> jsou označení virtuální uživatelé.</p>
+
 <% if @walkers.nil? %>
   No record found
 <% else %>
@@ -21,7 +23,7 @@
 	  </tr>
 	  <% @walkers.each do |walker| %>
 		<%= form_for(walker, :url => { :controller => "admin", :action => "walker_update" }) do |f| %>
-		  <tr>
+		  <tr class="<%= walker.virtual ? "virtual" : "registered" %>">
 			<%= f.hidden_field :id %>
 			<td>
 			  <% if !walker.username.nil? -%>
@@ -36,7 +38,7 @@
 			  <%- end %>
 			</td>
 			<td>
-				<%= f.select :sex, options_for_select($sex_options,  f.object.sex), {}%>
+				<%= f.select :sex, options_for_select($sex_options, f.object.sex), :autocomplete => "off" %>
 			</td>
 			<td><%= f.number_field :year, :size => 4 %></td>
 			<td>
@@ -46,6 +48,7 @@
 		<% end %>
 	  <% end %>
 	  <tr><%= form_for @new_walker, :url => { :controller => "admin", :action => "walker_create"} do |f| %>
+	  	  <%= f.hidden_field :virtual, :value => true %>
 		  <td></td>
 		  <td><%= f.text_field :name, :size => 10 %></td>
 		  <td><%= f.text_field :surname, :size => 20 %></td>

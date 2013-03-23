@@ -1,4 +1,4 @@
-<h2><%= I18n.t('edit registration', :user => @walker.username, :dc_id => $current_dc_id) %></h2>
+<h2><%= I18n.t('edit registration', :user => @walker.username, :dc_id => $dc.id) %></h2>
 <br />
 <% if !isLimit || !@registration.canceled  %>
 	<%= render  'form' %>

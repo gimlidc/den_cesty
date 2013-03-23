@@ -36,7 +36,7 @@ class ReportController < ApplicationController
 		end
 
 		@dc_select=""
-		for i in 1..$current_dc_id do
+		for i in 1..$dc.id do
 			if @dc_id != nil && i == Integer(@dc_id)
 				@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
 			else
@@ -83,7 +83,7 @@ class ReportController < ApplicationController
 			return
 		end
 
-		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 	end
 
 	def show
@@ -91,7 +91,7 @@ class ReportController < ApplicationController
 			flash[:notice] = "No report found!"
 		end
 
-		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})[0]
+		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id}).first
 	end
 
 	def save
@@ -100,14 +100,12 @@ class ReportController < ApplicationController
 			return
 		end
 
-		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id}).first
 
-		if @report.nil? || @report.empty?
+		if @report.nil?
 			@report = Report.new
 			@report.walker_id = current_walker[:id]
-			@report.dc_id = $current_dc_id
-		else
-			@report = @report[0]
+			@report.dc_id = $dc.id
 		end
 
 		@report.report_html = params[:report][:report_html]
@@ -126,12 +124,12 @@ class ReportController < ApplicationController
 	end
 
 	def has_report?
-		@report = Report.all(:conditions => {:dc_id => $current_dc_id, :walker_id => current_walker[:id] })
+		@report = Report.all(:conditions => {:dc_id => $dc.id, :walker_id => current_walker[:id] })
 		return !@report.nil? && !@report.empty?
 	end
 
 	def report_accessible?
-		return Time.now > $dc_date && Time.now < $report_deadline
+		return Time.now > $dc.start_time && Time.now < $report_deadline
 	end
 
 end
