@@ -4,7 +4,7 @@ class PagesControllerTest < ActionController::TestCase
 	include Devise::TestHelpers
 
 	test "should get actual without login" do
-	  loadDc
+	  loadDcTest
     get :actual
     assert_response :success, "Actual page is not accessible"
 		assert_select "#walker_nav", "#{I18n.t("Register")} #{I18n.t("or")} #{I18n.t("Sign_in")}"

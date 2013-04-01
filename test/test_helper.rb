@@ -11,7 +11,7 @@ class ActiveSupport::TestCase
   fixtures :all  
 
   # Add more helper methods to be used by all tests here...
-  def loadDc
+  def loadDcTest
     $dc = dcs(:two)
     $shirt_deadline = ($dc.start_time - 17.days).end_of_day
     $registration_deadline = ($dc.start_time - 4.days).end_of_day

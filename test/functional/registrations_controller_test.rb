@@ -26,7 +26,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
 	test "new of logged walker before shirt deadline" do
 		setup_walker
-		loadDc
+		loadDcTest
 		get :new
 		assert_response :success, "New registration form for elis not generated"
 		#assert_select 'select'
