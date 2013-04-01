@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301170038) do
+ActiveRecord::Schema.define(:version => 20130323200937) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(:version => 20130301170038) do
     t.string   "username"
     t.integer  "year"
     t.binary   "photo"
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "email",                                 :default => "",    :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20130301170038) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "sex"
+    t.boolean  "virtual",                               :default => false
   end
 
   add_index "walkers", ["email"], :name => "index_walkers_on_email", :unique => true

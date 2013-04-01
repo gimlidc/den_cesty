@@ -1,37 +1,24 @@
 class AdminController < ApplicationController
 
 	def add_report
-			@walkers = Walker.all
-
-			@dc_select = ""
-			for i in 1..$current_dc_id do
-				if @dc_id != nil && i == Integer(@dc_id)
-					@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
-				else
-					@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
-				end
-			end
-
-			@walker_select = ""
-			@walkers.each do |walker|
-				@walker_select+="<option value=#{walker.id}>#{walker.name} #{walker.surname} (#{walker.year})</option>\n"
-			end
+			@walkers = Walker.order("surname")
+      @dcs = Dc.order("id")
 	end
 
 	def save_report
-			@report = Report.find(:first, :conditions => { :walker_id => params[:walker_id], :dc_id => params[:dc_id]})
-			@walker = Walker.find(:first, :conditions => { :id => params[:walker_id]})
+			@report = Report.find(:first, :conditions => { :walker_id => params[:walker][:id], :dc_id => params[:dc][:id]})
+			@walker = Walker.find(:first, :conditions => { :id => params[:walker][:id]})
 
 			if @report.nil?	&& !@walker.nil?
-				@dc_id = Integer("#{params[:dc_id]}")
+				@dc_id = Integer("#{params[:dc][:id]}")
 
 				report = Report.new
 				report.dc_id = @dc_id
-				report.walker_id = Integer("#{params[:walker_id]}")
+				report.walker_id = Integer("#{params[:walker][:id]}")
 				report.report_html = params[:report_html]
 
 				if report.save
-					flash[:notice] = "Report successfully stored #{report.walker_id}, #{report.dc_id}"
+					flash[:notice] = "Report successfully stored #{report.walker.nameSurnameYear}, #{report.dc.specifyName}"
 				else
 					flash[:alert] = "Report save failed"
 				end
@@ -47,8 +34,8 @@ class AdminController < ApplicationController
 	end
 
 	def merge		
-			@walker_a = Walker.find(:first, :conditions => { :id => params[:walkerA]})
-			@walker_b = Walker.find(:first, :conditions => { :id => params[:walkerB]})
+			@walker_a = Walker.find(params[:walker][:id])
+			@walker_b = Walker.find(params[:walker_virtual][:id])
 			if !@walker_a.nil? && !@walker_b.nil?
 				@results_a = Result.where(:walker_id => @walker_a.id).order(:dc_id)
 				@results_b = Result.where(:walker_id => @walker_b.id).order(:dc_id)
@@ -56,7 +43,7 @@ class AdminController < ApplicationController
 				# check problems in results
 				a=0
 				b=0
-				for i in 1..$current_dc_id
+				for i in 1..$dc.id
 					while(!@results_a[a].nil? && @results_a[a].dc_id < i)
 						a += 1
 					end
@@ -77,7 +64,7 @@ class AdminController < ApplicationController
 				# check problems in reports
 				a=0
 				b=0
-				for i in 1..$current_dc_id
+				for i in 1..$dc.id
 					while(!@reports_a[a].nil? && @reports_a[a].dc_id < i)
 						a += 1
 					end
@@ -123,16 +110,12 @@ class AdminController < ApplicationController
 	end
 
 	def merge_list
-			@walkers = Walker.find(:all, :order => "surname, name")
-			@options = ""
-			@walkers.each do |walker|
-				@options += "<option value=\"#{walker.id}\">#{walker.surname} #{walker.name}, #{walker.year}</option>\n"
-			end		
+			@walkers = Walker.find(:all, :order => "surname, name", :conditions => {:virtual => false})
+			@walkers_virtual = Walker.find(:all, :order => "surname, name", :conditions => {:virtual => true})		
 	end
 
 	def print_list
-		@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $current_dc_id).order(:surname)
-		
+		@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 	end
 
 	def results_update
@@ -169,7 +152,7 @@ class AdminController < ApplicationController
 
 	def results_setting
 			if params[:id].nil?
-				@set_dc = $current_dc_id
+				@set_dc = $dc.id
 			else
 				@set_dc = Integer("#{params[:id]}")
 			end

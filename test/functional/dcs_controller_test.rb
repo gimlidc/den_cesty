@@ -6,6 +6,7 @@ class DcsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   
   setup do
+    loadDc
     @request.env["devise.mapping"] = Devise.mappings[:walker]
     sign_in walkers(:gimli)
     @dc = dcs(:one)
@@ -32,23 +33,23 @@ class DcsControllerTest < ActionController::TestCase
   end
 
   test "should show dc" do
-    get :show, id: @dc.to_param
+    get :show, :id => @dc.to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @dc.to_param
+    get :edit, :id => @dc.to_param
     assert_response :success
   end
 
-  test "should update dc" do
-    put :update, id: @dc.to_param, dc: @dc.attributes
+  test "should update dc" do    
+    put :update, :id => @dc.to_param, :dc => @dc.attributes
     assert_redirected_to dc_path(assigns(:dc))
   end
 
   test "should destroy dc" do
     assert_difference('Dc.count', -1) do
-      delete :destroy, id: @dc.to_param
+      delete :destroy, :id => @dc.to_param
     end
 
     assert_redirected_to dcs_path

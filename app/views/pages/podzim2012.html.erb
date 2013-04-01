@@ -12,7 +12,7 @@ if  remains < 60 * 60 * 24 * 7  && remains > 0
 <table>
   <tr><td width="50%" valign="top">
 	  <table id="summary">
-		<tbody><tr><th class="title">Termín:</th><td><%= $dc_date.strftime("%d/%m/%Y v %H:%M") %></td></tr>
+		<tbody><tr><th class="title">Termín:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td></tr>
 		  <tr><th class="title">Start:</th><td>Brno, Maloměřice (konečná šaliny 4 - Obřany, Babická). Doporučený spoj z Prahy hl.n. odjíždí v 15:42. Sraz zájemců o hromadnou jízdenku je před 15:30 u výtahů z metra.</td></tr>
 		  <tr><th class="title">Podmínky:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td></tr>
 

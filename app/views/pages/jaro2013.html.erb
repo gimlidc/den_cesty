@@ -1,5 +1,5 @@
 <div class="left-column">
-    <h1 color="red"><%= $current_dc_id %>. Den cesty</h1>
+    <h1 color="red"><%= $dc.id %>. Den cesty</h1>
     <h6 align="center">revoluční</h6>
     <p>
         <%= t 'actual.introduction' %>
@@ -21,7 +21,7 @@
     <table id="summary">
         <tbody>
             <tr>
-                <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc_date.strftime("%d/%m/%Y v %H:%M") %></td>
+                <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td>
             </tr>
             <tr>
                 <th class="title"><%= t 'actual.where' %>:</th><td>Poděbrady cca 9:30</td>

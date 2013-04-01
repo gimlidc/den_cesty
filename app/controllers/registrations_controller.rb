@@ -3,7 +3,7 @@ class RegistrationsController < ApplicationController
   skip_before_filter :check_admin?, :except => [:unregister]
 
 	def new
-		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		if !@reg.nil? && !@reg.empty?
 			if (!@reg[0].canceled)
 				flash.notice = "You are already registered."
@@ -18,23 +18,23 @@ class RegistrationsController < ApplicationController
 	def create
 		@reg = Registration.new
 		@reg.walker_id = current_walker[:id]
-		@reg.dc_id = $current_dc_id
+		@reg.dc_id = $dc.id
 		update_db(@reg)
   end
 
 	def show
 		if (walker_signed_in?)
-			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $current_dc_id)
-			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
+			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		end
 	end
 
 	def edit
-		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		if @reg.nil? || @reg.empty?
 			redirect_to :action => :new
 		end
-		@registration = @reg
+		@registration = @reg.first
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("Save")
 		@action = "update"
@@ -78,7 +78,7 @@ class RegistrationsController < ApplicationController
 	end
 
 	def destroy
-		@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $current_dc_id})
+		@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 
 		if !@reg.nil?
 			@reg.canceled = true

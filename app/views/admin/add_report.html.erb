@@ -4,8 +4,9 @@
 %>
 
 <%= form_tag('save_report') do %>
-  <%= select_tag("walker_id", @walker_select.html_safe, :include_blank => true)  %>
-  <%= select_tag("dc_id", @dc_select.html_safe, :include_blank => true)  %>
+  
+  <%= collection_select("walker", :id, @walkers, :id, :nameSurnameYear, :include_blank => true)  %>
+  <%= collection_select("dc", :id, @dcs, :id, :specifyName, :include_blank => true)  %>
   <br />
   <%= text_area_tag("report_html", nil, :class => 'report-input', :maxlength => 50000, :rows => 30) %>
   <br />

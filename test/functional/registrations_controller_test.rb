@@ -17,19 +17,16 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test "new without login" do
-    assert_raise(NoMethodError) {
-			get :new
-			"Registration page is accessible without login"
-		}
+    get :new
+		assert_redirected_to walker_session_path		
 
-		assert_raise(NoMethodError) {
-			get(:new, {:id => 1})
-			"Registration page is accessible without login"
-		}
+		get(:new, {:id => 1})
+		assert_redirected_to walker_session_path
 	end
 
 	test "new of logged walker before shirt deadline" do
 		setup_walker
+		loadDc
 		get :new
 		assert_response :success, "New registration form for elis not generated"
 		#assert_select 'select'

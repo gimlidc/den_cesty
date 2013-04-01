@@ -5,7 +5,7 @@
 
 <% if !@registration.nil? %>
 
-  <h2 align="center">Prezenční list <%= $current_dc_id %>. Dne cesty - <%= $dc_date.strftime("%d.%m.%Y")  %></h2>
+  <h2 align="center">Prezenční list <%= $dc.id %>. Dne cesty - <%= $dc.start_time.strftime("%d.%m.%Y")  %></h2>
 
   Účastníci potvrzují, že akci konají na <b>vlastní nebezpečí</b>. V čase ukončení soutěže informují organizátory (605 062 837).
 
@@ -23,6 +23,7 @@
 	  </tr>
 	  <tr><th>čb</th>
 		<th>bar.</th></tr>
+		<% sum = 0 %>
 	  <% @registration.each do |reg| %>
 		<tr>
 		  <td><%= reg.walker.name %></td>
@@ -39,11 +40,18 @@
 		  <% else %>
 			<td />
 		  <% end %>
-		  <td><%= price(reg) %>,-</td>
+		  <td><% sum += price(reg) %><%= price(reg) %>,-</td>
 		  <td width="60%"></td>
 		  <td width="20%"></td>
 		</tr>
 	  <% end %>
+	  <tr><td></td><td></td><td></td>
+	  	<td></td>
+	  	<td></td>
+	  	<td></td>
+	  	<td><%= sum %></td>
+	  	<td></td><td></td>
+	  </tr>
 	</tbody>
   </table>
 <% else %>
