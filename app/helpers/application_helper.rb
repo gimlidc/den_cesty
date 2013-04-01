@@ -17,4 +17,8 @@ module ApplicationHelper
 		return @dc_select
 	end
 
+  def sex_options
+    [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
+  end
+
 end

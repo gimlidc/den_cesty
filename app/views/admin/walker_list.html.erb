@@ -38,7 +38,7 @@
 			  <%- end %>
 			</td>
 			<td>
-				<%= f.select :sex, options_for_select($sex_options, f.object.sex), :autocomplete => "off" %>
+				<%= f.select :sex, options_for_select(sex_options, f.object.sex), :autocomplete => "off" %>
 			</td>
 			<td><%= f.number_field :year, :size => 4 %></td>
 			<td>
@@ -54,7 +54,7 @@
 		  <td><%= f.text_field :surname, :size => 20 %></td>
 		  <td></td>
 		  <td>
-			<%= f.select :sex, options_for_select($sex_options,  f.object.sex), {}%>
+			<%= f.select :sex, options_for_select(sex_options,  f.object.sex), {}%>
 		  </td>
 		  <td><%= f.number_field :year, :size => 4 %></td>
 		  <td>
