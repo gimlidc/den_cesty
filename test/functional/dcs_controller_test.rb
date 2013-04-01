@@ -6,7 +6,7 @@ class DcsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   
   setup do
-    loadDc
+    loadDcTest
     @request.env["devise.mapping"] = Devise.mappings[:walker]
     sign_in walkers(:gimli)
     @dc = dcs(:one)
