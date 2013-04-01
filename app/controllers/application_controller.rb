@@ -5,13 +5,16 @@ class ApplicationController < ActionController::Base
   before_filter :check_admin?
   before_filter :check_logged_in?
   
-  $dc = Dc.find(18);
-  $shirt_deadline = ($dc.start_time - 17.days).end_of_day
-  $registration_deadline = ($dc.start_time - 4.days).end_of_day
-  $registration_starts = true
-  $report_deadline = ($dc.start_time + 1.month).end_of_day
+  if (ENV["RAILS_ENV"] != "test")
+    $dc = Dc.find(18);  
+    $shirt_deadline = ($dc.start_time - 17.days).end_of_day
+    $registration_deadline = ($dc.start_time - 4.days).end_of_day
+    $registration_starts = true
+    $report_deadline = ($dc.start_time + 1.month).end_of_day
+  end
+  
   $race_limit = 100
-
+  
   $admin_name = "gimli"
   $sex_options = [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
   $dc_spec = ["jaro 2005 - Sázava",

@@ -6,6 +6,7 @@ class DcsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   
   setup do
+    loadDc
     @request.env["devise.mapping"] = Devise.mappings[:walker]
     sign_in walkers(:gimli)
     @dc = dcs(:one)
@@ -41,7 +42,7 @@ class DcsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should update dc" do
+  test "should update dc" do    
     put :update, :id => @dc.to_param, :dc => @dc.attributes
     assert_redirected_to dc_path(assigns(:dc))
   end
