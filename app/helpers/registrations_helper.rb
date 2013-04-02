@@ -41,7 +41,7 @@ module RegistrationsHelper
 	end
 	
 	def isLimit
-    Registration.find(:all, :conditions => {:dc_id => $dc.id, :canceled => false}).count > $race_limit
+    Registration.find(:all, :conditions => {:dc_id => $dc.id, :canceled => false}).count >= $race_limit
   end
 
 end
