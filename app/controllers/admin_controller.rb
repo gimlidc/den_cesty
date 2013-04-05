@@ -119,35 +119,24 @@ class AdminController < ApplicationController
 	end
 
 	def results_update
-			dc_id = Integer("#{params[:dc_id]}")
-			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id) AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id")
-			@results = Result.where(:dc_id => dc_id).order(:walker_id)
-			res = 0
-			@walkers.each do |walker|
-				if @results.nil? || @results.empty? || @results[res].nil? || @results[res].walker_id != walker.id
-					result = Result.new
-					result.dc_id = dc_id
-					result.walker_id = walker.id
-				else
-					result = @results[res]
-					res += 1
-				end
-
-				distance = params["#{walker.id}"]
-				if !distance.nil? && distance != ""
-					result.distance = distance
-
-					if (!result.save)
-						flash[:notice] = "#{flash[:notice]}, result: #{result.walker_id},#{result.dc_id},#{result.distance} not saved";
-					else
-						flash[:notice] = "#{flash[:notice]}, result: #{result.walker_id},#{result.dc_id},#{result.distance} saved";
-					end
-				else
-					flash[:notice] = "#{flash[:notice]}, distance for walker: #{walker.id} not set";
-				end
-			end
-			redirect_to :action => "results_setting", :id => dc_id
-		
+	  @results = params[:results] 
+	  
+		@results.each do |key, value|
+		  if value[:distance] == ''
+		    next
+		  end
+		  
+      result = Result.first(:conditions => {:walker_id => value[:walker_id], :dc_id => value[:dc_id]})
+      
+      if result.nil?
+        result = Result.create(:walker_id => value[:walker_id], :dc_id => value[:dc_id], :distance => value[:distance])
+      else
+        result.update_attributes(:distance => value[:distance])
+      end
+  
+    end
+    
+    redirect_to :action => 'results_setting', :id => params[:dc_id]
 	end
 
 	def results_setting
@@ -156,8 +145,8 @@ class AdminController < ApplicationController
 			else
 				@set_dc = Integer("#{params[:id]}")
 			end
-			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc}) AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id")
-		
+			
+			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
 	end
 
 	def results_list
