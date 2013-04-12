@@ -17,6 +17,7 @@ DenCesty::Application.routes.draw do
 	match 'rules' => 'pages#rules', :as => :pages_rules
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
 	match 'dc_results' => "pages#dc_results", :as => :dc_results
+	match 'walker_results' => "pages#walker_results", :as => :walker_results
 	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations
 	match 'jar12_16' => 'pages#jar12_16', :as => :pages_jar12_16
   match 'pod12_17' => 'pages#pod12_17', :as => :pages_pod12_17
