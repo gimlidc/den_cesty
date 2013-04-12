@@ -66,14 +66,13 @@ SimpleNavigation::Configuration.run do |navigation|
 #    # You can also specify a condition-proc that needs to be fullfilled to display an item.
 #    # Conditions are part of the options. They are evaluated in the context of the views,
 #    # thus you can use all the methods and vars you have available in the views.
-#    #primary.item :key_3, 'Admin', url, :class => 'special', :if => Proc.new { current_user.admin? }
+#    #primary.item :key_3, 'Admin', url, :class => 'special', :if => Proc.new��{ current_user.admin? }
 #    #primary.item :key_4, 'Account', url, :unless => Proc.new { logged_in? }
 #
 
 
 		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
-			results.item :pod12_17, I18n.t('Autumn 2012'), pages_pod12_17_path
-      results.item :jar12_16, I18n.t('Spring 2012'), pages_jar12_16_path
+			results.item :dc_results, I18n.t('by Year'), dc_results_path
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
 		end
 

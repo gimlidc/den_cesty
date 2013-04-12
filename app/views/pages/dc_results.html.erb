@@ -1,0 +1,48 @@
+Výsledky <%= @dc_id %>. Dne cesty: 
+<%= form_tag "dc_results", :method => :get do %>
+<%= collection_select(:get, :dc_id, @dcs, :id, :specifyName, :selected => @dc_id) %>
+<%= submit_tag("Najít") %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    new Highcharts.Chart({
+      chart: { 
+      	renderTo: 'dc-chart',
+      	type: 'bar'
+      },
+      title: {
+      	text: 'Výsledky <%= @dc_id %>. DC'
+      },
+      yAxis: {
+      	title: {
+      		text: "km"
+      	}
+      },
+      xAxis: {
+      	categories: [<% @results.each do |result| %>
+      			'<%= "#{result.walker.nameSurname}" %>',
+      		<% end %>
+      		],
+      	title: {
+      		text: "chodec"
+      	}
+      },
+      plotOptions: {
+		bar: {
+			dataLabels: {
+				enabled: true
+			}
+		}
+	  },
+      series: [{
+      	name: "<%= @dc_id %>. den cesty",
+      	data: [
+      		<% @results.each do |result| %> 	
+				<%= result.distance %>,
+			<% end %>
+			]
+		}]
+    });
+  });
+</script>
+<div id="dc-chart" style="height: <%= 25*@results.count %>px;"></div>
