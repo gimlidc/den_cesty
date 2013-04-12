@@ -1,0 +1,50 @@
+Výsledky chodce: 
+<%= form_tag "walker_results", :method => :get do %>
+<%= collection_select(:walker, :first, @walkers, :id, :nameSurname) %>
+<%= submit_tag("Najít") %>
+<% end %>
+<% if !@walker_first.nil? %>
+	<script type="text/javascript" charset="utf-8">
+  $(function () {
+    new Highcharts.Chart({
+      chart: { 
+      	renderTo: 'walker-chart' 
+      },
+      title: {
+      	text: 'Výsledky za historii DC'
+      },
+      yAxis: {
+      	title: {
+      		text: "km"
+      	}
+      },
+      xAxis: {
+      	title: {
+      		text: "DC"
+      	}
+      },
+      series: [
+      <% if !@walker_second.nil? %>
+      { name: "<%= "#{@walker_second.name} #{@walker_second.surname}" %>",
+      	data: [
+      	<% @results_second.each do |result| %>
+      		[<%= result.dc_id %>, <%= result.distance %>],
+      	<% end %>
+      	
+      },
+      <% end %>
+      { name: "<%= "#{@walker_first.name} #{@walker_first.surname}" %>",
+      	data: [
+      	<% @results_first.each do |result| %>
+      		[<%= result.dc_id %>, <%= result.distance %>],
+      	<% end %>
+		]
+      }]
+    });
+  });
+	</script>
+	<div id="walker-chart" style="width: 560px; height: 300px;"></div>
+<% end %>
+<table>
+	<%= render :partial => "result", :collection => @results %>
+</table>

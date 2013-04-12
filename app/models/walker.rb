@@ -19,6 +19,10 @@ class Walker < ActiveRecord::Base
     :with => /^[12][0-9]{3}$/
   }
 
+  def nameSurname
+    "#{name} #{surname}"
+  end
+
   def nameSurnameYear
     "#{name} #{surname} (#{year})"
   end
