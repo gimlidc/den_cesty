@@ -8,37 +8,18 @@ class ApplicationController < ActionController::Base
   
   $admin_name = "gimli"
   $sex_options = [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
-  $dc_spec = ["jaro 2005 - Sázava",
-    "podzim 2005 - Sázava II",
-    "jaro 2006 - Otava",
-    "podzim 2006 - Otava II",
-    "jaro 2007 - Středohořím",
-    "podzim 2007 - Deštivým středohořím",
-    "jaro 2008 - Vrchovinou",
-    "podzim 2008 - Vrchovinou II",
-    "jaro 2009 - Lázeňská",
-    "léto 2010 - Na Ještěd",
-    "podzim 2009 - Lázeňská II",
-    "jaro 2010 - Zelenohorská",
-    "podzim 2010 - Zelenohorská II",
-    "jaro 2011 - Blaník",
-    "podzim 2011 - Do stříbrného města II",
-    "jaro 2012 - Nejkrásnější Moravská",
-    "podzim 2012 - Nejkrásnější Moravská II",
-    "jaro 2013 - Revoluční"
-  ]
 
   before_filter :set_locale
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(18)  
+      $dc = Dc.find(19)  
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
       $registration_starts = true
       $report_deadline = ($dc.start_time + 1.month).end_of_day          
     end    
-    $race_limit = 100    
+    $race_limit = 150    
   end
 
   def set_locale

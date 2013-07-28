@@ -81,15 +81,15 @@ cs:
   female: "žena"
   male: "muž"
   actual:
-      introduction: "Den cesty je extrémní závod na 24 hodin. Cílem je pěšky (chůzí nebo během), zdolat za jeden den co největší vzdálenost po vyznačené trase. Neběhá se na oválu, ale přírodou, o kopce a bloudění tedy není nouze. Pokud Vás navíc neláká běhání v kruzích, ale chcete se dostat od někud někam ... je DC závod přesně pro Vás."
-      limit: "Tento rok je maximum stanoveno na 100 registrovaných závodníků."
+      introduction: "Den cesty není jako ostatní extrémní ultra-trailové závody a to zejména kvůli časovému limitu (oproti vzdálenostnímu, který je běžnější). Nejde tedy jaksi doběhnout dřív, nejde se těšit na poslední kontrolu (žádná taková totiž není). Chtě nechtě, čeká Vás 24 hodin (a to je zatraceně hodně). Cílem je pěšky (chůzí nebo během), zdolat za jeden den co největší vzdálenost po vyznačené trase. Neběhá se na oválu, ale přírodou, o kopce a bloudění tedy není nouze. Pokud Vás navíc neláká běhání v kruzích, ale chcete se dostat od někud někam ... je DC závod přesně pro Vás."
+      limit: "Tento rok je maximum stanoveno na %s registrovaných závodníků."
       date: "Termín"
       where: "Start"
       conditions: "Podmínky"
       equipment: "Co s sebou"
       route: "Trasa"
       registered: "Přihlášení"
-      itinerary: "Předběžný itinerář"
+      itinerary: "Orientační itinerář"
   commertial:
     title: "Sponzoři a partneři závodu"
   date:
