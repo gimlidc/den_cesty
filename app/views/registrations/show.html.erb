@@ -58,7 +58,7 @@
 	<table width="40%">
 	  <tbody>
 		<tr><th></th><th class="bottom_line left"><%= t 'value' %></th><th class="bottom_line right"><%= t 'price' %></th></tr>
-		<tr><td><%= t 'registration fee' %></td><td><%= t 'obligate' %></td><td class="right"><b><%= $reg_price %>&nbsp;Kč</b></td></tr>
+		<tr><td><%= t 'registration fee' %></td><td><%= t 'obligate' %></td><td class="right"><b><%= $dc.reg_price %>&nbsp;Kč</b></td></tr>
 		<tr><td><%= t 'shirt' %></td><td><%= @reg.shirt_size %></td><td class="right"><b><%= shirt_price(@reg.shirt_size) %>&nbsp;Kč</b></td></tr>
 		<tr><td><%= t  'bw_map' %></td><td><%= @reg.bw_map %></td><td class="right"><b><%= bw_map_price(@reg.bw_map) %>&nbsp;Kč</b></td></tr>
 		<tr class="bottom_line"><td class="bottom_line"><%= t 'colour_map' %></td><td class="bottom_line"><%= @reg.colour_map %></td><td class="bottom_line right"><b><%= colour_map_price(@reg.colour_map) %>&nbsp;Kč</b></td></tr>
