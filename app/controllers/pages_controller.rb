@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   skip_before_filter :check_logged_in?
 
   def actual
-		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:username)
+		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:surname, :name)
 		render "podzim2013.html.erb"
   end
 
