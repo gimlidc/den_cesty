@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
   def actual
 		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:username)
-		render "jaro2013.html.erb"
+		render "podzim2013.html.erb"
   end
 
 	def rules

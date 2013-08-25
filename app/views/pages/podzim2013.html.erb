@@ -1,0 +1,120 @@
+<div class="left-column">
+    <h1 color="red"><%= $dc.id %>. Den cesty</h1>
+    <h6 align="center"><%= $dc.name_cs %></h6>
+    <p>
+        <%= t 'actual.introduction' %>
+    </p>
+    <p>
+        <%= t 'actual.limit', :race_limit => "#{$race_limit}" %>
+    </p>    
+    <br />
+    <%
+    remains = $registration_deadline - Time.now
+    if  remains < 60 * 60 * 24 * 7 && remains > 0
+    %>
+    <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
+    <% else if remains < 0 %>
+    <h4>Registrace byla ukončena</h4>
+    <% end %>
+    <% end %>
+
+    <table id="summary">
+        <tbody>
+            <tr>
+                <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y") %></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.where' %>:</th><td>Poděbrady <%= $dc.start_time.localtime.strftime("v %H:%M") %></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.conditions' %>:</th><td>Nová pravidla závodu najdete v sekci <%= link_to "pravidla", pages_rules_path %>. Novinkou jsou kontroly na trase. Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.equipment' %>:</th><td>Žádné povinné vybavení není stanoveno. Pokud se ale  na ultratrailový závod chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme. Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.route' %>:</th><td>Trasa je totožná s trasou na jaře. Detailní prohlídka <a href="http://www.mapy.cz/s/6BKp">TRASY</a>. Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th><td> <% if !@registered_walkers.nil? %>
+                <% @registered_walkers.each do |reg| %>
+                <%= reg.walker.username %>,
+                <% end %>
+                <% end %> </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <%= render :file => "pages/commertial.html.erb" %>    
+</div>
+<div class="right-column">
+	<p>Potisk letošních triček:</p>
+	<p>
+    	<%= image_tag "trikot-small-web.png", :width => "400"%>
+    </p>
+    <p>
+    	<b><%= t 'actual.itinerary' %>:</b>
+    </p>
+    <table class="itinerary">
+    	<tr>
+    		<th>Místo</th><th>km</th><th>značka</th>
+    	</tr>
+    	<tr>
+    		<td>Poděbrady žst.</td><td>0</td><td>bez značení</td>
+    	</tr>
+    	<tr>
+    		<td>Poděbrady nám.</td><td>0,84</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Nymburk nám.</td><td>9,3</td><td>modrá</td>
+    	</tr>
+    	<tr>
+    		<td>Dražice</td><td>46</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Staré splavy</td><td>92</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>Nad Braniborskou jeskyní</td><td>96,5</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Sedlo pod Maršovickým vrchem</td><td>99</td><td>žlutá</td>
+    	</tr>
+    	<tr>
+    		<td>Chlum bus</td><td>100,5</td><td>bez značení</td>
+    	</tr>
+    	<tr>
+    		<td>Dřevčice</td><td>107</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>Velká Řebčice</td><td>109</td><td>žlutá</td>
+    	</tr>
+    	<tr>
+    		<td>Úštěk nám.</td><td>124</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Pod Malým sedlem</td><td>131</td><td>žlutá</td>
+    	</tr>
+    	<tr>
+    		<td>Nad Lovečkovicemi</td><td>133</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>Pláň</td><td>140</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>křižovatka zelené a červené tur. značky</td><td>146</td><td>zelená</td>
+    	</tr>
+    	<tr>
+    		<td>křižovatka zelené a modré tur. značky</td><td>146,08</td><td>modrá</td>
+    	</tr>
+    	<tr>
+    		<td>Vitín rozc.</td><td>146,12</td><td>červená</td>
+    	</tr>
+    	<tr>
+    		<td>Děčín - Staré město</td><td>163</td><td>bez značení</td>
+    	</tr>
+    	<tr>
+    		<td>Děčín hl.n.</td><td>165</td><td>-</td>
+    	</tr>
+    </table>
+</div>

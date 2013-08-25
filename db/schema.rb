@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323200937) do
+ActiveRecord::Schema.define(:version => 20130726170249) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20130323200937) do
     t.integer  "map_color_price"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "limit"
   end
 
   create_table "posts", :force => true do |t|
