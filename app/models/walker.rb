@@ -10,10 +10,10 @@ class Walker < ActiveRecord::Base
 	has_many :post
 
   # Setup accessible (or protected) attributes for your model	
-  attr_accessible :email, :name, :surname, :year, :username, :password, :password_confirmation, :remember_me, :sex, :virtual
+  attr_accessible :email, :name, :surname, :year, :username, :password, :password_confirmation, :remember_me, :sex, :virtual, :phone
 
   # Extra validation
-  validates :username, :surname, :year, :name, :email, :presence => true, :allow_blank => false 
+  validates :username, :surname, :year, :name, :email, :presence => true, :allow_blank => false, :phone
   validates :username, :email, :uniqueness => true
   validates :year, :format => {
     :with => /^[12][0-9]{3}$/
