@@ -57,9 +57,11 @@
 <% else %>
   <% if !@reg.nil? %>
 	<h4><%= t "Registration summary" %></h4>
-	<h4><%= t "Fill phone number"%> <%= link_to t("Profil"), edit_walker_path %>.</h4>
-	<table width="40%">
+	<table width="43%">
 	  <tbody>
+		<tr><td class="left"><%= t 'phone' %></td><td colspan="2" class="left"><%=  @reg.phone %></td></tr>
+		<tr><td class="left"><%= t 'goal' %></td><td colspan="2" class="left"><%=  @reg.goal %></td></tr>
+		<tr><td></td><td></td><td></td></tr>
 		<tr><th></th><th class="bottom_line left"><%= t 'value' %></th><th class="bottom_line right"><%= t 'price' %></th></tr>
 		<tr><td><%= t 'registration fee' %></td><td><%= t 'obligate' %></td><td class="right"><b><%= $dc.reg_price %>&nbsp;Kč</b></td></tr>
 		<tr><td><%= t 'shirt' %></td><td><%= @reg.shirt_size %></td><td class="right"><b><%= shirt_price(@reg.shirt_size) %>&nbsp;Kč</b></td></tr>

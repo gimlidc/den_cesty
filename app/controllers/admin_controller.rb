@@ -189,6 +189,7 @@ class AdminController < ApplicationController
 				end
 				walker.name = params[:walker][:name]
 				walker.surname = params[:walker][:surname]
+				walker.phone = params[:walker][:phone]
 				walker.sex = params[:walker][:sex]
 				walker.year = params[:walker][:year]
 				if walker.save(:validate => validate)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130827114524) do
+ActiveRecord::Schema.define(:version => 20130828081852) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20130827114524) do
     t.datetime "updated_at"
     t.boolean  "canceled",   :default => false
     t.string   "goal"
+    t.string   "phone"
   end
 
   create_table "reports", :force => true do |t|

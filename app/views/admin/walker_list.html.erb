@@ -53,8 +53,9 @@
 	  	  <%= f.hidden_field :virtual, :value => true %>
 		  <td></td>
 		  <td><%= f.text_field :name, :size => 10 %></td>
-		  <td><%= f.text_field :surname, :size => 20 %></td>
+		  <td><%= f.text_field :surname, :size => 15 %></td>
 		  <td></td>
+		  <td><%= f.text_field :phone, :size => 10 %></td>
 		  <td>
 			<%= f.select :sex, options_for_select(sex_options,  f.object.sex), {}%>
 		  </td>

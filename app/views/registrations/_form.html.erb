@@ -3,7 +3,10 @@
   <%= f.hidden_field :walker_id, :value => current_walker[:id] %>
   <%= f.hidden_field :dc_id, :value => $dc.id %>
   
-  <div><%= f.label t :goal %>
+  <div><%= f.label t :phone %><br />
+	<%= f.text_field :phone %></div>
+  
+  <div><%= f.label t :goal %><br />
 	<%= f.text_field :goal %></div>
   
   <div><%= f.check_box :bw_map %>

@@ -40,7 +40,7 @@ class RegistrationsController < ApplicationController
 		@action = "update"
 	end
 
-	def update_db(reg)
+	def update_db(reg, walker)
 		if (Time.now > $registration_deadline)
 			flash.notice = "It's after deadline for registration, changes was not accepted."
 			redirect_to :action => :show
@@ -49,8 +49,12 @@ class RegistrationsController < ApplicationController
 				reg.bw_map = params[:registration][:bw_map]
 				reg.colour_map = params[:registration][:colour_map]
 				reg.goal = params[:registration][:goal]
+				reg.phone = params[:registration][:phone]
 				reg.canceled = false
-
+				
+				@phone = params[:registration][:phone]
+				walker.phone = @phone
+        
 				# field for shirt selection is missing
 				if (Time.now > $shirt_deadline)
 					if reg.shirt_size.nil?
@@ -61,21 +65,27 @@ class RegistrationsController < ApplicationController
 				end
 
 				if reg.save
-					flash.notice = "Registration details sucessfully stored."
-					redirect_to :action => 'show'
+					if walker.save
+					  flash.notice = "Registration details sucessfully stored."
+					  redirect_to :action => 'show'
+					else  
+					  @registration = reg
+            render :action => 'show'
+          end
 				else
 					@registration = reg
-					render :action => 'edit'
+					render :action => 'show'
 				end
 			else
 				flash.notice = "Data of registration is missing, illegal access?!"
 			end
 		end
-	end
+	end    
 
 	def update
 		@reg = Registration.find(:first, :conditions => {:walker_id => params[:registration][:walker_id], :dc_id => params[:registration][:dc_id]})
-		update_db(@reg)
+		@walker = Walker.find(current_walker[:id])
+		update_db(@reg, @walker)
 	end
 
 	def destroy
