@@ -70,11 +70,12 @@ class RegistrationsController < ApplicationController
 					  redirect_to :action => 'show'
 					else  
 					  @registration = reg
-            render :action => 'show'
+					  flash.alert = "You have to fill phone number."
+            redirect_to :action => :edit
           end
 				else
 					@registration = reg
-					render :action => 'show'
+					redirect_to :action => :edit
 				end
 			else
 				flash.notice = "Data of registration is missing, illegal access?!"
