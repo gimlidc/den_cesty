@@ -69,6 +69,7 @@ cs:
         surname: "Příjmení"
         name: "Jméno"
         year: "Rok"
+        phone: "Telefon během závodu"
     errors:
       models:
         walker:

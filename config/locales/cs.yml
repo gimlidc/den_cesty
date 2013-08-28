@@ -14,7 +14,7 @@ cs:
   name: "jméno"
   surname: "příjmení"
   Sign_up: "Vytvořit účet"
-  Sign_in: "Příhlásit"
+  Sign_in: "Přihlásit"
   Forgot your password?: "Zapomenuté heslo?"
   Didn't receive confirmation instructions?: "Potvrzovací email nedorazil?"
   Send me reset password instructions: "Poslat instrukce pro nastavení hesla"
@@ -27,6 +27,7 @@ cs:
   leave blank if you don't want to change it: "nechceš-li měnit nechej prázdné"
   Signed in as: "Přihlášen(a) jako"
   Not you?: "Nesouhlasí?"
+  Profil: "Profil"
   Log out: "Odhlásit"
   Resend confirmation instructions: "Poslat potvrzovací email znovu"
   Edit registration: "Upravit registraci"
@@ -44,7 +45,10 @@ cs:
   Registrations: "Přihlášení"
   shirt_size: "velikost trika"
   colour_map: "barevnou mapu"
+  phone: "Telefonní číslo po dobu závodu"
+  Fill phone number: "Pro urychlení registrace prosím vyplň své telefonní číslo v "
   bw_map: "černobílou mapu"
+  goal: "cíl"
   edit registration: "Úprava registrace pro %{dc_id}. Den cesty"
   change possible until: "Trika možno objednávat pouze do %{deadline}!"
   Registration summary: "Registrace: Přehled"
@@ -97,4 +101,4 @@ cs:
       - :day
       - :month
       - :year
-    month_names: [ "leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec" ] 
+    month_names: [ "leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec" ]

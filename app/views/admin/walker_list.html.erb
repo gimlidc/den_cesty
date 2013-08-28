@@ -17,6 +17,7 @@
 		<th>jméno</th>
 		<th>příjmení</th>
 		<th>e-mail</th>
+		<th>telefon</th>
 		<th>kategorie</th>
 		<th>rok narození</th>
 		<th></th>
@@ -31,12 +32,13 @@
 			  <%- end %>
 			</td>
 			<td><%= f.text_field :name, :size => 10 %></td>
-			<td><%= f.text_field :surname, :size => 20 %></td>
+			<td><%= f.text_field :surname, :size => 15 %></td>
 			<td>
 			  <% if !walker.username.nil? -%>
-				<%= f.email_field :email, :size => 20 %>
+				<%= f.email_field :email, :size => 15 %>
 			  <%- end %>
 			</td>
+			<td><%= f.text_field :phone, :size => 10 %></td>
 			<td>
 				<%= f.select :sex, options_for_select(sex_options, f.object.sex), :autocomplete => "off" %>
 			</td>

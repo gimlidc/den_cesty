@@ -6,9 +6,6 @@
   <div><%= f.label :email %><br />
 	<%= f.email_field :email %></div>
 
-  <div><%= f.label t 'current_password' %> <i>(<%= I18n.t("we need your current password to confirm your changes") %>)</i><br />
-	<%= f.password_field :current_password %></div>
-
   <div><%= f.label t 'password' %><i>(<%= I18n.t("leave blank if you don't want to change it") %>)</i><br />
 	<%= f.password_field :password %></div>
 
@@ -20,6 +17,9 @@
 
   <div><%= f.label t 'surname' %><br />
 	<%= f.text_field :surname %></div>
+	
+  <div><%= f.label :phone %><br />
+	<%= f.text_field :phone %></div>
 
   <div><%= f.label t 'sex' %><br />
 	<%= f.select :sex,
@@ -31,6 +31,9 @@
 
   <div><%= f.label t 'year_of_birth' %><br />
 	<%= f.number_field :year %></div>
+
+  <div><%= f.label t 'current_password' %> <i>(<%= I18n.t("we need your current password to confirm your changes") %>)</i><br />
+	<%= f.password_field :current_password %></div>
 
   <div><%= f.submit t "Update" %></div>
 <% end %>

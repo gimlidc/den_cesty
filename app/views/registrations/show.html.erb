@@ -26,6 +26,7 @@
 		  <th>jméno</th>
 		  <th>příjmení</th>
 		  <th>e-mail</th>
+		  <th>telefon</th>
 		  <th>triko</th>
 		  <th>černobílá mapa</th>
 		  <th>barevná mapa</th>
@@ -38,11 +39,12 @@
 			<td><%= reg.walker.name %></td>
 			<td><%= reg.walker.surname %></td>
 			<td><%= reg.walker.email %></td>
+			<td><%= reg.walker.phone %></td>
 			<td><%= reg.shirt_size %></td>
 			<td><%= reg.bw_map %></td>
 			<td><%= reg.colour_map %></td>
 			<td><%= price(reg) %>&nbsp;Kč</td>
-			<td></td>
+			<td><%= reg.goal %></td>
 			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => I18n.t("Are you sure?") %></td>
 		  </tr>
 
@@ -55,6 +57,7 @@
 <% else %>
   <% if !@reg.nil? %>
 	<h4><%= t "Registration summary" %></h4>
+	<h4><%= t "Fill phone number"%> <%= link_to t("Profil"), edit_walker_path %>.</h4>
 	<table width="40%">
 	  <tbody>
 		<tr><th></th><th class="bottom_line left"><%= t 'value' %></th><th class="bottom_line right"><%= t 'price' %></th></tr>

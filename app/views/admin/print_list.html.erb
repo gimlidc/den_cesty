@@ -28,7 +28,7 @@
 		<tr>
 		  <td><%= reg.walker.name %></td>
 		  <td><%= reg.walker.surname %></td>
-		  <td width="20%"></td>
+		  <td width="15%"><%= reg.walker.phone %></td>
 		  <td><%= reg.shirt_size != "NO" ? reg.shirt_size : "" %></td>
 		  <% if reg.bw_map %>
 			<td align="center">X</td>
@@ -41,7 +41,7 @@
 			<td />
 		  <% end %>
 		  <td><% sum += price(reg) %><%= price(reg) %>,-</td>
-		  <td width="60%"></td>
+		  <td width="60%" ><%= reg.goal %></td>
 		  <td width="20%"></td>
 		</tr>
 	  <% end %>

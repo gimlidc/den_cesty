@@ -48,6 +48,7 @@ class RegistrationsController < ApplicationController
 			if !reg.nil?
 				reg.bw_map = params[:registration][:bw_map]
 				reg.colour_map = params[:registration][:colour_map]
+				reg.goal = params[:registration][:goal]
 				reg.canceled = false
 
 				# field for shirt selection is missing
@@ -111,5 +112,5 @@ class RegistrationsController < ApplicationController
 		redirect_to :action => 'show'
 
 	end
-
+	
 end
