@@ -10,7 +10,7 @@ en:
   Register: "Register"
   signUp:
       title: "Registration of new walker"
-      help: "This step is necessary for creating account on Den Cesty web page. Account is used for making statistics and computations in Hall of Glory during time. This step does NOT include registration for a race. Registration for a race appears after log in into your (possibly) new account."
+      help: "This step is necessary for creating account on Den Cesty web page. Account is used for making statistics and computations in Hall of Glory during time and for registration on races. This step does NOT include registration for a race. Registration for a race appears after log in into your (possibly) new account."
   name: "name"
   surname: "surname"
   Sign_in: "Sign in"
@@ -47,7 +47,8 @@ en:
   bw_map: "monochrome map"
   colour_map: "barevnou mapu"
   goal: "Private goal"
-  phone: "Phone number during the race"
+  actual phone: "Phone number during the race"
+  phone: "Phone number"
   Fill phone number: "To help us pleas fill your phone number in your "
   edit registration: "Walking day %{dc_id} editing %{user} registration"
   change possible until: "Shirts available until %{deadline}!"

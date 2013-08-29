@@ -50,9 +50,9 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    if walker_signed_in? 
-      nav.item :edit_walker, I18n.t('Profil'), edit_walker_path
-    end
+#    if walker_signed_in? 
+#      nav.item :edit_walker, I18n.t('Profil'), edit_walker_path
+#    end
 
 
     if walker_signed_in? && current_walker.username == $admin_name

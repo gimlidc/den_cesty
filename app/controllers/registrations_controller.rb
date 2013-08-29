@@ -11,6 +11,7 @@ class RegistrationsController < ApplicationController
 			redirect_to :action => :edit
 		end
 		@registration = Registration.new
+		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("sign_up_dc")
 		@action = "create"		
 	end
@@ -18,8 +19,9 @@ class RegistrationsController < ApplicationController
 	def create
 		@reg = Registration.new
 		@reg.walker_id = current_walker[:id]
+		@walker = Walker.find(current_walker[:id])
 		@reg.dc_id = $dc.id
-		update_db(@reg)
+		update_db(@reg, @walker)
   end
 
 	def show
@@ -70,11 +72,12 @@ class RegistrationsController < ApplicationController
 					  redirect_to :action => 'show'
 					else  
 					  @registration = reg
-					  flash.alert = "You have to fill phone number."
+					  flash.alert = walker.errors.full_messages.to_sentence
             redirect_to :action => :edit
           end
 				else
 					@registration = reg
+					flash.alert = reg.errors.full_message.to_sentence
 					redirect_to :action => :edit
 				end
 			else

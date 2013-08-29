@@ -69,7 +69,7 @@ cs:
         surname: "Příjmení"
         name: "Jméno"
         year: "Rok"
-        phone: "Telefon během závodu"
+        phone: "Telefonní číslo"
     errors:
       models:
         walker:
@@ -86,3 +86,5 @@ cs:
               invalid: " musí být ve formátu YYYY."
             name:
               blank: " nemůže být prázdné. Slouží pro výsledkové listiny."
+            phone:
+              blank: " nemůže být prázdné. Slouží pro registraci k závodům."

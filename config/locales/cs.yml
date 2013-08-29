@@ -10,7 +10,7 @@ cs:
   Register: "Založit účet"
   signUp:
       title: "Registrace nového chodce"
-      help: "Tento krok je nutný pro tvorbu nového účtu na stránkách Dne cesty. Účet je použit pro tvorbu a výpočet statistik v Síni slávy během plynoucích ročníků. Založení účtu v sobě NEZAHRNUJE registraci na konkrétní závod. Na závod se můžete registrovat po přihlášení do vašeho (nového) účtu."
+      help: "Tento krok je nutný pro tvorbu nového účtu na stránkách Dne cesty. Účet je použit pro tvorbu a výpočet statistik v Síni slávy během plynoucích ročníků a přihlašování na jednotlivé závody. Založení účtu v sobě NEZAHRNUJE registraci na konkrétní závod. Na závod se můžete registrovat po přihlášení do vašeho (nového) účtu."
   name: "jméno"
   surname: "příjmení"
   Sign_up: "Vytvořit účet"
@@ -45,7 +45,8 @@ cs:
   Registrations: "Přihlášení"
   shirt_size: "velikost trika"
   colour_map: "barevnou mapu"
-  phone: "Telefonní číslo po dobu závodu"
+  phone: "Telefonní číslo"
+  actual phone: "Telefonní číslo po dobu závodu"
   Fill phone number: "Pro urychlení registrace prosím vyplň své telefonní číslo v "
   bw_map: "černobílou mapu"
   goal: "cíl"
