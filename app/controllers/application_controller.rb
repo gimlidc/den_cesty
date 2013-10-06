@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_logged_in?
   before_filter :loadDcParams  
   
-  $admin_name = "evajs"
+  $admin_name = "gimli"
   $sex_options = [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
 
   before_filter :set_locale

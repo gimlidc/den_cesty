@@ -13,7 +13,7 @@ class RegistrationsController < ApplicationController
 		@registration = Registration.new
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("sign_up_dc")
-		@action = "create"		
+		@action = "create"
 	end
 
 	def create
@@ -25,7 +25,7 @@ class RegistrationsController < ApplicationController
   end
 
 	def show
-		if (walker_signed_in?)
+		if walker_signed_in?
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		end
@@ -42,7 +42,9 @@ class RegistrationsController < ApplicationController
 		@action = "update"
 	end
 
-	def update_db(reg, walker)
+# @param reg created registration
+# @param walker owning the registration
+  def update_db(reg, walker)
 		if (Time.now > $registration_deadline)
 			flash.notice = "It's after deadline for registration, changes was not accepted."
 			redirect_to :action => :show
@@ -53,14 +55,14 @@ class RegistrationsController < ApplicationController
 				reg.goal = params[:registration][:goal]
 				reg.phone = params[:registration][:phone]
 				reg.canceled = false
-				
+
 				@phone = params[:registration][:phone]
 				walker.phone = @phone
-        
+
 				# field for shirt selection is missing
 				if (Time.now > $shirt_deadline)
 					if reg.shirt_size.nil?
-						reg.shirt_size = "NO"
+						reg.shirt_size = 'NO'
 					end
 				else
 					reg.shirt_size = params[:registration][:shirt_size]
@@ -68,9 +70,9 @@ class RegistrationsController < ApplicationController
 
 				if reg.save
 					if walker.save
-					  flash.notice = "Registration details sucessfully stored."
+					  flash.notice = 'Registration details successfully stored.'
 					  redirect_to :action => 'show'
-					else  
+					else
 					  @registration = reg
 					  flash.alert = walker.errors.full_messages.to_sentence
             redirect_to :action => :edit
@@ -84,7 +86,7 @@ class RegistrationsController < ApplicationController
 				flash.notice = "Data of registration is missing, illegal access?!"
 			end
 		end
-	end    
+	end
 
 	def update
 		@reg = Registration.find(:first, :conditions => {:walker_id => params[:registration][:walker_id], :dc_id => params[:registration][:dc_id]})
@@ -109,7 +111,7 @@ class RegistrationsController < ApplicationController
 		redirect_to :controller => 'pages', :action => 'actual'
 	end
 
-	def unregister		
+	def unregister
 		@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
     @walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})
     if !@reg.nil?
@@ -121,7 +123,7 @@ class RegistrationsController < ApplicationController
       end
     else
       flash.notice = "Registration not found."
-    end		
+    end
 
 		redirect_to :action => 'show'
 
