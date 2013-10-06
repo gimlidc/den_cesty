@@ -8,7 +8,7 @@
   <%= collection_select("walker", :id, @walkers, :id, :nameSurnameYear, :include_blank => true)  %>
   <%= collection_select("dc", :id, @dcs, :id, :specifyName, :include_blank => true)  %>
   <br />
-  <%= text_area_tag("report_html", nil, :class => 'report-input', :maxlength => 10000, :rows => 30) %>
+  <%= text_area_tag("report_html", nil, :class => 'report-input', :maxlength => 50000, :rows => 30) %>
   <br />
   <%= submit_tag %>
 <% end %>

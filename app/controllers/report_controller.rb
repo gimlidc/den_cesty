@@ -7,6 +7,7 @@ class ReportController < ApplicationController
 	  # 
 		@dc_id = (params[:id].nil? || params[:id] == "") ? nil : params[:id]
 		@author = (params[:walker].nil? || params[:walker] == "") ? nil :  Walker.where(:id => params[:walker]).first
+    dcs = Dc.find(:all, :order => :id)
 
     # user does not select nothing
 		if (@dc_id == nil && @author == nil)
@@ -38,9 +39,9 @@ class ReportController < ApplicationController
 		@dc_select=""
 		for i in 1..$dc.id do
 			if @dc_id != nil && i == Integer(@dc_id)
-				@dc_select+="<option value=#{i} selected=\"selected\">#{$dc_spec[i-1]}</option>\n"
+				@dc_select+="<option value=#{i} selected=\"selected\">#{dcs[i-1].name_cs}</option>\n"
 			else
-				@dc_select+="<option value=#{i}>#{$dc_spec[i-1]}</option>\n"
+				@dc_select+="<option value=#{i}>#{dcs[i-1].name_cs}</option>\n"
 			end
 		end
 
