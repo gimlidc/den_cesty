@@ -122,16 +122,16 @@ class AdminController < ApplicationController
 	  @results = params[:results] 
 	  
 		@results.each do |key, value|
-		  if value[:distance] == ''
+		  if value[:distance] == '' && value[:official] == ''
 		    next
 		  end
 		  
       result = Result.first(:conditions => {:walker_id => value[:walker_id], :dc_id => value[:dc_id]})
       
       if result.nil?
-        result = Result.create(:walker_id => value[:walker_id], :dc_id => value[:dc_id], :distance => value[:distance])
+        result = Result.create(:walker_id => value[:walker_id], :dc_id => value[:dc_id], :distance => value[:distance], :official => value[:official])
       else
-        result.update_attributes(:distance => value[:distance])
+        result.update_attributes(:distance => value[:distance], :official => value[:official])
       end
   
     end
@@ -146,7 +146,7 @@ class AdminController < ApplicationController
 				@set_dc = Integer("#{params[:id]}")
 			end
 			
-			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
+			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance, official FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
 	end
 
 	def results_list

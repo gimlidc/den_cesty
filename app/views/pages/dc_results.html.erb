@@ -20,7 +20,7 @@ Výsledky <%= @dc_id %>. Dne cesty:
       },
       xAxis: {
       	categories: [<% @results.each do |result| %>
-      			'<%= "#{result.walker.nameSurname}" %>',
+      			'<%= "#{result.walker.nameSurname}" %>',      			
       		<% end %>
       		],
       	title: {
@@ -30,15 +30,32 @@ Výsledky <%= @dc_id %>. Dne cesty:
       plotOptions: {
 		bar: {
 			dataLabels: {
-				enabled: true
+				enabled: true,
+				format: "{y} km",
+				y: -5
 			}
 		}
 	  },
       series: [{
-      	name: "<%= @dc_id %>. den cesty",
+      	name: 'Nahlášeno',
       	data: [
-      		<% @results.each do |result| %> 	
-				<%= result.distance %>,
+      		<% @results.each do |result| %>
+      			<% if result.distance == nil || result.distance == '' %>
+      				0,
+      			<% else %>       				
+					<%= result.distance %>,				
+				<% end %>
+			<% end %>
+			]
+		}, {
+		name: 'Oficielně',
+		data: [
+			<% @results.each do |result| %>
+				<%  if result.official == nil || result.official == '' %>
+					0,
+				<% else %>
+					<%= result.official %>,
+				<% end %>
 			<% end %>
 			]
 		}]

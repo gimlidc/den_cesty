@@ -28,7 +28,7 @@ class PagesController < ApplicationController
 	    @dc_id = params[:get][:dc_id]
 	  end
 	  @dcs = Dc.order(:start_time).all
-	  @results = Result.where(:dc_id => @dc_id).order('distance DESC').all
+	  @results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all
 	end
 
 	def contacts
