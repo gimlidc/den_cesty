@@ -8,30 +8,25 @@ class ReportController < ApplicationController
 		@dc_id = (params[:id].nil? || params[:id] == "") ? nil : params[:id]
 		@author = (params[:walker].nil? || params[:walker] == "") ? nil :  Walker.where(:id => params[:walker]).first
     dcs = Dc.find(:all, :order => :id)
+    @publishers = Walker.joins(:report).order(:surname).uniq
 
     # user does not select nothing
 		if (@dc_id == nil && @author == nil)
-			@reports = Report.joins(:walker).find(:all)
-			publishers = Report.select("walker_id")
-			@walkers = Walker.where(:id => publishers).select(["username", "id"])
+			@reports = Report.joins(:walker).find(:all, :order => 'updated_at DESC')
 		else
 		  # user selects Den Cesty
 			if (@author == nil)
 				@dc_id = params[:id]
-				@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id})
-				publishers = Report.where(:dc_id => @dc_id).select("walker_id")
-        @walkers = Walker.where(:id => publishers).select(["username", "id"])
+				@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id}, :order => 'updated_at DESC')
 			# user selects Author
 			else
 			  # Den Cesty is also defined
 				if (@dc_id == nil)
-					@reports = Report.joins(:walker).find(:all, :conditions => {:walker_id => params[:walker]})
-					@walkers = Walker.where(:id => @author).select(["username", "id"])
+					@reports = Report.joins(:walker).find(:all, :conditions => {:walker_id => params[:walker]}, :order => 'updated_at DESC')
 				# wtf?
 				else
 					@dc_id = params[:id]
-					@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id, :walker_id => params[:walker]})
-					@walkers = Walker.where(:id => @author).select(["username", "id"])
+					@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id, :walker_id => params[:walker]}, :order => 'updated_at DESC')
 				end
 			end
 		end

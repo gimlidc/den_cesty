@@ -3,12 +3,14 @@ DenCesty::Application.routes.draw do
   resources :dcs
 
 	devise_for :walkers
+  resources :walkers, :only => [:index, :edit]
 
 	resource :registration
 	
 	resource :dc
 
-	match 'walkers/edit' => "walkers#edit", :as => :edit_walker
+	#match 'walkers/edit' => "walkers#edit", :as => :edit_walker
+  #match 'walkers/:id' => 'walkers#show', :as => :show_walker
 	match 'report/new' => "report#new", :as => :new_report
 	match 'report/edit' => "report#edit", :as => :edit_report
 	match 'report/show' => "report#show", :as => :show_report

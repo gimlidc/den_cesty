@@ -7,7 +7,7 @@
   <table>
 	<tr>
 	  <td><b>autor:</b>
-	  	<%= collection_select(:walker, @author, @walkers, :id, :username, {:include_blank => true}, {:id => "walker", :name => "walker"}) %>
+	  	<%= collection_select(:report, :walker_id, @publishers, :id, :nameSurname, {:include_blank => true}, {:id => "walker", :name => "walker"}) %>
 	  </td>
 	  <td><b>rok:</b><%= select_tag("id", @dc_select.html_safe, :include_blank => true) %></td>
 	  <td><%= submit_tag "vyhledat" %></td>
@@ -26,7 +26,7 @@
 <% end %>
 <% for report in @reports %>
   <div class="report">
-	<b>&nbsp;autor:&nbsp;</b><%= report.walker.username.nil? ? "#{report.walker.name} #{report.walker.surname}" : "#{report.walker.username}" %>, <%= dc_name(report.dc_id) %>
+	<b>&nbsp;autor:&nbsp;</b><%= "#{report.walker.nameSurname}" %>, <%= report.dc.seasonYear %>
 	<div class="justify">
 	  <%= format(report.report_html).html_safe %>
 	</div>
