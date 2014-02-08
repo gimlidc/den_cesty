@@ -13,13 +13,13 @@ class ApplicationController < ActionController::Base
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(19)  
+      $dc = Dc.find(21)  
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
-      $registration_starts = true
+      $registration_starts = false
       $report_deadline = ($dc.start_time + 1.month).end_of_day          
     end    
-    $race_limit = 150    
+    $race_limit = $dc.limit    
   end
 
   def set_locale

@@ -89,6 +89,8 @@ en:
       limit: "For this race is limit %{race_limit} of registered walkers."
       date: "Date"
       where: "Start"
+      checks: "Checks"
+      fees: "Registration fee"
       conditions: "Conditions"
       equipment: "Equipment"
       route: "Route"

@@ -90,6 +90,8 @@ cs:
       limit: "Na tento závod je maximum stanoveno na %{race_limit} registrovaných závodníků."
       date: "Termín"
       where: "Start"
+      checks: "Kontroly"
+      fees: "Startovné"
       conditions: "Podmínky"
       equipment: "Co s sebou"
       route: "Trasa"

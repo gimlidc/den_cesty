@@ -4,8 +4,8 @@ class PagesController < ApplicationController
   skip_before_filter :check_logged_in?
 
   def actual
-		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:surname, :name)
-		render "podzim2013.html.erb"
+		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:surname, :name)		
+		render "jaro2014.html.erb"
   end
 
 	def rules
@@ -17,7 +17,54 @@ class PagesController < ApplicationController
 	end
 
 	def hall_of_glory
-
+    @year_maxima = Result.group(:dc_id).order(:dc_id).maximum(:distance)
+    @dc_max = []    
+    Dc.all.each do |dc|
+      @dc_max[dc.id] = Result.where(:dc_id => dc.id, :distance => @year_maxima[dc.id]).joins(:walker).order(:surname).all      
+    end
+    
+    @records = @dc_max.flatten(1)
+    
+    @recordmans = Hash.new
+    
+    @dr = []  
+    size = @year_maxima.keys.last
+    # for each year count DR
+    @year_maxima.each do |j,value|            
+      if @year_maxima[j].nil? # if no maxima in year is set, skip to next year
+        @dr[j] = 1        
+        next;
+      end
+      i = j - 1            
+      @dr[j] = 1
+      while i > 0 do
+        if !@year_maxima[i].nil?
+          if @year_maxima[i] <= value
+            @dr[j] = @dr[j] + 1
+          else
+            break;
+          end
+        end
+        i = i - 1
+      end
+      i = j + 1
+      while i < size do
+        if !@year_maxima[i].nil?
+          if @year_maxima[i] <= value
+            @dr[j] = @dr[j] + 1
+          else
+            break;
+          end
+        end
+        i = i + 1
+      end
+      @dc_max[j].each do |result|
+        if @recordmans[result.walker_id].nil? || @recordmans[result.walker_id][:dr] < @dr[j]
+          @recordmans[result.walker_id] = { :name => result.walker.name, :surname => result.walker.surname, :dr => @dr[j] }
+        end
+      end      
+    end
+    @recordmans = @recordmans.sort_by{|k, v| v[:dr]}.reverse
 	end
 	
 	def dc_results
