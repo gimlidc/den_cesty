@@ -5,7 +5,7 @@
         Den cesty je souboj s vlastním já a fyzickým vyčerpáním. Letos na Vás čeká nádherná cesta Českým středohořím, českými chmelnicemi a finishem v městě českého piva. Připravili jsme 180km s kladným převýšením více než 4000m. Jarní trasa je jako obvykle startována ráno, tedy i ti, co si nevěří, že by celých 24h zvládli mají jedinečnou možnost účasti za denního světla.
     </p>
     <p>
-        <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %>
+        <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %> Registrace začne během února, pokud máš účet na našich stránkách, upozornění Ti přijde emailem při spuštění.
     </p>    
     <br />
     <%
@@ -20,6 +20,9 @@
 <div class="left-column">
     <table id="summary">
         <tbody>
+        	<tr>
+                <th class="title"><%= t 'actual.intro' %>:</th><td>Den cesty je 24h dlouhý závod. Cílem závodníků je pokořit za tento čas co největší vzdálenost po určené trase.</td>
+            </tr>
             <tr>
                 <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td>
             </tr>
@@ -27,7 +30,13 @@
                 <th class="title"><%= t 'actual.where' %>:</th><td>Lovosice nádražní hala ČD</td>
             </tr>
             <tr>
-                <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu: <%= $dc.map_bw_price %>Kč, barevná mapa závodu <%= $dc.map_color_price %>Kč, bavlněné tričko: <%= $dc.shirt_price %>Kč.</td>
+                <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč), bavlněné tričko (<%= $dc.shirt_price %>Kč).</td>
+            </tr>            
+            <tr>
+                <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td>
+            </tr>            
+            <tr>
+                <th class="title"><%= t 'actual.route' %>:</th><td><a href="http://mapy.cz/s/95RQ">TRASA</a> pro rok 2014 se ještě může maličko změnit (ale trénovat můžete začít už teď). Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td>
             </tr>
             <tr>
             	<th class="title"><%= t 'actual.checks' %>:</th><td>Kontroly závodu jsou samoobslužné (až na výjjimky), v kontrolním místě (ta budou zveřejněna těsně před začátkem závodu), naleznete označení kontroly (papír velikosti A4) a u něj přiložený značkovač. Značkovačem si do svého itineráře zaznamenáte, že jste na kontrole byli (čas, nebo jen křížek). Všechny kontroly uvedené ve vašem itineráři jsou povinné, pokud nějaká chybí, bude Vám ujitá vzdálenost krácena dle pravidel.<br />
@@ -35,13 +44,7 @@
             	</td>
             </tr>
             <tr>
-                <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné).</td>
-            </tr>
-            <tr>
                 <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se sice nekoná v zimě, ale právě to se nezřídka stává osudným. Závodníci mají často pocit, "že už je teplo" a šetří s vybavením. Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme a pročíst si nějaké ty reporty (abyste věděli, co Vás čeká). Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a>. Závod žádné povinné vybavení nevyžaduje, nicméně doporučujeme: 2 čelovky (každoročně se mi stane, že někdo potřebuje zapůjčit), náhradní baterie pokud možno nedobíjecí (dobíjecí zkontrolujte před závodem, že jsou skutečně nabité, po dobu závodu je držte v teple). Lékárnička (vazelína, náplasti). Oblečení, ve kterém nezmrznete i když se budete muset na delší dobu zastavit. Pokud šetříte vybavením, vezměte si alespoň termofólii.</td>
-            </tr>
-            <tr>
-                <th class="title"><%= t 'actual.route' %>:</th><td><a href="http://mapy.cz/s/95RQ">TRASA</a> pro rok 2014 se ještě může maličko změnit (ale trénovat můžete začít už teď). Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td>
             </tr>
             <tr>
                 <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th><td> <% if !@registered_walkers.nil? %>
@@ -56,4 +59,4 @@
     <%= render :file => "pages/commertial.html.erb" %>    
 </div>
 </div>
-<div class="right-column"><%= image_tag "dc2014_final1.png", :width => "100%"%>></div>
+<div class="right-column"><%= image_tag "dc2014_final1.png", :width => "100%"%></div>
