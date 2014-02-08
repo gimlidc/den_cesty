@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
       $dc = Dc.find(21)  
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
-      $registration_starts = false
+      $registration_starts = true
       $report_deadline = ($dc.start_time + 1.month).end_of_day          
     end    
     $race_limit = $dc.limit    

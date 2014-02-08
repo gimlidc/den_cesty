@@ -49,7 +49,7 @@ cs:
   actual phone: "Telefonní číslo po dobu závodu"
   Fill phone number: "Pro urychlení registrace prosím vyplň své telefonní číslo v "
   bw_map: "černobílou mapu"
-  goal: "cíl aneb jaké máte ambice?"
+  goal: "Cíl (aneb jaké máš ambice?)"
   edit registration: "Úprava registrace pro %{dc_id}. Den cesty"
   change possible until: "Trika možno objednávat pouze do %{deadline}!"
   Registration summary: "Registrace: Přehled"

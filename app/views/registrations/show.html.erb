@@ -56,7 +56,7 @@
   <% end %>
 <% else %>
   <% if !@reg.nil? %>
-	<h4><%= t "Registration summary" %></h4>
+	<h2><%= t "Registration summary" %></h2>
 	<table width="43%">
 	  <tbody>
 		<tr><td class="left"><%= t 'phone' %></td><td colspan="2" class="left"><%=  @reg.phone %></td></tr>
@@ -70,6 +70,14 @@
 		<tr><td><b><%= t 'total price' %>:</b></td><td></td><td class="right"><b class="red"><%= price(@reg) %>&nbsp;Kč</b></td></tr>
 	  </tbody>
 	</table>
+	<p>
+	<% if shirt_price(@reg.shirt_size) == 0 %>
+		Startovné můžeš uhradit na startu nebo
+	<% else %>
+		Úhradu startovného proveď nejpozději
+	<% end %>
+	do <b class="red"><%= ($shirt_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveďt svůj email (místo @ nech například mezeru).	
+	</p>
   <% else %>
 	Access denied! Please log in.
   <% end %>

@@ -1,9 +1,9 @@
 <h2>Přihlášení k účasti na <%= $dc.id %>. Dni cesty </h2>
 <% if $registration_starts %>	
 	<% if !isLimit %>
-		<p>Obě verze mapy se před startem objeví na stránkách ke stažení. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Vyčkáte-li budete mít možnost si mapu vytisknout sami.
+		<p>Mapa (pokud si ji chceš vytisknout doma) se před startem objeví na stránkách ke stažení. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Pokud si mapu obědnáš (viz formulář) jednotlivé části mapy obdržíš na příslušné kontrole.
 		</p>
-		<p>Potisk triček bude stejný jako na jaře. Pokud chcete potisknout svoje vlastní triko, tak i to je možné. V nabídce zaškrtněte možnost <i>OWN</i> a vyčkejte na doručení mailu s instrukcemi. Upozorňujeme, že trika musí být nová nesepraná (jinak kvalitu potisku nelze zaručit).
+		<p>Na potisku triček aktuálně pracujeme, pokud se nestane nic neočekávaného, trika budou černá s šedým potiskem. Pokud chceš potisknout svoje vlastní triko, tak i to je možné. Napiš organizátorům. Upozorňujeme, že trika musí být nová nesepraná (jinak kvalitu potisku nelze zaručit).
 		</p>
 		<p class="red">
 			Přihlášením souhlasíte s <%= link_to "pravidly", pages_rules_path %> závodu.
@@ -14,6 +14,6 @@
 	<% end%>
 <% else %>
 <p>
-	Registrace ještě nezačala, upozornění přijde Ti emailem.
+	Registrace ještě nezačala, upozornění Ti přijde emailem.
 </p>
 <% end %>
