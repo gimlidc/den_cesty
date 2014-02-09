@@ -46,17 +46,31 @@
             <tr>
                 <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se sice nekoná v zimě, ale právě to se nezřídka stává osudným. Závodníci mají často pocit, "že už je teplo" a šetří s vybavením. Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme a pročíst si nějaké ty reporty (abyste věděli, co Vás čeká). Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a>. Závod žádné povinné vybavení nevyžaduje, nicméně doporučujeme: 2 čelovky (každoročně se mi stane, že někdo potřebuje zapůjčit), náhradní baterie pokud možno nedobíjecí (dobíjecí zkontrolujte před závodem, že jsou skutečně nabité, po dobu závodu je držte v teple). Lékárnička (vazelína, náplasti). Oblečení, ve kterém nezmrznete i když se budete muset na delší dobu zastavit. Pokud šetříte vybavením, vezměte si alespoň termofólii.</td>
             </tr>
+            <tr>        
+    <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th>
+    <td> 
+    	<% if !@registered_walkers.nil? && !@registered_walkers.empty? %>
+    	<table width="100%" border="1" cellpadding="3">
+        	<tr><th>Závodník</th><th>Registrace</th><th>Zaplaceno</th></tr>
+            <% @registered_walkers.each do |reg| %>
             <tr>
-                <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th><td> <% if !@registered_walkers.nil? %>
-                <% @registered_walkers.each do |reg| %>
-                <%= reg.walker.username %>,
-                <% end %>
-                <% end %> </td>
-            </tr>
+                <td><%= reg.walker.name %> <%= reg.walker.surname %></td>
+                <td align="right"><%= reg.updated_at.localtime.strftime("%d.%m %Y") %></td>
+           		<td align="center">
+           			<% if reg.confirmed %>
+           			ano
+           			<% end %>
+           		</td>
+          	</tr>                
+    	</table>
+        <% end %>
+    <% end %>    
+    </td></tr>
         </tbody>
     </table>
-    <br />
-    <%= render :file => "pages/commertial.html.erb" %>    
+</div>
+<div class="right-column"><%= image_tag "dc2014_final1.png" %>
+	<br />
+    <%= render :file => "pages/commertial.html.erb" %>
 </div>
 </div>
-<div class="right-column"><%= image_tag "dc2014_final1.png", :width => "100%"%></div>

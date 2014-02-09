@@ -3,9 +3,9 @@ class RegistrationsController < ApplicationController
   skip_before_filter :check_admin?, :except => [:unregister]
 
 	def new
-		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
-		if !@reg.nil? && !@reg.empty?
-			if (!@reg[0].canceled)
+		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+		if !@reg.nil?
+			if (!@reg.canceled)
 				flash.notice = "You are already registered."
 			end
 			redirect_to :action => :edit
@@ -17,7 +17,10 @@ class RegistrationsController < ApplicationController
 	end
 
 	def create
-		@reg = Registration.new
+	  @reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+	  if @reg.nil?
+		  @reg = Registration.new
+		end
 		@reg.walker_id = current_walker[:id]
 		@walker = Walker.find(current_walker[:id])
 		@reg.dc_id = $dc.id
@@ -55,6 +58,7 @@ class RegistrationsController < ApplicationController
 				reg.goal = params[:registration][:goal]
 				reg.phone = params[:registration][:phone]
 				reg.canceled = false
+				reg.confirmed = false
 
 				@phone = params[:registration][:phone]
 				walker.phone = @phone

@@ -16,7 +16,7 @@
 	<%= f.label t :colour_map %></div>
 
   <div><%= f.label t :shirt_size %>
-	<% options = [["NO", "NO"], ["OWN", "OWN"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
+	<% options = [["NO", "NO"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
 	<%= f.select :shirt_size,
 	  options_for_select(options,  f.object.shirt_size), {},
 	  :disabled => (Time.now > $shirt_deadline) %>

@@ -1,11 +1,6 @@
 class Registration < ActiveRecord::Base
 
-	$shirt_sizes = ["NO", "OWN", "XS", "S", "M", "L", "XL", "XXL"]
-	$reg_price = 30
-	$bw_map_price = 10
-	$colour_map_price = 50
-	$shirt_price = 250
-	$own_shirt_price = 125
+	$shirt_sizes = ["NO", "XS", "S", "M", "L", "XL", "XXL"]	
 
 	belongs_to :walker
 	belongs_to :dc
@@ -13,6 +8,6 @@ class Registration < ActiveRecord::Base
 	validates_inclusion_of :shirt_size, :in => $shirt_sizes
 	validate :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :presence => true
 	validate :phone, :presence => true, :allow_blank => false
-	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :phone, :canceled
+	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :phone, :canceled, :confirmed
 	validate :phone, :presence => true, :allow_blank => false
 end
