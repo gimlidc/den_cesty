@@ -2,10 +2,10 @@
     <h1 color="red"><%= $dc.id %>. Den cesty</h1>
     <h6 align="center"><%= $dc.name_cs %></h6>
     <p>
-        Den cesty je souboj s vlastním já a fyzickým vyčerpáním. Letos na Vás čeká nádherná cesta Českým středohořím, českými chmelnicemi a finishem v městě českého piva. Připravili jsme 180km s kladným převýšením více než 4000m. Jarní trasa je jako obvykle startována ráno, tedy i ti, co si nevěří, že by celých 24h zvládli mají jedinečnou možnost účasti za denního světla.
+        Den cesty je souboj s vlastním já a fyzickým vyčerpáním. Letos na Vás čeká nádherná cesta Českým středohořím, českými chmelnicemi a cílem v městě českého piva. Připravili jsme 180km s kladným převýšením více než 4000m. Jarní trasa je jako obvykle startována ráno, tedy i ten, kdo si nevěří, že by celých 24h zvládli, mají jedinečnou možnost účasti za denního světla.
     </p>
     <p>
-        <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %> Registrace začne během února, pokud máš účet na našich stránkách, upozornění Ti přijde emailem při spuštění.
+        <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %> Pokud se přiblíží limit závodu, budeme registrace starší jednoho týdne bez zaplacení mazat.
     </p>    
     <br />
     <%
@@ -15,7 +15,7 @@
     <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
     <% else if remains < 0 %>
     <h4>Registrace byla ukončena</h4>
-    <% end %>
+    <% end %>    
     <% end %>
 <div class="left-column">
     <table id="summary">
@@ -39,12 +39,12 @@
                 <th class="title"><%= t 'actual.route' %>:</th><td><a href="http://mapy.cz/s/95RQ">TRASA</a> pro rok 2014 se ještě může maličko změnit (ale trénovat můžete začít už teď). Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map.</td>
             </tr>
             <tr>
-            	<th class="title"><%= t 'actual.checks' %>:</th><td>Kontroly závodu jsou samoobslužné (až na výjjimky), v kontrolním místě (ta budou zveřejněna těsně před začátkem závodu), naleznete označení kontroly (papír velikosti A4) a u něj přiložený značkovač. Značkovačem si do svého itineráře zaznamenáte, že jste na kontrole byli (čas, nebo jen křížek). Všechny kontroly uvedené ve vašem itineráři jsou povinné, pokud nějaká chybí, bude Vám ujitá vzdálenost krácena dle pravidel.<br />
+            	<th class="title"><%= t 'actual.checks' %>:</th><td>Kontroly závodu jsou samoobslužné (až na výjimky), v kontrolním místě (ta budou zveřejněna těsně před začátkem závodu), naleznete označení kontroly (papír velikosti A4) a u něj přiložený značkovač. Značkovačem si do svého itineráře zaznamenáte, že jste na kontrole byli (čas, nebo jen křížek). Všechny kontroly uvedené ve vašem itineráři jsou povinné, pokud nějaká chybí, bude Vám ujitá vzdálenost krácena dle pravidel.<br />
             		Stejně jako v loňském roce i letos máme v úmyslu na trase zajistit alespoň jednu hlídanou kontrolu se zázemím (možnost doplnění zásob). Umístění této kontroly bude mezi 40.-100. kilometrem.
             	</td>
             </tr>
             <tr>
-                <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se sice nekoná v zimě, ale právě to se nezřídka stává osudným. Závodníci mají často pocit, "že už je teplo" a šetří s vybavením. Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme a pročíst si nějaké ty reporty (abyste věděli, co Vás čeká). Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a>. Závod žádné povinné vybavení nevyžaduje, nicméně doporučujeme: 2 čelovky (každoročně se mi stane, že někdo potřebuje zapůjčit), náhradní baterie pokud možno nedobíjecí (dobíjecí zkontrolujte před závodem, že jsou skutečně nabité, po dobu závodu je držte v teple). Lékárnička (vazelína, náplasti). Oblečení, ve kterém nezmrznete i když se budete muset na delší dobu zastavit. Pokud šetříte vybavením, vezměte si alespoň termofólii.</td>
+                <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se sice nekoná v zimě, ale právě to se nezřídka stává osudným. Závodníci mají často pocit, "že už je teplo" a šetří s vybavením. Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme a pročíst si nějaké ty <%= link_to "reporty", report_list_path %> (abyste věděli, co Vás čeká). Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a>. Závod žádné povinné vybavení nevyžaduje, nicméně doporučujeme: 2 čelovky (každoročně se mi stane, že někdo potřebuje zapůjčit), náhradní baterie pokud možno nedobíjecí (dobíjecí zkontrolujte před závodem, že jsou skutečně nabité, po dobu závodu je držte v teple). Lékárnička (vazelína, náplasti). Oblečení, ve kterém nezmrznete i když se budete muset na delší dobu zastavit. Pokud šetříte vybavením, vezměte si alespoň termofólii.</td>
             </tr>
             <tr>        
     <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th>
@@ -61,10 +61,10 @@
            			ano
            			<% end %>
            		</td>
-          	</tr>                
+          	</tr>
+          	<% end %>         
     	</table>
-        <% end %>
-    <% end %>    
+        <% end %>    
     </td></tr>
         </tbody>
     </table>

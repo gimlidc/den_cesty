@@ -32,7 +32,8 @@
 		  <th>barevná mapa</th>
 		  <th>cena</th>
 		  <th>cíl</th>
-		  <th>podpis</th>
+		  <th></th>
+		  <th>placeno</th>
 		</tr>
 		<% @registration.each do |reg| %>
 		  <tr>
@@ -45,7 +46,14 @@
 			<td><%= reg.colour_map %></td>
 			<td><%= price(reg) %>&nbsp;Kč</td>
 			<td><%= reg.goal %></td>
-			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => I18n.t("Are you sure?") %></td>
+			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => "Registration of " + reg.walker.name + reg.walker.surname + " will be canceled." %></td>
+			<td>
+				<% if reg.confirmed %>
+					OK
+				<% else %>
+					<%= link_to "potvrdit", {:controller => "registrations", :action => "confirm", :id => reg}, :method => "get", :confirm => "Potvrdit zaplacení registrace " + reg.walker.name + reg.walker.surname %>
+				<% end %>
+			</td>
 		  </tr>
 
 		<% end %>
@@ -71,12 +79,16 @@
 	  </tbody>
 	</table>
 	<p>
-	<% if shirt_price(@reg.shirt_size) == 0 %>
-		Startovné můžeš uhradit na startu nebo
+	<% if @reg.confirmed %>
+		Registrace již byla uhrazena.
 	<% else %>
-		Úhradu startovného proveď nejpozději
-	<% end %>
-	do <b class="red"><%= ($shirt_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveďt svůj email (místo @ nech například mezeru).	
+		<% if shirt_price(@reg.shirt_size) == 0 %>
+			Startovné můžeš uhradit na startu nebo
+		<% else %>
+			Úhradu startovného proveď nejpozději
+		<% end %>
+			do <b class="red"><%= ($shirt_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveďt svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
+	<% end %>	
 	</p>
   <% else %>
 	Access denied! Please log in.

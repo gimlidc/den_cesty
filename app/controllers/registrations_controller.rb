@@ -27,6 +27,22 @@ class RegistrationsController < ApplicationController
 		update_db(@reg, @walker)
   end
 
+  def confirm
+    @reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
+    if !@reg.nil?
+      @reg.confirmed = true
+      if @reg.save
+        flash.notice = "Registration of " << @reg.walker.username.to_s << " was confirmed."
+      else
+        flash.notice = "Confirmation failed."
+      end
+    else
+      flash.notice = "Registration not found."
+    end
+
+    redirect_to :action => 'show'
+  end
+
 	def show
 		if walker_signed_in?
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
@@ -40,6 +56,9 @@ class RegistrationsController < ApplicationController
 			redirect_to :action => :new
 		end
 		@registration = @reg.first
+		if @registration.confirmed
+		  flash.notice = "Registration was already payed. If you want to change payed items or registered walker, contact organizers."		  
+		end		
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("Save")
 		@action = "update"
@@ -58,19 +77,16 @@ class RegistrationsController < ApplicationController
 				reg.goal = params[:registration][:goal]
 				reg.phone = params[:registration][:phone]
 				reg.canceled = false
-				reg.confirmed = false
+				reg.confirmed = params[:registration][:confirmed]
+				reg.shirt_size = params[:registration][:shirt_size]
 
 				@phone = params[:registration][:phone]
 				walker.phone = @phone
 
 				# field for shirt selection is missing
-				if (Time.now > $shirt_deadline)
-					if reg.shirt_size.nil?
-						reg.shirt_size = 'NO'
-					end
-				else
-					reg.shirt_size = params[:registration][:shirt_size]
-				end
+				if reg.shirt_size.nil?
+					reg.shirt_size = 'NO'
+				end								
 
 				if reg.save
 					if walker.save
@@ -102,7 +118,7 @@ class RegistrationsController < ApplicationController
 		@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 
 		if !@reg.nil?
-			@reg.canceled = true
+			@reg.canceled = true			
 			if @reg.save
 				flash.notice = "Registration was cancelled."
 			else

@@ -1,5 +1,7 @@
 <%= form_for(@registration, :url => { :action => @action }) do |f| %>
 
+  <% disabled = @registration.confirmed? ? true : false %>
+  <%= f.hidden_field :confirmed, :value => @registration.confirmed %>
   <%= f.hidden_field :walker_id, :value => current_walker[:id] %>
   <%= f.hidden_field :dc_id, :value => $dc.id %>
   
@@ -9,17 +11,17 @@
   <div><%= f.label t :goal %><br />
 	<%= f.text_field :goal %></div>
   
-  <div><%= f.check_box :bw_map %>
+  <div><%= f.check_box :bw_map, :disabled => disabled %>
 	<%= f.label t :bw_map %></div>
 
-  <div><%= f.check_box :colour_map %>
+  <div><%= f.check_box :colour_map, :disabled => disabled  %>
 	<%= f.label t :colour_map %></div>
 
   <div><%= f.label t :shirt_size %>
 	<% options = [["NO", "NO"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
 	<%= f.select :shirt_size,
 	  options_for_select(options,  f.object.shirt_size), {},
-	  :disabled => (Time.now > $shirt_deadline) %>
+	  :disabled => (Time.now > $shirt_deadline || disabled) %>
 	<i><%= t 'change possible until', :deadline => I18n.l($shirt_deadline, :format => :date) %></i>
   </div>
   <div><%= f.submit @store_string %></div>
