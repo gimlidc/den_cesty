@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140208191930) do
+ActiveRecord::Schema.define(:version => 20140222215923) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20140208191930) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "limit"
+    t.integer  "polyester_shirt_price"
+    t.integer  "scarf_price"
   end
 
   create_table "posts", :force => true do |t|
@@ -42,10 +44,12 @@ ActiveRecord::Schema.define(:version => 20140208191930) do
     t.string   "shirt_size"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "canceled",   :default => false
+    t.boolean  "canceled",        :default => false
     t.string   "goal"
     t.string   "phone"
-    t.boolean  "confirmed",  :default => false
+    t.boolean  "confirmed",       :default => false
+    t.string   "shirt_polyester", :default => "NO"
+    t.boolean  "scarf",           :default => true
   end
 
   create_table "reports", :force => true do |t|

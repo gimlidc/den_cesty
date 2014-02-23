@@ -6,8 +6,9 @@ class Registration < ActiveRecord::Base
 	belongs_to :dc
 
 	validates_inclusion_of :shirt_size, :in => $shirt_sizes
-	validate :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :presence => true
+	validates_inclusion_of :shirt_polyester, :in => $shirt_sizes
+	validate :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :shirt_polyester, :scarf, :presence => true
 	validate :phone, :presence => true, :allow_blank => false
-	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :phone, :canceled, :confirmed
+	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :shirt_polyester, :scarf, :goal, :phone, :canceled, :confirmed, :created_at
 	validate :phone, :presence => true, :allow_blank => false
 end

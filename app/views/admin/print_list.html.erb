@@ -9,27 +9,37 @@
 
   Účastníci potvrzují, že akci konají na <b>vlastní nebezpečí</b>. V čase ukončení soutěže informují organizátory (605 062 837).
 
-  <table border="1" cellpadding="5" width="100%">
+  <table border="1" cellspacing="0" cellpadding="5" width="100%">
 	<tbody>
 	  <tr>
 		<th rowspan="2">jméno</th>
 		<th rowspan="2">příjmení</th>
 		<th rowspan="2">telefon</th>
-		<th rowspan="2">triko</th>
+		<th colspan="2">triko</th>
+		<th rowspan="2">šátek</th>
 		<th colspan="2">mapa</th>
 		<th rowspan="2">cena</th>
 		<th rowspan="2">cíl</th>
 		<th rowspan="2">podpis</th>
 	  </tr>
-	  <tr><th>čb</th>
+	  <tr>
+	  	<th>obyč</th>
+		<th>funk.</th>
+	  	<th>čb</th>
 		<th>bar.</th></tr>
 		<% sum = 0 %>
 	  <% @registration.each do |reg| %>
 		<tr>
 		  <td><%= reg.walker.name %></td>
 		  <td><%= reg.walker.surname %></td>
-		  <td width="15%"><%= reg.walker.phone %></td>
+		  <td width="15%"><%= reg.walker.phone %></td>		  
 		  <td><%= reg.shirt_size != "NO" ? reg.shirt_size : "" %></td>
+		  <td><%= reg.shirt_polyester != "NO" ? reg.shirt_polyester : "" %></td>
+		  <% if reg.scarf %>
+			<td align="center">X</td>
+		  <% else %>
+			<td />
+		  <% end %>
 		  <% if reg.bw_map %>
 			<td align="center">X</td>
 		  <% else %>
@@ -40,7 +50,7 @@
 		  <% else %>
 			<td />
 		  <% end %>
-		  <td><% sum += price(reg) %><%= price(reg) %>,-</td>
+		  <td><% if reg.confirmed %>OK<% else %><% sum += price(reg) %><%= price(reg) %>,-<% end %></td>
 		  <td width="60%" ><%= reg.goal %></td>
 		  <td width="20%"></td>
 		</tr>
@@ -49,7 +59,9 @@
 	  	<td></td>
 	  	<td></td>
 	  	<td></td>
-	  	<td><%= sum %></td>
+	  	<td></td>
+	  	<td></td>
+	  	<th><%= sum %>,-</th>
 	  	<td></td><td></td>
 	  </tr>
 	</tbody>

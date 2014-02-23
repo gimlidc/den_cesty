@@ -3,12 +3,12 @@
 <table>
   <tr>
     <th>Name cs</th>
-    <th>Name en</th>
-    <th>Description</th>
+    <th>Name en</th>    
     <th>Rules</th>
     <th>Start time</th>
     <th>Shirt price</th>
-    <th>Own shirt price</th>
+    <th>Polyester price</th>
+    <th>Scarf price</th>
     <th>Reg price</th>
     <th>Map bw price</th>
     <th>Map color price</th>
@@ -21,12 +21,12 @@
 <% @dcs.each do |dc| %>
   <tr>
     <td><%= dc.name_cs %></td>
-    <td><%= dc.name_en %></td>
-    <td><%= dc.description %></td>
+    <td><%= dc.name_en %></td>    
     <td><%= dc.rules_id %></td>
     <td><%= dc.start_time %></td>
     <td><%= dc.shirt_price %></td>
-    <td><%= dc.own_shirt_price %></td>
+    <td><%= dc.polyester_shirt_price %></td>
+    <td><%= dc.scarf_price %></td>
     <td><%= dc.reg_price %></td>
     <td><%= dc.map_bw_price %></td>
     <td><%= dc.map_color_price %></td>

@@ -10,19 +10,50 @@
   
   <div><%= f.label t :goal %><br />
 	<%= f.text_field :goal %></div>
-  
+  <h4>Mapy:&nbsp;</h4>
   <div><%= f.check_box :bw_map, :disabled => disabled %>
-	<%= f.label t :bw_map %></div>
+	<%= f.label t :bw_map %> (<%= $dc.map_bw_price %>Kč)</div>
 
   <div><%= f.check_box :colour_map, :disabled => disabled  %>
-	<%= f.label t :colour_map %></div>
-
-  <div><%= f.label t :shirt_size %>
-	<% options = [["NO", "NO"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
-	<%= f.select :shirt_size,
-	  options_for_select(options,  f.object.shirt_size), {},
-	  :disabled => (Time.now > $shirt_deadline || disabled) %>
-	<i><%= t 'change possible until', :deadline => I18n.l($shirt_deadline, :format => :date) %></i>
-  </div>
+	<%= f.label t :colour_map %> (<%= $dc.map_color_price %>Kč)</div>
+  <p />
+  <b>Textil:&nbsp;</b><i>(<%= t 'change possible until', :deadline => I18n.l($shirt_deadline, :format => :date) %>)</i><br />
+  <ul>
+  	<li>Trika
+  <%= t :shirt_size %>
+  <table>
+  	<tr>
+  		<td>
+  			<%= f.label t :shirt_cotton %>
+  		</td>
+		<td>
+			<% options = [["NO", "NO"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
+			<%= f.select :shirt_size,
+	  			options_for_select(options,  f.object.shirt_size), {},
+	  			:disabled => (Time.now > $shirt_deadline || disabled) %>
+	  			(<%= $dc.shirt_price %>Kč)
+	  	</td>
+	</tr>  
+  <tr>
+  	<td>
+  		<%= f.label t :shirt_polyester %>
+  	</td>
+  	<td>
+  		<% options = [["NO", "NO"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
+		<%= f.select :shirt_polyester,
+	  		options_for_select(options,  f.object.shirt_polyester), {},
+	  		:disabled => (Time.now > $shirt_deadline || disabled) %>
+	  		(<%= $dc.polyester_shirt_price %>Kč)
+  	</td>
+  </tr>
+  </table>
+  	</li>  	
+    <li>Šátek:
+      <div><%= f.check_box :scarf, :disabled => disabled %>
+	    <%= f.label t :scarf %>
+	    (<%= $dc.scarf_price %>Kč)	    
+      </div>
+  </li>
+  </ul>
   <div><%= f.submit @store_string %></div>
 <% end %>

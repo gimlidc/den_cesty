@@ -1,5 +1,21 @@
 module RegistrationsHelper
 
+  def polyester_shirt_price(shirt_size)
+    price = 0
+    if (!shirt_size.eql?("NO"))
+      price += $dc.polyester_shirt_price
+    end
+    return price
+  end
+  
+  def scarf_price(scarf)
+    price = 0
+    if (scarf == true)
+      return $dc.scarf_price
+    end
+    return price
+  end
+
 	def shirt_price(shirt_size)
 		price = 0
 		if (!shirt_size.eql?("NO") && !shirt_size.eql?("OWN"))
@@ -28,7 +44,7 @@ module RegistrationsHelper
 	end
 
 	def price(reg)
-		return $dc.reg_price + shirt_price(reg.shirt_size) + bw_map_price(reg.bw_map) + colour_map_price(reg.colour_map)
+		return $dc.reg_price + shirt_price(reg.shirt_size) + bw_map_price(reg.bw_map) + colour_map_price(reg.colour_map) + scarf_price(reg.scarf) + polyester_shirt_price(reg.shirt_polyester)
 	end
 
 	def is_registered
@@ -42,6 +58,20 @@ module RegistrationsHelper
 	
 	def isLimit
     Registration.find(:all, :conditions => {:dc_id => $dc.id, :canceled => false}).count >= $race_limit
+  end
+
+  def bool2str(value)
+    if value
+        return "yes_value"
+    end
+    return "no_value"
+  end
+
+  def shirt2str(value)
+    if value.eql?("NO")
+      return "no_value"
+    end
+    return value
   end
 
 end

@@ -20,28 +20,36 @@
 
 	Showing all registrations for Den cesty <%= $dc.id %>
 
-	<table>
+	<table border="1" width="100%" cellpadding="3" cellspacing="0">
 	  <tbody>
 		<tr>
 		  <th>jméno</th>
 		  <th>příjmení</th>
 		  <th>e-mail</th>
 		  <th>telefon</th>
-		  <th>triko</th>
-		  <th>černobílá mapa</th>
-		  <th>barevná mapa</th>
+		  <th>triko<br />bavlna</th>
+		  <th>triko<br />funkční</th>
+		  <th>šátek</th>
+		  <th>ČB mapa</th>
+		  <th>mapa</th>		  
 		  <th>cena</th>
 		  <th>cíl</th>
 		  <th></th>
 		  <th>placeno</th>
 		</tr>
 		<% @registration.each do |reg| %>
-		  <tr>
+		  <tr
+		  <% if Time.now - reg.created_at > 7.days %>
+		  class="notify"
+		  <% end %>
+		  >
 			<td><%= reg.walker.name %></td>
 			<td><%= reg.walker.surname %></td>
 			<td><%= reg.walker.email %></td>
 			<td><%= reg.phone %></td>
 			<td><%= reg.shirt_size %></td>
+			<td><%= reg.shirt_polyester %></td>
+			<td><%= reg.scarf %></td>
 			<td><%= reg.bw_map %></td>
 			<td><%= reg.colour_map %></td>
 			<td><%= price(reg) %>&nbsp;Kč</td>
@@ -65,16 +73,38 @@
 <% else %>
   <% if !@reg.nil? %>
 	<h2><%= t "Registration summary" %></h2>
-	<table width="43%">
+	<table width="43%" cellspacing="0">
 	  <tbody>
 		<tr><td class="left"><%= t 'phone' %></td><td colspan="2" class="left"><%=  @reg.phone %></td></tr>
 		<tr><td class="left"><%= t 'goal' %></td><td colspan="2" class="left"><%=  @reg.goal %></td></tr>
-		<tr><td></td><td></td><td></td></tr>
+		<tr><td>&nbsp; &nbsp;</td><td></td><td></td></tr>
 		<tr><th></th><th class="bottom_line left"><%= t 'value' %></th><th class="bottom_line right"><%= t 'price' %></th></tr>
 		<tr><td><%= t 'registration fee' %></td><td><%= t 'obligate' %></td><td class="right"><b><%= $dc.reg_price %>&nbsp;Kč</b></td></tr>
-		<tr><td><%= t 'shirt' %></td><td><%= @reg.shirt_size %></td><td class="right"><b><%= shirt_price(@reg.shirt_size) %>&nbsp;Kč</b></td></tr>
-		<tr><td><%= t  'bw_map' %></td><td><%= @reg.bw_map %></td><td class="right"><b><%= bw_map_price(@reg.bw_map) %>&nbsp;Kč</b></td></tr>
-		<tr class="bottom_line"><td class="bottom_line"><%= t 'colour_map' %></td><td class="bottom_line"><%= @reg.colour_map %></td><td class="bottom_line right"><b><%= colour_map_price(@reg.colour_map) %>&nbsp;Kč</b></td></tr>
+		<tr>
+			<td><%= t  'bw_map' %></td>
+			<td><%= t bool2str(@reg.bw_map) %></td>
+			<td class="right"><b><%= bw_map_price(@reg.bw_map) %>&nbsp;Kč</b></td>
+		</tr>
+		<tr>
+			<td><%= t 'colour_map' %></td>
+			<td><%= t bool2str(@reg.colour_map) %></td>
+			<td class="right"><b><%= colour_map_price(@reg.colour_map) %>&nbsp;Kč</b></td>
+		</tr>
+		<tr>
+			<td><%= t :shirt_cotton %></td>
+			<td><%= t shirt2str(@reg.shirt_size) %></td>
+			<td class="right"><b><%= shirt_price(@reg.shirt_size) %>&nbsp;Kč</b></td>
+		</tr>
+		<tr>
+			<td><%= t :shirt_polyester %></td>
+			<td><%= t shirt2str(@reg.shirt_polyester) %></td>
+			<td class="right"><b><%= polyester_shirt_price(@reg.shirt_polyester) %>&nbsp;Kč</b></td>
+		</tr>
+		<tr class="bottom_line">
+			<td class="bottom_line"><%= t 'scarf' %></td>
+			<td class="bottom_line"><%= t bool2str(@reg.scarf) %></td>
+			<td class="bottom_line right"><b><%= scarf_price(@reg.scarf) %>&nbsp;Kč</b></td>
+		</tr>		
 		<tr><td><b><%= t 'total price' %>:</b></td><td></td><td class="right"><b class="red"><%= price(@reg) %>&nbsp;Kč</b></td></tr>
 	  </tbody>
 	</table>

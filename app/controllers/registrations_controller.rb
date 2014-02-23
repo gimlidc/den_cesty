@@ -76,9 +76,12 @@ class RegistrationsController < ApplicationController
 				reg.colour_map = params[:registration][:colour_map]
 				reg.goal = params[:registration][:goal]
 				reg.phone = params[:registration][:phone]
-				reg.canceled = false
+				reg.canceled = false				
+				reg.confirmed = params[:registration][:confirmed]
 				reg.confirmed = params[:registration][:confirmed]
 				reg.shirt_size = params[:registration][:shirt_size]
+				reg.shirt_polyester = params[:registration][:shirt_polyester]
+				reg.scarf = params[:registration][:scarf]
 
 				@phone = params[:registration][:phone]
 				walker.phone = @phone

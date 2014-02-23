@@ -54,6 +54,8 @@ en:
   Registration summary: "Registration summary"
   registration fee: "registration fee"
   value: "value"
+  yes_value: "yes"
+  no_value: "no"
   price: "price"
   shirt: "shirt"
   total price: "total price"
