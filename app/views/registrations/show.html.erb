@@ -112,7 +112,7 @@
 	<% if @reg.confirmed %>
 		Registrace již byla uhrazena.
 	<% else %>
-		<% if shirt_price(@reg.shirt_size) == 0 %>
+		<% if price(@reg) < 100 %>
 			Startovné můžeš uhradit na startu nebo
 		<% else %>
 			Úhradu startovného proveď nejpozději
