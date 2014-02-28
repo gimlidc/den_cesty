@@ -6,14 +6,14 @@ class ApplicationController < ActionController::Base
   before_filter :check_logged_in?
   before_filter :loadDcParams  
   
-  $admin_name = "gimli"
+  $admin_name = "evajs"
   $sex_options = [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
 
   before_filter :set_locale
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(21)  
+      $dc = Dc.find(18)  
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
       $registration_starts = true

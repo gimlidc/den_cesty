@@ -99,5 +99,6 @@ en:
       route: "Route"
       registered: "Registered"
       itinerary: "Preliminary itinerary"
+      registration_workflow: "How to join"
   commertial:
       title: "Sponsors and partners of the race"

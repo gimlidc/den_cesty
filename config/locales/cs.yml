@@ -103,6 +103,7 @@ cs:
       route: "Trasa"
       registered: "Přihlášení"
       itinerary: "Orientační itinerář"
+      registration_workflow: "Jak se přihlásit"
   commertial:
     title: "Sponzoři a partneři závodu"
   date:
