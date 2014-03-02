@@ -72,16 +72,17 @@ class RegistrationsController < ApplicationController
 			redirect_to :action => :show
 		else
 			if !reg.nil?
-				reg.bw_map = params[:registration][:bw_map]
-				reg.colour_map = params[:registration][:colour_map]
+			  if !reg.confirmed
+				  reg.bw_map = params[:registration][:bw_map]
+				  reg.colour_map = params[:registration][:colour_map]
+				  reg.shirt_size = params[:registration][:shirt_size]
+          reg.shirt_polyester = params[:registration][:shirt_polyester]
+          reg.scarf = params[:registration][:scarf]
+        end
+        
 				reg.goal = params[:registration][:goal]
 				reg.phone = params[:registration][:phone]
 				reg.canceled = false				
-				reg.confirmed = params[:registration][:confirmed]
-				reg.confirmed = params[:registration][:confirmed]
-				reg.shirt_size = params[:registration][:shirt_size]
-				reg.shirt_polyester = params[:registration][:shirt_polyester]
-				reg.scarf = params[:registration][:scarf]
 
 				@phone = params[:registration][:phone]
 				walker.phone = @phone
