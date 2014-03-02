@@ -112,12 +112,12 @@
 	<% if @reg.confirmed %>
 		Registrace již byla uhrazena.
 	<% else %>
-		<% if shirt_price(@reg.shirt_size) == 0 %>
+		<% if price(@reg) < 100 %>
 			Startovné můžeš uhradit na startu nebo
 		<% else %>
 			Úhradu startovného proveď nejpozději
 		<% end %>
-			do <b class="red"><%= ($shirt_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveďt svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
+			do <b class="red"><%= ($shirt_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
 	<% end %>	
 	</p>
   <% else %>
