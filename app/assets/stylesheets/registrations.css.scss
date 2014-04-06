@@ -1,3 +1,21 @@
 // Place all the styles related to the registrations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.preview table {
+  border: 1px solid black;      
+}
+
+.preview td {
+  border: 0px;
+  padding: 3px;
+  background-color: white;  
+}
+
+.confirmed td {
+  background-color: #C0FFC0;  
+}
+
+.notify td {
+  background-color: #FFCFDD;
+}

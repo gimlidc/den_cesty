@@ -1,26 +1,52 @@
 <% if walker_signed_in? && current_walker.username == $admin_name %>
   <% if !@registration.nil? %>
 
-	<p>Summary:
+	<p>Přehled:
 		<ul>
-			<li>BW maps:<%=  @registration.where(:bw_map => true, :canceled =>false).count %></li>
-			<li>Color maps:<%=  @registration.where(:colour_map => true, :canceled =>false).count %></li>
+			<li>BW maps:<%=  @bwmaps %></li>
+			<li>Color maps:<%=  @colormaps %></li>
+			<li>Šátky: <%=  @textil["scarfs"] %></li>
 			<li>Trika:
-				<ul>
-					<li>XS - <%=  @registration.where(:shirt_size => "XS", :canceled =>false).count %></li>
-					<li>S - <%=  @registration.where(:shirt_size => "S", :canceled =>false).count %></li>
-					<li>M - <%=  @registration.where(:shirt_size => "M", :canceled =>false).count %></li>
-					<li>L - <%=  @registration.where(:shirt_size => "L", :canceled =>false).count %></li>
-					<li>XL - <%=  @registration.where(:shirt_size => "XL", :canceled =>false).count %></li>
-					<li>XXL - <%=  @registration.where(:shirt_size => "XXL", :canceled =>false).count %></li>
-				</ul>
+				<table border="1" cellpadding="5" cellspacing="0">
+				<tr>
+					<th>typ/velikost</th>
+					<% $shirt_sizes.each do |size| %>
+						<th><%= size %></th>
+					<% end %>
+				</tr>
+				<tr>
+					<th>pánská bavlna</th>
+					<% $shirt_sizes.each do |size| %>
+						<td><%= @textil["panskaBavlna"][size] %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>dámská bavlna</th>
+					<% $shirt_sizes.each do |size| %>
+						<td><%= @textil["damskaBavlna"][size] %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>pánský polyester</th>
+					<% $shirt_sizes.each do |size| %>
+						<td><%= @textil["panskyPolyester"][size] %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>dámský polyester</th>
+					<% $shirt_sizes.each do |size| %>
+						<td><%= @textil["damskyPolyester"][size] %></td>
+					<% end %>
+				</tr>
+				</table>
+				Monika Lōrniczová chce pánské L (místo dámského). Robert Frōhn neví, zda platba dojde včas (pokud ne, stejně mu objednat triko).
 			</li>
 		</ul>
 	</p>
 
 	Showing all registrations for Den cesty <%= $dc.id %>
 
-	<table border="1" width="100%" cellpadding="3" cellspacing="0">
+	<table border="1" width="100%" class="preview" cellspacing="0">
 	  <tbody>
 		<tr>
 		  <th>jméno</th>
@@ -37,10 +63,18 @@
 		  <th></th>
 		  <th>placeno</th>
 		</tr>
-		<% @registration.each do |reg| %>
+		<% @collected_money = 0 %>
+		<% @resting_money = 0 %>
+		<% @registration.each do |reg| %>		  
 		  <tr
-		  <% if Time.now - reg.created_at > 7.days %>
+		  <% if reg[:confirmed] == true %>
+		  	class="confirmed"
+		  	<% @collected_money = @collected_money + price(reg) %>
+		  <% else %>
+		    <% @resting_money = @resting_money + price(reg) %>
+		  	<% if price(reg) > 100 %>
 		  class="notify"
+		  	<% end %>
 		  <% end %>
 		  >
 			<td><%= reg.walker.name %></td>
@@ -67,6 +101,7 @@
 		<% end %>
 	  </tbody>
 	</table>
+	Celkem přijato <%= @collected_money %>Kč. Zbývá vybrat <%= @resting_money %>Kč.
   <% else %>
 	No record found!
   <% end %>
