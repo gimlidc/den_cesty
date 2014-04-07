@@ -48,7 +48,7 @@ class RegistrationsController < ApplicationController
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		end
-		if check_admin?
+		if current_walker.username != $admin_name
 		  @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
 		  @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count
 		  # chceme tabulku poctu textilu, kde hraje roli: [typ, sex, velikost]
