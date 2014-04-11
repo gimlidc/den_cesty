@@ -94,11 +94,21 @@ class RegistrationsController < ApplicationController
 		else
 			if !reg.nil?
 			  if !reg.confirmed
-				  reg.bw_map = params[:registration][:bw_map]
-				  reg.colour_map = params[:registration][:colour_map]
-				  reg.shirt_size = params[:registration][:shirt_size]
-          reg.shirt_polyester = params[:registration][:shirt_polyester]
-          reg.scarf = params[:registration][:scarf]
+				  if !params[:registration][:bw_map].nil?
+				    reg.bw_map = params[:registration][:bw_map]
+				  end
+				  if !params[:registration][:colour_map].nil?
+				    reg.colour_map = params[:registration][:colour_map]
+				  end
+				  if !params[:registration][:shirt_size].nil?
+				    reg.shirt_size = params[:registration][:shirt_size]
+				  end
+				  if !params[:registration][:shirt_polyester].nil?
+            reg.shirt_polyester = params[:registration][:shirt_polyester]
+          end
+          if !params[:registration][:scarf].nil?
+            reg.scarf = params[:registration][:scarf]
+          end
         end
         
 				reg.goal = params[:registration][:goal]
