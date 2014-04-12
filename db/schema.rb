@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140222215923) do
+ActiveRecord::Schema.define(:version => 20140412102446) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20140222215923) do
     t.string   "phone"
     t.boolean  "confirmed",       :default => false
     t.string   "shirt_polyester", :default => "NO"
-    t.boolean  "scarf",           :default => true
+    t.boolean  "scarf",           :default => false
   end
 
   create_table "reports", :force => true do |t|
