@@ -1,0 +1,85 @@
+<div>
+    <h1 color="red"><%= $dc.id %>. Den cesty</h1>
+    <h6 align="center"><%= $dc.name_cs %></h6>
+    <p>
+        Den cesty je terénní závod, souboj s vlastním já a fyzickým vyčerpáním. Již podruhé na Vás čeká nádherná cesta Českým středohořím, českými chmelnicemi a cílem v městě českého piva. Podzimní trasa je jako obvykle startována večer.
+    </p>
+    <p>
+        <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %> Pokud se přiblíží limit závodu, budeme registrace starší jednoho týdne bez zaplacení mazat.
+    </p>    
+    <br />
+    <%
+    remains = $registration_deadline - Time.now
+    if  remains < 60 * 60 * 24 * 7 && remains > 0
+    %>
+    <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
+    <% else if remains < 0 %>
+    <h4>Registrace byla ukončena</h4>
+    <% end %>    
+    <% end %>
+<div class="left-column">
+    <table id="summary">
+        <tbody>
+        	<tr>
+                <th class="title"><%= t 'actual.intro' %>:</th><td>Den cesty je 24h dlouhý závod. Cílem závodníků je pokořit za tento čas co největší vzdálenost po určené trase. Na trase není závodníkům poskytována žádná podpora.</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.where' %>:</th><td>Lovosice nádražní hala ČD</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.registration_workflow' %>:</th><td>Pro přihlášení na závod si nejprve založ účet na těchto stránkách (odkaz v pravém horním rohu), menu potřebná pro přihlášení se Ti po přihlášení zobrazí.</td>
+            </tr>
+            <tr>
+              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč), bavlněné tričko (<%= $dc.shirt_price %>Kč), funkční tričko (<%= $dc.polyester_shirt_price %>Kč), šátek (<%= $dc.scarf_price %>Kč).</td>
+            </tr>            
+            <tr>
+                <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují <%= link_to "potvrzení zákoného zástupce", "povoleniZZ.doc" %> (samozřejmě vyplněné). Upravte si prosím v dokumentu datum konání závodu.</td>
+            </tr>            
+            <tr>
+                <th class="title"><%= t 'actual.route' %>:</th><td><a href="http://mapy.cz/s/9Hww">TRASA</a> pro rok 2014 je finální. Děkujeme sponzorovi závodu <a href="http://www.mapy.cz">Mapy.cz</a> za poskytnutí mapových podkladů pro tvorbu oficiálních map. <a href="itinerar_dc_2014_plain.ods">Itinerář</a> (například pro domácí úpravy).</td>
+            </tr>
+            <tr>
+            	<th class="title"><%= t 'actual.checks' %>:</th><td>Kontroly závodu jsou samoobslužné (až na výjimky), v kontrolním místě (ta budou zveřejněna těsně před začátkem závodu), naleznete označení kontroly (papír velikosti A4) a u něj přiložený značkovač. Značkovačem si do svého itineráře zaznamenáte, že jste na kontrole byli (čas, nebo jen křížek). Všechny kontroly uvedené ve vašem itineráři jsou povinné, pokud nějaká chybí, bude Vám ujitá vzdálenost krácena dle pravidel.<br />
+            		Na trase bude jedna hlídaná kontrola se zázemím její umístění zatím řešíme. Otevřena bude zejména v nočních hodinách. Kontrola bude mezi 30. a 60. kilometrem trasy.
+            	</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se sice nekoná v zimě, ale právě to se nezřídka stává osudným. Závodníci mají často pocit, "že už je teplo" a šetří s vybavením. Pokud se chystáte poprvé, neváhejte využít <%= link_to "rad", pages_recommendations_path %>, které už několik let poctivě sbíráme a pročíst si nějaké ty <%= link_to "reporty", report_list_path %> (abyste věděli, co Vás čeká). Dotazy zodpovíme rádi na <a href="https://www.facebook.com/groups/456660911045261/">Facebooku</a>. Závod žádné povinné vybavení nevyžaduje, nicméně doporučujeme: 2 čelovky (každoročně se mi stane, že někdo potřebuje zapůjčit), náhradní baterie pokud možno nedobíjecí (dobíjecí zkontrolujte před závodem, že jsou skutečně nabité, po dobu závodu je držte v teple). Lékárnička (vazelína, náplasti). Oblečení, ve kterém nezmrznete i když se budete muset na delší dobu zastavit. Pokud šetříte vybavením, vezměte si alespoň termofólii.</td>
+            </tr>
+            <tr>        
+    <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th>
+    <td> 
+    	<% if !@registered_walkers.nil? && !@registered_walkers.empty? %>
+    	<table width="100%" border="1" cellpadding="3">
+        	<tr><th>Závodník</th><th>Registrace</th><th>Zaplaceno</th></tr>
+            <% @registered_walkers.each do |reg| %>
+            <tr>
+                <td><%= reg.walker.name %> <%= reg.walker.surname %></td>
+                <td align="right"><%= reg.updated_at.localtime.strftime("%d.%m %Y") %></td>
+           		<td align="center">
+           			<% if reg.confirmed %>
+           			ano
+           			<% end %>
+           		</td>
+          	</tr>
+          	<% end %>         
+    	</table>
+        <% end %>    
+    </td></tr>
+        </tbody>
+    </table>
+</div>
+<div class="right-column">
+	<a href="https://docs.google.com/forms/d/186jWPG_mvtk7k458FIk_Yhm6GrumDI17TNHPNdJQOV0/viewform">CHCI POMOCI S ORGANIZACÍ</a>
+	<br />
+	<br />
+	Letošní potisk textilu:
+	<br />
+	<%= image_tag "DC21.png" %>
+	<br />
+    <%= render :file => "pages/commertial.html.erb" %>
+</div>
+</div>

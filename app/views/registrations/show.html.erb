@@ -49,6 +49,7 @@
 	<table border="1" width="100%" class="preview" cellspacing="0">
 	  <tbody>
 		<tr>
+		  <th>id</th>
 		  <th>jméno</th>
 		  <th>příjmení</th>
 		  <th>e-mail</th>
@@ -77,6 +78,7 @@
 		  	<% end %>
 		  <% end %>
 		  >
+		  	<td><%= reg.walker.id %></td>
 			<td><%= reg.walker.name %></td>
 			<td><%= reg.walker.surname %></td>
 			<td><%= reg.walker.email %></td>
@@ -152,7 +154,7 @@
 		<% else %>
 			Úhradu startovného proveď nejpozději
 		<% end %>
-			do <b class="red"><%= ($registration_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
+			do <b class="red"><%= ($shirt_deadline - 3.days).localtime.strftime("%d.%m %Y") %></b> na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
 	<% end %>	
 	</p>
   <% else %>
