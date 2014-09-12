@@ -184,4 +184,45 @@ class RegistrationsController < ApplicationController
 
 	end
 	
+	def change_owner
+	  @registration = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+	end
+	
+	def change_owner_do
+	  @changedReg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
+	  if @changedReg.walker_id != current_walker[:id]
+	    flash.alert = t "not own registration"
+	    redirect_to :action => 'change_owner'
+	    return
+	  end
+	  
+	  @walker = Walker.find(:first, :conditions => {:email => "#{params[:walker][:email]}"})
+	  
+	  if !@walker.nil? # walker exist?
+	    # check if walker does not already have one (registration)
+	    walkerReg = Registration.find(:first, :conditions => {:dc_id => $dc.id, :walker_id => @walker.id})
+	    if !walkerReg.nil?
+	      flash.alert = t("walker already registered")
+	      redirect_to :action => 'change_owner'
+	      return
+	    end
+	    
+	    # OK walker exist and does not have registration for current DC - switch owner
+	    @changedReg[:walker_id] = @walker[:id]
+	    begin
+	      @changedReg.save!
+	      flash.notice = t("registration transferred") << " " << @walker.name << " " << @walker.surname << " (" << @walker.email << ")"
+	      redirect_to :controller => 'pages', :action => 'actual'
+	      return
+	    rescue => e
+	      flash.alert = t("reg transfer error") << e.message
+	      redirect_to :action => 'change_owner'
+	      return
+	    end
+    else
+      flash.alert = t("unknown email") << ": " << "#{params[:walker][:email]}"
+      redirect_to :action => 'change_owner'
+	  end	  
+	end
+	
 end

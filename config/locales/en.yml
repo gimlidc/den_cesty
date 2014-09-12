@@ -102,3 +102,9 @@ en:
       registration_workflow: "How to join"
   commertial:
       title: "Sponsors and partners of the race"
+  unknown email: "This email is not known"
+  not own registration: "Only your own registration can be transferred."
+  walker already registered: "This walker already has one registration, choose another."
+  registration transferred: "Registration was successfuly changed. Owner of your registration is now"
+  reg transfer error: "Registration switch failed: "
+  Transfer registration: "Transfer"

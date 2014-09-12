@@ -112,3 +112,9 @@ cs:
       - :month
       - :year
     month_names: [ "leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec" ]
+  unknown email: "Pod tímto emailem není nikdo zaregistrován"
+  not own registration: "Pouze tvá vlastní registrace může být převedena."
+  walker already registered: "Tento závodník má již svou vlastní registraci. Zkus někoho jiného."
+  registration transferred: "Registrace byla úspěšně převedena. Novým vlastníkem je nyní"
+  reg transfer error: "Převod registrace selhal: "
+  Transfer registration: "Převést"

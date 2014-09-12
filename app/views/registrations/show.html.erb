@@ -39,7 +39,6 @@
 					<% end %>
 				</tr>
 				</table>
-				Monika Lōrniczová chce pánské L (místo dámského). Robert Frōhn neví, zda platba dojde včas (pokud ne, stejně mu objednat triko).
 			</li>
 		</ul>
 	</p>
@@ -60,7 +59,6 @@
 		  <th>ČB mapa</th>
 		  <th>mapa</th>		  
 		  <th>cena</th>
-		  <th>cíl</th>
 		  <th></th>
 		  <th>placeno</th>
 		</tr>
@@ -89,7 +87,6 @@
 			<td><%= reg.bw_map %></td>
 			<td><%= reg.colour_map %></td>
 			<td><%= price(reg) %>&nbsp;Kč</td>
-			<td><%= reg.goal %></td>
 			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => "Registration of " + reg.walker.name + reg.walker.surname + " will be canceled." %></td>
 			<td>
 				<% if reg.confirmed %>

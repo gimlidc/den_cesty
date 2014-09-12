@@ -1,0 +1,13 @@
+<h2>Převedení registrace</h2>
+<p>
+Zde můžete změnit majitele své již zaplacené registrace. 
+Na registraci už bohužel nelze nic měnit. 
+Jednoduše vyplň email, pod kterým je Tvůj kolega registrován a my mu registraci převedeme (uvidí ji ve svém účtu po přihlášení).
+</p> 
+<br />
+<%= form_tag(:action => 'change_owner_do', :method => 'post') do %>
+	<%= hidden_field_tag :id, @registration.id %>
+	<%= text_field(:walker, :email) %>
+	<br />
+	<%= submit_tag("Převést registraci") %>
+<% end %>

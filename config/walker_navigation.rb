@@ -32,6 +32,7 @@ SimpleNavigation::Configuration.run do |navigation|
         if is_registered
           registration.item :edit_registration, I18n.t('Show registration'), registration_path
           registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path
+          registration.item :edit_registration, I18n.t('Transfer registration'), change_owner_path
           registration.item :edit_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?")
         else
           registration.item :edit_registration, I18n.t('Sign_in'), new_registration_path
