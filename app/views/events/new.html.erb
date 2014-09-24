@@ -1,0 +1,19 @@
+<h1>Events#new</h1>
+
+<%= form_for(:event, :url => {:action => 'create', :id => 1}) do |f| %>
+
+    <table summary="Json POST simulation">
+      <tr>
+        <th>Json</th>
+        <td><%= text_area_tag(:jsondata, '[{"data":{"key2":"value2","key1":"value1"},"type":"LocationUpdateTest","eventId":0},
+{"data":{"key2":"value2","key1":"value1"},"type":"LocationUpdateTest","eventId":1},
+{"data":{"key2":"value2","key1":"value1"},"type":"LocationUpdateTest","eventId":2}]',
+			size: "160x6") %></td>
+      </tr>
+    </table>
+
+    <div class="form-buttons">
+      <%= submit_tag("Send POST to events#create") %>
+    </div>
+
+  <% end %>

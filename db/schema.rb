@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140412102446) do
+ActiveRecord::Schema.define(:version => 20140922173754) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(:version => 20140412102446) do
     t.integer  "limit"
     t.integer  "polyester_shirt_price"
     t.integer  "scarf_price"
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "walker"
+    t.integer  "eventId"
+    t.string   "eventType"
+    t.text     "eventData"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "posts", :force => true do |t|

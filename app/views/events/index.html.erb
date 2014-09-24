@@ -1,0 +1,11 @@
+<h1>Events#index</h1>
+<p style="word-break: break-all">
+
+<% @events.each do |event| %>
+	<%= event.created_at %>;
+	<%= event.eventId %>;
+	<%= event.eventType %>;
+	<%= event.eventData %>;<br />
+<% end %>
+
+</p>
