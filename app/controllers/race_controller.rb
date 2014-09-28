@@ -5,6 +5,29 @@ class RaceController < ApplicationController
 
   layout false
 
+  def login
+    email = request.POST[:email]
+    password = request.POST[:password]
+
+    w = Walker.where(:email => email).first
+    if w.nil? # uživatel z emailem nenalezen
+      render :json => {:success => false}
+    else
+      bcrypt = ::BCrypt::Password.new(w.encrypted_password)
+      password = ::BCrypt::Engine.hash_secret(password, bcrypt.salt)
+
+      if w.encrypted_password == password
+        render :json => {:success => true,
+                         :id => w.id,
+                         :name => w.name,
+                         :surname => w.surname,
+                         :username => w.username}
+      else
+        render :json => {:success => false}
+      end
+    end
+  end
+
   def index
   	# just for testing
   	render :json => {:numWalkersAhead => 20,
