@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140922173754) do
+ActiveRecord::Schema.define(:version => 20141002163009) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(:version => 20140922173754) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "events", ["walker", "eventId"], :name => "index_events_on_walker_and_eventId", :unique => true
 
   create_table "posts", :force => true do |t|
     t.datetime "created_at"

@@ -5,4 +5,5 @@ class Event < ActiveRecord::Base
 
 	serialize :eventData, Hash
 
+	validates_uniqueness_of :eventId, scope: [:walker]
 end

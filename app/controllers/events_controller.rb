@@ -28,11 +28,11 @@ class EventsController < ApplicationController
     	event.eventType = jsonEvent["type"]
     	event.eventData = jsonEvent["data"]
     	if event.save
-		  saved << jsonEvent["eventId"]
-		else
-		  puts "Not Saved!"
-		  puts jsonEvent
-		end
+		    saved << jsonEvent["eventId"]
+		  else
+		    puts "Not Saved!"
+		    puts jsonEvent
+		  end
     end
     render :json => {:savedEventIds => saved}
   end
