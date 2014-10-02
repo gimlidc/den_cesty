@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+	<Document>
+		<Style id="dencestyFine">
+			<IconStyle>
+				<Icon>
+					<href>https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<Style id="dencestyBad">
+			<IconStyle>
+				<Icon>
+					<href>https://maps.gstatic.com/mapfiles/ms2/micons/pink.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<Style id="dencestyNoSpeed">
+			<IconStyle>
+				<Icon>
+					<href>https://maps.gstatic.com/mapfiles/ms2/micons/ltblue-dot.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<%
+		@locationUpdates.each do |locUpdate|
+			if locUpdate.eventData['horAcc'] < 100
+				if locUpdate.eventData['speed'] >= 0
+					styleUrl = "#dencestyFine"
+				else
+					styleUrl = "#dencestyNoSpeed"
+				end
+			else
+				styleUrl = "#dencestyBad"
+			end
+		%>
+		<Placemark id="<%= locUpdate.id %>">
+			<name>(<%= locUpdate.eventId %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
+			<description>
+				<![CDATA[ 
+					Altitude: <%= locUpdate.eventData['altitude'] %><br />
+					Speed: <%= locUpdate.eventData['speed'] %><br />
+					Course: <%= locUpdate.eventData['course'] %><br />
+					VerAcc: <%= locUpdate.eventData['verAcc'] %><br />
+					HorAcc: <%= locUpdate.eventData['horAcc'] %><br />
+					Timestamp: <%= locUpdate.eventData['timestamp'] %>
+				 ]]>
+			</description>
+			<Point>
+				<coordinates>
+					<%= locUpdate.eventData['longitude'] %>,<%= locUpdate.eventData['latitude'] %>
+				</coordinates>
+			</Point>
+			<styleUrl><%= styleUrl %></styleUrl>
+		</Placemark>
+		<% end %>
+	</Document>
+</kml>

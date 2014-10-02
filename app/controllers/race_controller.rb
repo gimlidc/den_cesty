@@ -42,4 +42,19 @@ class RaceController < ApplicationController
   					}
   end
 
+  def map
+    if request.format.xml?
+      if params[:id].present?
+        @locationUpdates = Event.where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
+        # @checkpoints = Event.where(:walker => params[:id]).where(:eventType => "Checkpoint")
+        render "map_for_walker"
+      else
+        # TODO
+        render "map_for_all_walkers"
+      end
+    else
+      redirect_to "https://maps.google.com/maps?q=" + request.original_url + ".xml?t=" + Time.now.to_i.to_s
+    end
+  end
+
 end
