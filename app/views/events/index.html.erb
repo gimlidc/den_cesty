@@ -2,6 +2,7 @@
 <p style="word-break: break-all">
 
 <% @events.each do |event| %>
+	<%= event.walker %>;
 	<%= event.created_at %>;
 	<%= event.eventId %>;
 	<%= event.eventType %>;

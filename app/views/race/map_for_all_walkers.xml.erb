@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+	<Document>
+		<%
+		pinnamesDots = ["blue-dot", "red-dot", "green-dot", "ltblue-dot", "yellow-dot", "purple-dot", "pink-dot"]
+		pinnamesSolid = ["blue", "red", "green", "lightblue", "yellow", "purple", "pink"]
+		pinnamesPushpins = ["blue-pushpin", "red-pushpin", "grn-pushpin", "ltblu-pushpin", "ylw-pushpin", "purple-pushpin", "pink-pushpin"]
+		%>
+		<% [pinnamesDots, pinnamesSolid, pinnamesPushpins].flatten.each do |pinname| %>
+		<Style id="<%= pinname %>">
+			<IconStyle>
+				<Icon>
+					<href>https://maps.gstatic.com/mapfiles/ms2/micons/<%= pinname %>.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<% end %>
+		<%
+		counter = 0
+		lastWalker = @locationUpdates.first.walker
+		@locationUpdates.each do |locUpdate|
+			if lastWalker != locUpdate.walker
+				counter += 1
+				lastWalker = locUpdate.walker
+			end
 
+			if locUpdate.eventData['horAcc'] < 100
+				if locUpdate.eventData['speed'] >= 0
+					styleUrl = pinnamesDots[counter % pinnamesDots.size]
+				else
+					styleUrl = pinnamesSolid[counter % pinnamesSolid.size]
+				end
+			else
+				styleUrl = pinnamesSolid[counter % pinnamesSolid.size]
+			end
+		%>
+		<Placemark id="<%= locUpdate.id %>">
+			<name>(<%= locUpdate.walker %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
+			<description>
+				<![CDATA[ 
+					EventId: <%= locUpdate.eventId %><br />
+					Altitude: <%= locUpdate.eventData['altitude'] %><br />
+					Speed: <%= locUpdate.eventData['speed'] %><br />
+					Course: <%= locUpdate.eventData['course'] %><br />
+					VerAcc: <%= locUpdate.eventData['verAcc'] %><br />
+					HorAcc: <%= locUpdate.eventData['horAcc'] %><br />
+					Timestamp: <%= locUpdate.eventData['timestamp'] %>
+				 ]]>
+			</description>
+			<Point>
+				<coordinates>
+					<%= locUpdate.eventData['longitude'] %>,<%= locUpdate.eventData['latitude'] %>
+				</coordinates>
+			</Point>
+			<styleUrl>#<%= styleUrl %></styleUrl>
+		</Placemark>
+		<% end %>
+	</Document>
 </kml>

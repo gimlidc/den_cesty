@@ -49,7 +49,8 @@ class RaceController < ApplicationController
         # @checkpoints = Event.where(:walker => params[:id]).where(:eventType => "Checkpoint")
         render "map_for_walker"
       else
-        # TODO
+        #@allWalkers = Event.connection.execute("SELECT * FROM \"events\" e1 WHERE e1.\"eventId\" = (SELECT max(e2.\"eventId\") FROM \"events\" as e2 WHERE e1.\"walker\"=e2.\"walker\");")
+        @locationUpdates = Event.where(:eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
         render "map_for_all_walkers"
       end
     else
