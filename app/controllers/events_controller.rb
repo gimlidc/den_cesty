@@ -5,22 +5,13 @@ class EventsController < ApplicationController
 
   layout false
 
-  def new
-  	@event = Event.new # because of default values from database
-  	@event.walker = 1
-  	@event.eventId = 0
-  	@event.eventType = "LocationUpdateTest"
-  	@event.eventData = '{"key2"=>"value2", "key1"=>"value1"}'
-  end
-
   def index
   	@events = Event.all
   end
 
   def create 
   	saved = []
-  	jsonData = request.POST[:jsondata]
-  	jsonHash = JSON.parse(jsonData)
+    jsonHash = request.POST[:_json];
     jsonHash.each do |jsonEvent|
     	event = Event.new
     	event.walker = params[:id]
@@ -29,6 +20,7 @@ class EventsController < ApplicationController
     	event.eventData = jsonEvent["data"]
       event.batteryLevel = jsonEvent["batL"]
       event.batteryState = jsonEvent["batS"]
+      event.timestamp = Time.zone.parse(jsonEvent["time"])
     	if event.save
 		    saved << jsonEvent["eventId"]
 		  else

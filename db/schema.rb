@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141004192357) do
+ActiveRecord::Schema.define(:version => 20141004214128) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20141004192357) do
     t.datetime "updated_at"
     t.integer  "batteryLevel"
     t.integer  "batteryState"
+    t.datetime "timestamp"
   end
 
   add_index "events", ["walker", "eventId"], :name => "index_events_on_walker_and_eventId", :unique => true
