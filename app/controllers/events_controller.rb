@@ -27,6 +27,8 @@ class EventsController < ApplicationController
     	event.eventId = jsonEvent["eventId"]
     	event.eventType = jsonEvent["type"]
     	event.eventData = jsonEvent["data"]
+      event.batteryLevel = jsonEvent["batL"]
+      event.batteryState = jsonEvent["batS"]
     	if event.save
 		    saved << jsonEvent["eventId"]
 		  else
