@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141004214128) do
+ActiveRecord::Schema.define(:version => 20141006155742) do
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(:version => 20141004214128) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "races", :force => true do |t|
+    t.integer  "walker"
+    t.integer  "lastCheckpoint"
+    t.integer  "raceState"
+    t.integer  "distance"
+    t.float    "avgSpeed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "races", ["walker"], :name => "index_races_on_walker", :unique => true
 
   create_table "registrations", :force => true do |t|
     t.integer  "walker_id"

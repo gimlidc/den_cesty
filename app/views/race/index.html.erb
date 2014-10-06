@@ -1,2 +1,22 @@
 <h1>Race#index</h1>
-<p>Find me in app/views/race/index.html.erb</p>
+
+<table class="listing" summary="Race status">
+    <tr class="header">
+      <th>Walker</th>
+      <th>Race State</th>
+      <th>Last Checkpoint</th>
+      <th>Distance</th>
+      <th>Avg Speed</th>
+      <th>Updated at</th>
+    </tr>
+    <% @race.each do |walker| %>
+    <tr>
+      <td><%= walker.walker %></td>
+      <td><%= walker.raceState %></td>
+      <td><%= walker.lastCheckpoint %></td>
+      <td><%= walker.distance %></td>
+      <td><%= walker.avgSpeed %></td>
+      <td><%= walker.updated_at %></td>
+    </tr>
+    <% end %>
+</table>
