@@ -42,20 +42,4 @@ class RaceController < ApplicationController
   					}
   end
 
-  def map
-    if request.format.xml?
-      if params[:id].present?
-        @locationUpdates = Event.where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
-        # @checkpoints = Event.where(:walker => params[:id]).where(:eventType => "Checkpoint")
-        render "map_for_walker"
-      else
-        #@allWalkers = Event.connection.execute("SELECT * FROM \"events\" e1 WHERE e1.\"eventId\" = (SELECT max(e2.\"eventId\") FROM \"events\" as e2 WHERE e1.\"walker\"=e2.\"walker\");")
-        @locationUpdates = Event.where(:eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
-        render "map_for_all_walkers"
-      end
-    else
-      redirect_to "https://maps.google.com/maps?q=" + request.original_url + ".xml?t=" + Time.now.to_i.to_s
-    end
-  end
-
 end
