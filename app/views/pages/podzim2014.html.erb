@@ -24,7 +24,7 @@
                 <th class="title"><%= t 'actual.intro' %>:</th><td>Den cesty je 24h dlouhý závod. Cílem závodníků je pokořit za tento čas co největší vzdálenost po určené trase. Na trase není závodníkům poskytována žádná podpora.</td>
             </tr>
             <tr>
-                <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td>
+              <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %><br />alternativní start (zkráceného DC) proběhne v Peruci cca před 9. hodinou ranní v sobotu</td>
             </tr>
             <tr>
                 <th class="title"><%= t 'actual.where' %>:</th><td>Lovosice nádražní hala ČD</td>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
             	<th class="title"><%= t 'actual.checks' %>:</th><td>Kontroly závodu jsou samoobslužné (až na výjimky), v kontrolním místě (ta budou zveřejněna těsně před začátkem závodu), naleznete označení kontroly (papír velikosti A4) a u něj přiložený značkovač. Značkovačem si do svého itineráře zaznamenáte, že jste na kontrole byli (čas, nebo jen křížek). Všechny kontroly uvedené ve vašem itineráři jsou povinné, pokud nějaká chybí, bude Vám ujitá vzdálenost krácena dle pravidel.<br />
-            		Na trase bude jedna hlídaná kontrola se zázemím její umístění zatím řešíme. Otevřena bude zejména v nočních hodinách. Kontrola bude mezi 30. a 60. kilometrem trasy.
+            		Na trase bude jedna hlídaná kontrola se zázemím a to v Libochovicích (27. kilometr), zde bude možno v nočních hodinách se občerstvit a dotočit vodu. Kontrola bude otevřena nejdéle do třetí hodiny ranní.
             	</td>
             </tr>
             <tr>
@@ -74,8 +74,11 @@
 </div>
 <div class="right-column">
 	<a href="https://docs.google.com/forms/d/186jWPG_mvtk7k458FIk_Yhm6GrumDI17TNHPNdJQOV0/viewform">CHCI POMOCI S ORGANIZACÍ</a>
-	<br />
-	<br />
+  <br />
+  <br />
+  Pokud vlastníš iPhone a chceš se podílet na testování naší trackovací aplikace (specielně navržené pro Den cesty), ozvi se nám na email.
+  <br />
+  <br />
 	Letošní potisk textilu:
 	<br />
 	<%= image_tag "DC21.png" %>
