@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141006155742) do
+ActiveRecord::Schema.define(:version => 20141008083013) do
+
+  create_table "checkpoints", :force => true do |t|
+    t.integer "checkid"
+    t.integer "meters"
+    t.float   "latitude"
+    t.float   "longitude"
+  end
+
+  add_index "checkpoints", ["checkid"], :name => "index_checkpoints_on_checkid", :unique => true
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"

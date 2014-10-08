@@ -5,42 +5,18 @@ class EventsController < ApplicationController
 
   layout false
 
-  def index
-  	@events = Event.all
-  end
+  # Web methods:
 
-  def create 
-  	saved = []
-    jsonHash = request.POST[:_json];
-    jsonHash.each do |jsonEvent|
-    	event = Event.new
-    	event.walker = params[:id]
-    	event.eventId = jsonEvent["eventId"]
-    	event.eventType = jsonEvent["type"]
-    	event.eventData = jsonEvent["data"]
-      event.batteryLevel = jsonEvent["batL"]
-      event.batteryState = jsonEvent["batS"]
-      event.timestamp = Time.zone.parse(jsonEvent["time"])
-    	if event.save
-		    saved << jsonEvent["eventId"]
-        createSimulationEvents(jsonEvent)
-		  else
-        saved << jsonEvent["eventId"]
-		    puts "Not Saved!"
-		    puts jsonEvent
-		  end
-    end
-    render :json => {:savedEventIds => saved}
+  def index
+  	@events = Event.order(:id)
   end
 
   def map
     if request.format.xml?
       if params[:id].present?
         @locationUpdates = Event.where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
-        # @checkpoints = Event.where(:walker => params[:id]).where(:eventType => "Checkpoint")
         render "map_for_walker"
       else
-        #@allWalkers = Event.connection.execute("SELECT * FROM \"events\" e1 WHERE e1.\"eventId\" = (SELECT max(e2.\"eventId\") FROM \"events\" as e2 WHERE e1.\"walker\"=e2.\"walker\");")
         @locationUpdates = Event.where(:eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
         render "map_for_all_walkers"
       end
@@ -49,41 +25,129 @@ class EventsController < ApplicationController
     end
   end
 
+  # API methods:
+
+  def create 
+    saved = []
+    jsonHash = request.POST[:_json];
+    jsonHash.each do |jsonEvent|
+      event = Event.new
+      event.walker = params[:id]
+      event.eventId = jsonEvent["eventId"]
+      event.eventType = jsonEvent["type"]
+      event.eventData = jsonEvent["data"]
+      event.batteryLevel = jsonEvent["batL"]
+      event.batteryState = jsonEvent["batS"]
+      event.timestamp = Time.zone.parse(jsonEvent["time"])
+      if event.save
+        saved << jsonEvent["eventId"]
+        after_create(event)
+      else
+        saved << jsonEvent["eventId"]
+        puts "Not Saved!"
+        puts jsonEvent
+      end
+    end
+    render :json => {:savedEventIds => saved}
+  end
+
   private
 
   	def event_params
   	  params.require(:event).permit(:walker, :eventId, :eventType, :eventData)
   	end
 
-    def createSimulationEvents(jsonEvent)
+    def after_create(event)
+      
+      create_race(event)
+      update_checkpoint(event)
+      update_distance(event)
 
-      if jsonEvent["type"] == "LocationUpdate"
+      #create_simulation_events(event)
+    end
 
-        
-        jsonEvent["data"]["latitude"] += 0.002
-        jsonEvent["data"]["longitude"] += 0.002
-        event998 = Event.new
-        event998.walker = 998
-        event998.eventId = jsonEvent["eventId"]
-        event998.eventType = jsonEvent["type"]
-        event998.eventData = jsonEvent["data"]
-        event998.batteryLevel = -1
-        event998.batteryState = -1
-        event998.timestamp = Time.zone.parse(jsonEvent["time"])
+    def create_race(event)
+      if (event.eventType == "StartRace")
+        race_info = Race.new(:walker => event.walker, :raceState => 1,
+                             :lastCheckpoint => 0, :distance => 0, :avgSpeed => 0)
+        race_info.save
+      end
+    end
+
+    def update_checkpoint(event)
+      if (event.eventType == "Checkpoint")
+        newCheckpoint = event.eventData["kId"]
+        raceInfo = Race.find_by_walker(event.walker)
+        oldCheckpoint = raceInfo.lastCheckpoint
+        if newCheckpoint > oldCheckpoint
+          raceInfo.lastCheckpoint = newCheckpoint
+          newCheckpointDB = Checkpoint.find_by_checkid(newCheckpoint)
+          raceInfo.distance = newCheckpointDB.meters
+          raceInfo.save
+        end
+      end
+    end
+
+    def update_distance(event)
+      if (event.eventType == "LocationUpdate")
+        if event.eventData['horAcc'] < 200
+          raceInfo = Race.find_by_walker(event.walker)
+          lastCheckpoint = Checkpoint.find_by_checkid(raceInfo.lastCheckpoint)
+          nextCheckpoint = Checkpoint.find_by_checkid(raceInfo.lastCheckpoint+1)
+          latitude = event.eventData['latitude']
+          longitude = event.eventData['longitude']
+
+          distance_last = gps_distance [lastCheckpoint.latitude,lastCheckpoint.longitude],[latitude,longitude]
+          distance_next = gps_distance [latitude, longitude],[nextCheckpoint.latitude,nextCheckpoint.longitude]
+          distance_between = gps_distance [lastCheckpoint.latitude,lastCheckpoint.longitude],[nextCheckpoint.latitude,nextCheckpoint.longitude] # TODO optimize
+
+          if distance_next < distance_between && distance_last < distance_between # vylouceni updatu, ktere nejsou mimo checkpointy
+            progress_between = distance_last / (distance_last+distance_next)
+            real_distance_between = nextCheckpoint.meters - lastCheckpoint.meters
+            new_distance = (progress_between * real_distance_between).to_i + lastCheckpoint.meters
+
+            if raceInfo.distance < new_distance
+              raceInfo.distance = new_distance
+              raceInfo.save
+              puts "Distance updated to: "+new_distance.to_s
+            end
+          end
+        end
+      end
+    end
+
+    # http://stackoverflow.com/a/12969617
+    def gps_distance a, b
+      rad_per_deg = Math::PI/180  # PI / 180
+      rkm = 6371                  # Earth radius in kilometers
+      rm = rkm * 1000             # Radius in meters
+
+      dlon_rad = (b[1]-a[1]) * rad_per_deg  # Delta, converted to rad
+      dlat_rad = (b[0]-a[0]) * rad_per_deg
+
+      lat1_rad, lon1_rad = a.map! {|i| i * rad_per_deg }
+      lat2_rad, lon2_rad = b.map! {|i| i * rad_per_deg }
+
+      a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon_rad/2)**2
+      c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+
+      rm * c # Delta in meters
+    end
+
+    def create_simulation_events(event)
+
+      if event.eventType == "LocationUpdate"
+
+        event998 = Event.new(event.attributes.merge(:walker => 998, :batteryLevel => -1, :batteryState => -1))
+        event998.eventData["latitude"] += 0.002
+        event998.eventData["longitude"] += 0.002
         event998.save
 
-        
-        jsonEvent["data"]["latitude"] -= 0.004
-        jsonEvent["data"]["longitude"] -= 0.004
-        event999 = Event.new
-        event999.walker = 999
-        event999.eventId = jsonEvent["eventId"]
-        event999.eventType = jsonEvent["type"]
-        event999.eventData = jsonEvent["data"]
-        event999.batteryLevel = -1
-        event999.batteryState = -1
-        event999.timestamp = Time.zone.parse(jsonEvent["time"])
+        event999 = Event.new(event.attributes.merge(:walker => 999, :batteryLevel => -1, :batteryState => -1))
+        event999.eventData["latitude"] -= 0.004
+        event999.eventData["longitude"] -= 0.004
         event999.save
+
       end
 
     end

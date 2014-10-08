@@ -17,7 +17,9 @@
 		<% end %>
 		<%
 		counter = 0
-		lastWalker = @locationUpdates.first.walker
+		if @locationUpdates.any?
+          lastWalker = @locationUpdates.first.walker
+        end
 		@locationUpdates.each do |locUpdate|
 			if lastWalker != locUpdate.walker
 				counter += 1

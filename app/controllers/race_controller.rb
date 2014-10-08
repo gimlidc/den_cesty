@@ -37,7 +37,7 @@ class RaceController < ApplicationController
   end 
 
   def info
-    walker = Race.find_by_walker(params[:id])
+    walker = Race.find_by_walker(params[:id]) # TODO může být nil, pokud přijde dřív než StartRace event
   	numWalkersAhead = Race.count(:conditions => "\"races\".\"distance\" > "+walker.distance.to_s)
     numWalkersBehind = Race.count(:conditions => "\"races\".\"distance\" <= "+walker.distance.to_s+" AND \"races\".\"walker\" <> "+walker.walker.to_s)
     numWalkersEnded = Race.count(:conditions => "\"races\".\"raceState\" = 2 AND \"races\".\"walker\" <> "+walker.walker.to_s)
@@ -54,7 +54,9 @@ class RaceController < ApplicationController
       walkersBehind << {:name => wb.walker.to_s, :distance => walker.distance-wb.distance, :speed => wb.avgSpeed}
     end
 
-    render :json => {:numWalkersAhead => numWalkersAhead,
+    render :json => {:distance => walker.distance,
+             :speed => walker.avgSpeed,
+             :numWalkersAhead => numWalkersAhead,
              :numWalkersBehind => numWalkersBehind,
              :numWalkersEnded => numWalkersEnded,
              :walkersAhead => walkersAhead,
