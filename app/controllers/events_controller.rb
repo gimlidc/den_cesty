@@ -59,17 +59,32 @@ class EventsController < ApplicationController
 
     def after_create(event)
       
-      create_race(event)
+      start_race(event)
+      stop_race(event)
       update_checkpoint(event)
       update_distance(event)
 
       #create_simulation_events(event)
     end
 
-    def create_race(event)
+    def start_race(event)
       if (event.eventType == "StartRace")
+        #Create race if not exists
         race_info = Race.new(:walker => event.walker, :raceState => 1,
                              :lastCheckpoint => 0, :distance => 0, :avgSpeed => 0)
+        if !race_info.save
+          # if exists, just update raceState
+          race_info = Race.find_by_walker(event.walker)
+          race_info.raceState = 1
+          race_info.save
+        end
+      end
+    end
+
+    def stop_race(event)
+      if (event.eventType == "StopRace")
+        race_info = Race.find_by_walker(event.walker)
+        race_info.raceState = 2
         race_info.save
       end
     end
