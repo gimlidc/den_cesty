@@ -40,6 +40,7 @@
 			<name>(<%= locUpdate.walker %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
 			<description>
 				<![CDATA[ 
+					Calc Distance: <%= if locUpdate.eventData["distance"] then locUpdate.eventData["distance"] else "-" end %><br />
 					EventId: <%= locUpdate.eventId %><br />
 					Altitude: <%= locUpdate.eventData['altitude'] %><br />
 					Speed: <%= locUpdate.eventData['speed'] %><br />
