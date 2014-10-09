@@ -13,6 +13,8 @@ class EventsController < ApplicationController
 
   def map
     if request.format.xml?
+      @checkpoints = Checkpoint.order("\"checkid\" ASC")
+      @checkpoints_count = @checkpoints.count
       if params[:id].present?
         @locationUpdates = Event.where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
         render "map_for_walker"
@@ -42,7 +44,7 @@ class EventsController < ApplicationController
       if event.save
         saved << jsonEvent["eventId"]
         after_create(event)
-        create_simulation_events(event)
+        #create_simulation_events(event)
       else
         saved << jsonEvent["eventId"]
         puts "Not Saved!"
