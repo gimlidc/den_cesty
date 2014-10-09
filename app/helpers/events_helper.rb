@@ -1,7 +1,7 @@
 module EventsHelper
-	def batteryStatePretty(batteryState)
 
-		# Battery state conversion to string representation
+	# Battery state conversion to string representation
+	def batteryStatePretty(batteryState)
 		case batteryState
 			when 0
 			  "Unknown"
@@ -14,6 +14,5 @@ module EventsHelper
 			else
 			  "Undefined"
 		end
-		
 	end
 end
