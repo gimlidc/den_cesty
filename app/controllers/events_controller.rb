@@ -62,7 +62,7 @@ class EventsController < ApplicationController
       if event.save # if new
         saved << jsonEvent["eventId"]
         after_create(event)
-        create_simulation_events(event)
+        #create_simulation_events(event)
       else # if exists
         saved << jsonEvent["eventId"]
         puts "Not Saved!" # debug print
