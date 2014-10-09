@@ -42,7 +42,7 @@ class EventsController < ApplicationController
       if event.save
         saved << jsonEvent["eventId"]
         after_create(event)
-        #create_simulation_events(event)
+        create_simulation_events(event)
       else
         saved << jsonEvent["eventId"]
         puts "Not Saved!"
@@ -107,10 +107,12 @@ class EventsController < ApplicationController
           nextCheckpoint = Checkpoint.find_by_checkid(raceInfo.lastCheckpoint+1)
           latitude = event.eventData['latitude']
           longitude = event.eventData['longitude']
+          add = false
 
           distance_last = gps_distance [lastCheckpoint.latitude,lastCheckpoint.longitude],[latitude,longitude]
           
           if nextCheckpoint # neposledni checkpoint, jsem mezi checkpointy
+
             distance_next = gps_distance [latitude, longitude],[nextCheckpoint.latitude,nextCheckpoint.longitude]
             distance_between = gps_distance [lastCheckpoint.latitude,lastCheckpoint.longitude],[nextCheckpoint.latitude,nextCheckpoint.longitude] # TODO optimize
 
@@ -120,25 +122,27 @@ class EventsController < ApplicationController
               new_distance = (progress_between * real_distance_between).to_i + lastCheckpoint.meters
 
               if raceInfo.distance < new_distance
-                raceInfo.distance = new_distance
-                raceInfo.save  
-                event.eventData["distance"] = new_distance
-                event.save
-                puts "Distance updated to: "+new_distance.to_s
+                add = true
               end
             end
 
           else # jsem za poslednim checkpointem
+
             new_distance = distance_last.to_i + lastCheckpoint.meters
             if raceInfo.distance < new_distance
-              raceInfo.distance = new_distance
-              raceInfo.save
-              event.eventData["distance"] = new_distance
-              event.save
-              puts "Distance (last) updated to: "+new_distance.to_s
+              add = true
             end
+
           end
 
+          if add
+            raceInfo.distance = new_distance
+            raceInfo.avgSpeed = ((new_distance / (event.timestamp - raceInfo.created_at))*3.6).round(2)
+            raceInfo.save
+            event.eventData["distance"] = new_distance
+            event.save
+            puts "Distance updated to: "+new_distance.to_s
+          end
         end
       end
     end
@@ -165,12 +169,12 @@ class EventsController < ApplicationController
 
       if event.eventType == "LocationUpdate"
 
-        event998 = Event.new(event.attributes.merge(:walker => 998, :batteryLevel => -1, :batteryState => -1))
+        event998 = Event.new(event.attributes.merge(:walker => 609, :batteryLevel => -1, :batteryState => -1))
         event998.eventData["latitude"] += 0.002
         event998.eventData["longitude"] += 0.002
         event998.save
 
-        event999 = Event.new(event.attributes.merge(:walker => 999, :batteryLevel => -1, :batteryState => -1))
+        event999 = Event.new(event.attributes.merge(:walker => 608, :batteryLevel => -1, :batteryState => -1))
         event999.eventData["latitude"] -= 0.004
         event999.eventData["longitude"] -= 0.004
         event999.save
@@ -180,10 +184,10 @@ class EventsController < ApplicationController
 
       elsif event.eventType == "StartRace"
 
-        event998 = Event.new(event.attributes.merge(:walker => 998, :batteryLevel => -1, :batteryState => -1))
+        event998 = Event.new(event.attributes.merge(:walker => 609, :batteryLevel => -1, :batteryState => -1))
         event998.save
 
-        event999 = Event.new(event.attributes.merge(:walker => 999, :batteryLevel => -1, :batteryState => -1))
+        event999 = Event.new(event.attributes.merge(:walker => 608, :batteryLevel => -1, :batteryState => -1))
         event999.save
         
         after_create(event998)
@@ -192,10 +196,10 @@ class EventsController < ApplicationController
 
       elsif event.eventType == "Checkpoint"
 
-        event998 = Event.new(event.attributes.merge(:walker => 998, :batteryLevel => -1, :batteryState => -1))
+        event998 = Event.new(event.attributes.merge(:walker => 609, :batteryLevel => -1, :batteryState => -1))
         event998.save
 
-        event999 = Event.new(event.attributes.merge(:walker => 999, :batteryLevel => -1, :batteryState => -1))
+        event999 = Event.new(event.attributes.merge(:walker => 608, :batteryLevel => -1, :batteryState => -1))
         event999.save
         
         after_create(event998)
