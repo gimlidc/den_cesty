@@ -6,6 +6,9 @@ class RaceController < ApplicationController
   layout false
 
   # Web methods:
+
+  # Shows race progress and walkers order based on elapsed distance.
+  # /race
   def index
     @race = Race.order("\"races\".\"distance\" DESC")
   end
@@ -13,6 +16,8 @@ class RaceController < ApplicationController
 
   # API methods:
 
+  # Process login for mobile app. Return true, walker id, name, surname and username if success.
+  # /race/login
   def login
     email = request.POST[:email]
     password = request.POST[:password]
@@ -36,6 +41,8 @@ class RaceController < ApplicationController
     end
   end 
 
+  # Returns informations about other walkers for particular walker id.
+  # /race/info/{id}
   def info
     walker = Race.find_by_walker(params[:id]) # TODO může být nil, pokud přijde dřív než StartRace event
   	numWalkersAhead = Race.count(:conditions => "\"races\".\"distance\" > "+walker.distance.to_s)
