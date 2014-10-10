@@ -1,0 +1,24 @@
+<h1>Race#index</h1>
+
+<table class="listing" summary="Race status">
+    <tr class="header">
+      <th>Walker</th>
+      <th>Race State</th>
+      <th>Last Checkpoint</th>
+      <th>Distance</th>
+      <th>Avg Speed</th>
+      <th>Updated at</th>
+      <th>Started at</th>
+    </tr>
+    <% @race.each do |walker| %>
+    <tr>
+      <td><%= walker.walker %></td>
+      <td><%= raceStatePretty(walker.raceState) %></td>
+      <td><%= walker.lastCheckpoint %></td>
+      <td><%= walker.distance %></td>
+      <td><%= walker.avgSpeed %></td>
+      <td><%= walker.updated_at %></td>
+      <td><%= walker.created_at %></td>
+    </tr>
+    <% end %>
+</table>

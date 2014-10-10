@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+	<Document>
+		<%
+		pinnamesDots = ["blue-dot", "red-dot", "green-dot", "ltblue-dot", "yellow-dot", "purple-dot", "pink-dot"]
+		pinnamesSolid = ["blue", "red", "green", "lightblue", "yellow", "purple", "pink"]
+		pinnamesPushpins = ["blue-pushpin", "red-pushpin", "grn-pushpin", "ltblu-pushpin", "ylw-pushpin", "purple-pushpin", "pink-pushpin"]
+		%>
+		<% [pinnamesDots, pinnamesSolid, pinnamesPushpins].flatten.each do |pinname| %>
+		<Style id="<%= pinname %>">
+			<IconStyle>
+				<Icon>
+					<href>https://maps.gstatic.com/mapfiles/ms2/micons/<%= pinname %>.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<% end %>
+		<%
+		@locationUpdates.each do |locUpdate|
+			if locUpdate.eventData['horAcc'] < 200
+				styleUrl = pinnamesDots[1]
+			else
+				styleUrl = pinnamesSolid[1]
+			end
+		%>
+		<Placemark id="<%= @checkpoints_count+locUpdate.id %>">
+			<name>(<%= locUpdate.eventId %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
+			<description>
+				<![CDATA[ 
+					Calc Distance: <%= if locUpdate.eventData["distance"] then locUpdate.eventData["distance"] else "none" end %><br />
+					EventId: <%= locUpdate.eventId %><br />
+					Altitude: <%= locUpdate.eventData['altitude'] %><br />
+					Speed: <%= locUpdate.eventData['speed'] %><br />
+					Course: <%= locUpdate.eventData['course'] %><br />
+					VerAcc: <%= locUpdate.eventData['verAcc'] %><br />
+					HorAcc: <%= locUpdate.eventData['horAcc'] %><br />
+					Timestamp: <%= locUpdate.eventData['timestamp'] %>
+				 ]]>
+			</description>
+			<Point>
+				<coordinates>
+					<%= locUpdate.eventData['longitude'] %>,<%= locUpdate.eventData['latitude'] %>
+				</coordinates>
+			</Point>
+			<styleUrl>#<%= styleUrl %></styleUrl>
+		</Placemark>
+		<% end %>
+		<% @checkpoints.each do |check| %>
+		<Placemark id="<%= check.checkid %>">
+			<name>K<%= check.checkid %></name>
+			<description>
+				<![CDATA[ 
+					Meters: <%= check.meters %>
+				 ]]>
+			</description>
+			<Point>
+				<coordinates>
+					<%= check.longitude %>,<%= check.latitude %>
+				</coordinates>
+			</Point>
+			<styleUrl>#<%= pinnamesPushpins[0] %></styleUrl>
+		</Placemark>
+		<% end %>
+	</Document>
+</kml>

@@ -1,0 +1,26 @@
+<h1>Events#index</h1>
+
+<table class="listing" summary="Events log">
+    <tr class="header">
+      <th>Time</th>
+      <th>Walker</th>
+      <th>EventId</th>
+      <th>EventType</th>
+      <th>Timestamp</th>
+      <th>BatteryLevel</th>
+      <th>BatteryState</th>
+      <th>EventData</th>
+    </tr>
+    <% @events.each do |event| %>
+    <tr>
+      <td><%= event.created_at %></td>
+      <td><%= event.walker %></td>
+      <td><%= event.eventId %></td>
+      <td><%= event.eventType %></td>
+      <td><%= event.timestamp %></td>
+      <td><%= event.batteryLevel %></td>
+      <td><%= batteryStatePretty(event.batteryState) %></td>
+      <td><%= event.eventData %></td>
+    </tr>
+    <% end %>
+</table>
