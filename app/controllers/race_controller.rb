@@ -27,14 +27,17 @@ class RaceController < ApplicationController
   def login
     email = request.POST[:email]
     password = request.POST[:password]
-
+    puts email
+    puts password
     w = Walker.where(:email => email).first
+    puts w
     if w.nil? # uživatel s emailem nenalezen
       render :json => {:success => false}
     else
       bcrypt = ::BCrypt::Password.new(w.encrypted_password)
       password = ::BCrypt::Engine.hash_secret(password, bcrypt.salt)
-
+      puts password
+      puts w.encrypted_password
       if w.encrypted_password == password
         render :json => {:success => true,
                          :id => w.id,
