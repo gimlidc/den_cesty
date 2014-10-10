@@ -13,6 +13,12 @@ class RaceController < ApplicationController
     @race = Race.order("\"races\".\"distance\" DESC")
   end
 
+  def checkpoints
+    Checkpoint.create(:checkid => 0, :meters => 0, :latitude => 40.606541, :longitude => -74.044735)
+    Checkpoint.create(:checkid => 1, :meters => 6600, :latitude => 40.645822, :longitude => -74.013179)
+    Checkpoint.create(:checkid => 2, :meters => 9600, :latitude => 40.666740, :longitude => -73.99170)
+  end
+
 
   # API methods:
 
