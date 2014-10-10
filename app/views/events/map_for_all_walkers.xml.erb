@@ -26,12 +26,8 @@
 				lastWalker = locUpdate.walker
 			end
 
-			if locUpdate.eventData['horAcc'] < 100
-				if locUpdate.eventData['speed'] >= 0
-					styleUrl = pinnamesDots[counter % pinnamesDots.size]
-				else
-					styleUrl = pinnamesSolid[counter % pinnamesSolid.size]
-				end
+			if locUpdate.eventData['horAcc'] < 200
+				styleUrl = pinnamesDots[counter % pinnamesDots.size]
 			else
 				styleUrl = pinnamesSolid[counter % pinnamesSolid.size]
 			end

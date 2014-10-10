@@ -17,12 +17,8 @@
 		<% end %>
 		<%
 		@locationUpdates.each do |locUpdate|
-			if locUpdate.eventData['horAcc'] < 100
-				if locUpdate.eventData['speed'] >= 0
-					styleUrl = pinnamesDots[1]
-				else
-					styleUrl = pinnamesSolid[1]
-				end
+			if locUpdate.eventData['horAcc'] < 200
+				styleUrl = pinnamesDots[1]
 			else
 				styleUrl = pinnamesSolid[1]
 			end
