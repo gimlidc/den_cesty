@@ -31,7 +31,7 @@
 			else
 				styleUrl = pinnamesSolid[counter % pinnamesSolid.size]
 			end
-		%>
+  %>
 		<Placemark id="<%= @checkpoints_count+locUpdate.id %>">
 			<name>(<%= locUpdate.walker %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
 			<description>
@@ -52,8 +52,9 @@
 				</coordinates>
 			</Point>
 			<styleUrl>#<%= styleUrl %></styleUrl>
-		</Placemark>
-		<% end %>
+    </Placemark>
+  <% end %>
+  <% if Time.now > $dc.start_time %>
 		<% @checkpoints.each do |check| %>
 		<Placemark id="<%= check.checkid %>">
 			<name>K<%= check.checkid %></name>
@@ -69,6 +70,8 @@
 			</Point>
 			<styleUrl>#<%= pinnamesPushpins[0] %></styleUrl>
 		</Placemark>
-		<% end %>
+    <% end %>
+    <% end %>
+    -->
 	</Document>
 </kml>
