@@ -44,7 +44,8 @@
 			</Point>
 			<styleUrl>#<%= styleUrl %></styleUrl>
 		</Placemark>
-		<% end %>
+  <% end %>
+  <% if Time.now > $dc.start_time %>
 		<% @checkpoints.each do |check| %>
 		<Placemark id="<%= check.checkid %>">
 			<name>K<%= check.checkid %></name>
@@ -60,6 +61,7 @@
 			</Point>
 			<styleUrl>#<%= pinnamesPushpins[0] %></styleUrl>
 		</Placemark>
+		<% end %>
 		<% end %>
 	</Document>
 </kml>
