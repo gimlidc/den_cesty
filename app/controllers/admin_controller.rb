@@ -220,4 +220,12 @@ class AdminController < ApplicationController
 
 	end
 
+	def delete_events_and_race
+		Event.delete_all
+		Race.delete_all
+
+		flash[:notice] = "Všechny Eventy a Race tabulka byly odstraněny!"
+		redirect_to :action => 'results_setting'
+	end
+
 end
