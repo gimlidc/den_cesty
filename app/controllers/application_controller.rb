@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_logged_in?
   before_filter :loadDcParams  
   
-  $admin_name = "evajs"
+  $admin_name = ["gimli", "evajs"]
   $sex_options = [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
 
   before_filter :set_locale
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     if !check_logged_in?
       return false
     else
-      if current_walker.username != $admin_name
+      if !$admin_name.include?(current_walker.username)
         flash.notice = "Sorry you are not ADMINISTRATOR"
         redirect_to :controller => "pages", :action => "unauthorized"
         return false

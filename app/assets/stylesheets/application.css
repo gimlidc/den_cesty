@@ -20,7 +20,7 @@ body {
 
 
 .main-column {
-	background-color: black;
+	background-color: #000;
 	border-width: 0px;
 	padding: 0px;
 	margin: 0px;
@@ -33,7 +33,8 @@ body {
 }
 
 .content {
-	position:relative;
+	margin-top: 0px;
+	display:inline-block;
 	overflow:hidden;	
 	width: 71%;
 	min-width: 880px;
@@ -49,13 +50,8 @@ body {
 }
 
 .nav {
-	display: inline-block;
-	padding-left: 15%;
-	min-width: 800px;
-	width: 71%;
-	margin-left: auto;
-	margin-right: auto;
-	
+	display: block;
+	vertical-align: top;
 }
 
 .hmenu {
@@ -65,7 +61,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-bottom: 5px;
 	text-align: right;
 	font-size: 12pt; 
 }
@@ -82,7 +78,7 @@ body {
 	color: #e2a91a;/* yellowgreen;*/
 }
 
-.hmenu a:visited, a:visited {
+.hmenu a:visited, a:visited, .nav span {
 	color: #c89000; /*#77aa00;*/
 }
 

@@ -31,10 +31,10 @@ SimpleNavigation::Configuration.run do |navigation|
   # navigation.auto_highlight = false
 
   # Define the primary navigation
-	nav_class = 'sf-menu'
+	#nav_class = 'sf-menu sf-menu-vertical'
 
   navigation.items do |top|
-		top.dom_class = 'sf-menu'
+		top.dom_class = 'sf-menu sf-vertical'
     # Add an item to the primary navigation. The following params apply:
     # key - a symbol which uniquely defines your navigation item in the scope of the primary_navigation
     # name - will be displayed in the rendered navigation. This can also be a call to your I18n-framework.
@@ -71,7 +71,7 @@ SimpleNavigation::Configuration.run do |navigation|
 #
 
 
-		top.item :results, I18n.t('Results'), :class => 'sf-sub-indicator' do |results|
+		top.item :results, I18n.t('Results') do |results|
 			results.item :dc_results, I18n.t('by Year'), dc_results_path
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
 		end

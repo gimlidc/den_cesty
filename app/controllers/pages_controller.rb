@@ -4,8 +4,8 @@ class PagesController < ApplicationController
   skip_before_filter :check_logged_in?
 
   def actual
-		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:surname, :name)		
-		render "podzim2014.html.erb"
+		@results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all		
+		render "actuals.html.erb"
   end
 
 	def rules
@@ -84,6 +84,10 @@ class PagesController < ApplicationController
 		else
 			render "contacts.html.erb"
 		end
+	end
+	
+	def history
+	  
 	end
 	
 	def unauthorized
