@@ -87,7 +87,7 @@ class PagesController < ApplicationController
 	end
 	
 	def history
-	  
+	  @dcs = Dc.order(:id).all
 	end
 	
 	def unauthorized

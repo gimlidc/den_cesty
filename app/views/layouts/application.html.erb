@@ -35,9 +35,6 @@
 	<div class="main-column">
 	  <div class="main-content">
 		<div class="nav">
-			<% if walker_signed_in? %>
-				<%=  render_navigation(:context=> 'walker', :expand_all => true) %>
-		  	<% end %>
 			<%= render_navigation(:expand_all => true) %>
 		</div>
 		<div class="content">

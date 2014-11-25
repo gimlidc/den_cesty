@@ -209,6 +209,7 @@ class RegistrationsController < ApplicationController
 	    
 	    # OK walker exist and does not have registration for current DC - switch owner
 	    @changedReg[:walker_id] = @walker[:id]
+	    @changedReg[:phone] = @walker[:phone]
 	    begin
 	      @changedReg.save!
 	      flash.notice = t("registration transferred") << " " << @walker.name << " " << @walker.surname << " (" << @walker.email << ")"

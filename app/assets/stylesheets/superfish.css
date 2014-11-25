@@ -1,9 +1,22 @@
+/*** walker menu styles */
+.walker-menu {
+	border: 1px solid #885533;
+}
+
+.walker-menu a, .walker-menu span {
+	color: #7C3;
+}
+
+.admin_menu a, .admin_menu span {
+	color: #B22;
+}
+
 /*** ESSENTIAL STYLES ***/
 .sf-menu, .sf-menu * {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	border: 1px solid gray;
+	border: 1px groove;
 }
 .sf-menu li {
 	position: relative;
@@ -45,10 +58,6 @@
 	*width: 12em; /* no auto sub width for IE7, see white-space comment below */
 }
 .sf-menu a, .sf-menu span {
-	// border-left: 1px solid #fff;
-	// border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
-	// border-top: 1px solid rgba(255,255,255,.5); 
-	
 	padding: .75em 1em;
 	text-decoration: none;
 	zoom: 1; /* IE7 */
@@ -71,10 +80,14 @@
 }
 .sf-menu li:hover,
 .sf-menu li.sfHover {
-	background: #888;
+	background: #555;
 	/* only transition out, not in */
 	-webkit-transition: none;
 	transition: none;
+}
+
+li.selected {
+	background: #444;
 }
 
 /*** arrows (for all except IE7) **/

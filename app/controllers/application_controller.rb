@@ -1,19 +1,47 @@
 # encoding: utf-8
 class ApplicationController < ActionController::Base
+  
   protect_from_forgery
 
   before_filter :check_admin?
   before_filter :check_logged_in?
   before_filter :loadDcParams  
   
-  $admin_name = ["gimli", "evajs"]
   $sex_options = [[I18n.t('male'), "male"], [I18n.t('female'), "female"]]
 
   before_filter :set_locale
 
+  helper_method :check_logged_in?, :check_admin?
+
+  def check_logged_in?
+    if !walker_signed_in?
+      flash.notice = "Please sing in before accessing this page."
+      redirect_to new_walker_session_path
+    return false
+    end
+    return true
+  end
+
+  $admin_name = ["gimli", "evajs"]
+
+  def check_admin?
+    if !walker_signed_in?
+    return false
+    else
+      if !$admin_name.include?(current_walker.username)
+        flash.notice = "Sorry you are not ADMINISTRATOR"
+        redirect_to :controller => "pages", :action => "unauthorized"
+      return false
+      else
+      return true
+      end
+
+    end
+  end
+
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(22)  
+      $dc = Dc.find(20)  
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
       $registration_starts = true
@@ -38,30 +66,6 @@ class ApplicationController < ActionController::Base
       super
     else
       stored_location_for(resource) || request.referer || root_path
-    end
-  end
-
-  def check_logged_in?
-    if !walker_signed_in?
-      flash.notice = "Please sing in before accessing this page."
-      redirect_to new_walker_session_path
-      return false
-    end
-    return true
-  end  
-
-  def check_admin?        
-    if !check_logged_in?
-      return false
-    else
-      if !$admin_name.include?(current_walker.username)
-        flash.notice = "Sorry you are not ADMINISTRATOR"
-        redirect_to :controller => "pages", :action => "unauthorized"
-        return false
-      else
-        return true
-      end
-      
     end
   end
   

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# Configures your navigation
+# Configures your navigation 
+
 SimpleNavigation::Configuration.run do |navigation|
   # Specify a custom renderer if needed.
   # The default renderer is SimpleNavigation::Renderer::List which renders HTML lists.
@@ -11,7 +12,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Specify the class that will be applied to the current leaf of
   # active navigation items. Defaults to 'simple-navigation-active-leaf'
-  # navigation.active_leaf_class = 'your_active_leaf_class'
+  # navigation.active_leaf_class = 'selected'
 
   # Item keys are normally added to list items as id.
   # This setting turns that off
@@ -52,6 +53,34 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
+    
+    # A big group of buttons available only for logged users
+    if walker_signed_in? 
+      if Time.now < $registration_deadline && ($dc.id.modulo(10) != 0 || races_finished >= 3)
+        top.item :registration, I18n.t('Registration'), :class =>"walker-menu" do |registration|
+          if is_registered
+            registration.item :edit_registration, I18n.t('Show registration'), registration_path
+            registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path
+            registration.item :edit_registration, I18n.t('Transfer registration'), change_owner_path
+            registration.item :edit_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?")
+          else
+            registration.item :edit_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path
+          end
+        end
+      end
+
+      if is_registered && Time.now > $dc.start_time && Time.now < $report_deadline
+        if has_report
+          top.item :report, I18n.t('Reports'), :class => 'walker-menu' do |reports|
+            reports.item :edit_report, I18n.t('Edit report'), edit_report_path
+            reports.item :edit_report, I18n.t('Show report'), show_report_path
+          end
+        else
+          top.item :add_report, I18n.t('Add report'), new_report_path, :class => 'walker-menu'
+        end
+      end
+    end
+    
     top.item :actual, I18n.t('Actual'), root_path
 		top.item :rules, I18n.t('Rules'), pages_rules_path
 		top.item :recommendations, I18n.t('Recomendations'), pages_recommendations_path
@@ -74,6 +103,7 @@ SimpleNavigation::Configuration.run do |navigation|
 		top.item :results, I18n.t('Results') do |results|
 			results.item :dc_results, I18n.t('by Year'), dc_results_path
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
+			results.item :history, I18n.t('History'), pages_history_path
 		end
 
 		top.item :reports, I18n.t('Reports'), report_list_path
@@ -91,6 +121,17 @@ SimpleNavigation::Configuration.run do |navigation|
 
     # You can turn off auto highlighting for a specific level
     # primary.auto_highlight = false
+
+    if check_admin?
+      top.item :management, I18n.t('Management'), :class => 'admin_menu' do |manages|
+        manages.item :walkers, I18n.t('Walkers'), admin_walker_list_path
+        manages.item :registrations, I18n.t('Registrations'), registration_path
+        manages.item :result_setting, I18n.t('Results setting'), admin_results_setting_path
+        manages.item :result_setting, I18n.t('Presentation list'), admin_print_list_path
+        manages.item :dcs, "Přehled DC", dcs_path 
+      end
+    end
+    
 
   end
 

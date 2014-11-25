@@ -20,6 +20,7 @@ DenCesty::Application.routes.draw do
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
+	match 'history' => 'pages#history', :as => :pages_history
 	match 'dc_results' => "pages#dc_results", :as => :dc_results
 	match 'walker_results' => "pages#walker_results", :as => :walker_results
 	match 'recommendations' => 'pages#recommendations', :as => :pages_recommendations

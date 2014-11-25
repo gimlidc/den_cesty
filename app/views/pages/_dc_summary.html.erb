@@ -1,4 +1,5 @@
 <div class="dc-summary">
+	<%= dc.id %>. Den cesty (<%= dc_name(dc.id) %>)
 	<table>
 		<tr><th>Start:</th><td><%= dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td></tr>
 		<tr><th>Počet závodníků:</th><td>dc.results</td></tr>
@@ -8,9 +9,7 @@
 		<tr><th>Celková vzdálenost:</th><td>dc.sum</td></tr>
 		<tr><th>Trasa:</th><td>dc.description</td></tr>
 		<tr><th>Design trika:</th><td>
-			<% if !dc.img.nil? %>
-				<%= image_tag dc.img %>
-			<% end %>
+			
 		</td></tr>
 	</table>
 </div>
