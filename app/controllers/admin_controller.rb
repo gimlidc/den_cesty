@@ -32,6 +32,10 @@ class AdminController < ApplicationController
 
 			redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
 	end
+	
+	def registered
+	  
+	end
 
 	def merge		
 			@walker_a = Walker.find(params[:walker][:id])

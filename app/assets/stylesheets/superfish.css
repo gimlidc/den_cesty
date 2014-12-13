@@ -3,6 +3,11 @@
 	border: 1px solid #885533;
 }
 
+#delete_registration span {
+	border: 0px;
+	padding: 0px;
+}
+
 .walker-menu a, .walker-menu span {
 	color: #7C3;
 }

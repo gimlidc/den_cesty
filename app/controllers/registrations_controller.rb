@@ -48,7 +48,7 @@ class RegistrationsController < ApplicationController
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		end
-		if current_walker.username == $admin_name
+		if check_admin?
 		  @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
 		  @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count
 		  # chceme tabulku poctu textilu, kde hraje roli: [typ, sex, velikost]
@@ -189,6 +189,11 @@ class RegistrationsController < ApplicationController
 	end
 	
 	def change_owner_do
+	  if $dc.id.modulo(10) == 0
+	    flash.notice = "Registration could not be changed, race is in limited edition."
+	    redirect_to :action => 'show'
+	    return
+	  end 
 	  @changedReg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
 	  if @changedReg.walker_id != current_walker[:id]
 	    flash.alert = t "not own registration"

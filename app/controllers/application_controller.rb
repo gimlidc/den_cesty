@@ -29,11 +29,11 @@ class ApplicationController < ActionController::Base
     return false
     else
       if !$admin_name.include?(current_walker.username)
-        flash.notice = "Sorry you are not ADMINISTRATOR"
-        redirect_to :controller => "pages", :action => "unauthorized"
-      return false
+        #flash.notice = "Sorry you are not ADMINISTRATOR"
+        #redirect_to :controller => "pages", :action => "unauthorized"
+        return false
       else
-      return true
+        return true
       end
 
     end
