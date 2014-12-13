@@ -28,6 +28,7 @@ DenCesty::Application.routes.draw do
   match 'pod12_17' => 'pages#pod12_17', :as => :pages_pod12_17
 	match 'forum' => 'pages#forum', :as => :pages_forum
 	match 'admin/add_report', :as => :admin_add_report
+	match 'admin/register/(/:id)' => 'admin#register', :as => :admin_register
 	match 'admin/registered', :as => :admin_registered
 	match 'admin/print_list', :as => :admin_print_list
 	match 'admin/walker_list', :as => :admin_walker_list

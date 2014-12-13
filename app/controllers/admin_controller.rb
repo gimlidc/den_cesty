@@ -33,9 +33,70 @@ class AdminController < ApplicationController
 			redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
 	end
 	
+	def register
+	  walker_id = "#{params[:id]}"
+    @walker = Walker.find(walker_id)
+    @registration = Registration.where(:walker_id => walker_id, :dc_id => $dc.id).first
+    
+    if @registration.nil?
+      @registration = Registration.new
+      @new_registration = true
+    end
+  end
+  
+  def register_do
+    # check if there is only one registration for specified walker
+    @regs = Registration.where(:dc_id => $dc.id, :walker_id => "#{params[:registration][:walker_id]}")
+    if (@regs.size > 1) # there is more than one registration for the walker
+      @regs.each do |reg|
+        reg.delete # remove them all
+      end
+    end
+    
+    # try to find registration
+    @reg = Registration.where(:dc_id => $dc.id, :walker_id => "#{params[:registration][:walker_id]}").first
+    # is there registration of the walker for current dc?
+    if (@reg.nil?) # no -> create it
+      @reg = Registration.new(params[:registration])
+      if @reg.save # save
+        flash.notice = "Registration successfully created."
+      else
+        # this is strange - check DB health
+        flash.notice = "Error registration not saved."
+      end
+    else # there is already one registration -> update parameters according to admin form
+      if @reg.update_attributes(params[:registration])
+        flash.notice = "Registration successfully updated."
+      else
+        flash.notice = "Error registration not saved."
+      end
+    end
+    redirect_to admin_registered_path
+  end
+	
 	def registered
-	  
-	end
+	  @registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
+    @reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+    @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
+    @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count
+    # chceme tabulku poctu textilu, kde hraje roli: [typ, sex, velikost]
+    scarfs = Registration.where(:canceled => false, :confirmed => true, :dc_id => $dc.id, :scarf => true).count
+    # damska bavlna
+    fCShirt = Hash.new(0)
+    # panska bavlna
+    mCShirt = Hash.new(0)
+    # damsky polyester
+    fPShirt = Hash.new(0)
+    # pansky polyester
+    mPShirt = Hash.new(0)
+    $shirt_sizes.each do |size| # vypneni tabulky
+      fCShirt[size] = @registration.where(:confirmed => true, :shirt_size => size, :walkers => { :sex => "female" }).size
+      mCShirt[size] = @registration.where(:confirmed => true, :shirt_size => size, :walkers => { :sex => "male" }).size
+      fPShirt[size] = @registration.where(:confirmed => true, :shirt_polyester => size, :walkers => { :sex => "female" }).size
+      mPShirt[size] = @registration.where(:confirmed => true, :shirt_polyester => size, :walkers => { :sex => "male" }).size
+    end
+    @textil = { "scarfs" => scarfs, "damskyPolyester" => fPShirt, "panskyPolyester" => mPShirt, "damskaBavlna" => fCShirt, "panskaBavlna" => mCShirt }
+  end
 
 	def merge		
 			@walker_a = Walker.find(params[:walker][:id])

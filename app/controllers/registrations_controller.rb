@@ -48,27 +48,6 @@ class RegistrationsController < ApplicationController
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
 		end
-		if check_admin?
-		  @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
-		  @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count
-		  # chceme tabulku poctu textilu, kde hraje roli: [typ, sex, velikost]
-		  scarfs = Registration.where(:canceled => false, :confirmed => true, :dc_id => $dc.id, :scarf => true).count
-		  # damska bavlna
-		  fCShirt = Hash.new(0)
-		  # panska bavlna
-		  mCShirt = Hash.new(0)
-		  # damsky polyester
-		  fPShirt = Hash.new(0)
-		  # pansky polyester
-		  mPShirt = Hash.new(0)		  
-		  $shirt_sizes.each do |size| # vypneni tabulky		    
-		    fCShirt[size] = @registration.where(:confirmed => true, :shirt_size => size, :walkers => { :sex => "female" }).size
-		    mCShirt[size] = @registration.where(:confirmed => true, :shirt_size => size, :walkers => { :sex => "male" }).size
-		    fPShirt[size] = @registration.where(:confirmed => true, :shirt_polyester => size, :walkers => { :sex => "female" }).size
-		    mPShirt[size] = @registration.where(:confirmed => true, :shirt_polyester => size, :walkers => { :sex => "male" }).size
-		  end		  		  
-		  @textil = { "scarfs" => scarfs, "damskyPolyester" => fPShirt, "panskyPolyester" => mPShirt, "damskaBavlna" => fCShirt, "panskaBavlna" => mCShirt }
-		end
 	end
 
 	def edit
