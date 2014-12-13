@@ -1,0 +1,65 @@
+<div>
+    <h1 color="red"><%= $dc.id %>. Den cesty</h1>
+    <h6 align="center"><%= $dc.name_cs %></h6>
+    <p>
+        Výroční DC je jako obvykle jiný. Po deseti letech se vrátíme tam, kde DC začal. Jaké to tehdy bylo utrpení, urazit vzdálenost větší než 40km? Kudy vedla trasa? Kde jsme v noci mrzli? Kde bloudili a kde nás opustili naši společníci? Vzhledem k tomu, že akce bude více vzpomínková nežli sportovní, je registrace otevřena pouze těm, kteří s námi šli alespoň třikrát. Pokud máte přesto eminentní zájem se na 20.DC přidat, napište nám - něco s tím (dle našeho uvážení) uděláme - prosíme uveďte v mailu i zdůvodnění vaší účasti (například jdu s kamarádem X Y, který 3 účasti má a beze mě by nešel).
+    </p>
+    <p>
+    	Stejně jako na podzim budeme testovat prototyp naší trackovací aplikace. Tentokráte bude snad i verze pro Androidí telefony. Informace obdržíte zavčasu mailem. Pokud byste o trackování uvažovali, požadavky jsou - telefon s OS Android (4.2+) nebo iOS (7+), powerbanka (min. 3A), připojení k internetu (2G by mělo stačit), funkce GPS v telefonu.
+    </p>
+    <p>
+        <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %>
+    </p>    
+    <br />
+    <%
+    remains = $registration_deadline - Time.now
+    if  remains < 60 * 60 * 24 * 7 && remains > 0
+    %>
+    <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
+    <% else if remains < 0 %>
+    <h4>Registrace byla ukončena</h4>
+    <% end %>    
+    <% end %>
+    <table id="summary">
+        <tbody>
+        	<tr>
+                <th class="title"><%= t 'actual.intro' %>:</th><td>20. Den cesty je 12h dlouhý závod. Cílem závodníků je doběhnout v tomto časovém limitu co nejdál zvládnou. Na trase není závodníkům poskytována žádná podpora. Po ukončení akce bude vyznačená místa projiždět autobus, který závodníky sveze na prozatím utajené místo, kde bude možnost občerstvení těla i ducha a přespání.</td>
+            </tr>
+            <tr>
+              <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.where' %>:</th><td>Zbořený Kostelec, rozc. červené značky</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.registration_workflow' %>:</th><td>Pro přihlášení na závod je třeba mít již tři účasti na DC. Pokud je máš, po přihlášení (na stránkách) se Ti zobrazí menu potřebná pro registraci.</td>
+            </tr>
+            <tr>
+              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč). Trička (jako na prvním DC) nejsou.</td>
+            </tr>            
+            <tr>
+                <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let nebudou na závod vpuštěni (stejně by neměli potřebné 3 účasti).</td>
+            </tr>            
+            <tr>
+                <th class="title"><%= t 'actual.route' %>:</th><td>Trasu identifikujeme ze starých map, děkujeme za strpení ...</td>
+            </tr>
+            <tr>
+            	<th class="title"><%= t 'actual.checks' %>:</th><td>Na závodě nebudou žádné kontroly, ale podvádět nemá smysl, neb výsledky závodu se nebudou nikde na stránkách zobrazovat (pošleme vám je mailem).
+            	</td>
+            </tr>
+            <tr>
+                <th class="title"><%= t 'actual.equipment' %>:</th><td>Tento DC se koná v zimě, to je novinka. Zřejmě bude sníh, mokro a zima stejně jako na 2.DC - počítejte s tím, abyste nezmrzli.</td>
+            </tr>
+            <tr>        
+    <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th>
+    <td> 
+    	<% if !@registered_walkers.nil? && !@registered_walkers.empty? %>
+            <% @registered_walkers.each do |reg| %>
+            	<%= reg.walker.username %>, 
+          	<% end %> 
+        <% end %>     
+        ...   
+    </td></tr>
+        </tbody>
+    </table>
+</div>

@@ -19,6 +19,10 @@
 	font-weight: bold;
 }
 
+.gray {
+  color: gray;
+}
+
 .left-column {  
   width: 64%;
   display: inline-block;
@@ -69,4 +73,28 @@
 .itinerary td {
   padding: 3px;
   border: 1px solid gray;
+}
+
+.ksicht {
+  padding: 5px;
+  width: 250px;
+  height: 90px;
+  margin: 5px;
+  display: inline-block;
+}
+
+.popis-ksichtu, .jmeno-ksichtu {
+  position: relative;
+  margin-left: 55px;
+}
+
+.ksicht img {
+  float: left;
+  display: inline;
+  width: 50px;
+}
+
+.ksichti {
+  display: block;
+  margin: auto;
 }

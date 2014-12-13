@@ -4,8 +4,14 @@ class PagesController < ApplicationController
   skip_before_filter :check_logged_in?
 
   def actual
-		@registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false).joins(:walker).order(:surname, :name)		
-		render "podzim2014.html.erb"
+    # print results if the newest race was already started
+    if (Time.now > $dc.start_time)
+		  @results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all		
+		  render "actuals.html.erb"
+		else # otherwise print proposition of the current race
+		  @registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false)
+		  render "dc".concat($dc.id.to_s).concat(".html.erb")
+		end
   end
 
 	def rules
@@ -84,6 +90,10 @@ class PagesController < ApplicationController
 		else
 			render "contacts.html.erb"
 		end
+	end
+	
+	def history
+	  @dcs = Dc.order(:id).all
 	end
 	
 	def unauthorized

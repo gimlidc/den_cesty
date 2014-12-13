@@ -1,67 +1,134 @@
+/*** walker menu styles */
+.walker-menu {
+	border: 1px solid #885533;
+}
+
+#delete_registration span {
+	border: 0px;
+	padding: 0px;
+}
+
+.walker-menu a, .walker-menu span {
+	color: #7C3;
+}
+
+.admin_menu a, .admin_menu span {
+	color: #B22;
+}
 
 /*** ESSENTIAL STYLES ***/
 .sf-menu, .sf-menu * {
-	position:		relative;
-	margin:			0px;
-	padding-left:	0px;
-	width:			auto;
-	list-style:		none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: 1px groove;
 }
-
-.sf-menu ul {
-	position:		absolute;	
-	width:			10em; /* left offset of submenus need to match (see below) */	
-}
-
 .sf-menu li {
-	background-color: black;
-	display:		block;
-	color:			#b4850f; /*#eeeeee;*/
-	float:			left;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	-moz-border-top-left-radius: 10px;
-	-moz-border-top-right-radius: 10px;
-	border:			2px ridge #b4850f;
-	border-bottom:  2px solid black;
-	padding: 		.3em 1em;
-	text-decoration:none;
-	position:		relative;
-	font-size: 13pt;
-	margin-bottom: -0.2em;
+	position: relative;
+}
+.sf-menu ul {
+	position: absolute;
+	display: none;
+	top: 0%;
+	right: 0;
+	z-index: 99;
+}
+.sf-menu > li {
+	float: left;
+	text-align: center;
+}
+.sf-menu li:hover > ul,
+.sf-menu li.sfHover > ul {
+	display: block;
 }
 
-.sf-menu li li {
-	display:		block;
-	text-align:		center;
-	width:			7.3em;
-	border:			2px ridge #b4850f/*77aa00*/;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	-moz-border-top-left-radius: 0px;
-	-moz-border-top-right-radius: 0px;	
+.sf-menu a, .sf-menu span {
+	display: block;
+	position: relative;
 }
-
-.sf-menu li:hover {
-	color:			#e2a91a; /*puvodne #ffffff*/
-	background-color: #333;
-	border:			2px groove #e2a91a; /*yellowgreen;*/
-	visibility:		inherit; /* fixes IE7 'sticky bug' */
+.sf-menu ul ul {
+	top: 0;
+	left: 100%;
 }
 
 
-.sf-menu a {
-	color:			#b4850f; /*77aa00*/
+/*** DEMO SKIN ***/
+.sf-menu {
+	float: left;
+	margin-bottom: 1em;
+}
+.sf-menu ul {
+	box-shadow: 2px 2px 6px rgba(0,0,0,.2);
+	min-width: 12em; /* allow long menu items to determine submenu width */
+	*width: 12em; /* no auto sub width for IE7, see white-space comment below */
+}
+.sf-menu a, .sf-menu span {
+	padding: .75em 1em;
 	text-decoration: none;
+	zoom: 1; /* IE7 */
+}
+.sf-menu a, .sf-menu span {
+	// color: #853;
+}
+.sf-menu li {
+	background: #333;
+	white-space: nowrap; /* no need for Supersubs plugin */
+	*white-space: normal; /* ...unless you support IE7 (let it wrap) */
+	-webkit-transition: background .2s;
+	transition: background .2s;
+}
+.sf-menu ul li {
+	background: #222;
+}
+.sf-menu ul ul li {
+	background: #222;
+}
+.sf-menu li:hover,
+.sf-menu li.sfHover {
+	background: #555;
+	/* only transition out, not in */
+	-webkit-transition: none;
+	transition: none;
 }
 
-.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
-	color:		#e2a91a;/*yellowgreen;*/
+li.selected {
+	background: #444;
 }
 
-/*.sf-menu li:hover ul,*/
-.sf-menu li.sfHover ul {
-	left:			0em;
-	top:			1.8em; /* match top ul list item height */
-	z-index:		99;
+/*** arrows (for all except IE7) **/
+.sf-arrows .sf-with-ul {
+	padding-right: 2.5em;
+	*padding-right: 1em; /* no CSS arrows for IE7 (lack pseudo-elements) */
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: 1em;
+	margin-top: -3px;
+	height: 0;
+	width: 0;
+	/* order of following 3 rules important for fallbacks to work */
+	border: 5px solid transparent;
+	border-top-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+	border-top-color: rgba(255,255,255,.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+	border-top-color: white; /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+	margin-top: -5px;
+	margin-right: -3px;
+	border-color: transparent;
+	border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+	border-left-color: rgba(255,255,255,.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+	border-left-color: white;
 }

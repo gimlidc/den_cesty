@@ -1,0 +1,43 @@
+<table>
+<tr><td>Závodník:</td><td><%= @walker.name %> <%= @walker.surname %> (<%= @walker.id %>)</td></tr>
+<tr><td>Na závod:</td><td><%= $dc.id %></td></tr>
+<tr><td>Kontakty:</td><td><%= @walker.email %>, <%= @walker.phone %></td></tr>
+<tr><td>Stav registrace:</td>
+	<td>
+		<% if @new_registration %>
+			žádná
+		<% else %>
+			<% if @registration.confirmed == true %>
+				zaplacená
+			<% end %>
+			<% if @registration.canceled == true %>
+				zrušená
+			<% else %>
+				platná
+			<% end %>
+		<% end %>
+	</td></tr>
+</table>
+
+<% options = [["NO", "NO"], ["XS", "XS"], ["S", "S"], ["M", "M"], ["L", "L"], ["XL", "XL"], ["XXL", "XXL"]] %>
+
+<%= form_for( @registration, :url => { :controller => "admin", :action => "register_do" }) do |f| %>
+  <div><%= f.check_box :confirmed %><%= f.label "zaplacená" %></div>
+  <div><%= f.check_box :canceled %><%= f.label "zrušená" %></div>
+  <%= f.hidden_field :id %>
+  <%= f.hidden_field :walker_id, :value => @walker.id %>
+  <%= f.hidden_field :dc_id, :value => $dc.id %>
+  <div><%= f.text_field :phone %><%= f.label "telefon" %></div>
+  <div><%= f.text_field :goal %><%= f.label "cíl" %></div>
+  <div><%= f.check_box :bw_map %>
+	<%= f.label t :bw_map %></div>
+  <div><%= f.check_box :colour_map %>
+	<%= f.label t :colour_map %></div>
+  <div><%= f.select :shirt_size,
+	  	options_for_select(options,  f.object.shirt_size), {} %><%= f.label t :shirt_cotton %></div>
+  <div><%= f.select :shirt_polyester,
+	  	options_for_select(options,  f.object.shirt_polyester), {} %><%= f.label t :shirt_polyester %></div>
+  <div><%= f.check_box :scarf %>
+	    <%= f.label t :scarf %></div>
+  <div><%= f.submit %></div>
+<% end %>
