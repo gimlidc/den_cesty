@@ -1,110 +1,3 @@
-<% if walker_signed_in? && current_walker.username == $admin_name %>
-  <% if !@registration.nil? %>
-
-	<p>Přehled:
-		<ul>
-			<li>BW maps:<%=  @bwmaps %></li>
-			<li>Color maps:<%=  @colormaps %></li>
-			<li>Šátky: <%=  @textil["scarfs"] %></li>
-			<li>Trika:
-				<table border="1" cellpadding="5" cellspacing="0">
-				<tr>
-					<th>typ/velikost</th>
-					<% $shirt_sizes.each do |size| %>
-						<th><%= size %></th>
-					<% end %>
-				</tr>
-				<tr>
-					<th>pánská bavlna</th>
-					<% $shirt_sizes.each do |size| %>
-						<td><%= @textil["panskaBavlna"][size] %></td>
-					<% end %>
-				</tr>
-				<tr>
-					<th>dámská bavlna</th>
-					<% $shirt_sizes.each do |size| %>
-						<td><%= @textil["damskaBavlna"][size] %></td>
-					<% end %>
-				</tr>
-				<tr>
-					<th>pánský polyester</th>
-					<% $shirt_sizes.each do |size| %>
-						<td><%= @textil["panskyPolyester"][size] %></td>
-					<% end %>
-				</tr>
-				<tr>
-					<th>dámský polyester</th>
-					<% $shirt_sizes.each do |size| %>
-						<td><%= @textil["damskyPolyester"][size] %></td>
-					<% end %>
-				</tr>
-				</table>
-			</li>
-		</ul>
-	</p>
-
-	Showing all registrations for Den cesty <%= $dc.id %>
-
-	<table border="1" width="100%" class="preview" cellspacing="0">
-	  <tbody>
-		<tr>
-		  <th>id</th>
-		  <th>jméno</th>
-		  <th>příjmení</th>
-		  <th>e-mail</th>
-		  <th>telefon</th>
-		  <th>triko<br />bavlna</th>
-		  <th>triko<br />funkční</th>
-		  <th>šátek</th>
-		  <th>ČB mapa</th>
-		  <th>mapa</th>		  
-		  <th>cena</th>
-		  <th></th>
-		  <th>placeno</th>
-		</tr>
-		<% @collected_money = 0 %>
-		<% @resting_money = 0 %>
-		<% @registration.each do |reg| %>		  
-		  <tr
-		  <% if reg[:confirmed] == true %>
-		  	class="confirmed"
-		  	<% @collected_money = @collected_money + price(reg) %>
-		  <% else %>
-		    <% @resting_money = @resting_money + price(reg) %>
-		  	<% if price(reg) > 100 %>
-		  class="notify"
-		  	<% end %>
-		  <% end %>
-		  >
-		  	<td><%= reg.walker.id %></td>
-			<td><%= reg.walker.name %></td>
-			<td><%= reg.walker.surname %></td>
-			<td><%= reg.walker.email %></td>
-			<td><%= reg.phone %></td>
-			<td><%= reg.shirt_size %></td>
-			<td><%= reg.shirt_polyester %></td>
-			<td><%= reg.scarf %></td>
-			<td><%= reg.bw_map %></td>
-			<td><%= reg.colour_map %></td>
-			<td><%= price(reg) %>&nbsp;Kč</td>
-			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => "Registration of " + reg.walker.name + reg.walker.surname + " will be canceled." %></td>
-			<td>
-				<% if reg.confirmed %>
-					OK
-				<% else %>
-					<%= link_to "potvrdit", {:controller => "registrations", :action => "confirm", :id => reg}, :method => "get", :confirm => "Potvrdit zaplacení registrace " + reg.walker.name + reg.walker.surname %>
-				<% end %>
-			</td>
-		  </tr>
-
-		<% end %>
-	  </tbody>
-	</table>
-	Celkem přijato <%= @collected_money %>Kč. Zbývá vybrat <%= @resting_money %>Kč.
-  <% else %>
-	No record found!
-  <% end %>
-<% else %>
   <% if !@reg.nil? %>
 	<h2><%= t "Registration summary" %></h2>
 	<table width="43%" cellspacing="0">
@@ -114,31 +7,41 @@
 		<tr><td>&nbsp; &nbsp;</td><td></td><td></td></tr>
 		<tr><th></th><th class="bottom_line left"><%= t 'value' %></th><th class="bottom_line right"><%= t 'price' %></th></tr>
 		<tr><td><%= t 'registration fee' %></td><td><%= t 'obligate' %></td><td class="right"><b><%= $dc.reg_price %>&nbsp;Kč</b></td></tr>
+		<% if map_bw? %>
 		<tr>
 			<td><%= t  'bw_map' %></td>
 			<td><%= t bool2str(@reg.bw_map) %></td>
 			<td class="right"><b><%= bw_map_price(@reg.bw_map) %>&nbsp;Kč</b></td>
 		</tr>
+		<% end %>
+		<% if map_colour? %>
 		<tr>
 			<td><%= t 'colour_map' %></td>
 			<td><%= t bool2str(@reg.colour_map) %></td>
 			<td class="right"><b><%= colour_map_price(@reg.colour_map) %>&nbsp;Kč</b></td>
 		</tr>
+		<% end %>
+		<% if shirt? %>
 		<tr>
 			<td><%= t :shirt_cotton %></td>
 			<td><%= t shirt2str(@reg.shirt_size) %></td>
 			<td class="right"><b><%= shirt_price(@reg.shirt_size) %>&nbsp;Kč</b></td>
 		</tr>
+		<% end %>
+		<% if pes_shirt? %>
 		<tr>
 			<td><%= t :shirt_polyester %></td>
 			<td><%= t shirt2str(@reg.shirt_polyester) %></td>
 			<td class="right"><b><%= polyester_shirt_price(@reg.shirt_polyester) %>&nbsp;Kč</b></td>
 		</tr>
+		<% end %>
+		<% if scarf? %>
 		<tr class="bottom_line">
 			<td class="bottom_line"><%= t 'scarf' %></td>
 			<td class="bottom_line"><%= t bool2str(@reg.scarf) %></td>
 			<td class="bottom_line right"><b><%= scarf_price(@reg.scarf) %>&nbsp;Kč</b></td>
 		</tr>		
+		<% end %>
 		<tr><td><b><%= t 'total price' %>:</b></td><td></td><td class="right"><b class="red"><%= price(@reg) %>&nbsp;Kč</b></td></tr>
 	  </tbody>
 	</table>
@@ -157,4 +60,3 @@
   <% else %>
 	Access denied! Please log in.
   <% end %>
-<% end %>

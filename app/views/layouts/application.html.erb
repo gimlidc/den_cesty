@@ -7,14 +7,12 @@
 	<%= csrf_meta_tags %>
 
 	<script type="text/javascript" charset="UTF-8">
-	  $(document).ready(function(){
-		$("ul.sf-menu").superfish({
-		  delay: 700               // 1.2 second delay on mouseout
+	jQuery(document).ready(function(){
+		$('ul.sf-menu').superfish({
+			animation: {height:'show'},	// slide-down effect without fade-in
+			delay:		 700			// 700 miliseconds delay on mouseout
 		});
-		$("ul.walker-nav").superfish({
-		  delay: 700               // 1.2 second delay on mouseout
-		});
-	  });
+	});
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-36705877-1']);
@@ -33,19 +31,11 @@
 		<div class="hmenu">
 			<%= render 'devise/menu/login_items' %>
 		</div>
-		<div class="nav">
-			<%= render_navigation(:expand_all => true) %>
-		</div>
 	</div>
 	<div class="main-column">
 	  <div class="main-content">
-		<div class="walker-nav">
-		  <% if walker_signed_in? %>
-			<%=  render_navigation(:context=> 'walker', :expand_all => true) %>
-		  <% else %>
-		  <ul>
-		  </ul>
-		  <% end %>
+		<div class="nav">
+			<%= render_navigation(:expand_all => true) %>
 		</div>
 		<div class="content">
 		  <div class="main-text">

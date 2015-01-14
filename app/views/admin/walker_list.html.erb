@@ -13,13 +13,13 @@
   <table>
 	<tbody>
 	  <tr>
-		<th>přezdívka</th>
+		<th>vokativ</th>
 		<th>jméno</th>
 		<th>příjmení</th>
 		<th>e-mail</th>
 		<th>telefon</th>
-		<th>kategorie</th>
-		<th>rok narození</th>
+		<th>sex</th>
+		<th>nar.</th>
 		<th></th>
 	  </tr>
 	  <% @walkers.each do |walker| %>
@@ -44,8 +44,10 @@
 			</td>
 			<td><%= f.number_field :year, :size => 4 %></td>
 			<td>
-			  <%= f.submit "aktualizovat" %>/
-			  <%= link_to "odstranit", {:controller => "admin", :action => "walker_destroy", :id => walker}, :method => "delete", :confirm => "Opravdu smazat uživatele: ".concat(walker.surname) %></td>
+			  <%= f.submit "update" %>/
+			  <%= link_to "delete", {:controller => "admin", :action => "walker_destroy", :id => walker}, :method => "delete", :confirm => "Opravdu smazat uživatele: ".concat(walker.surname) %>/
+			  <%= link_to "regedit", {:controller => "admin", :action => "register", :id => walker} %>
+			  </td>
 		  </tr>
 		<% end %>
 	  <% end %>
@@ -59,7 +61,7 @@
 		  <td>
 			<%= f.select :sex, options_for_select(sex_options,  f.object.sex), {}%>
 		  </td>
-		  <td><%= f.number_field :year, :size => 4 %></td>
+		  <td><%= f.number_field :year, :size => 4, :lenght => 4 %></td>
 		  <td>
 			<%= f.submit "vytvořit" %></td>
 		<% end %>

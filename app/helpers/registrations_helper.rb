@@ -2,6 +2,9 @@ module RegistrationsHelper
 
   def polyester_shirt_price(shirt_size)
     price = 0
+    if ($dc.polyester_shirt_price == -1)
+      return 0
+    end
     if (!shirt_size.eql?("NO"))
       price += $dc.polyester_shirt_price
     end
@@ -10,6 +13,9 @@ module RegistrationsHelper
   
   def scarf_price(scarf)
     price = 0
+    if ($dc.scarf_price == -1)
+      return 0
+    end
     if (scarf == true)
       return $dc.scarf_price
     end
@@ -18,6 +24,9 @@ module RegistrationsHelper
 
 	def shirt_price(shirt_size)
 		price = 0
+		if ($dc.shirt_price == -1)
+		  return 0
+		end
 		if (!shirt_size.eql?("NO") && !shirt_size.eql?("OWN"))
 			price += $dc.shirt_price
 		end
@@ -29,7 +38,7 @@ module RegistrationsHelper
 
 	def bw_map_price(bw_map)
 		price = 0
-		if (bw_map == true)
+		if (bw_map == true && $dc.map_bw_price != -1)
 			price+= $dc.map_bw_price
 		end
 		return price
@@ -37,7 +46,7 @@ module RegistrationsHelper
 
 	def colour_map_price(colour_map)
 		price = 0
-		if (colour_map == true)
+		if (colour_map == true && $dc.map_color_price != -1)
 			price+= $dc.map_color_price
 		end
 		return price
@@ -54,6 +63,22 @@ module RegistrationsHelper
 		else
 			return true
 		end
+	end
+	
+	def races_finished
+	  if walker_signed_in?
+	    Result.count(:conditions => ["walker_id = ? AND distance != ?", current_walker[:id], 0])
+	  else
+	    return 0
+	  end
+	end
+	
+	def registered?
+	  if walker_signed_in?
+	    return Registration.where(:dc_id => $dc.id, :walker_id => current_walker[:id]).size == 1
+	  else
+	    return false
+	  end
 	end
 	
 	def isLimit

@@ -1,0 +1,117 @@
+<% if check_admin? %>
+<% if !@registration.nil? %>
+
+<p>
+	Přehled:
+	<ul>
+		<li>
+			BW maps:<%= @bwmaps %>
+		</li>
+		<li>
+			Color maps:<%= @colormaps %>
+		</li>
+		<li>
+			Šátky: <%= @textil["scarfs"] %>
+		</li>
+		<li>
+			Trika:
+			<table border="1" cellpadding="5" cellspacing="0">
+				<tr>
+					<th>typ/velikost</th>
+					<% $shirt_sizes.each do |size| %>
+					<th><%= size %></th>
+					<% end %>
+				</tr>
+				<tr>
+					<th>pánská bavlna</th>
+					<% $shirt_sizes.each do |size| %>
+					<td><%= @textil["panskaBavlna"][size] %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>dámská bavlna</th>
+					<% $shirt_sizes.each do |size| %>
+					<td><%= @textil["damskaBavlna"][size] %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>pánský polyester</th>
+					<% $shirt_sizes.each do |size| %>
+					<td><%= @textil["panskyPolyester"][size] %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<th>dámský polyester</th>
+					<% $shirt_sizes.each do |size| %>
+					<td><%= @textil["damskyPolyester"][size] %></td>
+					<% end %>
+				</tr>
+			</table>
+		</li>
+	</ul>
+</p>
+
+Showing all registrations for Den cesty <%= $dc.id %>
+
+<table border="1" width="100%" class="preview" cellspacing="0">
+	<tbody>
+		<tr>
+			<th>id</th>
+			<th>jméno</th>
+			<th>příjmení</th>
+			<th>e-mail</th>
+			<th>telefon</th>
+			<th>triko
+			<br />
+			bavlna</th>
+			<th>triko
+			<br />
+			funkční</th>
+			<th>šátek</th>
+			<th>ČB mapa</th>
+			<th>mapa</th>
+			<th>cena</th>
+			<th></th>
+			<th>placeno</th>
+		</tr>
+		<% @collected_money = 0 %>
+		<% @resting_money = 0 %>
+		<% @registration.each do |reg| %>
+		<tr
+		<% if reg[:confirmed] == true %>
+		class="confirmed"
+		<% @collected_money = @collected_money + price(reg) %>
+		<% else %>
+		<% @resting_money = @resting_money + price(reg) %>
+		<% if price(reg) > 100 %>
+			class="notify"
+			<% end %>
+			<% end %>
+			>
+			<td><%= reg.walker.id %></td>
+			<td><%= reg.walker.name %></td>
+			<td><%= reg.walker.surname %></td>
+			<td><%= reg.walker.email %></td>
+			<td><%= reg.phone %></td>
+			<td><%= reg.shirt_size %></td>
+			<td><%= reg.shirt_polyester %></td>
+			<td><%= reg.scarf %></td>
+			<td><%= reg.bw_map %></td>
+			<td><%= reg.colour_map %></td>
+			<td><%= price(reg) %>&nbsp;Kč</td>
+			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => "Registration of " + reg.walker.name + reg.walker.surname + " will be canceled." %></td>
+			<td> <% if reg.confirmed %>
+			OK
+			<% else %>
+			<%= link_to "potvrdit", {:controller => "registrations", :action => "confirm", :id => reg}, :method => "get", :confirm => "Potvrdit zaplacení registrace " + reg.walker.name + reg.walker.surname %>
+			<% end %> </td>
+		</tr>
+
+		<% end %>
+	</tbody>
+</table>
+Celkem přijato <%= @collected_money %>Kč. Zbývá vybrat <%= @resting_money %>Kč.
+<% else %>
+No record found!
+<% end %>
+<% end %>

@@ -1,0 +1,60 @@
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    new Highcharts.Chart({
+      chart: { 
+      	renderTo: 'dc-chart',
+      	type: 'bar'
+      },
+      title: {
+      	text: 'Výsledky <%= dc_id %>. DC'
+      },
+      yAxis: {
+      	title: {
+      		text: "km"
+      	}
+      },
+      xAxis: {
+      	categories: [<% @results.each do |result| %>
+      			'<%= "#{result.walker.nameSurname}" %>',      			
+      		<% end %>
+      		],
+      	title: {
+      		text: "chodec"
+      	}
+      },
+      plotOptions: {
+		bar: {
+			dataLabels: {
+				enabled: true,
+				format: "{y} km",
+				y: -5
+			}
+		}
+	  },
+      series: [{
+      	name: 'Nahlášeno',
+      	data: [
+      		<% @results.each do |result| %>
+      			<% if result.distance == nil || result.distance == '' %>
+      				0,
+      			<% else %>       				
+					<%= result.distance %>,				
+				<% end %>
+			<% end %>
+			]
+		}, {
+		name: 'Oficiálně',
+		data: [
+			<% @results.each do |result| %>
+				<%  if result.official == nil || result.official == '' %>
+					0,
+				<% else %>
+					<%= result.official %>,
+				<% end %>
+			<% end %>
+			]
+		}]
+    });
+  });
+</script>
+<div id="dc-chart" style="height: <%= 25*@results.count %>px;"></div>

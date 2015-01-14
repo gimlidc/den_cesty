@@ -25,6 +25,6 @@ class Walker < ActiveRecord::Base
 
   def nameSurnameYear
     "#{name} #{surname} (#{year})"
-  end
+  end  
 
 end

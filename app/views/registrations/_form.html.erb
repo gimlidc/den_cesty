@@ -17,11 +17,14 @@
   <div><%= f.check_box :colour_map, :disabled => disabled  %>
 	<%= f.label t :colour_map %> (<%= $dc.map_color_price %>Kč)</div>
   <p />
+  <% if scarf? || shirt? || pes_shirt? %>
   <b>Textil:&nbsp;</b><i>(<%= t 'change possible until', :deadline => I18n.l($shirt_deadline, :format => :date) %>)</i><br />
   <ul>
+  	<% if shirt? || pes_shirt? %>
   	<li>Trika
   <%= t :shirt_size %>
   <table>
+  	<% if shirt? %>
   	<tr>
   		<td>
   			<%= f.label t :shirt_cotton %>
@@ -34,6 +37,8 @@
 	  			(<%= $dc.shirt_price %>Kč)
 	  	</td>
 	</tr>  
+	<% end # shirt? %>
+	<% if pes_shirt? %>
   <tr>
   	<td>
   		<%= f.label t :shirt_polyester %>
@@ -46,14 +51,19 @@
 	  		(<%= $dc.polyester_shirt_price %>Kč)
   	</td>
   </tr>
+  	<% end # pes_shirt? %>  
   </table>
-  	</li>  	
+  	</li>
+  	<% end # shirt? || pes_shirt? %>
+  	<% if scarf? %>  	
     <li>Šátek:
       <div><%= f.check_box :scarf, :disabled => (Time.now > $shirt_deadline || disabled) %>
 	    <%= f.label t :scarf %>
 	    (<%= $dc.scarf_price %>Kč)
       </div>
   </li>
+  <% end # scarf? %>
   </ul>
+  <% end # shirt? || pes_shirt? || scarf? %>
   <div><%= f.submit @store_string %></div>
 <% end %>

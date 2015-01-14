@@ -1,10 +1,12 @@
 <h2>Přihlášení k účasti na <%= $dc.id %>. Dni cesty </h2>
 <% if $registration_starts %>	
 	<% if !isLimit %>
-		<p>Mapa (pokud si ji chceš vytisknout doma) se před startem objeví na stránkách ke stažení. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Pokud si mapu objednáš (viz formulář) jednotlivé části mapy obdržíš na příslušné kontrole.
+		<p>Vzhledem k rostoucím schopnostem našeho partnera Mapy.cz na stránkách uvádíme pouze link na trasu závodu. Tištěnou verzi vřele doporučujeme, je někdy podstatným doplňkem itineráře. Obvykle se jedná o dvě až tři strany velikosti A3 potištěné z obou stran. Pokud si mapu objednáš (viz formulář) jednotlivé části mapy obdržíš na příslušné kontrole. Pokud si chceš mapu z našich podkladů vytisknout - napiš 2-3 dny před závodem, můžeme PDF verzi poskytnout. 
 		</p>
-		<p>Na potisku triček aktuálně pracujeme, pokud se nestane nic neočekávaného, trika budou černá s šedým potiskem. Pokud chceš potisknout svoje vlastní triko, tak i to je možné. Napiš organizátorům. Upozorňujeme, že trika musí být nová nesepraná (jinak kvalitu potisku nelze zaručit).
+		<% if shirt? || pes_shirt? || scarf? %>
+		<p>Na potisku textilu aktuálně pracujeme, pokud se nestane nic neočekávaného, trika budou černá s šedým potiskem. Pokud chceš potisknout svůj vlastní textil, tak i to je možné, byť organizačně náročnější. Napiš organizátorům. Upozorňujeme, že textil musí být nový nesepraný s minimální gramáží 100g/m<sup>2</sup> (jinak kvalitu potisku nelze zaručit). Barvu potisku nelze měnit.
 		</p>
+		<% end %>
 		<p class="red">
 			Přihlášením souhlasíte s <%= link_to "pravidly", pages_rules_path %> závodu.
 		</p>
