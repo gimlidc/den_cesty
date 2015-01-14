@@ -47,12 +47,18 @@ class EventsController < ApplicationController
   # Process JSON request for sending events for walker id.
   # Returns JSON with event ids of processed events.
   # /events/create/{id}
-  def create 
+  def create
+    in_race = Time.now > $dc_app_start && Time.now < $dc_app_end
+
     saved = []
     jsonHash = request.POST[:_json];
     jsonHash.each do |jsonEvent|
       event = Event.new
-      event.dc = $dc.id
+      if in_race
+        event.dc = $dc.id
+      else
+        event.dc = 0 # request is not during race (probably testing)
+      end
       event.walker = params[:id]
       event.eventId = jsonEvent["eventId"]
       event.eventType = jsonEvent["type"]
@@ -62,7 +68,9 @@ class EventsController < ApplicationController
       event.timestamp = Time.zone.parse(jsonEvent["time"])
       if event.save # if new
         saved << jsonEvent["eventId"]
-        #after_create(event)
+        if in_race
+          after_create(event)
+        end
         #create_simulation_events(event)
       else # if exists
         saved << jsonEvent["eventId"]

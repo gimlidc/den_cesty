@@ -42,6 +42,8 @@ class ApplicationController < ActionController::Base
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
       $dc = Dc.find(20)  
+      $dc_app_start = Time.zone.parse("2015-01-17 06:50:00 +0100")
+      $dc_app_end =   Time.zone.parse("2015-01-17 19:05:00 +0100")
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
       $registration_starts = true
