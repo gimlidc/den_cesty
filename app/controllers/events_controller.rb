@@ -12,9 +12,9 @@ class EventsController < ApplicationController
   # /events/index/{id}
   def index
     if params[:id].present?
-      @events = Event.where(:walker => params[:id]).order(:id)
+      @events = Event.where(:walker => params[:id]).order(:dc).order(:id)
     else
-      @events = Event.order(:id)
+      @events = Event.order(:dc).order(:id)
     end
   end
 
@@ -26,14 +26,14 @@ class EventsController < ApplicationController
   # /events/map/{id}
   def map
     if request.format.xml?
-      @checkpoints = Checkpoint.order("\"checkid\" ASC")
+      @checkpoints = Checkpoint.where(:dc => $dc.id).order("\"checkid\" ASC")
       @checkpoints_count = @checkpoints.count
 
       if params[:id].present?
-        @locationUpdates = Event.where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
+        @locationUpdates = Event.where(:dc => $dc.id).where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
         render "map_for_walker"
       else
-        @locationUpdates = Event.where(:eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
+        @locationUpdates = Event.where(:dc => $dc.id).where(:eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
         render "map_for_all_walkers"
       end
 
@@ -52,6 +52,7 @@ class EventsController < ApplicationController
     jsonHash = request.POST[:_json];
     jsonHash.each do |jsonEvent|
       event = Event.new
+      event.dc = $dc.id
       event.walker = params[:id]
       event.eventId = jsonEvent["eventId"]
       event.eventType = jsonEvent["type"]
@@ -61,7 +62,7 @@ class EventsController < ApplicationController
       event.timestamp = Time.zone.parse(jsonEvent["time"])
       if event.save # if new
         saved << jsonEvent["eventId"]
-        after_create(event)
+        #after_create(event)
         #create_simulation_events(event)
       else # if exists
         saved << jsonEvent["eventId"]

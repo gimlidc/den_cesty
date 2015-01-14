@@ -10,7 +10,7 @@ class RaceController < ApplicationController
   # Shows race progress and walkers order based on elapsed distance.
   # /race
   def index
-    @race = Race.order("\"races\".\"distance\" DESC")
+    @race = Race.order("\"races\".\"dc\" ASC, \"races\".\"distance\" DESC")
   end
 
   # API methods:
@@ -43,26 +43,26 @@ class RaceController < ApplicationController
   # Returns informations about other walkers for particular walker id.
   # /race/info/{id}
   def info
-    walker = Race.find_by_walker(params[:id])
+    walker = Race.where(:dc => $dc.id).where(:walker => params[:id]).first
 
   	if walker
 
-      numWalkersAhead = Race.count(:conditions => "\"races\".\"distance\" > "+walker.distance.to_s)
-      numWalkersBehind = Race.count(:conditions => "\"races\".\"distance\" <= "+walker.distance.to_s+" AND \"races\".\"walker\" <> "+walker.walker.to_s)
-      numWalkersEnded = Race.count(:conditions => "\"races\".\"raceState\" = 2 AND \"races\".\"walker\" <> "+walker.walker.to_s)
-      walkersAheadDB = Race.where("\"races\".\"distance\" > ?", walker.distance).order("\"races\".\"distance\" DESC")
-      walkersBehindDB = Race.where("\"races\".\"distance\" <= ? AND \"races\".\"walker\" <> ?", walker.distance, walker.walker).order("\"races\".\"distance\" DESC")
+      numWalkersAhead = Race.where("\"races\".\"dc\" = ?", $dc.id).count(:conditions => "\"races\".\"distance\" > "+walker.distance.to_s)
+      numWalkersBehind = Race.where("\"races\".\"dc\" = ?", $dc.id).count(:conditions => "\"races\".\"distance\" <= "+walker.distance.to_s+" AND \"races\".\"walker\" <> "+walker.walker.to_s)
+      numWalkersEnded = Race.where("\"races\".\"dc\" = ?", $dc.id).count(:conditions => "\"races\".\"raceState\" = 2 AND \"races\".\"walker\" <> "+walker.walker.to_s)
+      walkersAheadDB = Race.where("\"races\".\"dc\" = ? AND \"races\".\"distance\" > ?", $dc.id, walker.distance).order("\"races\".\"distance\" DESC")
+      walkersBehindDB = Race.where("\"races\".\"dc\" = ? AND \"races\".\"distance\" <= ? AND \"races\".\"walker\" <> ?", $dc.id, walker.distance, walker.walker).order("\"races\".\"distance\" DESC")
 
       walkersAhead = []
       walkersAheadDB.each do |wa|
         w = Walker.find(wa.walker)
-        walkersAhead << {:name => w.nameSurname, :distance => wa.distance-walker.distance, :speed => wa.avgSpeed}
+        walkersAhead << {:name => w.nameSurname, :distance => wa.distance, :speed => wa.avgSpeed}
       end
 
       walkersBehind = []
       walkersBehindDB.each do |wb|
         w = Walker.find(wb.walker)
-        walkersBehind << {:name => w.nameSurname, :distance => walker.distance-wb.distance, :speed => wb.avgSpeed}
+        walkersBehind << {:name => w.nameSurname, :distance => walker.distance, :speed => wb.avgSpeed}
       end
 
       render :json => {:distance => walker.distance,
@@ -76,10 +76,10 @@ class RaceController < ApplicationController
 
     else # may happen if first start race event is late than race info request
 
-      numWalkersAhead = Race.count
+      numWalkersAhead = Race.where(:dc => $dc.id).count
       numWalkersBehind = 0
       numWalkersEnded = 0
-      walkersAheadDB = Race.order("\"races\".\"distance\" DESC")
+      walkersAheadDB = Race.where(:dc => $dc.id).order("\"races\".\"distance\" DESC")
       walkersBehind = []
 
       walkersAhead = []

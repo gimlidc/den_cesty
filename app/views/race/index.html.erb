@@ -2,6 +2,7 @@
 
 <table class="listing" summary="Race status">
     <tr class="header">
+      <th>Dc</th>
       <th>Walker</th>
       <th>Race State</th>
       <th>Last Checkpoint</th>
@@ -12,6 +13,7 @@
     </tr>
     <% @race.each do |walker| %>
     <tr>
+      <td><%= walker.dc %></td>
       <td><%= walker.walker %></td>
       <td><%= raceStatePretty(walker.raceState) %></td>
       <td><%= walker.lastCheckpoint %></td>

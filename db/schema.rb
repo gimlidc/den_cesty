@@ -11,16 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141008083013) do
+ActiveRecord::Schema.define(:version => 20150114171759) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
     t.integer "meters"
     t.float   "latitude"
     t.float   "longitude"
+    t.integer "dc",        :default => 0
   end
 
-  add_index "checkpoints", ["checkid"], :name => "index_checkpoints_on_checkid", :unique => true
+  add_index "checkpoints", ["dc", "checkid"], :name => "index_checkpoints_on_dc_and_checkid", :unique => true
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -50,9 +51,10 @@ ActiveRecord::Schema.define(:version => 20141008083013) do
     t.integer  "batteryLevel"
     t.integer  "batteryState"
     t.datetime "timestamp"
+    t.integer  "dc",           :default => 0
   end
 
-  add_index "events", ["walker", "eventId"], :name => "index_events_on_walker_and_eventId", :unique => true
+  add_index "events", ["dc", "walker", "eventId"], :name => "index_events_on_dc_and_walker_and_eventId", :unique => true
 
   create_table "posts", :force => true do |t|
     t.datetime "created_at"
@@ -67,9 +69,10 @@ ActiveRecord::Schema.define(:version => 20141008083013) do
     t.float    "avgSpeed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "dc",             :default => 0
   end
 
-  add_index "races", ["walker"], :name => "index_races_on_walker", :unique => true
+  add_index "races", ["dc", "walker"], :name => "index_races_on_dc_and_walker", :unique => true
 
   create_table "registrations", :force => true do |t|
     t.integer  "walker_id"
