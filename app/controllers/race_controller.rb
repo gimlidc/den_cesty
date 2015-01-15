@@ -10,7 +10,7 @@ class RaceController < ApplicationController
   # Shows race progress and walkers order based on elapsed distance.
   # /race
   def index
-    @race = Race.order("\"races\".\"dc\" ASC, \"races\".\"distance\" DESC")
+    @race = Race.where(:dc => $dc.id).order("\"races\".\"distance\" DESC")
   end
 
   # API methods:

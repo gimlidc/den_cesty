@@ -12,9 +12,9 @@ class EventsController < ApplicationController
   # /events/index/{id}
   def index
     if params[:id].present?
-      @events = Event.where(:walker => params[:id]).order(:dc).order(:id)
+      @events = Event.where(:walker => params[:id]).order(:id)
     else
-      @events = Event.order(:dc).order(:id)
+      @events = Event.where(:dc => [0, $dc.id]).order(:id)
     end
   end
 
@@ -71,7 +71,6 @@ class EventsController < ApplicationController
         if in_race
           after_create(event)
         end
-        #create_simulation_events(event)
       else # if exists
         saved << jsonEvent["eventId"]
         puts "Not Saved!" # debug print
@@ -88,7 +87,6 @@ class EventsController < ApplicationController
       
       start_race(event)
       stop_race(event)
-      update_checkpoint(event)
       update_distance(event)
 
     end
@@ -97,11 +95,11 @@ class EventsController < ApplicationController
     def start_race(event)
       if (event.eventType == "StartRace")
         #Create race if not exists
-        race_info = Race.new(:walker => event.walker, :raceState => 1,
+        race_info = Race.new(:dc => $dc.id, :walker => event.walker, :raceState => 1,
                              :lastCheckpoint => 0, :distance => 0, :avgSpeed => 0)
         if !race_info.save
           # if exists, just update raceState
-          race_info = Race.find_by_walker(event.walker)
+          race_info = Race.where(:dc => $dc.id, :walker => event.walker).first
           race_info.raceState = 1
           race_info.save
         end
@@ -111,24 +109,9 @@ class EventsController < ApplicationController
     # Process event with type StopRace. Updates race state field in table Race for particular walker.
     def stop_race(event)
       if (event.eventType == "StopRace")
-        race_info = Race.find_by_walker(event.walker)
+        race_info = Race.where(:dc => $dc.id, :walker => event.walker).first
         race_info.raceState = 2
         race_info.save
-      end
-    end
-
-    # Process event with type Checkpoint. Updates last checkpoint field in table Race for particular walker.
-    def update_checkpoint(event)
-      if (event.eventType == "Checkpoint")
-        newCheckpoint = event.eventData["kId"]
-        raceInfo = Race.find_by_walker(event.walker)
-        oldCheckpoint = raceInfo.lastCheckpoint
-        if newCheckpoint > oldCheckpoint # prevent backwards scanning
-          raceInfo.lastCheckpoint = newCheckpoint
-          newCheckpointDB = Checkpoint.find_by_checkid(newCheckpoint)
-          raceInfo.distance = newCheckpointDB.meters # update distance by checkpoint
-          raceInfo.save
-        end
       end
     end
 
@@ -137,21 +120,27 @@ class EventsController < ApplicationController
       if (event.eventType == "LocationUpdate")
         if event.eventData['horAcc'] < 200 # inaccurate location updates filter
 
-          raceInfo = Race.find_by_walker(event.walker)
-          lastCheckpoint = Checkpoint.find_by_checkid(raceInfo.lastCheckpoint)
-          nextCheckpoint = Checkpoint.find_by_checkid(raceInfo.lastCheckpoint+1)
+          raceInfo = Race.where(:dc => $dc.id, :walker => event.walker).first
           latitude = event.eventData['latitude']
           longitude = event.eventData['longitude']
-          add = false
 
-          # distance from last checkpoint to walker location
-          distance_last = gps_distance [lastCheckpoint.latitude,lastCheckpoint.longitude],[latitude,longitude]
-          
-          if nextCheckpoint # next checkpoint exists (last checkpoint is not actual last)
+          # gets checkid of finish (actually the last one is not finish, the previous one is)
+          lastCheckId = Checkpoint.where(:dc => $dc.id).maximum(:checkid) - 1 
 
+          # saves last checkpoint to nextCheckpoint; it's outside of for loop for better performance (see below)
+          nextCheckpoint = Checkpoint.where(:dc => $dc.id, :checkid => raceInfo.lastCheckpoint).first
+
+          # distance from last checkpoint to walker location; it's outside of for loop for better performance (see below)
+          distance_next = gps_distance [nextCheckpoint.latitude,nextCheckpoint.longitude],[latitude,longitude]
+
+          for i in raceInfo.lastCheckpoint .. lastCheckId
+            lastCheckpoint = nextCheckpoint # it's already computed in previous iteration
+            nextCheckpoint = Checkpoint.where(:dc => $dc.id, :checkid => i+1).first
+
+            # distance from last checkpoint to walker location
+            distance_last = distance_next # it's already obtained in previous iteration
             # distance from walker location to next checkpoint
             distance_next = gps_distance [latitude, longitude],[nextCheckpoint.latitude,nextCheckpoint.longitude]
-            
             # distance between checkpoints
             distance_between = gps_distance [lastCheckpoint.latitude,lastCheckpoint.longitude],[nextCheckpoint.latitude,nextCheckpoint.longitude]
 
@@ -163,28 +152,19 @@ class EventsController < ApplicationController
               new_distance = (progress_between * real_distance_between).to_i + lastCheckpoint.meters # convertion of elapsed distance to real distance
 
               if raceInfo.distance < new_distance # is walker farther away than before
-                add = true # will update distance later
+                raceInfo.distance = new_distance
+                raceInfo.avgSpeed = ((new_distance / (event.timestamp - $dc.start_time))*3.6).round(2) # v = s/t converted to km/h and rounded :-)
+                raceInfo.lastCheckpoint = i
+                raceInfo.save
+                event.eventData["distance"] = new_distance
+                event.save
+                puts "Distance updated to: "+new_distance.to_s # debug print
               end
+
+              break # it's between checkpoints, so there is no need to continue checking other checkpoints (it ends for loop)
             end
+            # else continue for loop
 
-          else # next checkpoint does not exist
-
-            # distance from last checkpoint based on gps measuring (estimate of real distance)
-            new_distance = distance_last.to_i + lastCheckpoint.meters
-            if raceInfo.distance < new_distance
-              add = true # will update distance later
-            end
-
-          end
-
-          # distance field in table Race update
-          if add
-            raceInfo.distance = new_distance
-            raceInfo.avgSpeed = ((new_distance / (event.timestamp - raceInfo.created_at))*3.6).round(2) # v = s/t converted to km/h and rounded :-)
-            raceInfo.save
-            event.eventData["distance"] = new_distance
-            event.save
-            puts "Distance updated to: "+new_distance.to_s # debug print
           end
         end
       end
@@ -207,51 +187,5 @@ class EventsController < ApplicationController
       c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
 
       rm * c # Delta in meters
-    end
-
-    # Debug only
-    # Simulation of next walkers
-    def create_simulation_events(event)
-
-      if event.eventType == "LocationUpdate"
-
-        event998 = Event.new(event.attributes.merge(:walker => 609, :batteryLevel => -1, :batteryState => -1))
-        event998.eventData["latitude"] += 0.002
-        event998.eventData["longitude"] += 0.002
-        event998.save
-
-        event999 = Event.new(event.attributes.merge(:walker => 608, :batteryLevel => -1, :batteryState => -1))
-        event999.eventData["latitude"] -= 0.004
-        event999.eventData["longitude"] -= 0.004
-        event999.save
-
-        after_create(event998)
-        after_create(event999)
-
-      elsif event.eventType == "StartRace"
-
-        event998 = Event.new(event.attributes.merge(:walker => 609, :batteryLevel => -1, :batteryState => -1))
-        event998.save
-
-        event999 = Event.new(event.attributes.merge(:walker => 608, :batteryLevel => -1, :batteryState => -1))
-        event999.save
-        
-        after_create(event998)
-        after_create(event999)
-
-
-      elsif event.eventType == "Checkpoint"
-
-        event998 = Event.new(event.attributes.merge(:walker => 609, :batteryLevel => -1, :batteryState => -1))
-        event998.save
-
-        event999 = Event.new(event.attributes.merge(:walker => 608, :batteryLevel => -1, :batteryState => -1))
-        event999.save
-        
-        after_create(event998)
-        after_create(event999)
-
-      end
-
     end
 end
