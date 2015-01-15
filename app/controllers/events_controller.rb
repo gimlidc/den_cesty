@@ -8,9 +8,10 @@ class EventsController < ApplicationController
   # Web methods:
 
   # Shows all events, or all events for walker id
-  # /events
-  # /events/index/{id}
-  def index
+  # May be memory inefficient, for debuging purposes only
+  # /events/dump
+  # /events/dump/{id}
+  def dump
     if params[:id].present?
       @events = Event.where(:walker => params[:id]).order(:id)
     else
@@ -19,12 +20,13 @@ class EventsController < ApplicationController
   end
 
   # Generates KML 2.2 output of all events, or all events for walker id
-  # /events/map.xml
-  # /events/map/{id}.xml
+  # May be memory inefficient, for debuging purposes only
+  # /events/mapdump.xml
+  # /events/mapdump/{id}.xml
   # Redirect to Google Maps
-  # /events/map
-  # /events/map/{id}
-  def map
+  # /events/mapdump
+  # /events/mapdump/{id}
+  def mapdump
     if request.format.xml?
       @checkpoints = Checkpoint.where(:dc => $dc.id).order("\"checkid\" ASC")
       @checkpoints_count = @checkpoints.count
@@ -36,6 +38,23 @@ class EventsController < ApplicationController
         @locationUpdates = Event.where(:dc => $dc.id, :eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
         render "map_for_all_walkers"
       end
+
+    else # Google maps redirect and added timestamp for bypassing their cache
+      redirect_to "https://maps.google.com/maps?q=" + request.original_url + ".xml?t=" + Time.now.to_i.to_s
+    end
+  end
+
+  # Generates KML 2.2 positions of all walkers
+  # /events/map.xml
+  # Redirect to Google Maps
+  # /events/map
+  def map # TODO: move to race_controller
+    if request.format.xml?
+      @checkpoints = Checkpoint.where(:dc => $dc.id).order("\"checkid\" ASC")
+      @checkpoints_count = @checkpoints.count
+
+      @races = Race.where(:dc => $dc.id)
+      render "map_of_race"
 
     else # Google maps redirect and added timestamp for bypassing their cache
       redirect_to "https://maps.google.com/maps?q=" + request.original_url + ".xml?t=" + Time.now.to_i.to_s
@@ -102,6 +121,12 @@ class EventsController < ApplicationController
           race_info = Race.where(:dc => $dc.id, :walker => event.walker).first
           race_info.raceState = 1
           race_info.save
+        else
+          # if new, set location to Dc start location (checkpoint 0)
+          start = Checkpoint.where(:dc => $dc.id, :checkid => 0).first
+          race_info.latitude = start.latitude
+          race_info.longitude = start.longitude
+          race_info.save
         end
       end
     end
@@ -155,8 +180,10 @@ class EventsController < ApplicationController
                 raceInfo.distance = new_distance
                 raceInfo.avgSpeed = ((new_distance / (event.timestamp - $dc.start_time))*3.6).round(2) # v = s/t converted to km/h and rounded :-)
                 raceInfo.lastCheckpoint = i
+                raceInfo.latitude = latitude
+                raceInfo.longitude = longitude
                 raceInfo.save
-                event.eventData["distance"] = new_distance
+                event.eventData["distance"] = new_distance # marks event with calculated distance, for future debugging
                 event.save
                 puts "Distance updated to: "+new_distance.to_s # debug print
               end

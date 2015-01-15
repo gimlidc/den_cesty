@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150115120814) do
+ActiveRecord::Schema.define(:version => 20150115194226) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20150115120814) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "dc",             :default => 0
+    t.float    "latitude",       :default => 0.0
+    t.float    "longitude",      :default => 0.0
   end
 
   add_index "races", ["dc", "walker"], :name => "index_races_on_dc_and_walker", :unique => true

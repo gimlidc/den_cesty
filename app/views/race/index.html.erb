@@ -10,6 +10,8 @@
       <th>Avg Speed</th>
       <th>Updated at</th>
       <th>Started at</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
     </tr>
     <% @race.each do |walker| %>
     <tr>
@@ -21,6 +23,8 @@
       <td><%= walker.avgSpeed %></td>
       <td><%= walker.updated_at %></td>
       <td><%= walker.created_at %></td>
+      <td><%= walker.latitude %></td>
+      <td><%= walker.longitude %></td>
     </tr>
     <% end %>
 </table>

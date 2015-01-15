@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+	<Document>
+		<%
+		pinnamesDots = ["blue-dot", "red-dot", "green-dot", "ltblue-dot", "yellow-dot", "purple-dot", "pink-dot"]
+		pinnamesSolid = ["blue", "red", "green", "lightblue", "yellow", "purple", "pink"]
+		pinnamesPushpins = ["blue-pushpin", "red-pushpin", "grn-pushpin", "ltblu-pushpin", "ylw-pushpin", "purple-pushpin", "pink-pushpin"]
+		%>
+		<% [pinnamesDots, pinnamesSolid, pinnamesPushpins].flatten.each do |pinname| %>
+		<Style id="<%= pinname %>">
+			<IconStyle>
+				<Icon>
+					<href>https://maps.gstatic.com/mapfiles/ms2/micons/<%= pinname %>.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<% end %>
+		<%
+		counter = 0
+		@races.each do |race|
+			styleUrl = pinnamesDots[counter % pinnamesDots.size]
+			counter += 1
+			walker = Walker.find(race.walker)
+  %>
+		<Placemark id="<%= @checkpoints_count+counter %>">
+			<name><%= walker.nameSurname %> (<%= walker.id %>)</name>
+			<description>
+				<![CDATA[ 
+					Distance: <%= race.distance %> m<br />
+					Avg. speed: <%= race.avgSpeed %> km/h<br />
+					Checkpoint: <%= race.lastCheckpoint %><br />
+					State: <%= race.raceState %><br />
+					Updated at: <%= race.updated_at %>
+				 ]]>
+			</description>
+			<Point>
+				<coordinates>
+					<%= race.longitude %>,<%= race.latitude %>
+				</coordinates>
+			</Point>
+			<styleUrl>#<%= styleUrl %></styleUrl>
+    </Placemark>
+  <% end %>
+  <% if Time.now > $dc.start_time %>
+		<% @checkpoints.each do |check| %>
+		<Placemark id="<%= check.checkid %>">
+			<name>Checkpoint <%= check.checkid %></name>
+			<description>
+				<![CDATA[ 
+					Meters: <%= check.meters %>
+				 ]]>
+			</description>
+			<Point>
+				<coordinates>
+					<%= check.longitude %>,<%= check.latitude %>
+				</coordinates>
+			</Point>
+			<styleUrl>#<%= pinnamesPushpins[0] %></styleUrl>
+		</Placemark>
+    <% end %>
+    <% end %>
+    -->
+	</Document>
+</kml>
