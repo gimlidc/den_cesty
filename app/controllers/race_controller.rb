@@ -43,7 +43,7 @@ class RaceController < ApplicationController
   # Returns informations about other walkers for particular walker id.
   # /race/info/{id}
   def info
-    walker = Race.where(:dc => $dc.id).where(:walker => params[:id]).first
+    walker = Race.where(:dc => $dc.id, :walker => params[:id]).first
 
   	if walker
 

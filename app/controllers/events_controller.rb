@@ -30,10 +30,10 @@ class EventsController < ApplicationController
       @checkpoints_count = @checkpoints.count
 
       if params[:id].present?
-        @locationUpdates = Event.where(:dc => $dc.id).where(:walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
+        @locationUpdates = Event.where(:dc => $dc.id, :walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
         render "map_for_walker"
       else
-        @locationUpdates = Event.where(:dc => $dc.id).where(:eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
+        @locationUpdates = Event.where(:dc => $dc.id, :eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
         render "map_for_all_walkers"
       end
 
