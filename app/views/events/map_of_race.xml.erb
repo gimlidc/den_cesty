@@ -20,10 +20,9 @@
 		@races.each do |race|
 			styleUrl = pinnamesDots[counter % pinnamesDots.size]
 			counter += 1
-			walker = Walker.find(race.walker)
   %>
 		<Placemark id="<%= @checkpoints_count+counter %>">
-			<name><%= walker.nameSurname %> (<%= walker.id %>)</name>
+			<name><%= race.walker.nameSurname %> (<%= race.walker_id %>)</name>
 			<description>
 				<![CDATA[ 
 					Distance: <%= race.distance %> m<br />

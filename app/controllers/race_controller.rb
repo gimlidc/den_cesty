@@ -10,7 +10,7 @@ class RaceController < ApplicationController
   # Shows race progress and walkers order based on elapsed distance.
   # /race
   def index
-    @race = Race.where(:dc => $dc.id).order("\"races\".\"distance\" DESC")
+    @races = Race.where(:dc_id => $dc.id).order("distance DESC")
   end
 
   # API methods:
@@ -22,7 +22,7 @@ class RaceController < ApplicationController
     password = request.POST[:password]
     
     w = Walker.where(:email => email).first
-    if w.nil? # uživatel s emailem nenalezen
+    if w.nil? # walker with this email not found
       render :json => {:success => false}
     else
       bcrypt = ::BCrypt::Password.new(w.encrypted_password)
@@ -43,15 +43,15 @@ class RaceController < ApplicationController
   # Returns informations about other walkers for particular walker id.
   # /race/info/{id}
   def info
-    walker = Race.where(:dc => $dc.id, :walker => params[:id]).first
+    walker = Race.where(:dc_id => $dc.id, :walker_id => params[:id]).first
 
   	if walker
 
-      numWalkersAhead = Race.where("\"races\".\"dc\" = ?", $dc.id).count(:conditions => "\"races\".\"distance\" > "+walker.distance.to_s)
-      numWalkersBehind = Race.where("\"races\".\"dc\" = ?", $dc.id).count(:conditions => "\"races\".\"distance\" <= "+walker.distance.to_s+" AND \"races\".\"walker\" <> "+walker.walker.to_s)
-      numWalkersEnded = Race.where("\"races\".\"dc\" = ?", $dc.id).count(:conditions => "\"races\".\"raceState\" = 2 AND \"races\".\"walker\" <> "+walker.walker.to_s)
-      walkersAheadDB = Race.where("\"races\".\"dc\" = ? AND \"races\".\"distance\" > ?", $dc.id, walker.distance).order("\"races\".\"distance\" DESC")
-      walkersBehindDB = Race.where("\"races\".\"dc\" = ? AND \"races\".\"distance\" <= ? AND \"races\".\"walker\" <> ?", $dc.id, walker.distance, walker.walker).order("\"races\".\"distance\" DESC")
+      numWalkersAhead = Race.where(:dc_id => $dc.id).count(:conditions => "distance > " + walker.distance.to_s)
+      numWalkersBehind = Race.where(:dc_id => $dc.id).count(:conditions => "distance <= " + walker.distance.to_s + " AND walker <> " + walker.walker.to_s)
+      numWalkersEnded = Race.where(:dc_id => $dc.id).count(:conditions => "raceState = 2 AND walker <> " + walker.walker.to_s)
+      walkersAheadDB = Race.where("dc_id = ? AND distance > ?", $dc.id, walker.distance).order("distance DESC")
+      walkersBehindDB = Race.where("dc_id = ? AND distance <= ? AND walker <> ?", $dc.id, walker.distance, walker.walker).order("distance DESC")
 
       walkersAhead = []
       walkersAheadDB.each do |wa|
@@ -76,10 +76,10 @@ class RaceController < ApplicationController
 
     else # may happen if first start race event is late than race info request
 
-      numWalkersAhead = Race.where(:dc => $dc.id).count
+      numWalkersAhead = Race.where(:dc_id => $dc.id).count
       numWalkersBehind = 0
       numWalkersEnded = 0
-      walkersAheadDB = Race.where(:dc => $dc.id).order("\"races\".\"distance\" DESC")
+      walkersAheadDB = Race.where(:dc_id => $dc.id).order("distance DESC")
       walkersBehind = []
 
       walkersAhead = []
