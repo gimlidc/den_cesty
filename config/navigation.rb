@@ -105,7 +105,7 @@ SimpleNavigation::Configuration.run do |navigation|
 		top.item :results, I18n.t('Results') do |results|
 			results.item :dc_results, I18n.t('by Year'), dc_results_path
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
-			results.item :history, I18n.t('History'), pages_history_path
+			#results.item :history, I18n.t('History'), pages_history_path
 		end
 
 		top.item :reports, I18n.t('Reports'), report_list_path
