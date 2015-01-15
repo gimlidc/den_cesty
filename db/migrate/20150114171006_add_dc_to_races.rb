@@ -11,7 +11,7 @@ class AddDcToRaces < ActiveRecord::Migration
 
   def down
   	remove_index "races", :column => ["dc", "walker"]
-  	add_index "races", ["walker"], :name => "index_races_on_walker", :unique => true
+  	add_index "races", ["walker"], :name => "index_races_on_walker"
   	remove_column :races, :dc # risky, wipes out dc info in rows
   end
 end

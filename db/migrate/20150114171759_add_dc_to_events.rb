@@ -11,7 +11,7 @@ class AddDcToEvents < ActiveRecord::Migration
 
   def down
   	remove_index "events", :column => ["dc", "walker", "eventId"]
-  	add_index "events", ["walker", "eventId"], :name => "index_events_on_walker_and_eventId", :unique => true
+  	add_index "events", ["walker", "eventId"], :name => "index_events_on_walker_and_eventId"
   	remove_column :events, :dc
   end
 end

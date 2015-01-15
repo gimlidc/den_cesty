@@ -11,7 +11,7 @@ class AddDcToCheckpoints < ActiveRecord::Migration
 
   def down
   	remove_index "checkpoints", :column => ["dc", "checkid"]
-  	add_index "checkpoints", ["checkid"], :name => "index_checkpoints_on_checkid", :unique => true
+  	add_index "checkpoints", ["checkid"], :name => "index_checkpoints_on_checkid"
   	remove_column :checkpoints, :dc # risky, wipes out dc info in rows
   end
 end
