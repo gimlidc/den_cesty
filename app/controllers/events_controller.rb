@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     if params[:id].present?
       @events = Event.where(:walker => params[:id]).order(:id)
     else
-      @events = Event.where(:dc => [0, $dc.id]).order(:id)
+      @events = Event.where(:dc_id => [0, $dc.id]).order(:id)
     end
   end
 
@@ -28,14 +28,14 @@ class EventsController < ApplicationController
   # /events/mapdump/{id}
   def mapdump
     if request.format.xml?
-      @checkpoints = Checkpoint.where(:dc => $dc.id).order("\"checkid\" ASC")
+      @checkpoints = Checkpoint.where(:dc_id => $dc.id).order(:checkid)
       @checkpoints_count = @checkpoints.count
 
       if params[:id].present?
-        @locationUpdates = Event.where(:dc => $dc.id, :walker => params[:id], :eventType => "LocationUpdate").order("\"eventId\" ASC")
+        @locationUpdates = Event.where(:dc_id => $dc.id, :walker_id => params[:id], :eventType => "LocationUpdate").order(:eventId)
         render "map_for_walker"
       else
-        @locationUpdates = Event.where(:dc => $dc.id, :eventType => "LocationUpdate").order("\"walker\" ASC, \"eventId\" ASC")
+        @locationUpdates = Event.where(:dc_id => $dc.id, :eventType => "LocationUpdate").order(:walker, :eventId)
         render "map_for_all_walkers"
       end
 
@@ -50,10 +50,10 @@ class EventsController < ApplicationController
   # /events/map
   def map # TODO: move to race_controller
     if request.format.xml?
-      @checkpoints = Checkpoint.where(:dc => $dc.id).order("\"checkid\" ASC")
+      @checkpoints = Checkpoint.where(:dc_id => $dc.id).order(:checkid)
       @checkpoints_count = @checkpoints.count
 
-      @races = Race.where(:dc => $dc.id)
+      @races = Race.where(:dc_id => $dc.id)
       render "map_of_race"
 
     else # Google maps redirect and added timestamp for bypassing their cache
@@ -74,11 +74,11 @@ class EventsController < ApplicationController
     jsonHash.each do |jsonEvent|
       event = Event.new
       if in_race
-        event.dc = $dc.id
+        event.dc_id = $dc.id
       else
-        event.dc = 0 # request is not during race (probably testing)
+        event.dc_id = 0 # request is not during race (probably testing)
       end
-      event.walker = params[:id]
+      event.walker_id = params[:id]
       event.eventId = jsonEvent["eventId"]
       event.eventType = jsonEvent["type"]
       event.eventData = jsonEvent["data"]
@@ -114,16 +114,16 @@ class EventsController < ApplicationController
     def start_race(event)
       if (event.eventType == "StartRace")
         #Create race if not exists
-        race_info = Race.new(:dc => $dc.id, :walker => event.walker, :raceState => 1,
+        race_info = Race.new(:dc_id => $dc.id, :walker_id => event.walker_id, :raceState => 1,
                              :lastCheckpoint => 0, :distance => 0, :avgSpeed => 0)
         if !race_info.save
           # if exists, just update raceState
-          race_info = Race.where(:dc => $dc.id, :walker => event.walker).first
+          race_info = Race.where(:dc_id => $dc.id, :walker_id => event.walker_id).first
           race_info.raceState = 1
           race_info.save
         else
           # if new, set location to Dc start location (checkpoint 0)
-          start = Checkpoint.where(:dc => $dc.id, :checkid => 0).first
+          start = Checkpoint.where(:dc_id => $dc.id, :checkid => 0).first
           race_info.latitude = start.latitude
           race_info.longitude = start.longitude
           race_info.save
@@ -134,7 +134,7 @@ class EventsController < ApplicationController
     # Process event with type StopRace. Updates race state field in table Race for particular walker.
     def stop_race(event)
       if (event.eventType == "StopRace")
-        race_info = Race.where(:dc => $dc.id, :walker => event.walker).first
+        race_info = Race.where(:dc_id => $dc.id, :walker_id => event.walker_id).first
         race_info.raceState = 2
         race_info.save
       end
@@ -145,22 +145,22 @@ class EventsController < ApplicationController
       if (event.eventType == "LocationUpdate")
         if event.eventData['horAcc'] < 200 # inaccurate location updates filter
 
-          raceInfo = Race.where(:dc => $dc.id, :walker => event.walker).first
+          raceInfo = Race.where(:dc_id => $dc.id, :walker_id => event.walker_id).first
           latitude = event.eventData['latitude']
           longitude = event.eventData['longitude']
 
           # gets checkid of finish (actually the last one is not finish, the previous one is)
-          lastCheckId = Checkpoint.where(:dc => $dc.id).maximum(:checkid) - 1 
+          lastCheckId = Checkpoint.where(:dc_id => $dc.id).maximum(:checkid) - 1 
 
           # saves last checkpoint to nextCheckpoint; it's outside of for loop for better performance (see below)
-          nextCheckpoint = Checkpoint.where(:dc => $dc.id, :checkid => raceInfo.lastCheckpoint).first
+          nextCheckpoint = Checkpoint.where(:dc_id => $dc.id, :checkid => raceInfo.lastCheckpoint).first
 
           # distance from last checkpoint to walker location; it's outside of for loop for better performance (see below)
           distance_next = gps_distance [nextCheckpoint.latitude,nextCheckpoint.longitude],[latitude,longitude]
 
           for i in raceInfo.lastCheckpoint .. lastCheckId
             lastCheckpoint = nextCheckpoint # it's already computed in previous iteration
-            nextCheckpoint = Checkpoint.where(:dc => $dc.id, :checkid => i+1).first
+            nextCheckpoint = Checkpoint.where(:dc_id => $dc.id, :checkid => i+1).first
 
             # distance from last checkpoint to walker location
             distance_last = distance_next # it's already obtained in previous iteration

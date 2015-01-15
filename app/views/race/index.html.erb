@@ -13,18 +13,18 @@
       <th>Latitude</th>
       <th>Longitude</th>
     </tr>
-    <% @race.each do |walker| %>
+    <% @races.each do |race| %>
     <tr>
-      <td><%= walker.dc %></td>
-      <td><%= walker.walker %></td>
-      <td><%= raceStatePretty(walker.raceState) %></td>
-      <td><%= walker.lastCheckpoint %></td>
-      <td><%= walker.distance %></td>
-      <td><%= walker.avgSpeed %></td>
-      <td><%= walker.updated_at %></td>
-      <td><%= walker.created_at %></td>
-      <td><%= walker.latitude %></td>
-      <td><%= walker.longitude %></td>
+      <td><%= race.dc_id %></td>
+      <td><%= race.walker %></td>
+      <td><%= raceStatePretty(race.raceState) %></td>
+      <td><%= race.lastCheckpoint %></td>
+      <td><%= race.distance %></td>
+      <td><%= race.avgSpeed %></td>
+      <td><%= race.updated_at %></td>
+      <td><%= race.created_at %></td>
+      <td><%= race.latitude %></td>
+      <td><%= race.longitude %></td>
     </tr>
     <% end %>
 </table>
