@@ -2,7 +2,7 @@
     <h1 color="red"><%= $dc.id %>. Den cesty</h1>
     <h6 align="center"><%= $dc.name_cs %></h6>
     <p>
-        Výroční DC je jako obvykle jiný. Po deseti letech se vrátíme tam, kde DC začal. Jaké to tehdy bylo utrpení, urazit vzdálenost větší než 40km? Kudy vedla trasa? Kde jsme v noci mrzli? Kde bloudili a kde nás opustili naši společníci? Vzhledem k tomu, že akce bude více vzpomínková nežli sportovní, je registrace otevřena pouze těm, kteří s námi šli alespoň třikrát. Pokud máte přesto eminentní zájem se na 20.DC přidat, napište nám - něco s tím (dle našeho uvážení) uděláme - prosíme uveďte v mailu i zdůvodnění vaší účasti (například jdu s kamarádem X Y, který 3 účasti má a beze mě by nešel).
+    Výroční DC je jako obvykle jiný. Po deseti letech se vrátíme tam, kde <a href="http://gimli.mysteria.cz/den_cesty/jar05_01.php">DC začal</a>. Jaké to tehdy bylo utrpení, urazit vzdálenost větší než 40km? Kudy vedla trasa? Kde jsme v noci mrzli? Kde jsme bloudili a kde nás opustili naši společníci? Vzhledem k tomu, že akce bude více vzpomínková nežli sportovní, je registrace otevřena pouze těm, kteří s námi šli alespoň třikrát. Pokud máte přesto eminentní zájem se na 20.DC přidat, napište nám - něco s tím (dle našeho uvážení) uděláme - prosíme uveďte v mailu i zdůvodnění vaší účasti (například jdu s kamarádem X Y, který 3 účasti má a beze mě by nešel).
     </p>
     <p>
     	Stejně jako na podzim budeme testovat prototyp naší trackovací aplikace. Tentokráte bude snad i verze pro Androidí telefony. Informace obdržíte zavčasu mailem. Pokud byste o trackování uvažovali, požadavky jsou - telefon s OS Android (4.2+) nebo iOS (7+), powerbanka (min. 3A), připojení k internetu (2G by mělo stačit), funkce GPS v telefonu.
@@ -23,19 +23,19 @@
     <table id="summary">
         <tbody>
         	<tr>
-                <th class="title"><%= t 'actual.intro' %>:</th><td>20. Den cesty je 12h dlouhý závod. Cílem závodníků je doběhnout v tomto časovém limitu co nejdál zvládnou. Na trase není závodníkům poskytována žádná podpora. Po ukončení akce bude vyznačená místa projiždět autobus, který závodníky sveze na prozatím utajené místo, kde bude možnost občerstvení těla i ducha a přespání.</td>
+            <th class="title"><%= t 'actual.intro' %>:</th><td>20. Den cesty je 12h dlouhý závod. Cílem závodníků je doběhnout v tomto časovém limitu co nejdál zvládnou. Na trase není závodníkům poskytována žádná podpora. Po ukončení se všichni sjedeme do pivovaru Hubertus (Kácov),  kde bude možnost občerstvení těla i ducha a přespání (spacák není potřeba). Do Kácova se dostaneš z úseku Čerčany - Zruč nad Sázavou vlakem (poslední spoje budou vypsány na itineráři). Pokud dojdeš dál, napíšeš Gimlimu SMS. Po skončení závodu tě Gimli vyzvedne (na nějaké uvedené silnici). Vyhlášení závodu a rekapitulace předchozích ročníků proběhne v pivovarské restauraci cca mezi 20:30-22:00. Na startu bude možné Gimlimu předat zavazadlo, se kterým se posléze setkáš v Kácově.</td>
             </tr>
             <tr>
               <th class="title"><%= t 'actual.date' %>:</th><td><%= $dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></td>
             </tr>
             <tr>
-                <th class="title"><%= t 'actual.where' %>:</th><td>Zbořený Kostelec, rozc. červené značky</td>
+                <th class="title"><%= t 'actual.where' %>:</th><td>Čerčany ŽST</td>
             </tr>
             <tr>
                 <th class="title"><%= t 'actual.registration_workflow' %>:</th><td>Pro přihlášení na závod je třeba mít již tři účasti na DC. Pokud je máš, po přihlášení (na stránkách) se Ti zobrazí menu potřebná pro registraci.</td>
             </tr>
             <tr>
-              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč). Trička (jako na prvním DC) nejsou.</td>
+              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč). Trička (jako na prvním DC) nejsou. Další náklady spojené s přepravou do cíle a ubytování bude řešeno dobrovolným příspěvkem (kasička v cílovém objektu).</td>
             </tr>            
             <tr>
                 <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let nebudou na závod vpuštěni (stejně by neměli potřebné 3 účasti).</td>
