@@ -48,10 +48,10 @@ class RaceController < ApplicationController
   	if walker
 
       numWalkersAhead = Race.where(:dc_id => $dc.id).count(:conditions => "distance > " + walker.distance.to_s)
-      numWalkersBehind = Race.where(:dc_id => $dc.id).count(:conditions => "distance <= " + walker.distance.to_s + " AND walker <> " + walker.walker.to_s)
-      numWalkersEnded = Race.where(:dc_id => $dc.id).count(:conditions => "raceState = 2 AND walker <> " + walker.walker.to_s)
+      numWalkersBehind = Race.where(:dc_id => $dc.id).count(:conditions => "distance <= " + walker.distance.to_s + " AND walker_id <> " + walker.walker.id.to_s)
+      numWalkersEnded = Race.where(:dc_id => $dc.id).count(:conditions => "\"raceState\" = 2 AND walker_id <> " + walker.walker.id.to_s)
       walkersAheadDB = Race.where("dc_id = ? AND distance > ?", $dc.id, walker.distance).order("distance DESC")
-      walkersBehindDB = Race.where("dc_id = ? AND distance <= ? AND walker <> ?", $dc.id, walker.distance, walker.walker).order("distance DESC")
+      walkersBehindDB = Race.where("dc_id = ? AND distance <= ? AND walker_id <> ?", $dc.id, walker.distance, walker.walker.id.to_s).order("distance DESC")
 
       walkersAhead = []
       walkersAheadDB.each do |wa|

@@ -1,10 +1,6 @@
 class AddDcToEvents < ActiveRecord::Migration
   def up
     add_column :events, :dc_id, :integer, :default => 0
-    Event.find_each do |e|
-    	e.dc_id = 22
-    	e.save
-    end
     remove_index :events, :column => ["walker", "eventId"]
     rename_column :events, :walker, :walker_id
     add_index :events, ["dc_id", "walker_id", "eventId"], :unique => true

@@ -18,12 +18,12 @@
 		<%
 		counter = 0
 		if @locationUpdates.any?
-          lastWalker = @locationUpdates.first.walker
+          lastWalker = @locationUpdates.first.walker.id
         end
 		@locationUpdates.each do |locUpdate|
-			if lastWalker != locUpdate.walker
+			if lastWalker != locUpdate.walker.id
 				counter += 1
-				lastWalker = locUpdate.walker
+				lastWalker = locUpdate.walker.id
 			end
 
 			if locUpdate.eventData['horAcc'] < 200

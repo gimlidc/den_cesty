@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   # /events/dump/{id}
   def dump
     if params[:id].present?
-      @events = Event.where(:walker => params[:id]).order(:id)
+      @events = Event.where(:walker_id => params[:id]).order(:id)
     else
       @events = Event.where(:dc_id => [0, $dc.id]).order(:id)
     end
@@ -32,10 +32,10 @@ class EventsController < ApplicationController
       @checkpoints_count = @checkpoints.count
 
       if params[:id].present?
-        @locationUpdates = Event.where(:dc_id => $dc.id, :walker_id => params[:id], :eventType => "LocationUpdate").order(:eventId)
+        @locationUpdates = Event.where(:dc_id => $dc.id, :walker_id => params[:id], :eventType => "LocationUpdate").order("\"eventId\"")
         render "map_for_walker"
       else
-        @locationUpdates = Event.where(:dc_id => $dc.id, :eventType => "LocationUpdate").order(:walker, :eventId)
+        @locationUpdates = Event.where(:dc_id => $dc.id, :eventType => "LocationUpdate").order(:walker_id, "\"eventId\"")
         render "map_for_all_walkers"
       end
 
