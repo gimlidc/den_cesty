@@ -222,7 +222,11 @@ class AdminController < ApplicationController
 			@walkers = Walker.find(:all, :conditions => {:name => params[:walker][:name], :surname => params[:walker][:surname]})
 			if @walkers.empty?
 				walker = Walker.new(params[:walker])
-				walker.email = "#{walker.id}@#{walker.name}.#{walker.surname}"
+        if params[:walker][:email].empty?
+				  walker.email = "#{walker.id}@#{walker.name}.#{walker.surname}"
+        else
+          walker.email = params[:walker][:email]
+        end
 				walker.sex = params[:walker][:sex]
 				if walker.save(:validate => false)
 					flash[:notice] = "Walker created"

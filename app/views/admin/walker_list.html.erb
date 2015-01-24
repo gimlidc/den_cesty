@@ -27,16 +27,12 @@
 		  <tr class="<%= walker.virtual ? "virtual" : "registered" %>">
 			<%= f.hidden_field :id %>
 			<td>
-			  <% if !walker.username.nil? -%>
 				<%= f.text_field :username, :size => 10 %>
-			  <%- end %>
 			</td>
 			<td><%= f.text_field :name, :size => 10 %></td>
 			<td><%= f.text_field :surname, :size => 15 %></td>
 			<td>
-			  <% if !walker.username.nil? -%>
 				<%= f.email_field :email, :size => 15 %>
-			  <%- end %>
 			</td>
 			<td><%= f.text_field :phone, :size => 10 %></td>
 			<td>
@@ -56,7 +52,7 @@
 		  <td></td>
 		  <td><%= f.text_field :name, :size => 10 %></td>
 		  <td><%= f.text_field :surname, :size => 15 %></td>
-		  <td></td>
+      <td><%= f.email_field :email, :size => 15 %></td>
 		  <td><%= f.text_field :phone, :size => 10 %></td>
 		  <td>
 			<%= f.select :sex, options_for_select(sex_options,  f.object.sex), {}%>
