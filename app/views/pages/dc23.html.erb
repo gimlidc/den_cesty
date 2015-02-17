@@ -35,20 +35,20 @@
                 <th class="title"><%= t 'actual.registration_workflow' %>:</th><td>Pro přihlášení na závod je třeba mít účet na těchto stránkách. Po přihlášení se Ti zobrazí menu potřebná pro registraci.</td>
             </tr>
             <tr>
-              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč), bavlněné tričko (<%= $dc.shirt_price %>Kč), funkční tričko (<%= $dc.polyester_shirt_price %>Kč), šátek (<%= $dc.scarf_price %>Kč).</td>
+              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč), bavlněné tričko (<%= $dc.shirt_price %>Kč), funkční tričko (<%= $dc.polyester_shirt_price %>Kč), šátek (<%= $dc.scarf_price %>Kč). Na potisku triček usilovně pracujeme.</td>
             </tr>            
             <tr>
                 <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují souhlas zákonného zástupce s účastí na závodě a doprovod zletilé osoby po celou dobu závodu. Povinností každého závodníka je zaslat SMS zprávu při ukončení závodu organizátorům.</td>
             </tr>            
             <tr>
-                <th class="title"><%= t 'actual.route' %>:</th><td>Na definitivní podobě trasy zatím pracujeme. Odhalíme zatím, že délka letos poprvé přesáhne 200km.</td>
+                <th class="title"><%= t 'actual.route' %>:</th><td>Předběžně definitivní <%= link_to 'trasa', 'http://mapy.cz/s/fVH1' %></td>
             </tr>
             <tr>
             	<th class="title"><%= t 'actual.checks' %>:</th><td>Na závodě se vyskytují kontroly (papír A4) na v itineráři vyznačených místech. Itinerář závodníci obdrží na startu. Každá kontrola obsahuje značkovač, kterým si závodník do svého itineráře zaznačí, že kontrolou prošel. Po skončení závodu (do 7 dnů) zašle ofocený/oskenovaný itinerář emailem organizátorům.
             	</td>
             </tr>
             <tr>
-                <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se koná na jaře. Je běžné, že závodníci podcení vybavení. Povinné vybavení sice nedefinujeme (Česká Republika je civilizovaná země), ale pokud se snažíte běžet hodně na lehko, přibalte si určitě thermofólii.</td>
+                <th class="title"><%= t 'actual.equipment' %>:</th><td>DC se koná na jaře. Je běžné, že závodníci podcení vybavení. Povinné vybavení sice nedefinujeme (Česká Republika je civilizovaná země), ale pokud se snažíte běžet hodně na lehko, přibalte si určitě termofólii.</td>
             </tr>
             <tr>        
     	<th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red"><%= $dc.limit %></span>):</th>

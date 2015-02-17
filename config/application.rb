@@ -46,11 +46,10 @@ module DenCesty
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
-		config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 		
-		# this skips authorization checks inside devise (out of this project) pages
-		config.to_prepare do
+    # this skips authorization checks inside devise (out of this project) pages
+    config.to_prepare do
       Devise::SessionsController.skip_before_filter :check_admin?
       Devise::SessionsController.skip_before_filter :check_logged_in?
       Devise::RegistrationsController.skip_before_filter :check_admin?
