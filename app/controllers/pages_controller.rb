@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 		  @results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all		
 		  render "actuals.html.erb"
 		else # otherwise print proposition of the current race
-		  @registered_walkers = Registration.where(:dc_id => $dc.id, :canceled => false)
+		  @registered_walkers = Registration.joins(:walker).where(:dc_id => $dc.id, :canceled => false).order(:surname, :name)
 		  render "dc".concat($dc.id.to_s).concat(".html.erb")
 		end
   end

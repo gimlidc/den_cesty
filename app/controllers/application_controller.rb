@@ -62,8 +62,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'http')
+    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'https')
     
+    #sign_in_url = new_user_session_url
     if request.referer == sign_in_url
       super
     else

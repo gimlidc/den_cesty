@@ -31,9 +31,9 @@ DenCesty::Application.configure do
   # config.force_ssl = true
   
   # for enforcing SSL on Devise
-  #config.to_prepare { Devise::SessionsController.force_ssl }
-  #config.to_prepare { Devise::RegistrationsController.force_ssl }
-  #config.to_prepare { Devise::PasswordsController.force_ssl }
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl }
+  config.to_prepare { Devise::PasswordsController.force_ssl }
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
