@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RaceTest < ActiveSupport::TestCase
+class ScoreboardTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
