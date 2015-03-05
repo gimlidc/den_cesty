@@ -1,4 +1,4 @@
-module RaceHelper
+module ScoreboardHelper
 
 	# Race state conversion to string representation
 	def raceStatePretty(raceState)

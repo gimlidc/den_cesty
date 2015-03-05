@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150116134928) do
+ActiveRecord::Schema.define(:version => 20150305153250) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
@@ -61,21 +61,6 @@ ActiveRecord::Schema.define(:version => 20150116134928) do
     t.datetime "updated_at"
   end
 
-  create_table "races", :force => true do |t|
-    t.integer  "walker_id"
-    t.integer  "lastCheckpoint"
-    t.integer  "raceState"
-    t.integer  "distance"
-    t.float    "avgSpeed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "dc_id",          :default => 0
-    t.float    "latitude",       :default => 0.0
-    t.float    "longitude",      :default => 0.0
-  end
-
-  add_index "races", ["dc_id", "walker_id"], :name => "index_races_on_dc_id_and_walker_id", :unique => true
-
   create_table "registrations", :force => true do |t|
     t.integer  "walker_id"
     t.integer  "dc_id"
@@ -109,6 +94,21 @@ ActiveRecord::Schema.define(:version => 20150116134928) do
     t.datetime "updated_at"
     t.decimal  "official"
   end
+
+  create_table "scoreboard", :force => true do |t|
+    t.integer  "walker_id"
+    t.integer  "lastCheckpoint"
+    t.integer  "raceState"
+    t.integer  "distance"
+    t.float    "avgSpeed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "dc_id",          :default => 0
+    t.float    "latitude",       :default => 0.0
+    t.float    "longitude",      :default => 0.0
+  end
+
+  add_index "scoreboard", ["dc_id", "walker_id"], :name => "index_races_on_dc_id_and_walker_id", :unique => true
 
   create_table "walkers", :force => true do |t|
     t.string   "name"
