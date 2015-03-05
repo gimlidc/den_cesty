@@ -62,7 +62,7 @@ class RaceController < ApplicationController
       walkersBehind = []
       walkersBehindDB.each do |wb|
         w = Walker.find(wb.walker)
-        walkersBehind << {:name => w.nameSurname, :distance => walker.distance, :speed => wb.avgSpeed}
+        walkersBehind << {:name => w.nameSurname, :distance => wb.distance, :speed => wb.avgSpeed}
       end
 
       render :json => {:distance => walker.distance,

@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   # /events/dump/{id}
   def dump
     if params[:id].present?
-      @events = Event.where(:walker_id => params[:id]).order(:id)
+      @events = Event.where(:dc_id => [0, $dc.id], :walker_id => params[:id]).order(:id)
     else
       @events = Event.where(:dc_id => [0, $dc.id]).order(:id)
     end
