@@ -1,10 +1,10 @@
 class Event < ActiveRecord::Base
 
   belongs_to :walker
-  belongs_to :dc
+  belongs_to :race
 
-	# JSON serialization into hash
-	serialize :eventData, Hash
+  # JSON serialization into hash
+  serialize :eventData, Hash
 
-	validates_uniqueness_of :dc_id, scope: [:walker_id, :eventId]
+  validates_uniqueness_of :race_id, scope: [:walker_id, :eventId]
 end

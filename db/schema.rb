@@ -11,17 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150305153250) do
+ActiveRecord::Schema.define(:version => 20150306123024) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
     t.integer "meters"
     t.float   "latitude"
     t.float   "longitude"
-    t.integer "dc_id",     :default => 0
+    t.integer "race_id",   :default => 0
   end
 
-  add_index "checkpoints", ["dc_id", "checkid"], :name => "index_checkpoints_on_dc_id_and_checkid", :unique => true
+  add_index "checkpoints", ["race_id", "checkid"], :name => "index_checkpoints_on_race_id_and_checkid", :unique => true
 
   create_table "dcs", :force => true do |t|
     t.string   "name_cs"
@@ -51,12 +51,22 @@ ActiveRecord::Schema.define(:version => 20150305153250) do
     t.integer  "batteryLevel"
     t.integer  "batteryState"
     t.datetime "timestamp"
-    t.integer  "dc_id",        :default => 0
+    t.integer  "race_id",      :default => 0
   end
 
-  add_index "events", ["dc_id", "walker_id", "eventId"], :name => "index_events_on_dc_id_and_walker_id_and_eventId", :unique => true
+  add_index "events", ["race_id", "walker_id", "eventId"], :name => "index_events_on_race_id_and_walker_id_and_eventId"
 
   create_table "posts", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "races", :force => true do |t|
+    t.string   "name_cs",                        :null => false
+    t.string   "name_en",                        :null => false
+    t.datetime "start_time",                     :null => false
+    t.datetime "finish_time",                    :null => false
+    t.boolean  "visible",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,12 +113,12 @@ ActiveRecord::Schema.define(:version => 20150305153250) do
     t.float    "avgSpeed"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "dc_id",          :default => 0
+    t.integer  "race_id",        :default => 0
     t.float    "latitude",       :default => 0.0
     t.float    "longitude",      :default => 0.0
   end
 
-  add_index "scoreboard", ["dc_id", "walker_id"], :name => "index_races_on_dc_id_and_walker_id", :unique => true
+  add_index "scoreboard", ["race_id", "walker_id"], :name => "index_scoreboard_on_race_id_and_walker_id", :unique => true
 
   create_table "walkers", :force => true do |t|
     t.string   "name"
