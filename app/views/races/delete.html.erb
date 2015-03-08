@@ -1,0 +1,19 @@
+<h1>Delete Race</h1>
+
+<%= link_to "<< Back to List", {:action => 'index'} %>
+
+<div>
+
+  <%= form_for(:race, :url => {:action => 'destroy', :id => @race.id}) do |f| %>
+
+    <p>Are you sure you want to permanently delete this race?</p>
+
+    <p><%= @race.name_cs %> (<%= @race.name_en %>)</p>
+
+    <div>
+      <%= submit_tag("Delete Race") %>
+    </div>
+
+  <% end %>
+</div>
+

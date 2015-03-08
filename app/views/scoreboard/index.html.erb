@@ -1,30 +1,28 @@
-<h1>Scoreboard#index</h1>
+<h1>Scoreboard of "<%= @race.name_cs %>"</h1>
 
-<table class="listing" summary="Race status">
-    <tr class="header">
-      <th>Dc</th>
+<%= link_to "<< Back to Race List", {:controller => 'races', :action => 'index'} %>
+
+<table summary="Scoreboard of selected Race">
+    <tr>
       <th>Walker</th>
       <th>Race State</th>
-      <th>Last Checkpoint</th>
       <th>Distance</th>
       <th>Avg Speed</th>
       <th>Updated at</th>
       <th>Started at</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
+      <th>Coordinates</th>
+      <th>Ch.</th>
     </tr>
     <% @scoreboard.each do |entry| %>
     <tr>
-      <td><%= entry.dc_id %></td>
       <td><%= entry.walker.nameSurname%> (<%= entry.walker.id %>) </td>
       <td><%= raceStatePretty(entry.raceState) %></td>
-      <td><%= entry.lastCheckpoint %></td>
       <td><%= entry.distance %></td>
       <td><%= entry.avgSpeed %></td>
       <td><%= entry.updated_at %></td>
       <td><%= entry.created_at %></td>
-      <td><%= entry.latitude %></td>
-      <td><%= entry.longitude %></td>
+      <td><%= entry.latitude.round(5) %>, <%= entry.longitude.round(5) %></td>
+      <td><%= entry.lastCheckpoint %></td>
     </tr>
     <% end %>
 </table>

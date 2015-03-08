@@ -1,0 +1,35 @@
+<h1>Listing races</h1>
+
+<%= link_to 'Create New Race', {:action => 'new'} %>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Name cs</th>
+    <th>Name en</th>
+    <th>Start time</th>
+    <th>Finish time</th>
+    <th>Visible</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @races.each do |race| %>
+  <tr>
+    <td><%= race.id %></td>
+    <td><%= race.name_cs %></td>
+    <td><%= race.name_en %></td>
+    <td><%= race.start_time %></td>
+    <td><%= race.finish_time %></td>
+    <td><%= race.visible %></td>
+    <td><%= link_to 'Checkpoints', {:controller => 'checkpoints', :action => 'index', :id => race.id} %></td>
+    <td><%= link_to 'Scoreboard', {:controller => 'scoreboard', :action => 'index', :id => race.id} %></td>
+    <td><%= link_to 'Edit', {:action => 'edit', :id => race.id} %></td>
+    <td><%= link_to 'Destroy', {:action => 'delete', :id => race.id} %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
