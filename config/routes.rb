@@ -9,6 +9,11 @@ DenCesty::Application.routes.draw do
 	
 	resource :dc
 
+  resources :races do
+    resources :scoreboard, :only => [:index]
+    resources :checkpoints, :only => [:index, :new, :create, :edit, :update, :destroy]
+  end
+
 	#match 'walkers/edit' => "walkers#edit", :as => :edit_walker
   #match 'walkers/:id' => 'walkers#show', :as => :show_walker
   match 'registrations/change_owner' => "registrations#change_owner", :as => :change_owner

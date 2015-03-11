@@ -1,10 +1,10 @@
 <h1>Edit Race</h1>
 
-<%= link_to "<< Back to List", {:action => 'index'} %>
+<%= link_to "<< Back to List", races_url %>
 
 <div>
 
-  <%= form_for(:race, :url => {:action => 'update', :id => @race.id}) do |f| %>
+  <%= form_for @race do |f| %>
 
   <table summary="Race form fields">
     <tr>

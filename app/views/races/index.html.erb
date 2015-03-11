@@ -1,6 +1,6 @@
 <h1>Listing races</h1>
 
-<%= link_to 'Create New Race', {:action => 'new'} %>
+<%= link_to 'Create New Race', new_race_url %>
 
 <table>
   <tr>
@@ -24,10 +24,10 @@
     <td><%= race.start_time %></td>
     <td><%= race.finish_time %></td>
     <td><%= race.visible %></td>
-    <td><%= link_to 'Checkpoints', {:controller => 'checkpoints', :action => 'index', :id => race.id} %></td>
-    <td><%= link_to 'Scoreboard', {:controller => 'scoreboard', :action => 'index', :id => race.id} %></td>
-    <td><%= link_to 'Edit', {:action => 'edit', :id => race.id} %></td>
-    <td><%= link_to 'Destroy', {:action => 'delete', :id => race.id} %></td>
+    <td><%= link_to 'Checkpoints', race_checkpoints_path(race) %></td>
+    <td><%= link_to 'Scoreboard', race_scoreboard_index_path(race) %></td>
+    <td><%= link_to 'Edit', edit_race_path(race) %></td>
+    <td><%= link_to 'Destroy', race, :confirm => "Are you sure you want to delete race '#{race.name_cs}'?", :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -46,10 +46,6 @@ class RacesController < ApplicationController
     end
   end
 
-  def delete
-    @race = Race.find(params[:id])
-  end
-
   def destroy
     race = Race.find(params[:id]).destroy
     flash[:notice] = "Race '#{race.name_cs}' destroyed successfully."
