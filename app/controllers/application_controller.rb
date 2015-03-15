@@ -64,17 +64,6 @@ class ApplicationController < ActionController::Base
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { :locale => I18n.locale }
-  end
-
-  def after_sign_in_path_for(resource)
-    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'https')
-    
-    #sign_in_url = new_user_session_url
-    if request.referer == sign_in_url
-      super
-    else
-      stored_location_for(resource) || request.referer || root_path
-    end
-  end
+  end  
   
 end
