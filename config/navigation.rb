@@ -124,7 +124,7 @@ SimpleNavigation::Configuration.run do |navigation|
     # You can turn off auto highlighting for a specific level
     # primary.auto_highlight = false
 
-    if check_admin?
+    if is_admin?
       top.item :management, I18n.t('Management'), :class => 'admin_menu' do |manages|
         manages.item :walkers, I18n.t('Walkers'), admin_walker_list_path
         manages.item :registrations, I18n.t('Registrations'), admin_registered_path

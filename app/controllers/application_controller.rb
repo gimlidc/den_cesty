@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
 
-  helper_method :check_logged_in?, :check_admin?
+  helper_method :check_logged_in?, :check_admin?, :is_admin?
 
   def check_logged_in?
     if !walker_signed_in?
@@ -24,18 +24,23 @@ class ApplicationController < ActionController::Base
 
   $admin_name = ["gimli", "evajs"]
 
-  def check_admin?
+  def is_admin?
     if !walker_signed_in?
-    return false
+      return false
     else
       if !$admin_name.include?(current_walker.username)
-        #flash.notice = "Sorry you are not ADMINISTRATOR"
-        #redirect_to :controller => "pages", :action => "unauthorized"
         return false
       else
         return true
       end
 
+    end
+  end
+
+  def check_admin?
+    if !is_admin?
+      flash.notice = "Sorry you are not ADMINISTRATOR"
+      redirect_to :controller => "pages", :action => "unauthorized"
     end
   end
 
