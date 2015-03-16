@@ -1,9 +1,5 @@
 class CheckpointsController < ApplicationController
   
-  skip_before_filter :check_admin?
-  skip_before_filter :check_logged_in?
-  
-
   # GET /races/:race_id/checkpoints
   def index
     @race = Race.find(params[:race_id])
