@@ -6,7 +6,7 @@ class ApiController < ApplicationController
   layout false
 
   # Process login for mobile app. Return true, walker id, name, surname and username if success.
-  # /api/login
+  # /api/login(.json)
   def login
     email = request.POST[:email]
     password = request.POST[:password]
@@ -30,18 +30,40 @@ class ApiController < ApplicationController
     end
   end
 
-  # Returns informations about other walkers for particular walker id.
-  # /api/scoreboard/{id}
+  # /api/races(.json)
+  def races
+    show_time = Time.now - 1.day  # show only future races races that finished max 24 hours ago
+    races = Race.where("finish_time > ?", show_time).where(:visible => true).order(:start_time)
+    render :json => races
+  end
+
+  # /api/race_data/:id(.json)
+  def race_data
+    race = Race.find(params[:id])
+
+    show_time = Time.now + 1.hours  # allow only one hour before start or later
+    if (race.start_time < show_time && race.visible?)
+      checkpoints = race.checkpoints.order(:checkid)
+      render :json => {:race_info => race, :race_checkpoints => checkpoints}
+    else
+      head :forbidden
+    end
+  end
+
+  # Returns informations about other walkers for particular race id and walker id.
+  # /api/scoreboard/:id(.json)?walker_id=:walker_id
   def scoreboard
-    walker = Scoreboard.where(:dc_id => $dc.id, :walker_id => params[:id]).first
+    race_id = params[:id]
+    walker_id = params[:walker_id]
+    walkers_score = Scoreboard.where(:race_id => race_id, :walker_id => walker_id).first
 
-  	if walker
+  	if walkers_score
 
-      numWalkersAhead = Scoreboard.where(:dc_id => $dc.id).count(:conditions => "distance > " + walker.distance.to_s)
-      numWalkersBehind = Scoreboard.where(:dc_id => $dc.id).count(:conditions => "distance <= " + walker.distance.to_s + " AND walker_id <> " + walker.walker.id.to_s)
-      numWalkersEnded = Scoreboard.where(:dc_id => $dc.id).count(:conditions => "\"raceState\" = 2 AND walker_id <> " + walker.walker.id.to_s)
-      walkersAheadDB = Scoreboard.where("dc_id = ? AND distance > ?", $dc.id, walker.distance).order("distance DESC")
-      walkersBehindDB = Scoreboard.where("dc_id = ? AND distance <= ? AND walker_id <> ?", $dc.id, walker.distance, walker.walker.id.to_s).order("distance DESC")
+      numWalkersAhead = Scoreboard.where(:race_id => race_id).count(:conditions => "distance > " + walkers_score.distance.to_s)
+      numWalkersBehind = Scoreboard.where(:race_id => race_id).count(:conditions => "distance <= " + walkers_score.distance.to_s + " AND walker_id <> " + walkers_score.walker.id.to_s)
+      numWalkersEnded = Scoreboard.where(:race_id => race_id).count(:conditions => "\"raceState\" = 2 AND walker_id <> " + walkers_score.walker.id.to_s)
+      walkersAheadDB = Scoreboard.where("race_id = ? AND distance > ?", race_id, walkers_score.distance).order("distance DESC")
+      walkersBehindDB = Scoreboard.where("race_id = ? AND distance <= ? AND walker_id <> ?", race_id, walkers_score.distance, walkers_score.walker.id.to_s).order("distance DESC")
 
       walkersAhead = []
       walkersAheadDB.each do |wa|
@@ -55,8 +77,8 @@ class ApiController < ApplicationController
         walkersBehind << {:name => w.nameSurname, :distance => wb.distance, :speed => wb.avgSpeed}
       end
 
-      render :json => {:distance => walker.distance,
-             :speed => walker.avgSpeed,
+      render :json => {:distance => walkers_score.distance,
+             :speed => walkers_score.avgSpeed,
              :numWalkersAhead => numWalkersAhead,
              :numWalkersBehind => numWalkersBehind,
              :numWalkersEnded => numWalkersEnded,
@@ -66,10 +88,10 @@ class ApiController < ApplicationController
 
     else # may happen if first start race event is late than race info request
 
-      numWalkersAhead = Scoreboard.where(:dc_id => $dc.id).count
+      numWalkersAhead = Scoreboard.where(:race_id => race_id).count
       numWalkersBehind = 0
       numWalkersEnded = 0
-      walkersAheadDB = Scoreboard.where(:dc_id => $dc.id).order("distance DESC")
+      walkersAheadDB = Scoreboard.where(:race_id => race_id).order("distance DESC")
       walkersBehind = []
 
       walkersAhead = []
@@ -89,22 +111,18 @@ class ApiController < ApplicationController
     end
   end
 
-  # Process JSON request for sending events for walker id.
+  # Process JSON request for sending events for race id and walker id.
   # Returns JSON with event ids of processed events.
-  # /api/push_events/{id}
+  # /api/push_events(.json)
   def push_events
-    in_race = Time.now > $dc_app_start && Time.now < $dc_app_end
+    #in_race = Time.now > race.start_time && Time.now < race.finish_time
 
     saved = []
     jsonHash = request.POST[:_json];
     jsonHash.each do |jsonEvent|
       event = Event.new
-      if in_race
-        event.dc_id = $dc.id
-      else
-        event.dc_id = 0 # request is not during race (probably testing)
-      end
-      event.walker_id = params[:id]
+      event.race_id = jsonEvent["raceId"]
+      event.walker_id = jsonEvent["walkerId"]
       event.eventId = jsonEvent["eventId"]
       event.eventType = jsonEvent["type"]
       event.eventData = jsonEvent["data"]
@@ -113,9 +131,9 @@ class ApiController < ApplicationController
       event.timestamp = Time.zone.parse(jsonEvent["time"])
       if event.save # if new
         saved << jsonEvent["eventId"]
-        if in_race
-          after_create(event)
-        end
+        #if in_race
+          #after_create(event)
+        #end
       else # if exists
         saved << jsonEvent["eventId"]
         puts "Not Saved!" # debug print
@@ -132,7 +150,7 @@ class ApiController < ApplicationController
       
       start_race(event)
       stop_race(event)
-      update_distance(event)
+      #update_distance(event)
 
     end
 
