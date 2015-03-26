@@ -1,0 +1,10 @@
+Mil<% if @walker.sex == 'female'%>á<% else %>ý<% end %> <%= @walker.vokativ %>,
+
+byla na tebe převedena registrace na <%= $dc.id %>. Den cesty (původní vlastník <%= @oldOwner.nameSurname%>, email <%= @oldOwner.email%>). 
+Doufáme, že oprávněně. Detaily registrace můžeš měnit zde: <%= edit_walker_registration_url %> případně zrušit zde: <%= cancel_walker_registration_url %>
+
+V případě jakýchkoli nesrovnalostí piš obratem na tento mail.
+
+S přáním pěkného dne
+
+gimli

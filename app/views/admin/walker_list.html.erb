@@ -27,7 +27,7 @@
 		  <tr class="<%= walker.virtual ? "virtual" : "registered" %>">
 			<%= f.hidden_field :id %>
 			<td>
-				<%= f.text_field :username, :size => 10 %>
+				<%= f.text_field :vokativ, :size => 10 %>
 			</td>
 			<td><%= f.text_field :name, :size => 10 %></td>
 			<td><%= f.text_field :surname, :size => 15 %></td>
@@ -49,7 +49,7 @@
 	  <% end %>
 	  <tr><%= form_for @new_walker, :url => { :controller => "admin", :action => "walker_create"} do |f| %>
 	  	  <%= f.hidden_field :virtual, :value => true %>
-		  <td></td>
+		  <td><%= f.text_field :vokativ, :size => 10 %></td>
 		  <td><%= f.text_field :name, :size => 10 %></td>
 		  <td><%= f.text_field :surname, :size => 15 %></td>
       <td><%= f.email_field :email, :size => 15 %></td>

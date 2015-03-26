@@ -22,13 +22,13 @@ class ApplicationController < ActionController::Base
     return true
   end
 
-  $admin_name = ["gimli", "evajs"]
+  $admin_email = ["gimli@matfyz.cz", "evajs@matfyz.cz"]
 
   def is_admin?
     if !walker_signed_in?
       return false
     else
-      if !$admin_name.include?(current_walker.username)
+      if !$admin_email.include?(current_walker.email)
         return false
       else
         return true

@@ -22,7 +22,7 @@ if  remains < 60 * 60 * 24 * 7  && remains > 0
 		  <tr><th class="title">Přihlášení&nbsp;(<%= @registered_walkers.size %>):</th><td>
 			  <% if !@registered_walkers.nil? %>
 				<% @registered_walkers.each do |reg| %>
-				  <%= reg.walker.username %>,
+				  <%= reg.walker.name %> <%= reg.walker.surname %>,
 				<% end %>
 			  <% end %>
 			</td></tr>

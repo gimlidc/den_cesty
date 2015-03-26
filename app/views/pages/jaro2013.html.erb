@@ -38,7 +38,7 @@
             <tr>
                 <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>/<span class="red">100</span>):</th><td> <% if !@registered_walkers.nil? %>
                 <% @registered_walkers.each do |reg| %>
-                <%= reg.walker.username %>,
+                <%= reg.walker.name %><%= reg.walker.surname %>,
                 <% end %>
                 <% end %> </td>
             </tr>

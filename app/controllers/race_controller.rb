@@ -15,7 +15,7 @@ class RaceController < ApplicationController
 
   # API methods:
 
-  # Process login for mobile app. Return true, walker id, name, surname and username if success.
+  # Process login for mobile app. Return true, walker id, name, surname if success.
   # /race/login
   def login
     email = request.POST[:email]
@@ -32,8 +32,7 @@ class RaceController < ApplicationController
         render :json => {:success => true,
                          :id => w.id,
                          :name => w.name,
-                         :surname => w.surname,
-                         :username => w.username}
+                         :surname => w.surname}
       else
         render :json => {:success => false}
       end

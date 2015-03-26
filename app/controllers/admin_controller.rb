@@ -100,25 +100,51 @@ class AdminController < ApplicationController
     @textil = { "scarfs" => scarfs, "damskyPolyester" => fPShirt, "panskyPolyester" => mPShirt, "damskaBavlna" => fCShirt, "panskaBavlna" => mCShirt }
   end
   
+  def gimli_test
+    flash.notice = "Mail sent to gimli"
+    WalkerMailer.send_spam(Walker.find(1), "[DC]: mailer testing email", "Pokud tento mail dorazil, mailer funguje spravne.").deliver
+    redirect_to admin_registered_path
+  end
+  
+  def payment_notification
+    @registrations = Registration.where(:confirmed => false, :canceled => false, :dc_id => $dc.id)
+    if !@registrations.empty?
+      flash.notice = "Mail send to: "
+      @registrations.each do |registration|
+        WalkerMailer.send_payment_request(registration).deliver
+        flash.notice += registration.walker.email + ", "
+      end
+    else
+      flash.notice = "All registrations have been paid."
+    end
+    redirect_to admin_registered_path
+  end
+  
   def cleanup_unpaid_textile
-    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
+    @registrations = Registration.where(:confirmed => false, :canceled => false, :dc_id => $dc.id)
     @registrations.each do |registration|
       registration.scarf = false
       registration.shirt_size = 'NO'
       registration.shirt_polyester = 'NO'
       if !registration.save
         flash.notice += "Registration "+registration.id+" save failed.<br />"
-      end
+      else
+        WalkerMailer.notify_registration_update(registration).deliver
+        flash.notice = "Mail send to: " + registration.walker.email
+       end
     end
     redirect_to admin_registered_path
   end
 
   def cleanup_unpaid_maps
-    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
+    @registrations = Registration.where(:confirmed => false, :canceled => false, :dc_id => $dc.id)
     @registrations.each do |registration|
       registration.colour_map = false
       if !registration.save
         flash.notice += "Registration "+registration.id+" save failed.<br />"
+      else
+        WalkerMailer.notify_registration_update(registration).deliver
+        flash.notice = "Mail send to: " + registration.walker.email
       end
     end
     redirect_to admin_registered_path
@@ -276,10 +302,10 @@ class AdminController < ApplicationController
 			if walker.nil?
 				@notice = "Walker not found."
 			else
-				if (params[:walker][:username].nil?)
+				if (params[:walker][:vokativ].nil?)
 					validate = false
 				else
-					walker.username = params[:walker][:username]
+					walker.vokativ = params[:walker][:vokativ]
 					walker.email = params[:walker][:email]
 				end
 				walker.name = params[:walker][:name]

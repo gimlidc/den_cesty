@@ -1,0 +1,9 @@
+Mil<% if @walker.sex == 'female'%>á<% else %>ý<% end %> <%= @walker.vokativ %>,
+<p>
+je načase zaplatit svou registraci pro <%= $dc.id %>. Den cesty:
+</p>
+<%= render partial: "registrations/show", locals: {reg: @reg} %>
+<p>
+V případě neuhrazení do uvedeného termínu budeme muset registraci upravit (trička a mapy tiskneme pouze pokud jsou zaplacené). Děkujeme za pochopení.
+</p>
+za org. evajs, gimli, jeffer, martin, martin a olda

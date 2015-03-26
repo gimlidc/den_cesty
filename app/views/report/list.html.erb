@@ -21,7 +21,7 @@
   <% if !@dc_id.nil? %>
 	<h2>Reporty z <%= @dc_id %>. dne cesty</h2>
   <% else %>
-	<h2>Reporty od <%= @author.username %></h2>
+	<h2><%= @author.name %> <%= @author.surname %> napsal<% if @author.sex == 'female'%>a<% end %>:</h2>
   <% end %>
 <% end %>
 <% for report in @reports %>
