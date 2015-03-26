@@ -13,6 +13,13 @@ class Registration < ActiveRecord::Base
 	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :shirt_polyester, :scarf, :goal, :phone, :canceled, :confirmed, :created_at
 	validate :phone, :presence => true, :allow_blank => false
 	
+	def has_textile?
+	  if self.scarf || self.shirt_size != "NO" || self.shirt_polyester != "NO"
+	    return true
+	  end
+	  return false 
+	end
+	
   private
     def default_values
       self.bw_map ||= false

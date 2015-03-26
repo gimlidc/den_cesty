@@ -33,6 +33,7 @@ class AdminController < ApplicationController
 			redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
 	end
 	
+	# page allowing creation of new registration
 	def register
 	  walker_id = "#{params[:id]}"
     @walker = Walker.find(walker_id)
@@ -44,6 +45,7 @@ class AdminController < ApplicationController
     end
   end
   
+  # method edit existing registration or creates new one
   def register_do
     # check if there is only one registration for specified walker
     @regs = Registration.where(:dc_id => $dc.id, :walker_id => "#{params[:registration][:walker_id]}")
@@ -79,23 +81,47 @@ class AdminController < ApplicationController
     @reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
     @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
     @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count
-    # chceme tabulku poctu textilu, kde hraje roli: [typ, sex, velikost]
+    # table of shirts according to: [typ={cotton, pes}, sex={F,M}, velikost={S-XXL}]
     scarfs = Registration.where(:canceled => false, :confirmed => true, :dc_id => $dc.id, :scarf => true).count
-    # damska bavlna
+    # female cotton
     fCShirt = Hash.new(0)
-    # panska bavlna
+    # male cotton
     mCShirt = Hash.new(0)
-    # damsky polyester
+    # female polyester
     fPShirt = Hash.new(0)
-    # pansky polyester
+    # male polyester
     mPShirt = Hash.new(0)
-    $shirt_sizes.each do |size| # vypneni tabulky
+    $shirt_sizes.each do |size| # fill whole table
       fCShirt[size] = @registration.where(:confirmed => true, :shirt_size => size, :walkers => { :sex => "female" }).size
       mCShirt[size] = @registration.where(:confirmed => true, :shirt_size => size, :walkers => { :sex => "male" }).size
       fPShirt[size] = @registration.where(:confirmed => true, :shirt_polyester => size, :walkers => { :sex => "female" }).size
       mPShirt[size] = @registration.where(:confirmed => true, :shirt_polyester => size, :walkers => { :sex => "male" }).size
     end
     @textil = { "scarfs" => scarfs, "damskyPolyester" => fPShirt, "panskyPolyester" => mPShirt, "damskaBavlna" => fCShirt, "panskaBavlna" => mCShirt }
+  end
+  
+  def cleanup_unpaid_textile
+    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
+    @registrations.each do |registration|
+      registration.scarf = false
+      registration.shirt_size = 'NO'
+      registration.shirt_polyester = 'NO'
+      if !registration.save
+        flash.notice += "Registration "+registration.id+" save failed.<br />"
+      end
+    end
+    redirect_to admin_registered_path
+  end
+
+  def cleanup_unpaid_maps
+    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
+    @registrations.each do |registration|
+      registration.colour_map = false
+      if !registration.save
+        flash.notice += "Registration "+registration.id+" save failed.<br />"
+      end
+    end
+    redirect_to admin_registered_path
   end
 
 	def merge		

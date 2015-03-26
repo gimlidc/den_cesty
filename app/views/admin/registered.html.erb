@@ -50,6 +50,12 @@
 		</li>
 	</ul>
 </p>
+<p>
+	<%= link_to 'Smazat nezaplacený textil', admin_cleanup_unpaid_textile_path, :confirm => "Opravdu smazat všechen nezaplacený textil? Akce nepůjde vrátit!" %>
+</p>
+<p>
+	<%= link_to 'Smazat nezaplacené mapy', admin_cleanup_unpaid_maps_path, :confirm => "Opravdu smazat nezaplacené mapy? Akce nepůjde vrátit!" %>
+</p>
 
 Showing all registrations for Den cesty <%= $dc.id %>
 
