@@ -12,6 +12,7 @@
       <th>Started at</th>
       <th>Coordinates</th>
       <th>Ch.</th>
+      <th></th>
     </tr>
     <% @scoreboard.each do |entry| %>
     <tr>
@@ -23,6 +24,7 @@
       <td><%= entry.created_at %></td>
       <td><%= entry.latitude.round(5) %>, <%= entry.longitude.round(5) %></td>
       <td><%= entry.lastCheckpoint %></td>
+      <td><%= link_to 'Delete', [entry.race, entry], :confirm => 'Are you sure you want to delete this scoreboard entry?', :method => :delete %></td>
     </tr>
     <% end %>
 </table>

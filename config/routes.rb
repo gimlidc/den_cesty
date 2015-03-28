@@ -10,7 +10,7 @@ DenCesty::Application.routes.draw do
 	resource :dc
 
   resources :races do
-    resources :scoreboard, :only => [:index]
+    resources :scoreboard, :only => [:index, :destroy]
     resources :checkpoints, :only => [:index, :new, :create, :edit, :update, :destroy]
   end
 
