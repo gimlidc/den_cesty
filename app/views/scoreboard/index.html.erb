@@ -1,6 +1,8 @@
 <h1>Scoreboard of "<%= @race.name_cs %>"</h1>
 
 <%= link_to "<< Back to Race List", races_path %>
+ | 
+<%= link_to 'Public map', :controller => :map, :action => :show, :id => @race.id %>
 
 <table summary="Scoreboard of selected Race">
     <tr>

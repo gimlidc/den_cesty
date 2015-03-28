@@ -92,7 +92,7 @@ class CheckpointsController < ApplicationController
 
   def map
     @race = Race.find(params[:race_id])
-    @checkpoints = @race.checkpoints
+    @checkpoints = @race.checkpoints.select([:checkid, :latitude, :longitude, :meters])
   end
 
   private
