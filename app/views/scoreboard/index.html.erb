@@ -24,7 +24,7 @@
       <td><%= entry.created_at %></td>
       <td><%= entry.latitude.round(5) %>, <%= entry.longitude.round(5) %></td>
       <td><%= entry.lastCheckpoint %></td>
-      <td><%= link_to 'Delete', [entry.race, entry], :confirm => 'Are you sure you want to delete this scoreboard entry?', :method => :delete %></td>
+      <td><%= link_to 'Delete', [@race, entry], :confirm => 'Are you sure you want to delete this scoreboard entry?', :method => :delete %></td>
     </tr>
     <% end %>
 </table>

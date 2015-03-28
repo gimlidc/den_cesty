@@ -1,0 +1,30 @@
+<h1>Import GPX file</h1>
+
+<%= link_to "<< Back to List", race_checkpoints_path(params[:race_id]) %>
+
+<div>
+<%= form_tag({:action => :upload}, multipart: true) do %>
+
+  <table summary="Checkpoint form fields">
+  	<tr>
+      <th><%= label_tag 'GPX file' %></th>
+      <td><%= file_field_tag :file %></td>
+    </tr>
+    <tr>
+      <th><%= label_tag 'Enable distance filtering' %></th>
+      <td><%= check_box_tag :enable_distance_filtering, 'yes', true %></td>
+    </tr>
+    <tr>
+      <th><%= label_tag 'Distance filter' %></th>
+      <td><%= number_field_tag :distance_filter, '1000' %>&nbsp;m</td>
+    </tr>
+  </table>
+
+  <div>
+    <%= submit_tag( "Import" ) %>
+  </div>
+
+  <% end %>
+  
+</div>
+

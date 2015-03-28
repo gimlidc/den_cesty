@@ -3,6 +3,10 @@
 <%= link_to "<< Back to Race List", races_path %>
  | 
 <%= link_to 'Create New Checkpoint', new_race_checkpoint_path %>
+ | 
+<%= link_to 'Import GPX file', import_race_checkpoint_path %>
+ | 
+<%= link_to 'Show on map', map_race_checkpoints_path %>
 
 <table summary="Checkpoints of selected Race">
     <tr>
@@ -17,8 +21,8 @@
       <td><%= checkpoint.checkid %></td>
       <td><%= checkpoint.meters %></td>
       <td><%= checkpoint.latitude %>, <%= checkpoint.longitude %></td>
-      <td><%= link_to 'Edit', edit_race_checkpoint_path(checkpoint.race, checkpoint) %></td>
-      <td><%= link_to 'Delete', [checkpoint.race, checkpoint], :confirm => 'Are you sure you want to delete this checkpoint?', :method => :delete %></td>
+      <td><%= link_to 'Edit', edit_race_checkpoint_path(@race, checkpoint) %></td>
+      <td><%= link_to 'Delete', [@race, checkpoint], :confirm => 'Are you sure you want to delete this checkpoint?', :method => :delete %></td>
     </tr>
     <% end %>
 </table>

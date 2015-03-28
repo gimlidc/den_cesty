@@ -34,3 +34,6 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug'
+
+# XML processing
+gem 'nokogiri'
