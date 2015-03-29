@@ -5,7 +5,7 @@ class FillRaces < ActiveRecord::Migration
   	Scoreboard.where(:race_id => 22).update_all(:race_id => dc22.id)
   	Event.where(:race_id => 22).update_all(:race_id => dc22.id)
 
-  	dc20 = Race.create(:visible => true, :name_cs => "Kdo doběhne nejdál?", :name_en => "Who runs hard?", :start_time => "2015-01-17 06:00:00", :finish_time => "2015-01-17 18:00:00")
+  	dc20 = Race.create(:visible => true, :name_cs => "Kdo dobehne nejdal?", :name_en => "Who runs hard?", :start_time => "2015-01-17 06:00:00", :finish_time => "2015-01-17 18:00:00")
   	Checkpoint.where(:race_id => 20).update_all(:race_id => dc20.id)
   	Scoreboard.where(:race_id => 20).update_all(:race_id => dc20.id)
   	Event.where(:race_id => 20).update_all(:race_id => dc20.id)

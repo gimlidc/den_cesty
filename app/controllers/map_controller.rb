@@ -20,6 +20,7 @@ class MapController < ApplicationController
       @checkpoints = @race.checkpoints.select([:latitude, :longitude])
       @scoreboard = @race.scoreboard.joins(:walker).select([:name, :surname, :distance, :latitude, :longitude])
     else
+      flash.notice = "Map will be available after the race start."
       redirect_to :controller => "pages", :action => "unauthorized"
     end
   end
