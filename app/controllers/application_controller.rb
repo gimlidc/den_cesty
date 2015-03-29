@@ -55,6 +55,7 @@ class ApplicationController < ActionController::Base
       $report_deadline = ($dc.start_time + 1.month).end_of_day          
     end    
     $race_limit = $dc.limit    
+    $account_number = "670100-2209569678/6210"
   end
 
   def set_locale

@@ -25,6 +25,7 @@ DenCesty::Application.routes.draw do
 	match 'report/edit' => "report#edit", :as => :edit_report
 	match 'report/show' => "report#show", :as => :show_report
 	match 'report/list' => "report#list", :as => :report_list
+	match 'tracker_info' => "pages#tracker_info", :as => :tracker_info
 	match 'contacts' => 'pages#contacts', :as => :pages_contacts
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
