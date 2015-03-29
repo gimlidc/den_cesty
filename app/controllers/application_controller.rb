@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     return true
   end
 
-  $admin_name = ["gimli", "evajs"]
+  $admin_name = ["gimli", "evajs", "machl"]
 
   def is_admin?
     if !walker_signed_in?
