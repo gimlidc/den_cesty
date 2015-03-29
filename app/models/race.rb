@@ -1,8 +1,7 @@
 class Race < ActiveRecord::Base
 
-  belongs_to :dc
-  belongs_to :walker
-
-	validates_uniqueness_of :walker_id, :scope => :dc_id
+  has_many :checkpoints
+  has_many :events
+  has_many :scoreboard
 
 end

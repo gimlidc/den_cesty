@@ -1,0 +1,77 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "//api.mapy.cz/loader.js" %>
+  <script>Loader.load()</script>
+<% end %>
+
+<h1>Průběh závodu  "<%= @race.name_cs %>"</h1>
+
+<div id="map"></div>
+<script type="text/javascript">
+  var checkpoints = [<%= raw @checkpoints.to_json %>];
+
+  var center = SMap.Coords.fromWGS84(<%= if !@checkpoints.empty? then @checkpoints.first.coordinates else "14.41790, 50.12655" end %>);
+  var m = new SMap(JAK.gel("map"), center, 9);
+  m.addDefaultLayer(SMap.DEF_TURIST).enable();
+  m.addDefaultControls();
+
+  var sync = new SMap.Control.Sync({bottomSpace:30});
+  m.addControl(sync);
+
+  var layer = new SMap.Layer.Marker();
+  var all_coords = [];
+
+  for (var i=0; i < <%= @checkpoints.count %>; i++) {
+    var lon = checkpoints[0][i].longitude;
+    var lat = checkpoints[0][i].latitude;
+    var coords = SMap.Coords.fromWGS84(lon, lat);
+    all_coords.push(coords);
+
+    if (i == 0) {
+    	var marker = new SMap.Marker(coords, 0, {url:SMap.CONFIG.img+"/marker/drop-blue.png"});
+    	var card = new SMap.Card();
+    	card.getHeader().innerHTML = "Start závodu";
+    	marker.decorate(SMap.Marker.Feature.Card, card);
+    	layer.addMarker(marker);
+    }
+  }
+
+  m.addLayer(layer);
+  layer.enable();
+
+  // Add polyline:
+  var polyline_layer = new SMap.Layer.Geometry();
+  m.addLayer(polyline_layer);
+  polyline_layer.enable();
+
+  var polyline_options = {
+    color: "#00f",
+    width: 3
+  };
+
+  var polyline = new SMap.Geometry(SMap.GEOMETRY_POLYLINE, null, all_coords, polyline_options);
+  polyline_layer.addGeometry(polyline);
+
+
+  // Walkers:
+  var walkers = [<%= raw @scoreboard.to_json %>];
+
+  var walkers_layer = new SMap.Layer.Marker();
+
+  for (var i=0; i < <%= @scoreboard.count %>; i++) {
+    var lon = walkers[0][i].longitude;
+    var lat = walkers[0][i].latitude;
+    var coords = SMap.Coords.fromWGS84(lon, lat);
+    var marker = new SMap.Marker(coords);
+
+    var card = new SMap.Card();
+    card.getHeader().innerHTML = "<strong>" + walkers[0][i].name + " " + walkers[0][i].surname + "</strong>";
+    card.getBody().innerHTML = walkers[0][i].distance + " m";
+    marker.decorate(SMap.Marker.Feature.Card, card);
+    
+    layer.addMarker(marker);
+  }
+
+  m.addLayer(layer);
+  layer.enable();
+
+</script>
