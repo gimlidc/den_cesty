@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  walker: 1
+  lastCheckpoint: 1
+  raceState: 1
+  distance: 1
+  avgSpeed: 1.5
+
+two:
+  walker: 1
+  lastCheckpoint: 1
+  raceState: 1
+  distance: 1
+  avgSpeed: 1.5

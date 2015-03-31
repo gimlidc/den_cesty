@@ -33,7 +33,7 @@
 			end
   %>
 		<Placemark id="<%= @checkpoints_count+locUpdate.id %>">
-			<name>(<%= locUpdate.walker %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
+			<name>(<%= locUpdate.walker.id %>) LocationUpdate #<%= locUpdate.eventData['counter'] %></name>
 			<description>
 				<![CDATA[ 
 					Calc Distance: <%= if locUpdate.eventData["distance"] then locUpdate.eventData["distance"] else "-" end %><br />

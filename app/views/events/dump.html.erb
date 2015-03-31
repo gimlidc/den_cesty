@@ -2,7 +2,7 @@
 
 <table class="listing" summary="Events log">
     <tr class="header">
-      <th>Dc</th>
+      <th>Race</th>
       <th>Time</th>
       <th>Walker</th>
       <th>EventId</th>
@@ -14,9 +14,9 @@
     </tr>
     <% @events.each do |event| %>
     <tr>
-      <td><%= event.dc_id %></td>
+      <td><%= event.race_id %></td>
       <td><%= event.created_at %></td>
-      <td><%= event.walker.id %></td>
+      <td><%= event.walker_id %></td>
       <td><%= event.eventId %></td>
       <td><%= event.eventType %></td>
       <td><%= event.timestamp %></td>

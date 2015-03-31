@@ -1,0 +1,35 @@
+<h1>Listing races</h1>
+
+<%= link_to 'Create New Race', new_race_url %>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Name cs</th>
+    <th>Name en</th>
+    <th>Start time</th>
+    <th>Finish time</th>
+    <th>Visible</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @races.each do |race| %>
+  <tr>
+    <td><%= race.id %></td>
+    <td><%= race.name_cs %></td>
+    <td><%= race.name_en %></td>
+    <td><%= race.start_time %></td>
+    <td><%= race.finish_time %></td>
+    <td><%= race.visible %></td>
+    <td><%= link_to 'Checkpoints', race_checkpoints_path(race) %></td>
+    <td><%= link_to 'Scoreboard', race_scoreboard_index_path(race) %></td>
+    <td><%= link_to 'Edit', edit_race_path(race) %></td>
+    <td><%= link_to 'Destroy', race, :confirm => "Are you sure you want to delete race '#{race.name_cs}'?", :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

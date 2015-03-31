@@ -5,7 +5,6 @@
 <% if @walkers.nil? %>
   No record found
 <% else %>
-	<p style="text-align: right"><%= link_to "Vymazat všechny Eventy a Race tabulku (mobilní aplikace)", { :action => "delete_events_and_race"}, :confirm => "Opravdu chcete nenávratně smazat obsah tabulek?" %></p>
 
   <h2>Výsledky <%= @set_dc %>. dne cesty</h2>
   <%= form_tag('results_setting') do -%>

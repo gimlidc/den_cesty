@@ -132,6 +132,7 @@ SimpleNavigation::Configuration.run do |navigation|
         manages.item :print_list, I18n.t('Presentation list'), admin_print_list_path
         manages.item :dcs, "Přehled DC", dcs_path 
       end
+      top.item :races, "Mobilní aplikace", races_path, :class => 'admin_menu'
     end
     
 

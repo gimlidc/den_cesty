@@ -1,0 +1,75 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "//api.mapy.cz/loader.js" %>
+  <script>Loader.load()</script>
+<% end %>
+
+
+<h1>Checkpoints of "<%= @race.name_cs %>"</h1>
+<p>
+  <%= link_to "<< Back to Checkpoints List", race_checkpoints_path %>
+</p>
+
+<div id="map"></div>
+<script type="text/javascript">
+  var checkpoints = [<%= raw @checkpoints.to_json %>];
+
+  var center = SMap.Coords.fromWGS84(<%= if !@checkpoints.empty? then @checkpoints.first.coordinates else "14.41790, 50.12655" end %>);
+  var m = new SMap(JAK.gel("map"), center, 13);
+  m.addDefaultLayer(SMap.DEF_TURIST).enable();
+  m.addDefaultControls();
+
+  var sync = new SMap.Control.Sync({bottomSpace:30});
+  m.addControl(sync);
+
+  var layer = new SMap.Layer.Marker();
+  var all_coords = [];
+
+  for (var i=0; i < <%= @checkpoints.count %>; i++) {
+    var lon = checkpoints[0][i].longitude;
+    var lat = checkpoints[0][i].latitude;
+    var coords = SMap.Coords.fromWGS84(lon, lat);
+    all_coords.push(coords);
+    var marker = new SMap.Marker(coords);
+
+    var card = new SMap.Card();
+    card.getHeader().innerHTML = "#" + checkpoints[0][i].checkid;
+    card.getBody().innerHTML = "Meters: " + checkpoints[0][i].meters;
+    marker.decorate(SMap.Marker.Feature.Card, card);
+    
+    layer.addMarker(marker);
+  }
+
+  m.addLayer(layer);
+  layer.enable();
+
+  // Add polyline:
+  var polyline_layer = new SMap.Layer.Geometry();
+  m.addLayer(polyline_layer);
+  polyline_layer.enable();
+
+  var polyline_options = {
+    color: "#f00",
+    width: 3
+  };
+
+  var polyline = new SMap.Geometry(SMap.GEOMETRY_POLYLINE, null, all_coords, polyline_options);
+  polyline_layer.addGeometry(polyline);
+
+  // GPX file support:
+  function load() {
+    var value = JAK.gel("gpx").value.trim();
+    if (!value) { return alert("Vložte do textového pole obsah GPX souboru"); }
+    var xmlDoc = JAK.XML.createDocument(value);
+
+    var gpx = new SMap.Layer.GPX(xmlDoc, null, {maxPoints:500});
+    m.addLayer(gpx);
+    gpx.enable();
+    gpx.fit();
+  }
+
+</script>
+
+<hr/>
+Zde vložte obsah GPX souboru pro zobrazení na mapě:<br/>
+<textarea id="gpx"></textarea>
+<input type="button" value="Zobrazit" onclick="load()" />
