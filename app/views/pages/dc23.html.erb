@@ -5,8 +5,9 @@
     <p>
 	Den cesty je teréní závod na 24h během něhož, závodníkům není poskytována jakákoli podpora. Tedy žádné občerstvovací stanice, záchytné hospody ani odvoz účastníků, pokud už nemohou. Trasu navrhujeme tak, aby byla co nejpřímější a závodníci měli možnost poznat co nejpestřejší krajiny České Republiky.   
     </p>
+    <p>Podrobnější pravidla závodu najdete v <%= link_to 'pravidlech', pages_rules_path %>, cokoli není (zatím) zakázáno, je povoleno.</p>
     <p>
-    	Stejně jako na podzim budeme testovat prototyp naší trackovací aplikace. Tentokráte bude snad i verze pro Androidí telefony. Informace obdržíte zavčasu mailem. Pokud byste o trackování uvažovali, požadavky jsou - telefon s OS Android (4.2+) nebo iOS (7+), powerbanka (min. 3A), připojení k internetu (2G by mělo stačit), funkce GPS v telefonu.
+    	Stejně jako na podzim budeme "testovat" prototyp naší trackovací aplikace. Testovat je nyní již jen v uvozovkách - aplikace je plně funkční a čeká už jen na nejrůznější zlepšení. Informace jak na instalaci obdržíte zavčasu mailem a objeví se i zde na stránkách. Pokud byste o trackování uvažovali, požadavky jsou - telefon s OS Android (4.2+) nebo iOS (7+), powerbanka (min. 3A), připojení k internetu (2G by mělo stačit), funkce GPS v telefonu. Sledujte proto náš web, facebook a váš email.
     </p>
     <p>
         <%= t 'actual.limit', :race_limit => "#{$dc.limit}"  %>
@@ -36,7 +37,7 @@
                 <th class="title"><%= t 'actual.registration_workflow' %>:</th><td>Pro přihlášení na závod je třeba mít účet na těchto stránkách. Po přihlášení se Ti zobrazí menu potřebná pro registraci.</td>
             </tr>
             <tr>
-              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč), bavlněné tričko (<%= $dc.shirt_price %>Kč), funkční tričko (<%= $dc.polyester_shirt_price %>Kč), šátek (<%= $dc.scarf_price %>Kč). Na potisku triček usilovně pracujeme.</td>
+              <th class="title"><%= t 'actual.fees' %>:</th><td>Se skládá z části povinné: <b><%= $dc.reg_price %>Kč</b>  (obsahuje itinerář v igelitových deskách), a částí volitelných: černobílá mapa závodu (<%= $dc.map_bw_price %>Kč), barevná mapa závodu (<%= $dc.map_color_price %>Kč), bavlněné tričko (<%= $dc.shirt_price %>Kč), funkční tričko (<%= $dc.polyester_shirt_price %>Kč), šátek (<%= $dc.scarf_price %>Kč). Potisk triček (v negativu) ukazuje obrázek nahoře na stránce. Trika budou černá, potisk světle šedý.</td>
             </tr>            
             <tr>
                 <th class="title"><%= t 'actual.conditions' %>:</th><td>Mladší 18 let potřebují souhlas zákonného zástupce s účastí na závodě a doprovod zletilé osoby po celou dobu závodu. Povinností každého závodníka je zaslat SMS zprávu při ukončení závodu organizátorům.</td>
