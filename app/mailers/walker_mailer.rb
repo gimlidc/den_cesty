@@ -1,5 +1,5 @@
 class WalkerMailer < ActionMailer::Base
-  default from: "manve@seznam.cz"
+  default from: "info@dencesty.cz"
   add_template_helper(DcsHelper)
   add_template_helper(RegistrationsHelper)
   
