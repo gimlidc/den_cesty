@@ -5,7 +5,7 @@ class ApiController < ApplicationController
 
   layout false
 
-  # Process login for mobile app. Return true, walker id, name, surname and username if success.
+  # Process login for mobile app. Return true, walker id, name, surname and vokativ if success.
   # /api/login(.json)
   def login
     email = request.POST[:email]
@@ -23,7 +23,7 @@ class ApiController < ApplicationController
                          :id => w.id,
                          :name => w.name,
                          :surname => w.surname,
-                         :username => w.username}
+                         :vokativ => w.vokativ}
       else
         render :json => {:success => false}
       end
