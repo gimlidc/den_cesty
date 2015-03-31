@@ -1,0 +1,32 @@
+<h1>Scoreboard of "<%= @race.name_cs %>"</h1>
+
+<%= link_to "<< Back to Race List", races_path %>
+ | 
+<%= link_to 'Public map', :controller => :map, :action => :show, :id => @race.id %>
+
+<table summary="Scoreboard of selected Race">
+    <tr>
+      <th>Walker</th>
+      <th>Race State</th>
+      <th>Distance</th>
+      <th>Avg Speed</th>
+      <th>Updated at</th>
+      <th>Started at</th>
+      <th>Coordinates</th>
+      <th>Ch.</th>
+      <th></th>
+    </tr>
+    <% @scoreboard.each do |entry| %>
+    <tr>
+      <td><%= entry.walker.nameSurname%> (<%= entry.walker.id %>) </td>
+      <td><%= raceStatePretty(entry.raceState) %></td>
+      <td><%= entry.distance %></td>
+      <td><%= entry.avgSpeed %></td>
+      <td><%= entry.updated_at %></td>
+      <td><%= entry.created_at %></td>
+      <td><%= entry.latitude.round(5) %>, <%= entry.longitude.round(5) %></td>
+      <td><%= entry.lastCheckpoint %></td>
+      <td><%= link_to 'Delete', [@race, entry], :confirm => 'Are you sure you want to delete this scoreboard entry?', :method => :delete %></td>
+    </tr>
+    <% end %>
+</table>

@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  walker: 1
-  lastCheckpoint: 1
-  raceState: 1
-  distance: 1
-  avgSpeed: 1.5
+  name_cs: MyString
+  name_en: MyString
+  start_time: 2015-03-05 18:07:48
+  finish_time: 2015-03-05 18:07:48
+  visible: false
 
 two:
-  walker: 1
-  lastCheckpoint: 1
-  raceState: 1
-  distance: 1
-  avgSpeed: 1.5
+  name_cs: MyString
+  name_en: MyString
+  start_time: 2015-03-05 18:07:48
+  finish_time: 2015-03-05 18:07:48
+  visible: false

@@ -1,0 +1,33 @@
+<h1><%= @race.name_cs %> - průběžné výsledky</h1>
+
+Vysvětlivky:
+<ul>
+	<li><b>Vzdálenost</b> - vzdálenost je uvedena v metrech v čase poslední aktualizace a může se od skutečné vzdálenosti lišit +/- 400m v komplikovanějším terénu (smyčky na trase) i o více</li>
+	<li><b>Rychlost</b> - zde je uvedena průměrná rychlost za celou dobu závodu (nikoli rychlost aktuální), snadno ji spočtete tak, že počet kilometrů vydělíte časem, který uplynul od startu závodu. Pokud start závodu byl odložen, nemusí uvedená rychlost být správně.</li>
+	<li><b>Čas</b> - čas poslední aktualizace udává, kdy závodníkův telefon poslal poslední aktualizaci na server, je tedy důležité porovnávat i tento parametr neboť v místech bez signálu se aktualizace nemusí odeslat včas</li>
+	<li><b>Status</b> - závodník může závod v aplikaci ukončit, pak je zde uvedeno "ended" - to typicky znamená, že závodník už dál nepokračuje</li>
+</ul>
+
+<table border="1" cellpadding="4" cellspacing="0">
+  <tr>
+    <th>#</th>
+    <th>Závodník</th>
+    <th>Vzdálenost</th>
+    <th>Rychlost</th>
+    <th>Čas</th>
+    <th>Status</th>
+  </tr>
+
+<% i = 0 %>
+<% @scoreboard.each do |entry| %>
+  <% i = i + 1 %>
+  <tr>
+  	<td><%= i %>.</td>
+    <td><%= entry.walker.nameSurname%> (<%= entry.walker.id %>) </td>
+    <td><%= entry.distance %></td>
+    <td><%= entry.avgSpeed %></td>
+    <td><%= entry.updated_at %></td>
+    <td><%= raceStatePretty(entry.raceState) %></td>
+  </tr>
+<% end %>
+</table>

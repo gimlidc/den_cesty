@@ -289,16 +289,4 @@ class AdminController < ApplicationController
 
 	end
 
-	def delete_events_and_race
-    if Time.now < $dc.start_time
-		  Event.delete_all
-		  Race.delete_all
-
-		  flash[:notice] = "All events and race table was removed!"
-    else
-		  flash[:alert] = "Events can be deleted only before race starts!"
-    end
-		redirect_to :action => 'results_setting'
-	end
-
 end

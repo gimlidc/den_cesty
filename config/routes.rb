@@ -9,6 +9,15 @@ DenCesty::Application.routes.draw do
 	
 	resource :dc
 
+  resources :races do
+    resources :scoreboard, :only => [:index, :destroy]
+    resources :checkpoints, :only => [:index, :new, :create, :edit, :import, :destroy]
+  end
+  match 'races/:race_id/checkpoints/import' => 'checkpoints#import', :as => :import_race_checkpoint, via: [:get]
+  match 'races/:race_id/checkpoints/upload' => 'checkpoints#upload', via: [:post]
+  match 'races/:race_id/checkpoints/map' => 'checkpoints#map', :as => :map_race_checkpoints, via: [:get]
+  resources :map, :only => [:show]
+
 	#match 'walkers/edit' => "walkers#edit", :as => :edit_walker
   #match 'walkers/:id' => 'walkers#show', :as => :show_walker
   match 'registrations/change_owner' => "registrations#change_owner", :as => :change_owner
@@ -16,6 +25,8 @@ DenCesty::Application.routes.draw do
 	match 'report/edit' => "report#edit", :as => :edit_report
 	match 'report/show' => "report#show", :as => :show_report
 	match 'report/list' => "report#list", :as => :report_list
+	match 'tracker_info' => "pages#tracker_info", :as => :tracker_info
+	match 'running_results(/:id)' => "pages#running_results", :as => :running_results
 	match 'contacts' => 'pages#contacts', :as => :pages_contacts
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules

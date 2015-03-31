@@ -1,4 +1,4 @@
-class CreateRaces < ActiveRecord::Migration
+class CreateRacesOld < ActiveRecord::Migration
   def change
     create_table :races do |t|
       t.integer :walker

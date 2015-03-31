@@ -1,0 +1,37 @@
+<h1>Edit Checkpoint</h1>
+
+<%= link_to "<< Back to List", race_checkpoints_path(@checkpoint.race) %>
+
+<div>
+
+  <%= form_for [@checkpoint.race, @checkpoint] do |f| %>
+
+  <table summary="Checkpoint form fields">
+  	<tr>
+      <th><%= f.label(:race, "Race") %></th>
+      <td><%= @checkpoint.race.name_cs %></td>
+    </tr>
+    <tr>
+      <th><%= f.label(:checkid, "Position") %></th>
+      <td><%= f.text_field :checkid, :readonly => true %></td>
+    </tr>
+    <tr>
+      <th><%= f.label(:meters, "Meters") %></th>
+      <td><%= f.text_field(:meters) %></td>
+    </tr>
+    <tr>
+      <th><%= f.label(:latitude, "Latitude") %></th>
+      <td><%= f.text_field(:latitude) %></td>
+    </tr>
+    <tr>
+      <th><%= f.label(:longitude, "Longitude") %></th>
+      <td><%= f.text_field(:longitude) %></td>
+    </tr>
+  </table>
+
+  <div>
+    <%= submit_tag("Update Checkpoint") %>
+  </div>
+
+  <% end %>
+</div>
