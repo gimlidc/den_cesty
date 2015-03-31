@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150326151014) do
+ActiveRecord::Schema.define(:version => 20150331131632) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
@@ -148,6 +148,6 @@ ActiveRecord::Schema.define(:version => 20150326151014) do
 
   add_index "walkers", ["email"], :name => "index_walkers_on_email", :unique => true
   add_index "walkers", ["reset_password_token"], :name => "index_walkers_on_reset_password_token", :unique => true
-  add_index "walkers", ["vokativ"], :name => "index_walkers_on_username", :unique => true
+  add_index "walkers", ["vokativ"], :name => "index_walkers_on_username"
 
 end
