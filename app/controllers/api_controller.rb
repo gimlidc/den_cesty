@@ -32,8 +32,7 @@ class ApiController < ApplicationController
 
   # /api/races(.json)
   def races
-    show_time = Time.now - 1.day  # show only future races races that finished max 24 hours ago
-    races = Race.where("finish_time > ?", show_time).where(:visible => true).order(:start_time)
+    races = Race.where(:visible => true).order('finish_time DESC')
     render :json => races
   end
 
