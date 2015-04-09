@@ -75,6 +75,8 @@ class ApiController < ApplicationController
                          :distance => wa.distance,
                          :speed => wa.avgSpeed,
                          :raceState => wa.raceState,
+                         :latitude => wa.latitude,
+                         :longitude => wa.longitude,
                          :updated_at => wa.updated_at}
       end
 
@@ -85,12 +87,16 @@ class ApiController < ApplicationController
                          :distance => wb.distance,
                          :speed => wb.avgSpeed,
                          :raceState => wb.raceState,
+                         :latitude => wb.latitude,
+                         :longitude => wb.longitude,
                          :updated_at => wb.updated_at}
       end
 
       render :json => {:distance => walkers_score.distance,
              :speed => walkers_score.avgSpeed,
              :raceState => walkers_score.raceState,
+             :latitude => walkers_score.latitude,
+             :longitude => walkers_score.longitude,
              :updated_at => walkers_score.updated_at,
              :numWalkersAhead => numWalkersAhead,
              :numWalkersBehind => numWalkersBehind,
@@ -114,12 +120,16 @@ class ApiController < ApplicationController
                          :distance => wa.distance,
                          :speed => wa.avgSpeed,
                          :raceState => wa.raceState,
+                         :latitude => wa.latitude,
+                         :longitude => wa.longitude,
                          :updated_at => wa.updated_at}
       end
 
       render :json => {:distance => 0,
              :speed => 0,
              :raceState => 0,
+             :latitude => 0,
+             :longitude => 0,
              # does not contain updated_at
              :numWalkersAhead => numWalkersAhead,
              :numWalkersBehind => numWalkersBehind,
