@@ -6,7 +6,7 @@ module ApplicationHelper
 
   def dc_select
     @dc_select=""
-    dcs = Dc.find(:all, :order => :id)
+    dcs = Dc.all().order(:id)
     for i in 1..$dc.id do
       if i == @dc_id
         @dc_select+="<option value=#{i} selected=\"selected\">#{dcs[i-1].name_cs}</option>\n"

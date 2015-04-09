@@ -57,14 +57,14 @@ SimpleNavigation::Configuration.run do |navigation|
     # A big group of buttons available only for logged users
     if walker_signed_in? 
       if Time.now < $registration_deadline && ($dc.id.modulo(10) != 0 || races_finished >= 3 || registered?)
-        top.item :registration, I18n.t('Registration'), :class =>"walker-menu" do |registration|
+        top.item :registration, I18n.t('Registration') do |registration|
           if is_registered
             registration.item :show_registration, I18n.t('Show registration'), registration_path
             registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path
             if ($dc.id.modulo(10) != 0)
               registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path
             end
-            registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?"), :class => "menu"
+            registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?"), html: { class: 'menu' }
           else
             registration.item :new_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path
           end
@@ -73,12 +73,12 @@ SimpleNavigation::Configuration.run do |navigation|
 
       if is_registered && Time.now > $dc.start_time && Time.now < $report_deadline
         if has_report
-          top.item :report, I18n.t('Reports'), :class => 'walker-menu' do |reports|
+          top.item :report, I18n.t('Reports') do |reports|
             reports.item :edit_report, I18n.t('Edit report'), edit_report_path
             reports.item :show_report, I18n.t('Show report'), show_report_path
           end
         else
-          top.item :add_report, I18n.t('Add report'), new_report_path, :class => 'walker-menu'
+          top.item :add_report, I18n.t('Add report'), new_report_path, html: { class: 'walker-menu' }
         end
       end
     end
@@ -125,14 +125,14 @@ SimpleNavigation::Configuration.run do |navigation|
     # primary.auto_highlight = false
 
     if is_admin?
-      top.item :management, I18n.t('Management'), :class => 'admin_menu' do |manages|
+      top.item :management, I18n.t('Management') do |manages|
         manages.item :walkers, I18n.t('Walkers'), admin_walker_list_path
         manages.item :registrations, I18n.t('Registrations'), admin_registered_path
         manages.item :result_setting, I18n.t('Results setting'), admin_results_setting_path
         manages.item :print_list, I18n.t('Presentation list'), admin_print_list_path
         manages.item :dcs, "Přehled DC", dcs_path 
       end
-      top.item :races, "Mobilní aplikace", races_path, :class => 'admin_menu'
+      top.item :races, "Mobilní aplikace", races_path, html: { class: 'admin_menu' }
     end
     
 

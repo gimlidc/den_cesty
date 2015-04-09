@@ -7,26 +7,26 @@ class ReportController < ApplicationController
 	  # 
 		@dc_id = (params[:id].nil? || params[:id] == "") ? nil : params[:id]
 		@author = (params[:walker].nil? || params[:walker] == "") ? nil :  Walker.where(:id => params[:walker]).first
-    dcs = Dc.find(:all, :order => :id)
+    dcs = Dc.all().order(:id)
     @publishers = Walker.joins(:report).order(:surname).uniq
 
     # user does not select nothing
 		if (@dc_id == nil && @author == nil)
-			@reports = Report.joins(:walker).find(:all, :order => 'updated_at DESC')
+			@reports = Report.joins(:walker).all.order('updated_at DESC')
 		else
 		  # user selects Den Cesty
 			if (@author == nil)
 				@dc_id = params[:id]
-				@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id}, :order => 'updated_at DESC')
+				@reports = Report.joins(:walker).where(:dc_id => @dc_id).order('updated_at DESC')
 			# user selects Author
 			else
 			  # Den Cesty is also defined
 				if (@dc_id == nil)
-					@reports = Report.joins(:walker).find(:all, :conditions => {:walker_id => params[:walker]}, :order => 'updated_at DESC')
+					@reports = Report.joins(:walker).where(:walker_id => params[:walker]).order('updated_at DESC')
 				# wtf?
 				else
 					@dc_id = params[:id]
-					@reports = Report.joins(:walker).find(:all, :conditions => {:dc_id => @dc_id, :walker_id => params[:walker]}, :order => 'updated_at DESC')
+					@reports = Report.joins(:walker).where(:dc_id => @dc_id, :walker_id => params[:walker]).order('updated_at DESC')
 				end
 			end
 		end
@@ -79,7 +79,7 @@ class ReportController < ApplicationController
 			return
 		end
 
-		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id)
 	end
 
 	def show
@@ -87,7 +87,7 @@ class ReportController < ApplicationController
 			flash[:notice] = "No report found!"
 		end
 
-		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id}).first
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 	end
 
 	def save
@@ -96,7 +96,7 @@ class ReportController < ApplicationController
 			return
 		end
 
-		@report = Report.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id}).first
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 
 		if @report.nil?
 			@report = Report.new

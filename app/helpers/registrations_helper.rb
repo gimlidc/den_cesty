@@ -57,7 +57,11 @@ module RegistrationsHelper
 	end
 
 	def is_registered
-		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+    @reg = nil
+    begin
+		  @reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+    rescue ActiveRecord::RecordNotFound => e
+    end
 		if @reg.nil? || @reg.empty? || @reg[0].canceled == true
 			return false
 		else

@@ -18,7 +18,7 @@ class PagesController < ApplicationController
 		  @results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all		
 		  render "actuals.html.erb"
 		else # otherwise print proposition of the current race
-		  @registered_walkers = Registration.joins(:walker).where(:dc_id => $dc.id, :canceled => false).order(:surname, :name)
+		  @registered_walkers = Registration.joins(:walker).where(:dc_id => $dc.id, :canceled => false).order('walkers.surname', 'walkers.name')
 		  render "dc".concat($dc.id.to_s).concat(".html.erb")
 		end
   end
@@ -35,7 +35,7 @@ class PagesController < ApplicationController
     @year_maxima = Result.group(:dc_id).order(:dc_id).maximum(:distance)
     @dc_max = []    
     Dc.all.each do |dc|
-      @dc_max[dc.id] = Result.where(:dc_id => dc.id, :distance => @year_maxima[dc.id]).joins(:walker).order(:surname).all      
+      @dc_max[dc.id] = Result.where(:dc_id => dc.id, :distance => @year_maxima[dc.id]).joins(:walker).order('walkers.surname').all      
     end
     
     @records = @dc_max.flatten(1)

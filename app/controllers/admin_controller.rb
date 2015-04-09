@@ -6,8 +6,8 @@ class AdminController < ApplicationController
 	end
 
 	def save_report
-			@report = Report.find(:first, :conditions => { :walker_id => params[:walker][:id], :dc_id => params[:dc][:id]})
-			@walker = Walker.find(:first, :conditions => { :id => params[:walker][:id]})
+			@report = Report.where(:walker_id => params[:walker][:id], :dc_id => params[:dc][:id]).first
+			@walker = Walker.find(params[:walker][:id])
 
 			if @report.nil?	&& !@walker.nil?
 				@dc_id = Integer("#{params[:dc][:id]}")
@@ -77,8 +77,8 @@ class AdminController < ApplicationController
   end
 	
 	def registered
-	  @registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
-    @reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+	  @registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order('walkers.surname')
+    @reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
     @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
     @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count
     # table of shirts according to: [typ={cotton, pes}, sex={F,M}, velikost={S-XXL}]
@@ -227,12 +227,12 @@ class AdminController < ApplicationController
 	end
 
 	def merge_list
-			@walkers = Walker.find(:all, :order => "surname, name", :conditions => {:virtual => false})
-			@walkers_virtual = Walker.find(:all, :order => "surname, name", :conditions => {:virtual => true})		
+			@walkers = Walker.where(:virtual => false).order("surname, name")
+			@walkers_virtual = Walker.where(:virtual => true).order("surname, name")
 	end
 
 	def print_list
-		@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
+		@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order('walkers.surname')
 	end
 
 	def results_update
@@ -271,8 +271,8 @@ class AdminController < ApplicationController
 	end
 
 	def walker_create
-			@walkers = Walker.find(:all, :conditions => {:name => params[:walker][:name], :surname => params[:walker][:surname]})
-			if @walkers.empty?
+			@walkers = Walker.where(:name => params[:walker][:name], :surname => params[:walker][:surname])
+			if @walkers.nil? || @walkers.empty?
 				walker = Walker.new(params[:walker])
         if params[:walker][:email].empty?
 				  walker.email = "#{walker.id}@#{walker.name}.#{walker.surname}"
@@ -292,12 +292,12 @@ class AdminController < ApplicationController
 	end
 
 	def walker_list		
-			@walkers = Walker.find(:all, :order => "surname, name")
+      @walkers = Walker.all.order("surname, name")
 			@new_walker = Walker.new		
 	end
 
 	def walker_update
-			walker = Walker.find(params[:walker][:id])
+    walker = Walker.find(params[:walker][:id])
 
 			if walker.nil?
 				@notice = "Walker not found."

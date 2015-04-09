@@ -2,7 +2,7 @@ class Walker < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-		:recoverable, :rememberable, :trackable, :validatable, :token_authenticatable
+		:recoverable, :rememberable, :trackable, :validatable
 
 	has_many :registration
 	has_many :result
@@ -16,7 +16,7 @@ class Walker < ActiveRecord::Base
   validates :vokativ, :surname, :year, :name, :email, :phone, :presence => true, :allow_blank => false
   validates :email, :uniqueness => true
   validates :year, :format => {
-    :with => /^[12][0-9]{3}$/
+    :with => /\A[12][0-9]{3}\z/
   }
 
   def nameSurname

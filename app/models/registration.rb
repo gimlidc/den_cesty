@@ -6,12 +6,14 @@ class Registration < ActiveRecord::Base
 	belongs_to :walker
 	belongs_to :dc
 
+  accepts_nested_attributes_for :walker, :dc
+
 	validates_inclusion_of :shirt_size, :in => $shirt_sizes
 	validates_inclusion_of :shirt_polyester, :in => $shirt_sizes
-	validate :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :shirt_polyester, :scarf, :presence => true
-	validate :phone, :presence => true, :allow_blank => false
+	validates :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :goal, :shirt_polyester, :scarf, :presence => true
+	validates :phone, :presence => true, :allow_blank => false
 	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :shirt_polyester, :scarf, :goal, :phone, :canceled, :confirmed, :created_at
-	validate :phone, :presence => true, :allow_blank => false
+	validates :phone, :presence => true, :allow_blank => false
 	
 	def has_textile?
 	  if self.scarf || self.shirt_size != "NO" || self.shirt_polyester != "NO"
