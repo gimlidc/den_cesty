@@ -3,6 +3,15 @@ class PagesController < ApplicationController
   skip_before_filter :check_admin?
   skip_before_filter :check_logged_in?
 
+  def running_results
+    @race = Race.find(params[:id])
+    @scoreboard = @race.scoreboard.order("distance DESC")
+  end
+
+  def tracker_info
+    
+  end
+
   def actual
     # print results if the newest race was already started
     if (Time.now > $dc.start_time)

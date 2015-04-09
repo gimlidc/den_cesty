@@ -32,7 +32,7 @@ class RegistrationsController < ApplicationController
     if !@reg.nil?
       @reg.confirmed = true
       if @reg.save
-        flash.notice = "Registration of " << @reg.walker.username.to_s << " was confirmed."
+        flash.notice = "Registration of " << @reg.walker.email.to_s << " was confirmed."
       else
         flash.notice = "Confirmation failed."
       end
@@ -151,7 +151,7 @@ class RegistrationsController < ApplicationController
     if !@reg.nil?
       @reg.canceled = true
       if @reg.save
-        flash.notice = "Registration of " << @walker.username.to_s << " was cancelled."
+        flash.notice = "Registration of " << @walker.email.to_s << " was cancelled."
       else
         flash.notice = "Delete failed."
       end
@@ -197,6 +197,7 @@ class RegistrationsController < ApplicationController
 	    begin
 	      @changedReg.save!
 	      flash.notice = t("registration transferred") << " " << @walker.name << " " << @walker.surname << " (" << @walker.email << ")"
+	      WalkerMailer.notify_registration_transfer(current_walker, @walker)
 	      redirect_to :controller => 'pages', :action => 'actual'
 	      return
 	    rescue => e

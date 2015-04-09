@@ -25,6 +25,8 @@ DenCesty::Application.routes.draw do
 	match 'report/edit' => "report#edit", :as => :edit_report
 	match 'report/show' => "report#show", :as => :show_report
 	match 'report/list' => "report#list", :as => :report_list
+	match 'tracker_info' => "pages#tracker_info", :as => :tracker_info
+	match 'running_results(/:id)' => "pages#running_results", :as => :running_results
 	match 'contacts' => 'pages#contacts', :as => :pages_contacts
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
@@ -39,6 +41,10 @@ DenCesty::Application.routes.draw do
 	match 'admin/add_report', :as => :admin_add_report
 	match 'admin/register/(/:id)' => 'admin#register', :as => :admin_register
 	match 'admin/registered', :as => :admin_registered
+	match 'admin/cleanup_unpaid_textile', :as => :admin_cleanup_unpaid_textile
+	match 'admin/cleanup_unpaid_maps', :as => :admin_cleanup_unpaid_maps
+	match 'admin/payment_notification', :as => :admin_payment_notification
+	match 'admin/gimli_test'
 	match 'admin/print_list', :as => :admin_print_list
 	match 'admin/walker_list', :as => :admin_walker_list
 	match 'admin/results_update', :as => :admin_results_update

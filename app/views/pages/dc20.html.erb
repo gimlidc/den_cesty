@@ -55,7 +55,7 @@
     <td> 
     	<% if !@registered_walkers.nil? && !@registered_walkers.empty? %>
             <% @registered_walkers.each do |reg| %>
-            	<%= reg.walker.username %>, 
+            	<%= reg.walker.name %> <%= reg.walker.surname %>, 
           	<% end %> 
         <% end %>     
         ...   

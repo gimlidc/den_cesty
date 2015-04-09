@@ -1,4 +1,4 @@
-<% if check_admin? %>
+<% if is_admin? %>
 <% if !@registration.nil? %>
 
 <p>
@@ -49,6 +49,15 @@
 			</table>
 		</li>
 	</ul>
+</p>
+<p>
+	<%= link_to 'Zaslat upozornění o platbě', admin_payment_notification_path, :confirm => "Opravdu obeslat všechny walkery, kteří nemají zaplaceno? Jedná se o spam!" %>
+</p>
+<p>
+	<%= link_to 'Smazat nezaplacený textil', admin_cleanup_unpaid_textile_path, :confirm => "Opravdu smazat všechen nezaplacený textil? Akce nepůjde vrátit!" %>
+</p>
+<p>
+	<%= link_to 'Smazat nezaplacené mapy', admin_cleanup_unpaid_maps_path, :confirm => "Opravdu smazat nezaplacené mapy? Akce nepůjde vrátit!" %>
 </p>
 
 Showing all registrations for Den cesty <%= $dc.id %>

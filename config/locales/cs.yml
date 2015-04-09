@@ -2,7 +2,7 @@ cs:
   time:
     formats:
       date: "%d/%m"
-  username: "přezdívka"
+  vokativ: "jak ti máme říkat (5.pád prosím)"
   password: "heslo"
   password_confirmation: "heslo pro kontrolu"
   year_of_birth: "rok narození"
@@ -119,4 +119,6 @@ cs:
   reg transfer error: "Převod registrace selhal: "
   Transfer registration: "Převést"
   History: "Historie"
- 
+  registration updated: "Změna v registraci"
+  registration payment notification: "Výzva k úhradě startovného"
+  registration changed owner: "Zpráva o převedení registrace"

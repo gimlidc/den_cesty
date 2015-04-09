@@ -2,7 +2,7 @@ en:
   time:
     formats:
       date: "%m/%d"
-  username: "nick"
+  vokativ: "How we will call you?"
   password: "password"
   password_confirmation: "password confirmation"
   year_of_birth: "year of birth"
@@ -109,3 +109,6 @@ en:
   reg transfer error: "Registration switch failed: "
   Transfer registration: "Transfer"
   History: "History"
+  registration updated: "Registration updated"
+  registration payment notification: "Registration payment notification"
+  registration changed owner: "Registration changed owner"

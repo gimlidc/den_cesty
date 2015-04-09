@@ -148,6 +148,11 @@ table#summary {
 	border-top:1px solid #000;
 }
 
+.potisk_left {
+	height: 220px;
+	float: right
+}
+
 .report-input {
 	width: 100%
 }

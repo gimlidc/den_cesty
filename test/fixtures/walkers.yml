@@ -4,7 +4,7 @@ elis:
   name: Eliška
   surname: Pomořanská
   year: 1320
-  username: elis
+  vokativ: Eliško
   sex: female
 
 jenda:
@@ -12,14 +12,14 @@ jenda:
   name: Jan
   surname: Žižka z Trocnova
   year: 1356
-  username: jednoočko
+  vokativ: Jene
   sex: male
 
 kase:
   name: Rudolf
   surname: Habsburský
   year: 1280
-  username: kaše
+  vokativ: Rudolfe
   sex: male
 
 henry:
@@ -27,7 +27,7 @@ henry:
   name: Oscar
   surname: Wild
   year: 1854
-  username: lord henry
+  vokativ: Oskare
   encrypted_password: <%= BCrypt::Password.create('heslíčko') %>
   
 gimli:
@@ -35,5 +35,5 @@ gimli:
   name: Gimli
   surname: Syn Glóinův
   year: 1024
-  username: gimli
+  vokativ: gimli
   encrypted_password: <%= BCrypt::Password.create('heslo') %>
