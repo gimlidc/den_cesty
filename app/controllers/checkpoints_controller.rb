@@ -86,7 +86,15 @@ class CheckpointsController < ApplicationController
 
     counter = process_gpx_document(doc, filter)
 
-    flash[:notice] = "#{counter} checkpoints created successfully."
+    if counter.zero?
+      flash[:notice] = "No checkpoints added. Missing trkpts in GPX file?"
+    else
+      flash[:notice] = "#{counter} checkpoints created successfully."
+    end
+    redirect_to(race_checkpoints_url)
+    
+  rescue Nokogiri::XML::SyntaxError => e
+    flash[:notice] = "No checkpoints added. Invalid GPX file with syntax error: #{e}"
     redirect_to(race_checkpoints_url)
   end
 
@@ -137,7 +145,10 @@ class CheckpointsController < ApplicationController
         inserts.push "(#{counter}, #{lastLat}, #{lastLon}, #{sum.to_i}, #{params[:race_id].to_i})"
       end
 
-      mass_insert(inserts)
+      # Insert to db only if any coordinates was found
+      if inserts.any?
+        mass_insert(inserts)
+      end
 
       return counter
     end
