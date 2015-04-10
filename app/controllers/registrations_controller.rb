@@ -179,6 +179,11 @@ class RegistrationsController < ApplicationController
 	    redirect_to :action => 'change_owner'
 	    return
 	  end
+	  if not @changedReg.confirmed
+	    flash.notice = "Only payed registration can be transferred."
+	    redirect_to :action => 'show'
+	    return
+	  end
 	  
 	  @walker = Walker.find(:first, :conditions => {:email => "#{params[:walker][:email]}"})
 	  
@@ -210,5 +215,4 @@ class RegistrationsController < ApplicationController
       redirect_to :action => 'change_owner'
 	  end	  
 	end
-	
 end
