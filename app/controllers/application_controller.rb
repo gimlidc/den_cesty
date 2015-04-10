@@ -11,13 +11,13 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
 
-  helper_method :check_logged_in?, :check_admin?, :is_admin?
+  helper_method :check_logged_in?, :check_admin?, :is_admin?, :has_valid_registration?, :registration_for_current_exist?, :registration_payed?
 
   def check_logged_in?
     if !walker_signed_in?
       flash.notice = "Please sing in before accessing this page."
       redirect_to new_walker_session_path
-    return false
+      return false
     end
     return true
   end
@@ -41,6 +41,35 @@ class ApplicationController < ActionController::Base
     if !is_admin?
       flash.notice = "Sorry you are not ADMINISTRATOR"
       redirect_to :controller => "pages", :action => "unauthorized"
+    end
+  end
+  
+  def has_valid_registration?
+    if not walker_signed_in?
+      return false
+    end
+    
+    @reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+    if @reg.nil? || @reg.empty? || @reg[0].canceled == true
+      return false
+    else
+      return true
+    end
+  end
+  
+  def registration_for_current_exist?
+    if walker_signed_in?
+      return Registration.where(:dc_id => $dc.id, :walker_id => current_walker[:id]).size == 1
+    else
+      return false
+    end
+  end
+
+  def registration_payed?
+    if walker_signed_in?
+      return Registration.where(:dc_id => $dc.id, :walker_id => current_walker[:id], :confirmed => true).size == 1
+    else
+      return false
     end
   end
 
