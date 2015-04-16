@@ -16,7 +16,7 @@ class MapController < ApplicationController
   def show
     @race = Race.find_by_id(params[:id])
 
-    if !@race.nil? && @race.visible && @race.start_time < Time.now then
+    if !@race.nil? && @race.visible then # && @race.start_time < Time.now then
       @checkpoints = @race.checkpoints.select([:latitude, :longitude])
       @scoreboard = @race.scoreboard.joins(:walker).select([:name, :surname, :distance, :latitude, :longitude])
     else
