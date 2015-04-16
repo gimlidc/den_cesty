@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150331131632) do
+ActiveRecord::Schema.define(:version => 20150414090335) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20150331131632) do
     t.integer  "race_id",      :default => 0
   end
 
-  add_index "events", ["race_id", "walker_id", "eventId"], :name => "index_events_on_race_id_and_walker_id_and_eventId"
+  add_index "events", ["race_id", "walker_id", "eventId", "timestamp"], :name => "index_events_on_race_id_and_walker_id_and_eventId_and_timestamp"
 
   create_table "posts", :force => true do |t|
     t.datetime "created_at"
