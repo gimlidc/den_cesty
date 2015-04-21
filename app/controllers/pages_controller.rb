@@ -15,8 +15,7 @@ class PagesController < ApplicationController
   def actual
     # print results if the newest race was already started
     if (Time.now > $dc.start_time)
-		  @results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all		
-		  render "actuals.html.erb"
+		  @results = Result.where(:dc_id => $dc.id).order('official DESC, distance DESC').all		
 		else # otherwise print proposition of the current race
 		  @registered_walkers = Registration.joins(:walker).where(:dc_id => $dc.id, :canceled => false).order(:surname, :name)
 		  render "dc".concat($dc.id.to_s).concat(".html.erb")
