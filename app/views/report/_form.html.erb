@@ -17,11 +17,11 @@ a teprve nakonec sem report vložte. Předejdete možnému roztrpčení ze ztrac
   ostatní nepoužívejte, dokumenty budou naformátovány jednotně.
   <li>Pro odstavec vložte prázdný řádek</li>
 </li>
-<li>Limit na dokument je 10kB. Budete-li chtít přispět něčím delším, dejte mi vědět, nějak to uděláme.</li>
+<li>Limit na dokument je 25kB. Budete-li chtít přispět něčím delším, dejte mi vědět, nějak to uděláme.</li>
 </ul>
 
 <%= form_for(@report, :url => { :action => 'save' }) do |f|%>
-  <%= f.text_area :report_html, :class => 'report-input', :maxlength => 10000 %>
+  <%= f.text_area :report_html, :class => 'report-input', :maxlength => 25000 %>
   <br />
   <%= f.submit I18n.t("Save") %>
 <% end %>
