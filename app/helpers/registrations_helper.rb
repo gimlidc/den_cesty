@@ -77,14 +77,6 @@ module RegistrationsHelper
 	  end
 	end
 	
-	def registered?
-	  if walker_signed_in?
-	    return Registration.where(:dc_id => $dc.id, :walker_id => current_walker[:id]).size == 1
-	  else
-	    return false
-	  end
-	end
-	
 	def isLimit
     Registration.find(:all, :conditions => {:dc_id => $dc.id, :canceled => false}).count >= $race_limit
   end

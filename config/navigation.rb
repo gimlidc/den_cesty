@@ -56,22 +56,20 @@ SimpleNavigation::Configuration.run do |navigation|
     
     # A big group of buttons available only for logged users
     if walker_signed_in? 
-      if Time.now < $registration_deadline && ($dc.id.modulo(10) != 0 || races_finished >= 3 || registered?)
-        top.item :registration, I18n.t('Registration') do |registration|
-          if is_registered
+      if ($dc.id.modulo(10) != 0 || races_finished >= 3 || registration_for_current_exist?) && (has_valid_registration? || Time.now < $registration_deadline)
+        top.item :registration, I18n.t('Registration'), :class => "walker-menu" do |registration|
+          if has_valid_registration?
             registration.item :show_registration, I18n.t('Show registration'), registration_path
-            registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path
-            if ($dc.id.modulo(10) != 0)
-              registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path
-            end
-            registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?"), html: { class: 'menu' }
+            registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path, if: -> { Time.now < $registration_deadline }            
+            registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path, if: -> { registration_payed? && $dc.id.modulo(10) != 0 }            
+            registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?"), :class => "menu"
           else
-            registration.item :new_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path
+            registration.item :new_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path, if: -> { Time.now < $registration_deadline }
           end
         end
       end
 
-      if is_registered && Time.now > $dc.start_time && Time.now < $report_deadline
+      if has_valid_registration? && Time.now > $dc.start_time && Time.now < $report_deadline
         if has_report
           top.item :report, I18n.t('Reports') do |reports|
             reports.item :edit_report, I18n.t('Edit report'), edit_report_path
