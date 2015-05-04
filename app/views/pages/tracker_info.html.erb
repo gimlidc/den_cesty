@@ -1,6 +1,17 @@
-<h2>Jarním Šluknovskem - trackování na telefonu</h2>
+<h2>Trackování na telefonu během (nejen) ultratrailových závodů</h2>
 
-Závod Jarním Šluknovskem (110km) byl vybrán jako druhý pokusný závod pro naší mobilní aplikaci pro trackování závodníků během závodu. <b>Pozor: použití trackovací aplikace nenahrazuje klasické kontroly v závodě</b>, stejně tak nezaručujeme 100% funkčnost (aplikace je teprve ve vývoji).
+Během závodů CSUT, CUTT a dalších je možné nechat se trackovat naší aplikací. <b>Pozor: použití trackovací aplikace nenahrazuje klasické kontroly v závodě</b>, stejně tak nezaručujeme 100% funkčnost (aplikace je teprve ve vývoji).
+
+Trackování se účastní (účastnilo):
+<ul>
+  <li>23. Den cesty - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/8' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/8' %> závodu</li>
+  <li><%= link_to 'Jarním Šluknovskem', 'http://jarnim-sluknovskem.webnode.cz/' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/6' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/6' %> závodu</li>
+  <li><%= link_to 'Lazová stovka', 'http://www.lazovka.wbl.sk/2014News.html' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/10' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/10' %> závodu</li>
+  <li><%= link_to 'Jesenická stovka', 'http://www.jesenickastovka.cz/' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/12' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/12' %> závodu</li>
+  <li><%= link_to 'CUTT Jeseníky 2015', 'http://www.cutt.cz/' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/14' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/14' %> závodu</li>
+  <li><%= link_to 'Volkswagen Maraton Praha', 'http://www.runczech.com/…/zav…/volkswagen-maraton-praha/index.shtml' %> - pozor trackování je zcela neoficiální a zcela a pouze pro účely sbírání testovacích dat pro zlepšení naší aplikace. Je pravděpodobné, že na tomto závodě aplikace nebude fungovat moc dobře. Budeme ale rádi za každou testerskou duši. <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/13' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/13' %> závodu</li>
+  <li>... máte-li zájem o trackování právě na vašem závodě, napište nám na info@dencesty.cz</li>
+</ul>
 
 <h4>Proč aplikaci vyzkoušet</h4>
 
@@ -9,8 +20,7 @@ V dnešní době téměř každý běžec nosí na ruce počítač, meří čas,
 <ul>
 	<li>Meření rychlosti a vzdálenosti závodníka na trati</li>
 	<li>Informace o pozici a rychlosti soupeřů (kteří mají nainstalovánu aplikaci také) přímo v telefonu.</li>
-	<li>Kdokoli vás může sledovat - on-line mapa s polohou závodníků.<br />
-  Jak jsme si vedli při pokusném závodě, se můžete podívat na <%= link_to 'mapu', 'https://www.dencesty.cz/map/5?locale=cs' %>, případně na <%= link_to 'výsledkovou listinu', 'https://www.dencesty.cz/running_results/5' %>. Na mapě vidíte štítky s poslední pozicí závodníka.</li>
+	<li>Kdokoli vás může sledovat - on-line mapa s polohou závodníků.<br /> Podívejte se na již proběhlé závody.
 	<li>Aplikace šetří vaši baterii oproti běžným trackerům (řídké logování po 400m nebo 5 minutách), nejvíc vás tedy stojí "sledování displeje".</li> 
 </ul> 
 
@@ -20,10 +30,10 @@ V dnešní době téměř každý běžec nosí na ruce počítač, meří čas,
 Co pro on-line výsledky potřebujete?
 
 <ul>
-	<li>Smartphone - iOS 7 nebo vyšší, Android 4 nebo vyšší</li>
-	<li>Internet v mobilu - na rychlosti nezáleží, stačí vám 2G (v Německu je roaming výhodou)</li>
+	<li>Smartphone - iOS 7 nebo vyšší, Android 4.1 nebo vyšší</li>
+	<li>Internet v mobilu - na rychlosti nezáleží, stačí vám 2G (u některých závodů je roaming výhodou)</li>
 	<li>Záložní zdroj (powerbanku) pro telefon - běžná baterie při trackování vydrží cca 16h</li>
-	<li>Založit si účet na stránkách www.dencesty.cz (Omlouváme se, nesnažíme se propagovat konkurenční závod, pouze aplikaci primárně vyvíjíme pro Den cesty a zatím nejsme tak daleko, abychom měli separátní databázi běžců)</li>
+	<li>Založit si účet na stránkách www.dencesty.cz pokud ho již nemáš. (Omlouváme se, nesnažíme se propagovat konkurenční závod, pouze aplikaci primárně vyvíjíme pro Den cesty a zatím nejsme tak daleko, abychom měli separátní databázi běžců)</li>
 </ul>
 
 <hr/>
@@ -31,23 +41,18 @@ Co pro on-line výsledky potřebujete?
 <h4>Návod na instalaci</h4>
 zde je návod krok za krokem. Pokud v některém bodě budeš mít problém, napiš nám (facebook nebo email).
 <ol>
-	<li>Pro založení účtu pro trackování navštivte stránku: <%= link_to 'registrace', new_registration_url %>. Pokud už jse se někdy Dne cesty účastnili, tento krok můžete vynechat (jděte přímo na bod 3.)</li>
+	<li>Pro založení účtu pro trackování navštivte stránku: <%= link_to 'registrace', new_walker_registration_path %>. Pokud už jse se někdy Dne cesty účastnili, tento krok můžete vynechat (jděte přímo na bod 3.)</li>
 	<li>Zkontroluj svůj email, zda-li ti dorazil potvrzovací email a svou registraci potvrď kliknutím na link, který ti přijde.</li>
 	<li>Dle telefonu:
 		<ul>
-			<li>pro <b>Android</b> nainstaluj si aplikaci <%= link_to 'Den cesty', 'https://play.google.com/store/apps/details?id=cz.machalik.bcthesis.dencesty' %> a zkus se přihlásit.</li>
-			<li>u <b>iPhone</b> je instalace poněkud složitější, neb se nám nepodařilo dostat aplikaci včas na AppStore. Existuje ale cesta:
-				<ol type="a">
-					<li>Pošli na info@dencesty.cz mail - "Chci testovat trackovací aplikaci na svém iPhone".</li>
-					<li>Lukáš přidá tvůj email do seznamu testerů, pošle ti pozvánku a návod, jak aplikaci stáhnout z AppStoru pro testery.</li>
-				</ol>
-			</li>
+			<li>pro <b>Android</b> nainstaluj si aplikaci <%= link_to 'Den cesty z Google Play', 'https://play.google.com/store/apps/details?id=cz.machalik.bcthesis.dencesty' %> a zkus se přihlásit.</li>
+			<li>pro <b>iOS</b> nainstaluj si aplikaci <%= link_to 'Den cesty z App Store', 'https://itunes.apple.com/us/app/den-cesty/id929762511?mt=8' %> a zkus se přihlásit.</li>
 		</ul>
 	</li>
 	<li>Spusť aplikaci v telefonu a přihlaš se svým účtem.</li>
-	<li>Po přihlášení bys měl vidět v seznamu závodů závod <b>22. Jarním Šluknovskem (110km)</b>. Kliknutím závod vybereš - pozor kliknout se ti podaří až 10 minut před startem. Pokud chceš vyzkoušet funkcionalitu, vyber si jiný závod, který zde máme jako demo (vše podstatné tam uvidíš).</li>
+	<li>Po přihlášení bys měl vidět v seznamu závodů svůj závod. Kliknutím závod vybereš a zahájíš tak odesílání pozice na server - pozor kliknout se ti podaří až 10 minut před startem. Pokud chceš vyzkoušet funkcionalitu, vyber si jiný závod, který zde máme jako demo (vše podstatné tam uvidíš).</li>
 	<li>Po výběru závodu již stačí kliknout na "Start závodu" a telefon začne odesílat údaje o pozici závodníka na server (při nedostatku baterie doporučujeme vypnout logování - tlačítko se změní na "Ukončit závod").</li>
 	<li>Pod tlačítkem "Walker List" se pak schovává seznam závodníků, kteří odstartovali stejný závod v pořadí, dle posledního logu.</li>
 </ol>
 <hr />
-Pokud chcete vývoj aplikace podpořit, pište své postřehy, náměty a problémy s aplikací na <b>info@dencesty.cz</b>. Případné finanční příspěvky přijímáme na účtu č.: <b><%= $account_number %></b> (prosíme uveďte svůj email ve zprávě pro příjemce, rádi vám poděkujeme). V případě, že byste rádi testovali i na vaší ultratrailové akci, pošlete nám email.
+Pokud chcete vývoj aplikace podpořit, pište své postřehy, náměty a problémy s aplikací na <b>info@dencesty.cz</b>. Případné finanční příspěvky přijímáme na účtu č.: <b><%= $account_number %></b> (prosíme uveďte svůj email ve zprávě pro příjemce, rádi vám poděkujeme).
