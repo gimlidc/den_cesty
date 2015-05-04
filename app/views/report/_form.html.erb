@@ -21,7 +21,7 @@ a teprve nakonec sem report vložte. Předejdete možnému roztrpčení ze ztrac
 </ul>
 
 <%= form_for(@report, :url => { :action => 'save' }) do |f|%>
-  <%= f.text_area :report_html, :class => 'report-input', :maxlength => 25000 %>
+  <%= f.text_area :report_html, :class => 'report-input', :maxlength => 25000, :rows => 50 %>
   <br />
   <%= f.submit I18n.t("Save") %>
 <% end %>

@@ -1,7 +1,7 @@
 module ReportHelper
 
 	def has_report
-		@report = Report.all(:conditions => {:dc_id => $dc.id, :walker_id => current_walker[:id] })
+		@report = Report.where(:dc_id => $dc.id, :walker_id => current_walker[:id] )
 		return !@report.nil? && !@report.empty?
 	end
 

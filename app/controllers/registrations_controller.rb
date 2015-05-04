@@ -28,7 +28,7 @@ class RegistrationsController < ApplicationController
   end
 
   def confirm
-    @reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
+    @reg = Registration.find("#{params[:id]}")
     if !@reg.nil?
       @reg.confirmed = true
       if @reg.save
@@ -46,12 +46,12 @@ class RegistrationsController < ApplicationController
 	def show
 		if walker_signed_in?
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
-			@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+			@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 		end
 	end
 
 	def edit
-		@reg = Registration.find(:all, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 		if @reg.nil? || @reg.empty?
 			redirect_to :action => :new
 		end
@@ -123,13 +123,13 @@ class RegistrationsController < ApplicationController
 	end
 
 	def update
-		@reg = Registration.find(:first, :conditions => {:walker_id => params[:registration][:walker_id], :dc_id => params[:registration][:dc_id]})
+		@reg = Registration.where(:walker_id => params[:registration][:walker_id], :dc_id => params[:registration][:dc_id]).first
 		@walker = Walker.find(current_walker[:id])
 		update_db(@reg, @walker)
 	end
 
 	def destroy
-		@reg = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 
 		if !@reg.nil?
 			@reg.canceled = true			
@@ -146,8 +146,8 @@ class RegistrationsController < ApplicationController
 	end
 
 	def unregister
-		@reg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
-    @walker = Walker.find(:first, :conditions => {:id => @reg.walker_id})
+		@reg = Registration.find("#{params[:id]}")
+    @walker = Walker.find(@reg.walker_id)
     if !@reg.nil?
       @reg.canceled = true
       if @reg.save
@@ -164,7 +164,7 @@ class RegistrationsController < ApplicationController
 	end
 	
 	def change_owner
-	  @registration = Registration.find(:first, :conditions => {:walker_id => current_walker[:id], :dc_id => $dc.id})
+	  @registration = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 	end
 	
 	def change_owner_do
@@ -173,7 +173,7 @@ class RegistrationsController < ApplicationController
 	    redirect_to :action => 'show'
 	    return
 	  end 
-	  @changedReg = Registration.find(:first, :conditions => {:id => "#{params[:id]}" })
+	  @changedReg = Registration.where(:id => "#{params[:id]}").first
 	  if @changedReg.walker_id != current_walker[:id]
 	    flash.alert = t "not own registration"
 	    redirect_to :action => 'change_owner'
@@ -185,11 +185,11 @@ class RegistrationsController < ApplicationController
 	    return
 	  end
 	  
-	  @walker = Walker.find(:first, :conditions => {:email => "#{params[:walker][:email]}"})
+	  @walker = Walker.where(:email => "#{params[:walker][:email]}").first
 	  
 	  if !@walker.nil? # walker exist?
 	    # check if walker does not already have one (registration)
-	    walkerReg = Registration.find(:first, :conditions => {:dc_id => $dc.id, :walker_id => @walker.id})
+	    walkerReg = Registration.where(:dc_id => $dc.id, :walker_id => @walker.id).first
 	    if !walkerReg.nil?
 	      flash.alert = t("walker already registered")
 	      redirect_to :action => 'change_owner'

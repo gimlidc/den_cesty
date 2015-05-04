@@ -79,7 +79,7 @@ class ReportController < ApplicationController
 			return
 		end
 
-		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id)
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 	end
 
 	def show
@@ -120,7 +120,7 @@ class ReportController < ApplicationController
 	end
 
 	def has_report?
-		@report = Report.all(:conditions => {:dc_id => $dc.id, :walker_id => current_walker[:id] })
+		@report = Report.where(:dc_id => $dc.id, :walker_id => current_walker[:id])
 		return !@report.nil? && !@report.empty?
 	end
 
