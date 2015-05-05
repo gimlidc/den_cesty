@@ -52,9 +52,11 @@ class WalkersController < Devise::RegistrationsController
       end
       sign_in resource_name, resource, :bypass => true
 			@notice = "Update successful"
+			redirect_to after_update_path_for(resource)
     else
       clean_up_passwords resource
 			@notice = "Update failed"
+			respond_with resource
     end
 		set_flash_message :notice, @notice
   end
@@ -102,7 +104,7 @@ class WalkersController < Devise::RegistrationsController
   # this method in your own RegistrationsController.
   def after_update_path_for(resource)
 #    signed_in_root_path(resource)
-		redirect_to root_path
+		root_path
   end
 
   # Authenticates the current scope and gets the current resource from the session.

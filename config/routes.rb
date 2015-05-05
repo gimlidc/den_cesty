@@ -2,8 +2,10 @@ DenCesty::Application.routes.draw do
 
   resources :dcs
 
-	devise_for :walkers
-	resources :walkers, :only => [:index, :edit]
+	devise_for :walkers, controllers: {
+	  registrations: 'walkers'
+	}
+	#resources :walkers, :only => [:index, :edit]
 
 	resource :registration
 	
