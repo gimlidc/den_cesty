@@ -68,6 +68,9 @@ SimpleNavigation::Configuration.run do |navigation|
           end
         end
       end
+      if races_finished > 0
+        top.item :outgrowths, I18n.t('My results'), outgrowths_path, :class => 'walker-menu'
+      end
 
       if has_valid_registration? && Time.now > $dc.start_time && Time.now < $report_deadline
         if has_report

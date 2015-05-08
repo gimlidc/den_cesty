@@ -70,16 +70,8 @@ class DcsController < ApplicationController
     end
   end
 
-  # DELETE /dcs/1
-  # DELETE /dcs/1.json
-  def destroy
-    @dc = Dc.find(params[:id])
-    @dc.destroy
-
-    respond_to do |format|
-      format.html { redirect_to dcs_url }
-      format.json { head :ok }
-    end
-  end
+ def diplom
+   @dc = Dc.find(params[:id])
+ end
   
 end

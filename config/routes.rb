@@ -1,5 +1,7 @@
 DenCesty::Application.routes.draw do
 
+  get "outgrowths/show"
+
   resources :dcs
 
 	devise_for :walkers
@@ -8,7 +10,7 @@ DenCesty::Application.routes.draw do
 	resource :registration
 	
 	resource :dc
-
+	
   resources :races do
     resources :scoreboard, :only => [:index, :destroy]
     resources :checkpoints, :only => [:index, :new, :create, :edit, :update, :import, :destroy]
@@ -38,6 +40,7 @@ DenCesty::Application.routes.draw do
 	match 'jar12_16' => 'pages#jar12_16', :as => :pages_jar12_16
   match 'pod12_17' => 'pages#pod12_17', :as => :pages_pod12_17
 	match 'forum' => 'pages#forum', :as => :pages_forum
+	match 'outgrowths/show' => 'outgrowths#show', :as => :outgrowths, via: [:get]
 	match 'admin/add_report', :as => :admin_add_report
 	match 'admin/register/(/:id)' => 'admin#register', :as => :admin_register
 	match 'admin/registered', :as => :admin_registered
