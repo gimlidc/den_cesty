@@ -1,11 +1,13 @@
 class OutgrowthsController < ApplicationController
   def show
     @stats = statistics(current_walker)
+    @diploms = Dc.select('id, diplom_path').order('id DESC')
     @max = max 
   end
   
-  def add_compare
-    
+  def compare
+    @stats = statistics("#{params[:id]}")
+    @max = max
   end
 
   private

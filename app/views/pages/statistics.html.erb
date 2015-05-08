@@ -1,0 +1,36 @@
+<div style="float:left">
+<h4>Součet</h4>
+<table>
+<% id = 1 %>
+<% @sums.each do |sum| %>
+<tr>
+	<td><%= id %>.</td>
+	<td>
+		<%= sum.name %> <%= sum.surname %>
+	</td>
+	<td>
+		<%= sum.sum %>
+	</td>
+	<% id = id + 1 %>
+</tr>
+<% end %>
+</table>
+</div>
+<div style="float:left">
+<h4>Průměr</h4>
+<table>
+<% id = 1 %>
+<% @avgs.each do |avg| %>
+<tr>
+	<td><%= id %>.</td>
+	<td>
+		<%= avg.name %> <%= avg.surname %>
+	</td>
+	<td>
+		<%= avg.avg %>
+	</td>
+	<% id = id + 1 %>
+</tr>
+<% end %>
+</table>
+</div>

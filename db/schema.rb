@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150414090335) do
+ActiveRecord::Schema.define(:version => 20150508213648) do
 
   create_table "checkpoints", :force => true do |t|
     t.integer "checkid"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20150414090335) do
     t.integer  "limit"
     t.integer  "polyester_shirt_price"
     t.integer  "scarf_price"
+    t.string   "diplom_path",           :default => ""
   end
 
   create_table "events", :force => true do |t|
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20150414090335) do
     t.string   "sex"
     t.boolean  "virtual",                               :default => false
     t.string   "phone"
+    t.string   "local",                                 :default => ""
   end
 
   add_index "walkers", ["email"], :name => "index_walkers_on_email", :unique => true

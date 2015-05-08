@@ -22,6 +22,7 @@
 		<th>rok</th>
 		<th>nahlášeno</th>
 		<th>oficielně</th>
+		<th>diplom - 6.pád</th>
 	  </tr>
 	  <% odd = true %>
 	  <% id = 0 %>
@@ -41,6 +42,7 @@
 		   <%= hidden_field_tag "results[#{id}][dc_id]", @set_dc %>
 		  <td><%= number_field_tag "results[#{id}][distance]", walker.distance, :size => 4, :step => 0.1 %></td>
 		  <td><%= number_field_tag "results[#{id}][official]", walker.official, :size => 4, :step => 0.1 %></td>
+		  <td><%= text_field_tag "results[#{id}][local]", walker.local %></td>
 		</tr>
 	  <%  end %>
 	  <tr> <!-- last line contains only submit button //-->

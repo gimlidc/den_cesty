@@ -33,6 +33,7 @@ DenCesty::Application.routes.draw do
 	match 'actual' => "pages#actual", :as => :walker_root
 	match 'rules' => 'pages#rules', :as => :pages_rules
 	match 'hall_of_glory' => 'pages#hall_of_glory', :as => :pages_hall_of_glory
+	match 'statistics' => 'pages#statistics', :as => :pages_statistics
 	match 'history' => 'pages#history', :as => :pages_history
 	match 'dc_results' => "pages#dc_results", :as => :dc_results
 	match 'walker_results' => "pages#walker_results", :as => :walker_results
@@ -41,6 +42,7 @@ DenCesty::Application.routes.draw do
   match 'pod12_17' => 'pages#pod12_17', :as => :pages_pod12_17
 	match 'forum' => 'pages#forum', :as => :pages_forum
 	match 'outgrowths/show' => 'outgrowths#show', :as => :outgrowths, via: [:get]
+	match 'outgrowths/compare/(/:id)' => 'outgrowths#compare', :as => :outgrowths_compare, via: [:get]
 	match 'admin/add_report', :as => :admin_add_report
 	match 'admin/register/(/:id)' => 'admin#register', :as => :admin_register
 	match 'admin/registered', :as => :admin_registered

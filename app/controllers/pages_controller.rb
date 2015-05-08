@@ -81,6 +81,11 @@ class PagesController < ApplicationController
     @recordmans = @recordmans.sort_by{|k, v| v[:dr]}.reverse
 	end
 	
+	def statistics
+	  @sums = Result.joins(:walker).group(:walker_id, :name, :surname).select('walkers.name as name, walkers.surname as surname, sum(distance) as sum').order('sum DESC')
+	  @avgs = Result.joins(:walker).group(:walker_id, :name, :surname).select('walkers.name as name, walkers.surname as surname, avg(distance) as avg').order('avg DESC')
+	end
+	
 	def dc_results
 	  # shows results reached in each year
 	  if params[:get].nil?

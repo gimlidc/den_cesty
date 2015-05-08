@@ -17,13 +17,13 @@
 		</tr>
 		<tr>
 			<td>TOP 5</td>
-			<th><%= @stats[:top5] %>km
+			<th><%= number_with_precision(@stats[:top5], precision: 1, locale: :en) %>km
 			</th>
 		</tr>
 		<tr>
 			<td>TOP 10</td>
 			<th>
-				<%= @stats[:top10] %>km
+				<%= number_with_precision(@stats[:top10], precision: 1, locale: :en) %>km
 			</th>
 		</tr>
 	</table>
@@ -52,14 +52,12 @@
 				<% end %>
 			</th>
 		</tr>
+		<% if @diploms.find(result.dc_id).diplom_path.to_s != '' %>
 		<tr>
 			<td>Diplom:</td>
-			<td><%= link_to 'Download', '/dc' + result.dc_id.to_s + '/' + result.walker_id.to_s + '.pdf' %>
+			<th><%= link_to 'Download', "/" + @diploms.find(result.dc_id).diplom_path.to_s + result.walker_id.to_s + ".pdf" %></th>
 		</tr>
-		<tr>
-			<td>Track:</td>
-			<td><%= link_to 'Download', '/dc' + result.dc_id.to_s + '/' + result.walker_id.to_s + '.gpx' %>
-		</tr>
+		<% end %>
 	</table>
 	
 </p>
