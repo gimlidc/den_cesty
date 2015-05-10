@@ -87,6 +87,7 @@ class PagesController < ApplicationController
 	  @dc_best = Result.maximum(:official)
 	  @dc_avg = Result.average(:official)
 	  @dc_sum = Result.sum(:official)
+	  @distanceOrder = Result.order('official DESC').limit(100)
 	end
 	
 	def dc_results
