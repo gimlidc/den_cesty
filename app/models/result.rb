@@ -5,12 +5,4 @@ class Result < ActiveRecord::Base
 	
 	attr_accessible :walker_id, :dc_id, :distance, :duration, :official, :result
 
-  def self.result
-    if self.dc_id < 20
-      return self.distance
-    else
-      return self.official
-    end
-  end
-
 end
