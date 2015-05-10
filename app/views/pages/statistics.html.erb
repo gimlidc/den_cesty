@@ -34,3 +34,11 @@
 <% end %>
 </table>
 </div>
+<div style="float:left">
+	<h4>Den cesty v celku</h4>
+<table>
+	<tr><td>Průměrný výkon: </td><td><%= number_with_precision(@dc_avg, precision: 1, locale: :en)  %>km<td></tr>
+	<tr><td>Celkem našlapáno: </td><td><%= number_with_precision(@dc_sum, precision: 1, locale: :en) %>km<td></tr>
+	<tr><td>Nejlepší výkon: </td><td><%= number_with_precision(@dc_best, precision: 1, locale: :en) %>km<td></tr>
+</table>
+</div>

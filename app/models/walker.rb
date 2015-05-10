@@ -10,7 +10,7 @@ class Walker < ActiveRecord::Base
 	has_many :post
 
   # Setup accessible (or protected) attributes for your model	
-  attr_accessible :email, :name, :surname, :year, :vokativ, :password, :password_confirmation, :remember_me, :sex, :virtual, :phone, :local
+  attr_accessible :email, :name, :surname, :year, :vokativ, :password, :password_confirmation, :remember_me, :sex, :virtual, :phone, :lokal
 
   # Extra validation
   validates :vokativ, :surname, :year, :name, :email, :phone, :presence => true, :allow_blank => false

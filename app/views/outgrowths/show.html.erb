@@ -19,12 +19,14 @@
 			<td>TOP 5</td>
 			<th><%= number_with_precision(@stats[:top5], precision: 1, locale: :en) %>km
 			</th>
+			<td>Průměr 2-6. nejlepšího výkonu, pro zařazení do statistik je nutné účastnit se alespoň 7x.</td>
 		</tr>
 		<tr>
 			<td>TOP 10</td>
 			<th>
 				<%= number_with_precision(@stats[:top10], precision: 1, locale: :en) %>km
 			</th>
+			<td>Průměr 2-11. nejlepšího výkonu, pro zařazení do statistik je nutné účastnit se alespoň 12x.</td>
 		</tr>
 	</table>
 </p>

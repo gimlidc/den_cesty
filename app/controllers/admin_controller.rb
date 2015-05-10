@@ -5,6 +5,17 @@ class AdminController < ApplicationController
       @dcs = Dc.order("id")
 	end
 
+  def make_distance_official
+      results = Result.where('dc_id < ?', 19)
+      results.each do |result|
+        result.official = result.distance
+        if !result.save
+          flash.alert("Update of official failed. Please try it again.")
+        end
+      end
+      redirect_to root_path
+  end
+
 	def save_report
 			@report = Report.find(:first, :conditions => { :walker_id => params[:walker][:id], :dc_id => params[:dc][:id]})
 			@walker = Walker.find(:first, :conditions => { :id => params[:walker][:id]})
@@ -234,7 +245,7 @@ class AdminController < ApplicationController
       end
   
       walker = Walker.find(value[:walker_id])
-      walker.update_attributes(:local => value[:local])
+      walker.update_attributes(:lokal => value[:lokal])
   
     end
     
@@ -248,7 +259,7 @@ class AdminController < ApplicationController
 				@set_dc = Integer("#{params[:id]}")
 			end
 			
-			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, local, wal_reg.dc_id AS dc_id, distance, official FROM (SELECT walkers.id AS id, name, surname, year, local, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
+			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, lokal, wal_reg.dc_id AS dc_id, distance, official FROM (SELECT walkers.id AS id, name, surname, year, lokal, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
 	end
 
 	def results_list

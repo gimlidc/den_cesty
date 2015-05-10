@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20150508213648) do
     t.string   "sex"
     t.boolean  "virtual",                               :default => false
     t.string   "phone"
-    t.string   "local",                                 :default => ""
+    t.string   "lokal",                                 :default => ""
   end
 
   add_index "walkers", ["email"], :name => "index_walkers_on_email", :unique => true

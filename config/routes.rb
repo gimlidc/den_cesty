@@ -49,7 +49,7 @@ DenCesty::Application.routes.draw do
 	match 'admin/cleanup_unpaid_textile', :as => :admin_cleanup_unpaid_textile
 	match 'admin/cleanup_unpaid_maps', :as => :admin_cleanup_unpaid_maps
 	match 'admin/payment_notification', :as => :admin_payment_notification
-	match 'admin/gimli_test'
+	match 'admin/make_distance_official'
 	match 'admin/print_list', :as => :admin_print_list
 	match 'admin/walker_list', :as => :admin_walker_list
 	match 'admin/results_update', :as => :admin_results_update

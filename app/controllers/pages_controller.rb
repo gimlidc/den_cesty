@@ -84,6 +84,9 @@ class PagesController < ApplicationController
 	def statistics
 	  @sums = Result.joins(:walker).group(:walker_id, :name, :surname).select('walkers.name as name, walkers.surname as surname, sum(distance) as sum').order('sum DESC')
 	  @avgs = Result.joins(:walker).group(:walker_id, :name, :surname).select('walkers.name as name, walkers.surname as surname, avg(distance) as avg').order('avg DESC')
+	  @dc_best = Result.maximum(:official)
+	  @dc_avg = Result.average(:official)
+	  @dc_sum = Result.sum(:official)
 	end
 	
 	def dc_results
