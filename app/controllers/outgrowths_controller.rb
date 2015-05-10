@@ -1,4 +1,7 @@
 class OutgrowthsController < ApplicationController
+
+  skip_before_filter :check_admin?
+
   def show
     @stats = statistics(current_walker)
     @diploms = Dc.select('id, diplom_path').order('id DESC')
