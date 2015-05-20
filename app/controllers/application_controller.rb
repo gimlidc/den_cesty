@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     return true
   end
 
-  $admin_email = ["gimli@matfyz.cz", "evajs@matfyz.cz", "lukas@machalik.cz"]
+  $admin_email = ["user@test.com", "test@test.com"]
 
   def is_admin?
     if !walker_signed_in?
@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(23)  
+      $dc = Dc.find(1)  
       $dc_app_start = $dc.start_time - 10.minutes
       $dc_app_end =   $dc.start_time + 12.hours + 10.minutes
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
