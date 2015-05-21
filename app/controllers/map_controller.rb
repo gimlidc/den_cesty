@@ -1,8 +1,15 @@
+# Public map of competitors.
+# 
+# Author::  Lukáš Machalík
+# 
 class MapController < ApplicationController
 
   skip_before_filter :check_admin?
   skip_before_filter :check_logged_in?
 
+  # Redirects for recent race map.
+  #
+  # Available with: GET /map
   def index
     # Redirect to last visible race
     race = Race.where(:visible => true).last
@@ -13,6 +20,9 @@ class MapController < ApplicationController
     end
   end
 
+  # Shows map of competitors for given race id.
+  # 
+  # Available with: GET /map/:id
   def show
     @race = Race.find_by_id(params[:id])
 

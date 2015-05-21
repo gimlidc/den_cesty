@@ -1,3 +1,8 @@
+# Handles all communication with mobile application.
+# It has no view associated.
+# 
+# Author::  Lukáš Machalík
+# 
 class ApiController < ApplicationController
 
   skip_before_filter :check_admin?
@@ -5,8 +10,13 @@ class ApiController < ApplicationController
 
   layout false
 
-  # Process login for mobile app. Return true, walker id, name, surname and vokativ if success.
-  # /api/login(.json)
+  # Process login for mobile app.
+  #
+  # Returns true, walker id, name, surname and vokativ if success.
+  #
+  # Returns false if fails.
+  #
+  # Available with: POST /api/login(.json)
   def login
     email = request.POST[:email]
     password = request.POST[:password]
@@ -30,13 +40,24 @@ class ApiController < ApplicationController
     end
   end
 
-  # /api/races(.json)
+  # Provides list of available races (only visible ones) for mobile app.
+  #
+  # Available with: GET /api/races(.json)
   def races
     races = Race.where(:visible => true).order('finish_time DESC')
     render :json => races
   end
 
-  # /api/race_data/:id(.json)?walker_id=:walker_id
+  # Provides race data for particular race id and walker id.
+  # 
+  # Returns:
+  # - Race entry for given race id
+  # - Scoreboard entry for given walker id and race id
+  # - Checkpoints for given race id
+  #
+  # Might fail with error 403 forbidden if present time is one hour before start or earlier.
+  # 
+  # Available with: GET /api/race_data/:id(.json)?walker_id=:walker_id
   def race_data
     race = Race.find(params[:id])
 
@@ -53,8 +74,9 @@ class ApiController < ApplicationController
     end
   end
 
-  # Returns informations about other walkers for particular race id and walker id.
-  # /api/scoreboard/:id(.json)?walker_id=:walker_id
+  # Returns informations about race competitors for particular race id and walker id.
+  # 
+  # Available with: GET /api/scoreboard/:id(.json)?walker_id=:walker_id
   def scoreboard
     race_id = params[:id]
     walker_id = params[:walker_id]
@@ -140,9 +162,17 @@ class ApiController < ApplicationController
     end
   end
 
-  # Process JSON request for sending events for race id and walker id.
-  # Returns JSON with event ids of processed events.
-  # /api/push_events(.json)
+  # Process POST request with Events in JSON format.
+  # It saves all Events to database.
+  #
+  # It also does post-processing of Events with one of types:
+  # - StartRace - creates entry in Scoreboard
+  # - StopRace - modifies entry in Scoreboard
+  # - LocationUpdate - modifies entry in Scoreboard
+  #
+  # Returns JSON data with Event IDs of processed Events.
+  #
+  # Available with: POST /api/push_events(.json)
   def push_events
     saved = []
     jsonHash = request.POST[:_json];
@@ -163,8 +193,8 @@ class ApiController < ApplicationController
         end
       else # if exists
         saved << jsonEvent["eventId"]
-        puts "Not Saved!" # debug print
-        puts jsonEvent    # debug print 
+        #puts "Not Saved!" # debug print
+        #puts jsonEvent    # debug print 
       end
     end
     render :json => {:savedEventIds => saved}
@@ -187,7 +217,7 @@ class ApiController < ApplicationController
 
     # Process event with type StartRace. Updates scoreboard for particular walker.
     def start_race(event)
-      #Create scoreboard entry if not exists
+      # Create scoreboard entry if not exists
       score = Scoreboard.new(:race_id => event.race_id,
                                  :walker_id => event.walker_id,
                                  :raceState => 1,

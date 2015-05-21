@@ -1,15 +1,22 @@
+# Controller for Events debug print.
+#
+# Accessible only for logged users.
+# 
+# Author::  Lukáš Machalík
+# 
 class EventsController < ApplicationController
 
   skip_before_filter :check_admin?
 
   layout false
 
-  # Web methods:
-
-  # Shows all events, or all events for race id
-  # May be memory inefficient, for debuging purposes only
-  # /events/dump/:id
-  # /events/dump/:id?walker_id=:walker_id
+  # Shows all events for race id, optionaly for walker id.
+  #
+  # Warning: May be memory expensive. Use it for debuging purposes only.
+  # 
+  # Available with: GET /events/dump/:id
+  # 
+  # Available with: GET /events/dump/:id?walker_id=:walker_id
   def dump
     if params[:id].present?
 

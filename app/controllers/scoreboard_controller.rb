@@ -1,13 +1,22 @@
+# CRUD controller for Scoreboard (race live rankings).
+#
+# Accessible only for administrators.
+# 
+# Author::  Lukáš Machalík
+# 
 class ScoreboardController < ApplicationController
 
-  # Shows race progress and walkers order based on elapsed distance.
-  # /races/:race_id/scoreboard
+  # Shows race progress and walkers ordered by elapsed distance.
+  #
+  # Available with: GET /races/:race_id/scoreboard
   def index
     @race = Race.find(params[:race_id])
     @scoreboard = @race.scoreboard.order("distance DESC")
   end
 
-  # DELETE /races/:race_id/scoreboard/:id
+  # Deletes Scoreboard with given id.
+  #
+  # Available with: DELETE /races/:race_id/scoreboard/:id
   def destroy
     race = Race.find(params[:race_id])
 

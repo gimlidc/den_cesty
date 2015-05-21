@@ -1,12 +1,24 @@
+# CRUD controller for Checkpoints (race route).
+# Also allows to mass import race route from GPX TRK file,
+# and show race route on map.
+#
+# Accessible only for administrators.
+# 
+# Author::  Lukáš Machalík
+# 
 class CheckpointsController < ApplicationController
   
-  # GET /races/:race_id/checkpoints
+  # Shows list of Checkpoints for given race id.
+  # 
+  # Available with: GET /races/:race_id/checkpoints
   def index
     @race = Race.find(params[:race_id])
     @checkpoints = @race.checkpoints
   end
 
-  # GET /races/:race_id/checkpoints/new
+  # Shows form for Checkpoint creation.
+  # 
+  # Available with: GET /races/:race_id/checkpoints/new
   def new
     race = Race.find(params[:race_id])
     @checkpoint = race.checkpoints.build
@@ -14,7 +26,9 @@ class CheckpointsController < ApplicationController
     @checkpoint.checkid = race.checkpoints.count
   end
 
-  # POST /races/:race_id/checkpoints
+  # Creates new Checkpoint based on form data.
+  # 
+  # Available with: POST /races/:race_id/checkpoints
   def create
     race = Race.find(params[:race_id])
 
@@ -31,13 +45,17 @@ class CheckpointsController < ApplicationController
     end
   end
 
-  # GET /races/:race_id/checkpoints/:id/edit
+  # Shows form for editing Checkpoint with given id.
+  # 
+  # Available with: GET /races/:race_id/checkpoints/:id/edit
   def edit
     race = Race.find(params[:race_id])
     @checkpoint = race.checkpoints.find(params[:id])
   end
 
-  # PUT /races/:race_id/checkpoints/:id
+  # Updates Checkpoint data based on form data.
+  # 
+  # Available with: PUT /races/:race_id/checkpoints/:id
   def update
     race = Race.find(params[:race_id])
 
@@ -54,7 +72,9 @@ class CheckpointsController < ApplicationController
     end
   end
 
-  # DELETE /races/:race_id/checkpoints/:id
+  # Deletes Checkpoint with given id.
+  # 
+  # Available with: DELETE /races/:race_id/checkpoints/:id
   def destroy
     race = Race.find(params[:race_id])
 
@@ -65,10 +85,15 @@ class CheckpointsController < ApplicationController
     redirect_to(race_checkpoints_url)
   end
 
-  # GET /races/:race_id/checkpoints/import
+  # Shows form for GPX file import.
+  #
+  # Available with: GET /races/:race_id/checkpoints/import
   def import
   end
 
+  # Uploads and process imported GPX TRK file with race route.
+  #
+  # Available with: POST /races/:race_id/checkpoints/upload
   def upload
     file_name = params[:file]
     file = File.open(file_name.path)
@@ -98,6 +123,9 @@ class CheckpointsController < ApplicationController
     redirect_to(race_checkpoints_url)
   end
 
+  # Shows map with Checkpoints.
+  # 
+  # Available with: GET /races/:race_id/checkpoints/map
   def map
     @race = Race.find(params[:race_id])
     @checkpoints = @race.checkpoints.select([:checkid, :latitude, :longitude, :meters])
@@ -105,7 +133,10 @@ class CheckpointsController < ApplicationController
 
   private
 
+    # Contents of GPX TRK file processing 
     def process_gpx_document(doc, filter)
+
+       # filter only 'trkpt' XML tags
       points = doc.xpath('//xmlns:trkpt')
 
       inserts = []
@@ -117,6 +148,7 @@ class CheckpointsController < ApplicationController
       lastSum = filter
 
       points.each do |point|
+        # get latitude ant longitude from 'trkpt' tag
         lat = point.attribute('lat').value.to_f
         lon = point.attribute('lon').value.to_f
 
@@ -124,6 +156,7 @@ class CheckpointsController < ApplicationController
           lastLat = lat
           lastLon = lon
         else
+          # compute distance and add it to sum
           distance = gps_distance([lastLat, lastLon],[lat,lon])
           sum = sum + distance
           lastSum = lastSum + distance.to_i
@@ -131,21 +164,22 @@ class CheckpointsController < ApplicationController
           lastLon = lon
         end
 
+        # distance filtering
         if lastSum >= filter then
-          # Add new checkpoint
+          # prepare new checkpoint entry
           inserts.push "(#{counter}, #{lat}, #{lon}, #{sum.to_i}, #{params[:race_id].to_i})"
 
-          lastSum = 0;
+          lastSum = 0; # reset distance filter
           counter += 1
         end
       end
 
       if !counter.zero? && !lastSum.zero? then
-        # Add last checkpoint (if was previously filtered)
+        # also add last checkpoint (if it was previously filtered)
         inserts.push "(#{counter}, #{lastLat}, #{lastLon}, #{sum.to_i}, #{params[:race_id].to_i})"
       end
 
-      # Insert to db only if any coordinates was found
+      # insert to db only if any prepared checkpoints are found
       if inserts.any?
         mass_insert(inserts)
       end
@@ -153,7 +187,8 @@ class CheckpointsController < ApplicationController
       return counter
     end
 
-    # https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
+    # Mass insert of checkpoints.
+    # Benchmark on: https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
     def mass_insert(inserts)
         #puts inserts.join(", \n")
         sql = "INSERT INTO \"checkpoints\" (\"checkid\", \"latitude\", \"longitude\", \"meters\", \"race_id\") VALUES #{inserts.join(", ")}"
