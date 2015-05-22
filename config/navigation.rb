@@ -112,6 +112,7 @@ SimpleNavigation::Configuration.run do |navigation|
 		top.item :reports, I18n.t('Reports'), report_list_path
 
 		top.item :contacts, I18n.t('Contacts'), pages_contacts_path
+		top.item :tracking, I18n.t('Tracking'), tracker_info_path
 
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url
