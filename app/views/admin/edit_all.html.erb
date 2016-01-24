@@ -1,0 +1,33 @@
+
+<%= form_tag('set_vokativ') %>
+<table>
+	<tr>
+	<th>ID</th>
+	<th>Jméno</th>
+	<th>Příjmení</th>
+	<th>Email</th>
+	<th>Vokativ</th>
+</tr>
+<% odd = true %>
+<% @walkers.each do |walker| %>
+<% odd = !odd %>
+<tr class="<%= odd ? "odd-table-line" : "even-table-line" %>">
+	<td>
+		<%= walker.id %>
+	</td>
+	<td>
+		<%= walker.name %>
+	</td>
+	<td>
+		<%= walker.surname %>
+	</td>
+	<td>
+		<%= walker.email %>
+	</td>
+	<td>
+		<%= text_field_tag "vokativ[#{walker.id}]", walker.vokativ %>
+	</td>
+</tr>
+<% end %>
+</table>
+<%= submit_tag "save" %>

@@ -44,6 +44,30 @@ class AdminController < ApplicationController
 			redirect_to :controller => 'report', :action => 'list', :id => @dc_id, :author => params[:walker_id]
 	end
 	
+	def edit_all
+	  @walkers = Walker.select("id, name, surname, email, vokativ").order('created_at').all
+	end
+	
+	def set_vokativ
+	  vokativ = params[:vokativ]
+    
+    vokativ.each do |key, value|
+      walker = Walker.find(key)
+      if (!walker.nil? && walker.vokativ != value)
+        logger.debug('Vokativ changed for ' + key + ' new value: ' + value)
+        walker.vokativ = value
+        if walker.update_attribute('vokativ', value)
+          flash[:notice] = "Name update successful"
+        else
+          flash[:alert] = "Name update failed" + walker.errors.full_messages[0]
+        end
+      end      
+  
+    end
+    
+    redirect_to :action => 'edit_all'
+	end
+	
 	# page allowing creation of new registration
 	def register
 	  walker_id = "#{params[:id]}"
