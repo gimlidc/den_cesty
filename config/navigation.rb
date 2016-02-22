@@ -69,6 +69,9 @@ SimpleNavigation::Configuration.run do |navigation|
           end
         end
       end
+      if races_finished > 0
+        top.item :outgrowths, I18n.t('My results'), outgrowths_path, :class => 'walker-menu'
+      end
 
       if has_valid_registration? && Time.now > $dc.start_time && Time.now < $report_deadline
         if has_report
@@ -105,12 +108,13 @@ SimpleNavigation::Configuration.run do |navigation|
 		top.item :results, I18n.t('Results') do |results|
 			results.item :dc_results, I18n.t('by Year'), dc_results_path
 			results.item :hall_of_glory, I18n.t('Hall of Glory'), pages_hall_of_glory_path
-			#results.item :history, I18n.t('History'), pages_history_path
+			results.item :statistics, I18n.t('Statistics'), pages_statistics_path
 		end
 
 		top.item :reports, I18n.t('Reports'), report_list_path
 
 		top.item :contacts, I18n.t('Contacts'), pages_contacts_path
+		top.item :tracking, I18n.t('Tracking'), tracker_info_path
 
 #		top.item :routes, 'Routes', url
 #		top.item :forum, 'Forum', url

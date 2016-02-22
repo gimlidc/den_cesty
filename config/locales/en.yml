@@ -36,6 +36,7 @@ en:
   Actual: "Actual"
   Rules: "Rules"
   Recomendations: "Recommendations"
+  Tracking: "Race tracking"
   Results: "Results"
   Hall of Glory: "Hall of Glory"
   Are you sure to delete your account?: "Are you sure?"
@@ -112,3 +113,4 @@ en:
   registration updated: "Registration updated"
   registration payment notification: "Registration payment notification"
   registration changed owner: "Registration changed owner"
+  Statistics: "Statistics"

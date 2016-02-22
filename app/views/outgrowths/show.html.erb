@@ -1,0 +1,66 @@
+<h1>Výsledky</h1>
+<%= render partial: 'graph', locals: { myResults: @stats[:results], walker: @stats[:walker], compares: nil, max: @max} %>
+<p>
+	<h4>Statistiky:</h4>
+	<table>
+		<tr>
+			<td>Účastí:</td>
+			<th><%= @stats[:results].length %></th>
+		</tr>
+		<tr>
+			<td>Kilometrů:</td>
+			<th><%= @stats[:sum] %>km</th>
+		</tr>
+		<tr>
+			<td>Průměr:</td>
+			<th><%= number_with_precision(@stats[:avg], precision: 1, locale: :en) %>km</th>
+		</tr>
+		<tr>
+			<td>TOP 5</td>
+			<th><%= number_with_precision(@stats[:top5], precision: 1, locale: :en) %>km
+			</th>
+			<td>Průměr 2-6. nejlepšího výkonu, pro zařazení do statistik je nutné účastnit se alespoň 7x.</td>
+		</tr>
+		<tr>
+			<td>TOP 10</td>
+			<th>
+				<%= number_with_precision(@stats[:top10], precision: 1, locale: :en) %>km
+			</th>
+			<td>Průměr 2-11. nejlepšího výkonu, pro zařazení do statistik je nutné účastnit se alespoň 12x.</td>
+		</tr>
+	</table>
+</p>
+<% @stats[:results].each do |result| %>
+<p>
+	<h4>DC <%= result.dc_id %></h4>
+	<table>
+		<tr>
+			<td>Datum:</td>
+			<td><%= result.dc.start_time.localtime.strftime("%d/%m/%Y v %H:%M") %></th>
+		</tr>
+		<tr>
+			<td>Název:</td>
+			<td><%= result.dc.name_cs %></th>
+		</tr>
+		<tr>
+			<td>Trasa:</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Výsledek:</td>
+			<th><%= result.distance %>km
+				<% if result.dc_id > 19 %>
+					/<%= result.official%>km
+				<% end %>
+			</th>
+		</tr>
+		<% if @diploms.find(result.dc_id).diplom_path.to_s != '' %>
+		<tr>
+			<td>Diplom:</td>
+			<th><%= link_to 'Download', "/" + @diploms.find(result.dc_id).diplom_path.to_s + result.walker_id.to_s + ".pdf" %></th>
+		</tr>
+		<% end %>
+	</table>
+	
+</p>
+<% end %>

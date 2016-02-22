@@ -5,6 +5,17 @@ class AdminController < ApplicationController
       @dcs = Dc.order("id")
 	end
 
+  def make_distance_official
+      results = Result.where('dc_id < ?', 19)
+      results.each do |result|
+        result.official = result.distance
+        if !result.save
+          flash.alert("Update of official failed. Please try it again.")
+        end
+      end
+      redirect_to root_path
+  end
+
 	def save_report
 			@report = Report.where(:walker_id => params[:walker][:id], :dc_id => params[:dc][:id]).first
 			@walker = Walker.find(params[:walker][:id])
@@ -151,78 +162,60 @@ class AdminController < ApplicationController
   end
 
 	def merge		
-			@walker_a = Walker.find(params[:walker][:id])
-			@walker_b = Walker.find(params[:walker_virtual][:id])
-			if !@walker_a.nil? && !@walker_b.nil?
-				@results_a = Result.where(:walker_id => @walker_a.id).order(:dc_id)
-				@results_b = Result.where(:walker_id => @walker_b.id).order(:dc_id)
-
-				# check problems in results
-				a=0
-				b=0
-				for i in 1..$dc.id
-					while(!@results_a[a].nil? && @results_a[a].dc_id < i)
-						a += 1
-					end
-					while(!@results_b[b].nil? && @results_b[b].dc_id < i)
-						b += 1
-					end
-
-					if (!@results_b[b].nil? && @results_a[a] == @results_b[b])
-						flash[:alert] = "Conflict in results: #{@results_a[a]}, double record! Merge failed"
-						redirect_to :action => 'merge_list'
-						return
-					end
-				end
-
-				@reports_a = Report.where(:walker_id => @walker_a.id).order(:dc_id)
-				@reports_b = Report.where(:walker_id => @walker_b.id).order(:dc_id)
-
-				# check problems in reports
-				a=0
-				b=0
-				for i in 1..$dc.id
-					while(!@reports_a[a].nil? && @reports_a[a].dc_id < i)
-						a += 1
-					end
-					while(!@reports_b[b].nil? && @reports_b[b].dc_id < i)
-						b += 1
-					end
-
-					if (!@reports_a[a].nil? && @reports_a[a] == @reports_b[b])
-						flash[:alert] = "Conflict in reports: #{@reports_a[a]}, double record! Merge failed"
-						redirect_to :action => 'merge_list'
-						return
-					end
-				end
-
-				#everything seems to be OK
-				if !@results_a.nil? && !@results_a.empty?
-					@results_a.each do |result|
-						result.walker_id = @walker_b.id
-						if !result.save
-							flash[:alert] = "Result #{result.id} rewrite walker_id failed. Please do it manually\n"
-						end
-					end
-				end
-
-				if !@reports_a.nil? && !@reports_a.empty?
-					@reports_a.each do |report|
-						report.walker_id = @walker_b.id
-						if !result.save
-							flash[:alert] = "Result #{result.id} rewrite walker_id failed. Please do it manually\n"
-						end
-					end
-				end
-
-				if !@walker_a.delete
-					flash[:alert] = "Merged walker #{@walker_b.id} cannot be deleted. Do it manually.\n"
-				else
-					flash[:notice] = "Merge successful\n"
-				end
-			else
-				flash[:alert] = "Walkers not found"
+			real = Walker.find(params[:walker][:id])
+			virtual = Walker.find(params[:walker_virtual][:id])
+			if real.nil? || virtual.nil?
+			  flash[:alert] = "Walker not found in database"
+			  redirect_to :action => 'merge_list'
+			  return
 			end
+			
+			# switch results
+			results = Result.where(:walker_id => virtual.id).order(:dc_id)
+			
+			results.each do |result|
+			  conflict = Result.where(:walker_id => real.id, :dc_id => result.dc_id)
+			  if !conflict.nil? && !conflict.empty?
+			    flash[:alert] = "RESULT conflict in DC" + result.dc_id + " double reference must be solved manually: " + real.id + "->" + virtual.id
+			    redirect_to :action => 'merge_list'
+			    return
+			  end
+			  result.walker_id = real.id
+			  result.save
+			end
+
+      # switch reports
+			reports = Report.where(:walker_id => virtual.id).order(:dc_id)
+      reports.each do |report|
+        conflict = Report.where(:walker_id => real.id, :dc_id => report.dc_id)
+        if !conflict.nil? && !conflict.empty?
+          flash[:alert] = "REPORT onflict in  DC" + report.dc_id + " double reference must be solved manually: " + real.id + "->" + virtual.id
+          redirect_to :action => 'merge_list'
+          return
+        end
+        report.walker_id = real.id
+        report.save
+      end
+			
+			# switch registrations
+			registrations = Registration.where(:walker_id => virtual.id).order(:dc_id)
+			registrations.each do |registration|
+        conflict = Registration.where(:walker_id => real.id, :dc_id => registration.dc_id)
+        if !conflict.nil? && !conflict.empty?
+          flash[:alert] = "REPORT onflict in  DC" + registration.dc_id + " double reference must be solved manually: " + real.id + "->" + virtual.id
+          redirect_to :action => 'merge_list'
+          return
+        end
+        registration.walker_id = real.id
+        registration.save
+      end
+			
+			if !virtual.delete
+        flash[:alert] = "Merged walker #{virtual.id} cannot be deleted. Do it manually.\n"
+      else
+        flash[:notice] = "Merge successful\n"
+      end
+			
 			redirect_to :action => 'merge_list'		
 	end
 
@@ -251,6 +244,9 @@ class AdminController < ApplicationController
         result.update_attributes(:distance => value[:distance], :official => value[:official])
       end
   
+      walker = Walker.find(value[:walker_id])
+      walker.update_attributes(:lokal => value[:lokal])
+  
     end
     
     redirect_to :action => 'results_setting', :id => params[:dc_id]
@@ -263,7 +259,7 @@ class AdminController < ApplicationController
 				@set_dc = Integer("#{params[:id]}")
 			end
 			
-			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, wal_reg.dc_id AS dc_id, distance, official FROM (SELECT walkers.id AS id, name, surname, year, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
+			@walkers = Walker.find_by_sql("SELECT wal_reg.id AS id, name, surname, year, lokal, wal_reg.dc_id AS dc_id, distance, official FROM (SELECT walkers.id AS id, name, surname, year, lokal, registrations.dc_id AS dc_id FROM walkers JOIN registrations ON walkers.id = registrations.walker_id WHERE registrations.dc_id = #{@set_dc} AND canceled = 'false') AS wal_reg LEFT OUTER JOIN results ON wal_reg.id = results.walker_id AND wal_reg.dc_id = results.dc_id ORDER BY surname, name")
 	end
 
 	def results_list
@@ -340,5 +336,4 @@ class AdminController < ApplicationController
 	def unauthorized
 
 	end
-
 end

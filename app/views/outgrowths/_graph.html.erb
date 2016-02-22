@@ -1,0 +1,64 @@
+<% if !myResults.nil? %>
+	<script type="text/javascript" charset="utf-8">
+  $(function () {
+    new Highcharts.Chart({
+      chart: { 
+      	renderTo: 'walker-chart',
+      	type: 'column' 
+      },
+      title: {
+      	text: 'Výsledky za historii DC'
+      },
+      yAxis: {
+      	title: {
+      		text: "km"
+      	}
+      },
+      xAxis: {
+      	title: {
+      		text: "DC"
+      	},
+      	categories: <%= (0..$dc.id).step(1).to_s %>
+      },
+      series: [
+      <% if !max.nil? %>
+  		{ name: "max",
+  			data: [
+  			<% max.each do |result| %>
+  				[<%= result[0] %>, <%= result[1] %>],
+  			<% end %>
+  			]
+  		},
+      <% end %>
+      <% if !compares.nil? %>
+      	<% compares.each do |compare| %>
+      		{ name: "<%= @walker.nameSurname %>",
+      			data: [
+      			<% compare.each do |result| %>
+      				[<%= result.dc_id %>, <%= result.distance %>],
+      			<% end %>
+      			] 	
+      		},
+      	<% end %>
+      <% end %>
+      { name: "<%= walker.nameSurname %>",
+      	data: [
+      	<% myResults.each do |result| %>
+      		[<%= result.dc_id %>, <%= result.distance %>],
+      	<% end %>
+		]
+     },
+      { name: "official: <%= walker.nameSurname %>",
+      	data: [
+      	<% myResults.each do |result| %>
+      		<% if !result.official.nil? %>
+      			[<%= result.dc_id %>, <%= result.official %>],
+      		<% end %>
+      	<% end %>
+		]
+      }]
+    });
+  });
+	</script>
+	<div id="walker-chart" style="width: 90%; height: 300px;"></div>
+<% end %>

@@ -1,0 +1,34 @@
+<h1>Výsledky <%= @stats[:walker].nameSurname %></h1>
+<%= render partial: 'graph', locals: { myResults: @stats[:results], walker: @stats[:walker], compares: nil, max: @max} %>
+<p>
+	<h4>Statistiky:</h4>
+	<table>
+		<tr>
+			<td>Účastí:</td>
+			<th><%= @stats[:results].length %></th>
+		</tr>
+		<tr>
+			<td>Kilometrů:</td>
+			<th><%= @stats[:sum] %>km</th>
+		</tr>
+		<tr>
+			<td>Průměr:</td>
+			<th><%= number_with_precision(@stats[:avg], precision: 1, locale: :en) %>km</th>
+		</tr>
+		<% if !@stats[:top5].nil? %>
+		<tr>
+			<td>TOP 5</td>
+			<th><%= number_with_precision(@stats[:top5], precision: 1, locale: :en) %>km
+			</th>
+		</tr>
+		<% if !@stats[:top10].nil? %>
+		<tr>
+			<td>TOP 10</td>
+			<th>
+				<%= number_with_precision(@stats[:top10], precision: 1, locale: :en) %>km
+			</th>
+		</tr>
+		<% end %>
+		<% end %>
+	</table>
+</p>

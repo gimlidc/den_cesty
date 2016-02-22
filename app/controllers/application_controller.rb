@@ -75,10 +75,11 @@ class ApplicationController < ActionController::Base
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(23)  
+      $dc = Dc.find(25)  
       $dc_app_start = $dc.start_time - 10.minutes
       $dc_app_end =   $dc.start_time + 12.hours + 10.minutes
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
+      $map_deadline = ($dc.start_time - 6.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
       $registration_starts = true
       $report_deadline = ($dc.start_time + 1.month).end_of_day          

@@ -67,9 +67,11 @@
 	<% end %>
 	do <b class="red"> <% if @reg.has_textile? %>
 	<%= $shirt_deadline.localtime.strftime("%d.%m %Y") %>
+	<% else if @reg.colour_map %>
+	<%= $map_deadline.localtime.strftime("%d.%m %Y") %>
 	<% else %>
 	<%= $registration_deadline.localtime.strftime("%d.%m %Y") %>
-	<% end %> </b>
-	na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
+	<% end end %> </b>
+	na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b> a specifickým symbolem <b>666</b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
 	<% end %>
 </p>

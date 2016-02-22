@@ -1,0 +1,76 @@
+<h2>Ostatní statistiky</h2>
+<div style="float:left">
+	<h4>Nejlepší výkony</h4>
+<table>
+	<tr>
+		<td>#</td>
+		<td>závodník</td>
+		<td>km<td>
+		<td>DC</td>
+	</tr>
+	<% no = 1 %>
+	<% @distanceOrder.each do |result| %>
+	<tr>
+		<td><%= no %>.</td>
+		<td><%= result.walker.nameSurname %></td>
+		<td><%= number_with_precision(result.official, precision: 1, locale: :en)  %><td>
+		<td><%= result.dc_id %></td>
+	</tr>
+	<% no = no + 1 %>
+	<% end %>
+</table>
+</div>
+<div style="float:left">
+<h4>Součet</h4>
+<table>
+<tr>
+	<td>#</td>
+	<td>závodník</td>
+	<td>km<td>
+</tr>
+<% id = 1 %>
+<% @sums.each do |sum| %>
+<tr>
+	<td><%= id %>.</td>
+	<td>
+		<%= sum.name %> <%= sum.surname %>
+	</td>
+	<td>
+		<%= number_with_precision(sum.sum, precision: 1, locale: :en) %>
+	</td>
+	<% id = id + 1 %>
+</tr>
+<% end %>
+</table>
+</div>
+<div style="float:left">
+<h4>Průměr</h4>
+<table>
+<tr>
+		<td>#</td>
+		<td>závodník</td>
+		<td>km<td>
+</tr>
+<% id = 1 %>
+<% @avgs.each do |avg| %>
+<tr>
+	<td><%= id %>.</td>
+	<td>
+		<%= avg.name %> <%= avg.surname %>
+	</td>
+	<td>
+		<%= number_with_precision(avg.avg, precision: 1, locale: :en) %>
+	</td>
+	<% id = id + 1 %>
+</tr>
+<% end %>
+</table>
+</div>
+<div style="float:left">
+	<h4>Den cesty v celku</h4>
+<table>
+	<tr><td>Průměrný výkon: </td><td><%= number_with_precision(@dc_avg, precision: 1, locale: :en)  %>km<td></tr>
+	<tr><td>Celkem našlapáno: </td><td><%= number_with_precision(@dc_sum, precision: 1, locale: :en) %>km<td></tr>
+	<tr><td>Nejlepší výkon: </td><td><%= number_with_precision(@dc_best, precision: 1, locale: :en) %>km<td></tr>
+</table>
+</div>
