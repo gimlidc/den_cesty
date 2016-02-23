@@ -52,10 +52,10 @@ class RegistrationsController < ApplicationController
 
 	def edit
 		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
-		if @reg.nil? || @reg.empty?
+		if @reg.nil?
 			redirect_to :action => :new
 		end
-		@registration = @reg.first
+		@registration = @reg
 		if @registration.confirmed
 		  flash.notice = "Registration was already payed. If you want to change payed items or registered walker, contact organizers."		  
 		end		
@@ -102,7 +102,7 @@ class RegistrationsController < ApplicationController
 					reg.shirt_size = 'NO'
 				end								
 
-				if reg.save
+        if reg.save
 					if walker.save
 					  flash.notice = 'Registration details successfully stored.'
 					  redirect_to :action => 'show'
@@ -113,7 +113,7 @@ class RegistrationsController < ApplicationController
           end
 				else
 					@registration = reg
-					flash.alert = reg.errors.full_message.to_sentence
+					flash.alert = reg.errors.full_messages.to_sentence
 					redirect_to :action => :edit
 				end
 			else
@@ -123,7 +123,7 @@ class RegistrationsController < ApplicationController
 	end
 
 	def update
-		@reg = Registration.where(:walker_id => params[:registration][:walker_id], :dc_id => params[:registration][:dc_id]).first
+		@reg = Registration.where(walker_id: params[:registration][:walker_id], dc_id: params[:registration][:dc_id]).first
 		@walker = Walker.find(current_walker[:id])
 		update_db(@reg, @walker)
 	end

@@ -71,6 +71,11 @@ Devise.setup do |config|
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "29c73d478d131eb3c61943cff0a4aaf143ce6094728ff3d0ccf5d4949f53a67b94649c841c3fe85fc68af41f6cfcc23ef1f8c635c8eab61be46bda5c688f6dc8"
   config.secret_key = 'b211ba86bcbee65ff082dd9bd5ba3fb82d6e0f98281fa4328c1c168ff6ffb9265cb37661ef1a8ac93af3cbcf1bb65a5894ae65522b0e54de51f7c7524b5a60bb'
+  # Added with Devise 3.1
+  # The secret key used by Devise. Devise uses this key to generate
+  # random tokens. Changing this key will render invalid all existing
+  # confirmation, reset password and unlock tokens in the database.
+  #config.secret_key = PRIVATE_DATA['secret_key']
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without

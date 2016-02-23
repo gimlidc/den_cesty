@@ -1,8 +1,17 @@
 cs:
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            bw_map:
+              blank: "cannot be blank."
+      messages:
+        record_invalid: "Neplatný záznam, chyba v aplikaci kontaktujte administrátora"
   time:
     formats:
       date: "%d/%m"
-  vokativ: "jak ti máme říkat (5.pád prosím)"
+  vokativ: "oslovení - jak ti máme říkat?"
   password: "heslo"
   password_confirmation: "heslo pro kontrolu"
   year_of_birth: "rok narození"

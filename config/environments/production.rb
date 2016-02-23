@@ -12,7 +12,7 @@ DenCesty::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -39,7 +39,7 @@ DenCesty::Application.configure do
   #config.to_prepare { Devise::PasswordsController.force_ssl }
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -59,7 +59,8 @@ DenCesty::Application.configure do
   config.action_mailer.smtp_settings = {
     address:                 "127.0.0.1",
     port:                    25,
-    domain:                  "dencesty.cz"
+    domain:                  "dencesty.cz",
+    openssl_verify_mode:     'none'
   }
 
   config.action_mailer.default_url_options = { :host => 'dencesty.cz' }
