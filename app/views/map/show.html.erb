@@ -57,7 +57,7 @@
 
   var walkers_layer = new SMap.Layer.Marker();
 
-  for (var i=0; i < <%= @scoreboard.count %>; i++) {
+  for (var i=0; i < <%= @scoreboard.size %>; i++) {
     var lon = walkers[0][i].longitude;
     var lat = walkers[0][i].latitude;
     var coords = SMap.Coords.fromWGS84(lon, lat);
