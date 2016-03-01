@@ -17,7 +17,10 @@ class PagesController < ApplicationController
     if (Time.now > $dc.start_time)
 		  @results = Result.where(:dc_id => $dc.id).order('official DESC, distance DESC').all		
 		else # otherwise print proposition of the current race
-		  @registered_walkers = Registration.joins(:walker).where(:dc_id => $dc.id, :canceled => false).order('walkers.surname', 'walkers.name')
+		  @registered_walkers = Registration.includes(:walker)
+																.where(:dc_id => $dc.id, :canceled => false)
+                                .order('walkers.surname', 'walkers.name')
+
 		  render "dc".concat($dc.id.to_s).concat(".html.erb")
 		end
   end
