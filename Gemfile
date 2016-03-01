@@ -38,3 +38,5 @@ end
 
 # XML processing
 gem 'nokogiri'
+
+gem "bcrypt-ruby", :require => "bcrypt"
