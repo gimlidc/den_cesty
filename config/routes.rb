@@ -55,6 +55,8 @@ DenCesty::Application.routes.draw do
 	match 'admin/make_distance_official', via: [:get]
 	match 'admin/print_list', :as => :admin_print_list, via: [:get]	
 	match 'admin/walker_list', :as => :admin_walker_list, via: [:get]	
+	match 'admin/walker_destroy', :as => :admin_walker_destroy, via: [:delete]	
+  match 'admin/walker_update', :as => :admin_walker_update, via: [:patch]
 	match 'admin/results_update', :as => :admin_results_update, via: [:get]
 	match 'admin/results_setting(.:id)' => 'admin#results_setting', :as => :admin_results_setting, via: [:get]
 	match 'profile' => "walkers#profile", :as => :walker_profile, via: [:get]	

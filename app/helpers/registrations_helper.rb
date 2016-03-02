@@ -78,7 +78,7 @@ module RegistrationsHelper
 	end
 	
 	def isLimit
-    Registration.count(:conditions => {:dc_id => $dc.id, :canceled => false}) >= $race_limit
+    Registration.where(:dc_id => $dc.id, :canceled => false).count >= $race_limit
   end
 
   def bool2str(value)

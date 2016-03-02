@@ -54,6 +54,7 @@ class RegistrationsController < ApplicationController
 		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
 		if @reg.nil?
 			redirect_to :action => :new
+      return
 		end
 		@registration = @reg
 		if @registration.confirmed

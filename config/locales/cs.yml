@@ -1,9 +1,15 @@
 cs:
+  devise:
+    walkers:
+      walker:
+        signed_up_but_unconfirmed: "Dočasné přihlášení, pro plnou funkcionalitu postupujte dle instrukcí odeslaných na uvedený email"
   activerecord:
     errors:
       models:
         registration:
           attributes:
+            goal:
+              blank: "Vyplň prosím svůj cíl - pomáhá nám to odhadnout, kde závodníci končí, či zda se máme starat jestli přežili."
             bw_map:
               blank: "cannot be blank."
       messages:

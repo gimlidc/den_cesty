@@ -18,7 +18,7 @@
       	title: {
       		text: "DC"
       	},
-      	categories: <%= (0..$dc.id).step(1).to_s %>
+      	categories: <%= (0..$dc.id).step(1).to_a.to_s %>
       },
       series: [
       <% if !max.nil? %>

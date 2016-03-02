@@ -53,17 +53,19 @@ DenCesty::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
   # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:                 "127.0.0.1",
-    port:                    25,
-    domain:                  "dencesty.cz",
-    openssl_verify_mode:     'none'
-  }
+  #config.action_mailer.smtp_settings = {
+  #  address:                 "127.0.0.1",
+  #  port:                    25,
+  #  domain:                  "dencesty.cz",
+  #  openssl_verify_mode:     'none'
+  #}
 
-  config.action_mailer.default_url_options = { :host => 'dencesty.cz' }
+  config.action_mailer.default_options = { :from => 'info@dencesty.cz' }
+  config.action_mailer.default_url_options = { :host => 'https://www.dencesty.cz' }
 
   # Enable threaded mode
   # config.threadsafe!
