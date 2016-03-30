@@ -45,7 +45,8 @@ class ApiController < ApplicationController
       checkpoints = race.checkpoints.order(:checkid)
       walkers_score = Scoreboard.where(:race_id => race.id, :walker_id => params[:walker_id]).first
       if !walkers_score.present?
-        walkers_score = Scoreboard.new(:raceState => 0, :lastCheckpoint => 0, :distance => 0, :avgSpeed => 0.0)
+        walker = Walker.find(params[:walker_id])
+        walkers_score = Scoreboard.new(:race => race, :walker => walker, :raceState => 0, :lastCheckpoint => 0, :distance => 0, :avgSpeed => 0.0)
       end
       render :json => {:race => race, :scoreboard => walkers_score, :checkpoints => checkpoints}
     else
