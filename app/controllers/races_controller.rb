@@ -12,7 +12,7 @@ class RacesController < ApplicationController
 
   def create
     # Instantiate a new object using form parameters
-    @race = Race.new(params[:race]) # TODO: security, whitelisting of parameters needed
+    @race = Race.new(params[:race].permit(:name_cs, :name_en, :start_time, :finish_time))
     # Save the object
     if @race.save
       # If save succeeds, redirect to the index action
@@ -32,7 +32,7 @@ class RacesController < ApplicationController
     # Find an existing object using form parameters
     @race = Race.find(params[:id])
     # Update the object
-    if @race.update_attributes(params[:race]) # TODO: security, whitelisting of parameters needed
+    if @race.update_attributes(params[:race].permit(:name_cs, :name_en, :start_time, :finish_time, :visible))
       # If update succeeds, redirect to the index action
       flash[:notice] = "Race updated successfully."
       redirect_to(:action => 'index')

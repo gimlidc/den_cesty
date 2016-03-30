@@ -19,7 +19,7 @@ class CheckpointsController < ApplicationController
     race = Race.find(params[:race_id])
 
     # Instantiate a new object using form parameters
-    @checkpoint = race.checkpoints.create(params[:checkpoint]) # TODO: security, whitelisting of parameters needed
+    @checkpoint = race.checkpoints.create(params[:checkpoint].permit(:checkid, :meters, :latitude, :longitude, :race_id))
     # Save the object
     if @checkpoint.save
       # If save succeeds, redirect to the index action
@@ -44,7 +44,7 @@ class CheckpointsController < ApplicationController
     # Find an existing object using form parameters
     @checkpoint = race.checkpoints.find(params[:id])
     # Update the object
-    if @checkpoint.update_attributes(params[:checkpoint]) # TODO: security, whitelisting of parameters needed
+    if @checkpoint.update_attributes(params[:checkpoint].permit(:checkid, :meters, :latitude, :longitude, :race_id))
       # If update succeeds, redirect to the index action
       flash[:notice] = "Race updated successfully."
       redirect_to(race_checkpoints_url)
