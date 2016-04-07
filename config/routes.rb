@@ -49,6 +49,7 @@ DenCesty::Application.routes.draw do
 	match 'admin/add_report', :as => :admin_add_report, via: [:get]
 	match 'admin/register/(/:id)' => 'admin#register', :as => :admin_register, via: [:get]
 	match 'admin/registered', :as => :admin_registered, via: [:get]
+  match 'admin/register_do', :as => :admin_register_do, via: [:patch]
 	match 'admin/cleanup_unpaid_textile', :as => :admin_cleanup_unpaid_textile, via: [:get]
 	match 'admin/cleanup_unpaid_maps', :as => :admin_cleanup_unpaid_maps, via: [:get]
 	match 'admin/payment_notification', :as => :admin_payment_notification, via: [:get]
