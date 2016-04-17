@@ -132,7 +132,7 @@ class AdminController < ApplicationController
   end
   
   def cleanup_unpaid_textile
-    @registrations = Registration.where(:confirmed => false, :canceled => false, :dc_id => $dc.id)
+    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
     @registrations.each do |registration|
       registration.scarf = false
       registration.shirt_size = 'NO'
