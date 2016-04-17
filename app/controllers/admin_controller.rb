@@ -138,7 +138,7 @@ class AdminController < ApplicationController
       registration.shirt_size = 'NO'
       registration.shirt_polyester = 'NO'
       if !registration.save
-        flash.notice += "Registration "+registration.id+" save failed.<br />"
+        flash.notice += "Registration " + registration.id.to_s + " save failed.<br />"
       else
         WalkerMailer.notify_registration_update(registration).deliver
         flash.notice = "Mail send to: " + registration.walker.email
