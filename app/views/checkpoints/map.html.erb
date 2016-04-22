@@ -24,7 +24,7 @@
   var layer = new SMap.Layer.Marker();
   var all_coords = [];
 
-  for (var i=0; i < <%= @checkpoints.count %>; i++) {
+  for (var i=0; i < <%= @checkpoints.size %>; i++) {
     var lon = checkpoints[0][i].longitude;
     var lat = checkpoints[0][i].latitude;
     var coords = SMap.Coords.fromWGS84(lon, lat);
