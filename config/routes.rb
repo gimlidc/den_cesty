@@ -25,7 +25,7 @@ DenCesty::Application.routes.draw do
 	#match 'walkers/edit' => "walkers#edit", :as => :edit_walker
 	#match 'walkers/:id' => 'walkers#show', :as => :show_walker, via: [:get]
   match 'registrations/change_owner' => "registrations#change_owner", :as => :change_owner, via: [:get]
-  
+  match 'registrations/unregister/(/:id)' => "registrations#unregister", :as => :unregister, via: [:delete]
 	match 'report/new' => "report#new", :as => :new_report, via: [:get]	
 	match 'report/edit' => "report#edit", :as => :edit_report, via: [:get]	
 	match 'report/show' => "report#show", :as => :show_report, via: [:get]	
