@@ -236,7 +236,7 @@ class AdminController < ApplicationController
 		    next
 		  end
 		  
-      result = Result.first(:conditions => {:walker_id => value[:walker_id], :dc_id => value[:dc_id]})
+      result = Result.where(:walker_id => value[:walker_id], :dc_id => value[:dc_id]).first
       
       if result.nil?
         result = Result.create(:walker_id => value[:walker_id], :dc_id => value[:dc_id], :distance => value[:distance], :official => value[:official])
