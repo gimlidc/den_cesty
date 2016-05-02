@@ -60,6 +60,12 @@
 			<th><%= link_to 'Download', "/" + @diploms.find(result.dc_id).diplom_path.to_s + result.walker_id.to_s + ".pdf" %></th>
 		</tr>
 		<% end %>
+    <% if !@gpx[result.dc_id].nil? %>
+        <tr>
+          <td>GPS záznam:</td>
+          <th><%= link_to 'Download', :controller => 'outgrowths', :action => 'race_record', :format => :gpx, :walker_id => result.walker_id, :race_id => @gpx[result.dc_id], :dc_id => result.dc_id  %></th>
+        </tr>
+    <% end %>
 	</table>
 	
 </p>

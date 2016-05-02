@@ -16,7 +16,7 @@ class OutgrowthsController < ApplicationController
       @trks << trk
     end
 
-    @race_name = Race.find(params[:race_id]).name_cs
+    @race_name = Dc.find(params[:dc_id]).name_cs
 
     respond_to do |format|
       format.gpx do
@@ -28,7 +28,13 @@ class OutgrowthsController < ApplicationController
   def show
     @stats = statistics(current_walker)
     @diploms = Dc.select('id, diplom_path').order('id DESC')
-    @max = max 
+    @max = max
+    raceIds = Event.uniq.select(:race_id).where(:walker_id => current_walker)
+    dcs = Dc.select('id', 'race_id').where(:race_id => raceIds)
+    @gpx = Array.new($dc.id)
+    dcs.each do |dc|
+      @gpx[dc.id] = dc.race_id
+    end
   end
   
   def compare
