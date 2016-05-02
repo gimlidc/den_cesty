@@ -65,7 +65,7 @@ class PagesController < ApplicationController
         i = i - 1
       end
       i = j + 1
-      while i < size do
+      while i <= size do
         if !@year_maxima[i].nil?
           if @year_maxima[i] <= value
             @dr[j] = @dr[j] + 1

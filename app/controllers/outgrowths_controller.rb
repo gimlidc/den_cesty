@@ -2,6 +2,29 @@ class OutgrowthsController < ApplicationController
 
   skip_before_filter :check_admin?
 
+  def race_record
+    events = Event.where(:race_id => params[:race_id], :walker_id => params[:walker_id]).order(:id)
+    @trks = []
+    events.each do |event|
+      data = JSON.parse event.eventData.to_s.gsub('=>', ':')
+      if (data["latitude"].nil?)
+        next
+      end
+      trk = {}
+      trk[:latitude] = data["latitude"]
+      trk[:longitude] = data["longitude"]
+      @trks << trk
+    end
+
+    @race_name = Race.find(params[:race_id]).name_cs
+
+    respond_to do |format|
+      format.gpx do
+        headers['Content-Disposition'] = 'attachment;filename="rece_record.gpx"'
+      end
+    end
+  end
+
   def show
     @stats = statistics(current_walker)
     @diploms = Dc.select('id, diplom_path').order('id DESC')
