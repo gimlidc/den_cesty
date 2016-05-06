@@ -4,6 +4,7 @@ class OutgrowthsController < ApplicationController
 
   def race_record
     events = Event.where(:race_id => params[:race_id], :walker_id => params[:walker_id]).order(:id)
+    @walker = Walker.find_by_id(params[:walker_id])
     @trks = []
     events.each do |event|
       data = JSON.parse event.eventData.to_s.gsub('=>', ':')
@@ -13,10 +14,13 @@ class OutgrowthsController < ApplicationController
       trk = {}
       trk[:latitude] = data["latitude"]
       trk[:longitude] = data["longitude"]
+      trk[:time] = data["timestamp"]
       @trks << trk
     end
 
-    @race_name = Dc.find(params[:dc_id]).name_cs
+    @race = Race.find_by_id(params[:race_id])
+
+    @route = Checkpoint.where(:race_id => params[:race_id]).order(:checkid)
 
     respond_to do |format|
       format.gpx do

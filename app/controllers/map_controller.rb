@@ -25,4 +25,29 @@ class MapController < ApplicationController
     end
   end
 
+  def walker
+    @race = Race.find_by_id(params[:race_id])
+
+    if !@race.nil? && @race.visible then # && @race.start_time < Time.now then
+      @checkpoints = @race.checkpoints.select([:latitude, :longitude])
+      events = @race.events.where(:walker_id => params[:walker_id]).order(:timestamp)
+
+      events.each do |event|
+        data = JSON.parse event.eventData.to_s.gsub('=>', ':')
+        if (data["latitude"].nil?)
+          next
+        end
+        trk = {}
+        trk[:latitude] = data["latitude"]
+        trk[:longitude] = data["longitude"]
+        @trks << trk
+      end
+
+    else
+      flash.notice = "Race not yet started or not exist."
+      redirect_to :controller => "pages", :action => "unauthorized"
+    end
+
+  end
+
 end
