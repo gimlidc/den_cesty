@@ -3,11 +3,8 @@
 	border: 1px solid #885533;
 }
 
-#registration, #report {
-	border: 1px solid #885533;
-}
 
-#registration a, #registration span, #report a, #report span {
+#registration a, #registration span, #report a, #report span, #outgrowths a, #outgrowths span {
 	color: #7C3;
 }
 
