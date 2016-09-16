@@ -1,6 +1,10 @@
+require 'rqrcode'
+
 class RegistrationsController < ApplicationController
 
   skip_before_filter :check_admin?, :except => [:unregister]
+
+  include RegistrationsHelper
 
 	def new
 		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
@@ -47,6 +51,17 @@ class RegistrationsController < ApplicationController
 		if walker_signed_in?
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 			@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+
+      qrstring = "SPD*1.0*ACC:" << $IBAN
+      qrstring = qrstring << "*AM:" << price(@reg).to_s << "*CC:CZK"
+      qrstring = qrstring << "*X-SS:666" << "*X-VS:" << sprintf("%03d", $dc.id) << sprintf("%04d",@reg.walker_id)
+      qrstring = qrstring << "*MSG:" << @reg.walker[:email]
+
+			qrcode = RQRCode::QRCode.new(qrstring)
+			# With default options specified explicitly
+			@svg = qrcode.as_svg(offset: 0, color: '000',
+													shape_rendering: 'crispEdges',
+													module_size: 4)
 		end
 	end
 

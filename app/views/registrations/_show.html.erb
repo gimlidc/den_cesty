@@ -72,6 +72,8 @@
 	<% else %>
 	<%= $registration_deadline.localtime.strftime("%d.%m %Y") %>
 	<% end end %> </b>
-	na účet číslo <b>670100-2209569678/6210</b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b> a specifickým symbolem <b>666</b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
-	<% end %>
+	na účet číslo <b><%=$BBAN%></b> s variabilním symbolem <b><%= sprintf("%03d", $dc.id) %><%= sprintf("%04d",@reg.walker_id) %></b> a specifickým symbolem <b>666</b>, jako zprávu pro příjemce uveď svůj email (místo @ nech například mezeru). V případě zrušení registrace nebo neúčasti na závodě uhrazené startovné NEVRACÍME.
+      <p>Pro zadání můžete využít tento QR kód:</p>
+      <p><%= @svg.html_safe %></p>
+  <% end %>
 </p>

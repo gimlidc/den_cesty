@@ -40,3 +40,5 @@ end
 gem 'nokogiri'
 
 gem "bcrypt-ruby", :require => "bcrypt"
+
+gem 'rqrcode'

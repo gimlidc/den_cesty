@@ -84,8 +84,9 @@ class ApplicationController < ActionController::Base
       $registration_starts = true
       $report_deadline = ($dc.start_time + 1.month).end_of_day          
     end    
-    $race_limit = $dc.limit    
-    $account_number = "670100-2209569678/6210"
+    $race_limit = $dc.limit
+    $BBAN = "670100-2210847532/6210"
+    $IBAN = "CZ7962106701002210847532"
   end
 
   def set_locale
