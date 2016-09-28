@@ -60,7 +60,7 @@
 	<% if @reg.confirmed %>
 	Registrace již byla uhrazena.
 	<% else %>
-	<% if price(@reg) < 100 %>
+	<% if price(@reg) < 100 && !@reg.colour_map %>
 	Startovné můžeš uhradit na startu nebo
 	<% else %>
 	Úhradu startovného proveď nejpozději
