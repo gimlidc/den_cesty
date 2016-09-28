@@ -55,33 +55,31 @@
 </p>
 <p>
 	<%= link_to 'Smazat nezaplacený textil', admin_cleanup_unpaid_textile_path, :confirm => "Opravdu smazat všechen nezaplacený textil? Akce nepůjde vrátit!" %>
+  <%= $shirt_deadline %>
 </p>
 <p>
 	<%= link_to 'Smazat nezaplacené mapy', admin_cleanup_unpaid_maps_path, :confirm => "Opravdu smazat nezaplacené mapy? Akce nepůjde vrátit!" %>
+  <%= $map_deadline %>
 </p>
 
 Showing all registrations for Den cesty <%= $dc.id %>
 
 <table border="1" width="100%" class="preview" cellspacing="0">
 	<tbody>
-		<tr>
-			<th>id</th>
-			<th>jméno</th>
-			<th>příjmení</th>
-			<th>e-mail</th>
-			<th>telefon</th>
-			<th>triko
-			<br />
-			bavlna</th>
-			<th>triko
-			<br />
-			funkční</th>
-			<th>šátek</th>
-			<th>ČB mapa</th>
-			<th>mapa</th>
-			<th>cena</th>
+		<tr class="rotated90">
+			<th><div><span>id</span></div></th>
+			<th><div><span>jméno</span></div></th>
+			<th><div><span>příjmení</span></div></th>
+			<th><div><span>e-mail</span></div></th>
+			<th><div><span>telefon</span></div></th>
+			<th><div><span>triko bavlna</span></div></th>
+			<th><div><span>triko funkční</span></div></th>
+			<th><div><span>šátek</span></div></th>
+			<th><div><span>ČB mapa</span></div></th>
+			<th><div><span>mapa</span></div></th>
+			<th><div><span>cena</span></div></th>
 			<th></th>
-			<th>placeno</th>
+			<th><div><span>placeno</span></div></th>
 		</tr>
 		<% @collected_money = 0 %>
 		<% @resting_money = 0 %>
@@ -92,7 +90,7 @@ Showing all registrations for Den cesty <%= $dc.id %>
 		<% @collected_money = @collected_money + price(reg) %>
 		<% else %>
 		<% @resting_money = @resting_money + price(reg) %>
-		<% if price(reg) > 100 %>
+		<% if price(reg) >= 100 || reg.colour_map %>
 			class="notify"
 			<% end %>
 			<% end %>

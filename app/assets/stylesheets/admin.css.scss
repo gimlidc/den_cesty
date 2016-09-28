@@ -5,3 +5,23 @@
 .virtual input {
   color: red;
 }
+
+tr.rotated90 > th {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+  align: center;
+}
+
+tr.rotated90 > th > div {
+  transform:
+          /* Magic Numbers */
+          translate(0px, 53px)
+            /* 45 is really 360 - 45 */
+          rotate(270deg);
+  width: 30px;
+}
+tr.rotated90 > th > div > span {
+
+  padding: 5px 10px;
+}
