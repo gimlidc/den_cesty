@@ -10,6 +10,18 @@ class WalkerMailer < ActionMailer::Base
   def send_payment_request(registration)
     @walker = registration.walker
     @reg = registration
+
+    qrstring = "SPD*1.0*ACC:" << $IBAN
+    qrstring = qrstring << "*AM:" << price(@reg).to_s << "*CC:CZK"
+    qrstring = qrstring << "*X-SS:666" << "*X-VS:" << sprintf("%03d", $dc.id) << sprintf("%04d",@reg.walker_id)
+    qrstring = qrstring << "*MSG:" << @reg.walker[:email]
+
+    qrcode = RQRCode::QRCode.new(qrstring)
+    # With default options specified explicitly
+    @svg = qrcode.as_svg(offset: 0, color: '000',
+                         shape_rendering: 'crispEdges',
+                         module_size: 4)
+
     mail(to: registration.walker.email, subject: I18n.t("registration payment notification"))
   end
   
