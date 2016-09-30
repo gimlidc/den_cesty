@@ -2,7 +2,9 @@ class WalkerMailer < ActionMailer::Base
   default from: "info@dencesty.cz"
   add_template_helper(DcsHelper)
   add_template_helper(RegistrationsHelper)
-  
+
+  include RegistrationsHelper
+
   def send_payment_details(walker)
     
   end
