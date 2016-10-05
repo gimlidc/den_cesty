@@ -19,3 +19,13 @@
 .notify td {
   background-color: #FFCFDD;
 }
+
+.confirmed.canceled td {
+  background-color: lightblue;
+  text-decoration: line-through;
+}
+
+.notify.canceled td {
+  background-color: white;
+  text-decoration: line-through;
+}

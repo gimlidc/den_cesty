@@ -88,7 +88,7 @@ class AdminController < ApplicationController
   end
 	
 	def registered
-	  @registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order('walkers.surname')
+	  @registration = Registration.joins(:walker).where(:dc_id => $dc.id).order('walkers.surname')
     @reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
     @bwmaps = @registration.where(:bw_map => true, :canceled => false).count
     @colormaps = @registration.where(:colour_map => true, :canceled =>false, :confirmed => true).count

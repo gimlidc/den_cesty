@@ -84,17 +84,20 @@ Showing all registrations for Den cesty <%= $dc.id %>
 		<% @collected_money = 0 %>
 		<% @resting_money = 0 %>
 		<% @registration.each do |reg| %>
-		<tr
-		<% if reg[:confirmed] == true %>
-		class="confirmed"
-		<% @collected_money = @collected_money + price(reg) %>
-		<% else %>
-		<% @resting_money = @resting_money + price(reg) %>
-		<% if price(reg) >= 100 || reg.colour_map %>
-			class="notify"
+		<tr class="
+		  <% if reg[:confirmed] == true %>
+        confirmed
+		    <% @collected_money = @collected_money + price(reg) %>
+		  <% else %>
+		    <% @resting_money = @resting_money + price(reg) %>
+		    <% if price(reg) >= 100 || reg.colour_map %>
+			    notify
+			  <% end %>
 			<% end %>
+			<% if reg[:canceled] == true %>
+			    canceled
 			<% end %>
-			>
+		">
 			<td><%= reg.walker.id %></td>
 			<td><%= reg.walker.name %></td>
 			<td><%= reg.walker.surname %></td>
