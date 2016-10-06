@@ -132,6 +132,7 @@ class AdminController < ApplicationController
   end
   
   def cleanup_unpaid_textile
+    flash.notice = "Mail send to:"
     @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
     @registrations.each do |registration|
       registration.scarf = false
@@ -140,22 +141,27 @@ class AdminController < ApplicationController
       if !registration.save
         flash.notice += "Registration " + registration.id.to_s + " save failed.<br />"
       else
-        WalkerMailer.notify_registration_update(registration).deliver
-        flash.notice = "Mail send to: " + registration.walker.email
+        if !registration.canceled
+          WalkerMailer.notify_registration_update(registration).deliver
+          flash.notice +=  "<br />" + registration.walker.email
+        end
        end
     end
     redirect_to admin_registered_path
   end
 
   def cleanup_unpaid_maps
-    @registrations = Registration.where(:confirmed => false, :canceled => false, :dc_id => $dc.id)
+    flash.notice = "Mail send to: "
+    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
     @registrations.each do |registration|
       registration.colour_map = false
       if !registration.save
         flash.notice += "Registration "+registration.id+" save failed.<br />"
       else
-        WalkerMailer.notify_registration_update(registration).deliver
-        flash.notice = "Mail send to: " + registration.walker.email
+        if !registration.canceled
+          WalkerMailer.notify_registration_update(registration).deliver
+          flash.notice += "<br />" + registration.walker.email
+        end
       end
     end
     redirect_to admin_registered_path
