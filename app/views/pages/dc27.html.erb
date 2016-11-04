@@ -104,7 +104,7 @@
                     <td align="right"><%= DateTime.parse(reg["updated_at"]).strftime("%d.%m %Y")%></td>
                     <td align="center"><%= reg["official"] %>km</td>
                     <td align="center">
-                      <% if reg["confirmed"] %>
+                      <% if reg["confirmed"] == "t" %>
                           ano
                       <% end %>
                     </td>
