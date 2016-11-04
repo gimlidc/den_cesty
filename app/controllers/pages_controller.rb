@@ -95,10 +95,10 @@ class PagesController < ApplicationController
 	
 	def dc_results
 	  # shows results reached in each year
-	  if params[:get].nil?
-	    @dc_id = $dc.id
+	  if params[:dc_id].nil?
+	    @dc_id = $dc.id - 1
 	  else
-	    @dc_id = params[:get][:dc_id]
+	    @dc_id = params[:dc_id]
 	  end
 	  @dcs = Dc.order(:start_time).all
 	  @results = Result.where(:dc_id => @dc_id).order('official DESC, distance DESC').all

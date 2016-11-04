@@ -28,7 +28,7 @@
           <h4>Registrace byla ukončena</h4>
       <% end %>
   <% end %>
-  <div align="center"><b><%= link_to "Výsledky", dc_results_path %> právě proběhlého 26. Dne cesty a <%= link_to "reporty", report_list_path(:id => 26) %> účastníků.</b></div>
+  <div align="center"><b><%= link_to "Výsledky", dc_results_path(:dc_id => 26) %> proběhlého 26. Dne cesty a <%= link_to "reporty", report_list_path(:id => 26) %> účastníků.</b></div>
   <table id="summary">
     <tbody>
     <tr>
