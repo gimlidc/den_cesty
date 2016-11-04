@@ -99,7 +99,7 @@
                 <th>Zaplaceno</th>
               </tr>
               <% @registered.each do |reg| %>
-                  <tr>
+                  <tr <% if reg["id"].to_f == current_walker.id %> class="bold" <% end %>>
                     <td><%= reg["name"] %> <%= reg["surname"] %></td>
                     <td align="right"><%= DateTime.parse(reg["updated_at"]).strftime("%d.%m %Y")%></td>
                     <td align="center">
