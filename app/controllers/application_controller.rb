@@ -44,12 +44,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def has_valid_registration?
+  def has_valid_registration?(dc_id)
     if not walker_signed_in?
       return false
     end
     
-    @reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id)
+    @reg = Registration.where(:walker_id => current_walker[:id], :dc_id => dc_id)
     if @reg.nil? || @reg.empty? || @reg[0].canceled == true
       return false
     else

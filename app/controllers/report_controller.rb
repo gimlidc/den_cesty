@@ -43,7 +43,14 @@ class ReportController < ApplicationController
 	end
 
 	def new
-		if !report_accessible?
+		dc = report_accessible
+
+		if !has_valid_registration?(dc)
+			redirect_to :action => :unauthorized
+			return
+		end
+
+		if dc.nil?
 			redirect_to :action => :list
 			return
 		end
@@ -53,17 +60,19 @@ class ReportController < ApplicationController
 			return
 		end
 
-		if has_report?
+		if has_report?(dc)
 			flash[:notice] = "Report already exist, redirected to editing report."
 			redirect_to :action => :edit
 			return
 		end
 
 		@report = Report.new
+		@report.dc_id = dc.id
 	end
 
 	def edit
-		if !report_accessible?
+		dc = report_accessible
+		if dc.nil?
 			redirect_to :action => :list
 			return
 		end
@@ -73,21 +82,30 @@ class ReportController < ApplicationController
 			return
 		end
 
-		if !has_report?
+		if !has_report?(dc)
 			flash[:notice] = "No report found, redirected to new report."
 			redirect_to :action => :new
 			return
 		end
 
-		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => dc.id).first
 	end
 
 	def show
-		if !has_report?
-			flash[:notice] = "No report found!"
-		end
+		dc = report_accessible
 
-		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+		if dc.nil?
+      redirect_to :action => :unauthorized
+			return
+    end
+
+    if !has_report?(dc)
+      flash[:notice] = "No report found!"
+      redirect_to :action => :list
+      return
+    end
+
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => dc.id).first
 	end
 
 	def save
@@ -96,12 +114,18 @@ class ReportController < ApplicationController
 			return
 		end
 
-		@report = Report.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+		dc = report_accessible
+		if dc.nil? || !has_report?(dc)
+			redirect_to :action => :list
+      return
+		end
+
+		@report = Report.where(:walker_id => current_walker[:id], :dc_id => dc.id).first
 
 		if @report.nil?
 			@report = Report.new
 			@report.walker_id = current_walker[:id]
-			@report.dc_id = $dc.id
+			@report.dc_id = dc.id
 		end
 
 		@report.report_html = params[:report][:report_html]
@@ -119,13 +143,17 @@ class ReportController < ApplicationController
 		redirect_to :controller => 'pages', :action => 'actual'
 	end
 
-	def has_report?
-		@report = Report.where(:dc_id => $dc.id, :walker_id => current_walker[:id])
+	def has_report?(dc)
+		@report = Report.where(:dc_id => dc.id, :walker_id => current_walker[:id])
 		return !@report.nil? && !@report.empty?
 	end
 
-	def report_accessible?
-		return Time.now > $dc.start_time && Time.now < $report_deadline
+	def report_accessible
+		dc = Dc.where("start_time < ? AND start_time > ?",  Time.now, Time.now - 1.month).first
+		if (!dc.nil? && Time.now > dc.start_time && Time.now - 1.month < dc.start_time)
+			return dc
+		end
+		return nil
 	end
 
 end

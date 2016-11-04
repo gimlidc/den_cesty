@@ -56,10 +56,10 @@ SimpleNavigation::Configuration.run do |navigation|
     
     # A big group of buttons available only for logged users
     if walker_signed_in? 
-      if ($dc.id.modulo(10) != 0 || races_finished >= 3 || registration_for_current_exist?) && ((has_valid_registration? && $dc.start_time > Time.now) || Time.now < $registration_deadline)
+      if ($dc.id.modulo(10) != 0 || races_finished >= 3 || registration_for_current_exist?) && ((has_valid_registration?($dc.id) && $dc.start_time > Time.now) || Time.now < $registration_deadline)
         top.item :registration, I18n.t('Registration') do |registration|
           registration.dom_class = "walker-menu"
-          if has_valid_registration?
+          if has_valid_registration?($dc.id)
             registration.item :show_registration, I18n.t('Show registration'), registration_path
             registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path, if: -> { Time.now < $registration_deadline }            
             registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path, if: -> { registration_payed? && $dc.id.modulo(10) != 0 }            
@@ -73,8 +73,9 @@ SimpleNavigation::Configuration.run do |navigation|
         top.item :outgrowths, I18n.t('My results'), outgrowths_path
       end
 
-      if has_valid_registration? && Time.now > $dc.start_time && Time.now < $report_deadline
-        if has_report
+      dc = Dc.where("start_time < ? AND start_time > ?",  Time.now, Time.now - 1.month).first
+      if !dc.nil? && has_valid_registration?(dc.id)
+        if has_report(dc.id)
           top.item :report, I18n.t('Reports') do |reports|
             reports.dom_class = "walker-menu"
             reports.item :edit_report, I18n.t('Edit report'), edit_report_path
