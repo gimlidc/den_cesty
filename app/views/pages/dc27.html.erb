@@ -102,7 +102,13 @@
                   <tr>
                     <td><%= reg["name"] %> <%= reg["surname"] %></td>
                     <td align="right"><%= DateTime.parse(reg["updated_at"]).strftime("%d.%m %Y")%></td>
-                    <td align="center"><%= reg["official"] %>km</td>
+                    <td align="center">
+                      <% if !reg["official"].nil? %>
+                        <%= reg["official"] %>km
+                      <% else %>
+                        DNS
+                      <% end %>
+                    </td>
                     <td align="center">
                       <% if reg["confirmed"] == "t" %>
                           ano
