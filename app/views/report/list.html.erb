@@ -3,14 +3,14 @@
 # @version Apr 8, 2012
 %>
 
-<%= form_tag('/report/list') do -%>
+<%= form_tag("/report/list", :method => :get) do -%>
   <table>
 	<tr>
 	  <td><b>autor:</b>
 	  	<%= collection_select(:report, :walker_id, @publishers, :id, :nameSurname, {:include_blank => true}, {:id => "walker", :name => "walker"}) %>
 	  </td>
 	  <td><b>rok:</b><%= select_tag("id", @dc_select.html_safe, :include_blank => true) %></td>
-	  <td><%= submit_tag "vyhledat" %></td>
+	  <td><%= submit_tag "vyhledat", name: nil %></td>
 	</tr>
   </table>
 <%- end %>

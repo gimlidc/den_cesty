@@ -30,7 +30,7 @@ DenCesty::Application.routes.draw do
 	match 'report/new' => "report#new", :as => :new_report, via: [:get]	
 	match 'report/edit' => "report#edit", :as => :edit_report, via: [:get]	
 	match 'report/show' => "report#show", :as => :show_report, via: [:get]	
-	match 'report/list' => "report#list", :as => :report_list, via: [:post]
+	match 'report/list' => "report#list", :as => :report_list, via: [:get]
 	match 'report/save' => "report#save", :as => :report_patch, via: [:patch]
 	match 'tracker_info' => "pages#tracker_info", :as => :tracker_info, via: [:get]
 	match 'running_results(/:id)' => "pages#running_results", :as => :running_results, via: [:get]
