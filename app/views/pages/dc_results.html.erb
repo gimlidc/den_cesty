@@ -1,6 +1,7 @@
-Výsledky <%= @dc_id %>. Dne cesty: 
-<%= form_tag "dc_results", :method => :get do %>
-<%= collection_select(:get, :dc_id, @dcs, :id, :specifyName, :selected => @dc_id) %>
-<%= submit_tag("Najít") %>
-<% end %>
+Výsledky <%= @dc_id %>. Dne cesty:
+<select onchange="location.replace('<%= dc_results_path %>&dc_id='+ this.value)">
+  <% @dcs.each do |dc|%>
+    <option value="<%= dc.id %>" <% if @dc_id == dc.id.to_s %> selected <% end%>><%= dc.specifyName %></option>
+  <% end %>
+</select>
 <%= render partial: "dc_results", locals: {results: @results, dc_id: @dc_id} %>
