@@ -98,16 +98,36 @@ Showing all registrations for Den cesty <%= $dc.id %>
 			    canceled
 			<% end %>
 		">
-			<td><%= reg.walker.id %></td>
+			<td><%= link_to reg.walker.id, {:controller => "admin", :action => "register", :id => reg.walker.id} %></td>
 			<td><%= reg.walker.name %></td>
 			<td><%= reg.walker.surname %></td>
 			<td><%= reg.walker.email %></td>
 			<td><%= reg.phone %></td>
-			<td><%= reg.shirt_size %></td>
-			<td><%= reg.shirt_polyester %></td>
-			<td><%= reg.scarf %></td>
-			<td><%= reg.bw_map %></td>
-			<td><%= reg.colour_map %></td>
+			<td>
+        <% if reg.shirt_size != 'NO' %>
+            <%= reg.shirt_size %>
+        <% end %>
+      </td>
+			<td>
+        <% if reg.shirt_polyester != 'NO' %>
+          <%= reg.shirt_polyester %>
+        <% end %>
+      </td>
+			<td>
+        <% if reg.scarf %>
+          š-JO
+        <% end %>
+      </td>
+			<td>
+        <% if reg.bw_map %>
+            bw-JO
+        <% end %>
+      </td>
+			<td>
+        <% if reg.colour_map %>
+          m-JO
+        <% end %>
+      </td>
 			<td><%= price(reg) %>&nbsp;Kč</td>
 			<td><%= link_to "odhlásit", {:controller => "registrations", :action => "unregister", :id => reg}, :method => "delete", :confirm => "Registration of " + reg.walker.name + reg.walker.surname + " will be canceled." %></td>
 			<td> <% if reg.confirmed %>
