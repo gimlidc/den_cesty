@@ -43,8 +43,6 @@ class RegistrationsController < ApplicationController
     else
       flash.notice = "Registration not found."
     end
-
-    redirect_to :action => 'show'
   end
 
 	def show
