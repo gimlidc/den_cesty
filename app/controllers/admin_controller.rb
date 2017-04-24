@@ -124,7 +124,7 @@ class AdminController < ApplicationController
     if !@registrations.empty?
       flash.notice = "Mail send to: "
       @registrations.each do |registration|
-        if price(registration) > 100
+        if (registration.scarf == true || registration.shirt_size != 'NO' || registration.shirt_polyester != 'NO' || registration.colour_map == true)
           WalkerMailer.send_payment_request(registration).deliver
           flash.notice += registration.walker.email + ", "
         end
