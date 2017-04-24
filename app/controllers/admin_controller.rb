@@ -1,5 +1,7 @@
 class AdminController < ApplicationController
 
+  include RegistrationsHelper
+
 	def add_report
 			@walkers = Walker.order("surname")
       @dcs = Dc.order("id")
@@ -122,8 +124,10 @@ class AdminController < ApplicationController
     if !@registrations.empty?
       flash.notice = "Mail send to: "
       @registrations.each do |registration|
-        WalkerMailer.send_payment_request(registration).deliver
-        flash.notice += registration.walker.email + ", "
+        if price(registration) > 100
+          WalkerMailer.send_payment_request(registration).deliver
+          flash.notice += registration.walker.email + ", "
+        end
       end
     else
       flash.notice = "All registrations have been paid."
@@ -135,24 +139,26 @@ class AdminController < ApplicationController
     flash.notice = "Mail send to:"
     @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
     @registrations.each do |registration|
-      registration.scarf = false
-      registration.shirt_size = 'NO'
-      registration.shirt_polyester = 'NO'
-      if !registration.save
-        flash.notice += "Registration " + registration.id.to_s + " save failed.<br />"
-      else
-        if !registration.canceled
-          WalkerMailer.notify_registration_update(registration).deliver
-          flash.notice +=  "<br />" + registration.walker.email
+      if (registration.scarf == true || registration.shirt_size != 'NO' || registration.shirt_polyester != 'NO')
+        registration.scarf = false
+        registration.shirt_size = 'NO'
+        registration.shirt_polyester = 'NO'
+        if !registration.save
+          flash.notice += "Registration " + registration.id.to_s + " save failed.<br />"
+        else
+          if !registration.canceled
+            WalkerMailer.notify_registration_update(registration).deliver
+            flash.notice +=  "<br />" + registration.walker.email
+          end
         end
-       end
+      end
     end
     redirect_to admin_registered_path
   end
 
   def cleanup_unpaid_maps
     flash.notice = "Mail send to: "
-    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
+    @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id, :colour_map => true)
     @registrations.each do |registration|
       registration.colour_map = false
       if !registration.save
