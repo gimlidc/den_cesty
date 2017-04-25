@@ -42,7 +42,8 @@ class RegistrationsController < ApplicationController
       end
     else
       flash.notice = "Registration not found."
-    end
+		end
+		redirect_to admin_registered_path and return
   end
 
 	def show
