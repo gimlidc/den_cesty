@@ -115,7 +115,7 @@ class ReportController < ApplicationController
 		end
 
 		dc = report_accessible
-		if dc.nil? || !has_report?(dc)
+		if dc.nil?
 			redirect_to :action => :list
       return
 		end
