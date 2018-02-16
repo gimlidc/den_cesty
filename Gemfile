@@ -5,15 +5,15 @@ gem 'rails'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
-gem 'execjs'
+gem 'pg', '~>0.18.4'
+gem 'execjs', '~>2.6.0'
 gem 'therubyracer'
-gem 'devise'
+gem 'devise', '~>3.5.6'
 gem 'simple-navigation'
 
-gem 'json'
+gem 'json', '~>1.8.3'
 
-gem 'jquery-rails'
+gem 'jquery-rails', '~>4.1.1'
 gem 'protected_attributes'
 
 # To use ActiveModel has_secure_password
@@ -23,8 +23,8 @@ gem 'protected_attributes'
 # in production environments by default.
 group :assets do
   gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
+  gem 'coffee-rails', '~>4.1.1'
+  gem 'uglifier', '~>3.0.0'
 end
 
 # Use unicorn as the web server
@@ -37,8 +37,10 @@ end
 # gem 'ruby-debug'
 
 # XML processing
-gem 'nokogiri'
+gem 'nokogiri', '~>1.6.7.2'
 
 gem "bcrypt-ruby", :require => "bcrypt"
 
 gem 'rqrcode'
+
+gem 'rest-client'

@@ -62,6 +62,7 @@ DenCesty::Application.routes.draw do
   match 'admin/walker_update', :as => :admin_walker_update, via: [:patch]
 	match 'admin/results_update', :as => :admin_results_update, via: [:get]
 	match 'admin/results_setting(.:id)' => 'admin#results_setting', :as => :admin_results_setting, via: [:get]
+  match 'admin/payments_download' => 'admin#payments_download', :as => :admin_payments_download, via: [:get]
 	match 'profile' => "walkers#profile", :as => :walker_profile, via: [:get]	
 	match ':controller(/:action(/:id))', via: [:get, :post]
 	match ':action' => 'static#:action', via: [:get]
