@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(28)
+      $dc = Dc.find(29)
       $dc_app_start = $dc.start_time - 10.minutes
       $dc_app_end =   $dc.start_time + 12.hours + 10.minutes
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
@@ -85,8 +85,9 @@ class ApplicationController < ActionController::Base
       $report_deadline = ($dc.start_time + 1.month).end_of_day          
     end    
     $race_limit = $dc.limit
-    $BBAN = "670100-2209569678/6210"
-    $IBAN = "CZ1362106701002209569678"
+    $BBAN = "2501365701/2010"
+    $IBAN = "CZ5220100000002501365701"
+    $AT = "caN5ovDtmvByjU5V6s1AnSnCHZb1KAvF590C6ALh7CcOwumCHy2Frz9796CkQH3i"
   end
 
   def set_locale
