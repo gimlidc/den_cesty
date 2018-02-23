@@ -61,6 +61,9 @@
 	<%= link_to 'Smazat nezaplacené mapy', admin_cleanup_unpaid_maps_path, :confirm => "Opravdu smazat nezaplacené mapy? Akce nepůjde vrátit!" %>
   <%= $map_deadline %>
 </p>
+<p>
+  <%= link_to 'Spárovat platby', admin_payments_download_path %>
+</p>
 
 Showing all registrations for Den cesty <%= $dc.id %>
 

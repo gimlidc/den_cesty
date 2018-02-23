@@ -71,7 +71,7 @@ module RegistrationsHelper
 	
 	def races_finished
 	  if walker_signed_in?
-	    Result.count(:conditions => ["walker_id = ? AND distance != ?", current_walker[:id], 0])
+	    Result.where("walker_id = ? AND distance != ?", current_walker[:id], 0).count
 	  else
 	    return 0
 	  end

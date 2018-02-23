@@ -1,3 +1,5 @@
+require 'rest-client'
+
 class AdminController < ApplicationController
 
   include RegistrationsHelper
@@ -134,7 +136,59 @@ class AdminController < ApplicationController
     end
     redirect_to admin_registered_path
   end
-  
+
+  def payments_download
+    json = RestClient.get 'https://www.fio.cz/ib_api/rest/periods/caN5ovDtmvByjU5V6s1AnSnCHZb1KAvF590C6ALh7CcOwumCHy2Frz9796CkQH3i/2018-01-01/2018-05-01/transactions.json'
+    data = JSON.parse(json)
+    added = []
+    badVS = []
+    badKS = []
+    notMatched = []
+    badAmount = []
+    alreadyMatched = []
+
+    data['accountStatement']['transactionList']['transaction'].each do |transaction|
+      if transaction['column4'].nil? || transaction['column4']['value'] == 666
+        # unfilled KS we ignore and try to match the payment according to VS
+        if transaction['column5'].nil? || transaction['column5']['value'].nil?
+          badVS.push(transaction['column5'])
+          logger.info("VS is not set. Payment ignored: " + transaction['column1']['value'].to_s)
+        else
+          dcId = Integer(transaction['column5']['value']) / 10000
+          walkerId = Integer(transaction['column5']['value']) % 10000
+          reg = Registration.where(dc_id: dcId, walker_id: walkerId)
+          if reg.length && reg.length == 1
+            price = price(reg[0])
+            if price == transaction['column1']['value']
+              if !reg[0].confirmed?
+                added.push(walkerId)
+                reg[0].confirmed = true
+                reg[0].save
+              else
+                alreadyMatched.push(walkerId)
+              end
+            else
+              badAmount.push([ "id", walkerId, "amount", transaction['column1']['value'] ])
+              logger.warn("Price payed and required vary. Required: " + price.to_s + " Payed: " + transaction['column1']['value'].to_s + " WalkerId: " + walkerId.to_s)
+            end
+          else
+            notMatched.push(transaction['column5']['value'])
+            logger.info("VS mapping to dcId and walkerId failed. VS:" + transaction['column5']['value'] + " No record found.")
+          end
+        end
+      else
+        badKS.push(transaction['column1']['value'])
+        logger.info("Payment with unknown KS - ignored" + transaction['column1']['value'].to_s)
+      end
+    end
+    flash.notice = ["Paired payments:" + added.map { |wid| wid.to_s }.join(", "),
+      "Bad amount: " + badAmount.map { |wid| wid.to_s }.join(", "),
+      "Bad VS:" + badVS.join(", "),
+      "Urecognized registration: " + notMatched.join(", "),
+      "Not matched KS (other payments): " + badKS.join(", ")]
+    redirect_to admin_registered_path
+  end
+
   def cleanup_unpaid_textile
     flash.notice = "Mail send to:"
     @registrations = Registration.where(:confirmed => false, :dc_id => $dc.id)
