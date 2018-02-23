@@ -31,7 +31,15 @@
 		</div>
 		<div class="content">
 		  <div class="main-text">
-			<p class="notice"><%= notice %></p>
+			<p class="notice">
+        <%= if !notice.nil?
+              if notice.instance_of? Array
+                notice.join('<br>').html_safe
+              else
+                notice
+              end
+            end %>
+      </p>
 			<p class="alert"><%= alert %></p>
 
 			<%= yield %>
