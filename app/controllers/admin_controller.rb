@@ -142,13 +142,13 @@ class AdminController < ApplicationController
     data = JSON.parse(json)
     added = []
     badVS = []
-    badKS = []
+    badSS = []
     notMatched = []
     badAmount = []
     alreadyMatched = []
 
     data['accountStatement']['transactionList']['transaction'].each do |transaction|
-      if transaction['column4'].nil? || transaction['column4']['value'] == 666
+      if transaction['column6'].nil? || transaction['column6']['value'] == "666"
         # unfilled KS we ignore and try to match the payment according to VS
         if transaction['column5'].nil? || transaction['column5']['value'].nil?
           badVS.push(transaction['column5'])
@@ -177,15 +177,15 @@ class AdminController < ApplicationController
           end
         end
       else
-        badKS.push(transaction['column1']['value'])
-        logger.info("Payment with unknown KS - ignored" + transaction['column1']['value'].to_s)
+        badSS.push(transaction['column1']['value'])
+        logger.info("Payment with set but unknown SS - ignored" + transaction['column1']['value'].to_s)
       end
     end
     flash.notice = ["Paired payments:" + added.map { |wid| wid.to_s }.join(", "),
       "Bad amount: " + badAmount.map { |wid| wid.to_s }.join(", "),
       "Bad VS:" + badVS.join(", "),
       "Urecognized registration: " + notMatched.join(", "),
-      "Not matched KS (other payments): " + badKS.join(", ")]
+      "Not matched SS (other payments): " + badSS.join(", ")]
     redirect_to admin_registered_path
   end
 
