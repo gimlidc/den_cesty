@@ -154,8 +154,8 @@ class AdminController < ApplicationController
           badVS.push(transaction['column5'])
           logger.info("VS is not set. Payment ignored: " + transaction['column1']['value'].to_s)
         else
-          dcId = Integer(transaction['column5']['value']) / 10000
-          walkerId = Integer(transaction['column5']['value']) % 10000
+          dcId = transaction['column5']['value'].to_i / 10000
+          walkerId = transaction['column5']['value'].to_i % 10000
           reg = Registration.where(dc_id: dcId, walker_id: walkerId)
           if reg.length && reg.length == 1
             price = price(reg[0])
