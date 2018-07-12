@@ -20,7 +20,7 @@ class PagesController < ApplicationController
 		  @registered_walkers = Registration.includes(:walker)
 																.where(:dc_id => $dc.id, :canceled => false)
                                 .order('walkers.surname', 'walkers.name')
-      @registered = ActiveRecord::Base.connection.execute("select reg.id, reg.name, reg.surname, result.official, reg.updated_at, reg.confirmed from (select walkers.id as id, walkers.name as name, walkers.surname as surname, registrations.updated_at as updated_at, registrations.confirmed as confirmed from registrations join walkers on (registrations.walker_id = walkers.id) where registrations.canceled = false and registrations.dc_id = 29) as reg left outer join (select MAX(results.official) as official, results.walker_id from results group by walker_id) as result on (reg.id = result.walker_id) order by result.official DESC, reg.surname, reg.name");
+      @registered = ActiveRecord::Base.connection.execute("select reg.id, reg.name, reg.surname, result.official, reg.updated_at, reg.confirmed from (select walkers.id as id, walkers.name as name, walkers.surname as surname, registrations.updated_at as updated_at, registrations.confirmed as confirmed from registrations join walkers on (registrations.walker_id = walkers.id) where registrations.canceled = false and registrations.dc_id = "+$dc.id.to_s+") as reg left outer join (select MAX(results.official) as official, results.walker_id from results group by walker_id) as result on (reg.id = result.walker_id) order by result.official DESC, reg.surname, reg.name");
 		  render "dc".concat($dc.id.to_s).concat(".html.erb")
 		end
   end
