@@ -67,6 +67,29 @@
 </table>
 </div>
 <div style="float:left">
+  <h4>TOP10</h4>
+  <table>
+    <tr>
+      <td>#</td>
+      <td>závodník</td>
+      <td>km<td>
+    </tr>
+    <% id = 1 %>
+    <% @top10s.each do |top10| %>
+      <tr>
+        <td><%= id %>.</td>
+        <td>
+          <%= top10.name %> <%= top10.surname %>
+        </td>
+        <td>
+          <%= number_with_precision(top10.top10, precision: 1, locale: :en) %>
+        </td>
+        <% id = id + 1 %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<div style="float:left">
 	<h4>Den cesty v celku</h4>
 <table>
 	<tr><td>Průměrný výkon: </td><td><%= number_with_precision(@dc_avg, precision: 1, locale: :en)  %>km<td></tr>
