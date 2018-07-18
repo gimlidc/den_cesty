@@ -67,6 +67,29 @@
 </table>
 </div>
 <div style="float:left">
+  <h4>TOP5</h4>
+  <table>
+    <tr>
+      <td>#</td>
+      <td>závodník</td>
+      <td>km<td>
+    </tr>
+    <% id = 1 %>
+    <% @top5s.each do |top5| %>
+      <tr>
+        <td><%= id %>.</td>
+        <td>
+          <%= top5['name'] %> <%= top5['surname'] %>
+        </td>
+        <td>
+          <%= number_with_precision(top5['top5'], precision: 1, locale: :en) %>
+        </td>
+        <% id = id + 1 %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<div style="float:left">
   <h4>TOP10</h4>
   <table>
     <tr>
@@ -79,10 +102,10 @@
       <tr>
         <td><%= id %>.</td>
         <td>
-          <%= top10.name %> <%= top10.surname %>
+          <%= top10['name'] %> <%= top10['surname'] %>
         </td>
         <td>
-          <%= number_with_precision(top10.top10, precision: 1, locale: :en) %>
+          <%= number_with_precision(top10['top10'], precision: 1, locale: :en) %>
         </td>
         <% id = id + 1 %>
       </tr>
