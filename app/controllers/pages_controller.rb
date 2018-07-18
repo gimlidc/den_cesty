@@ -91,32 +91,8 @@ class PagesController < ApplicationController
 	  @dc_avg = Result.average(:official)
 	  @dc_sum = Result.sum(:official)
 	  @distanceOrder = Result.where('official is not null').order('official DESC').limit(100)
-		@top10s = ActiveRecord::Base.connection.exec_query("select name as name, surname as surname, prumery.dist as top10 from
-		(SELECT walker_id, avg(distance) as dist
-		FROM (SELECT *, rank() OVER (PARTITION BY walker_id ORDER BY distance DESC)
-		FROM
-		(select * from results where walker_id in
-		(select walker_id from results
-		group by walker_id
-		having count(*)>11)
-		order by walker_id) as results12
-		) as foo
-		WHERE rank < 12 and rank >1
-		group by walker_id) as prumery,walkers where prumery.walker_id=walkers.id
-		order by dist desc")
-		@top5s = ActiveRecord::Base.connection.exec_query("select name as name, surname as surname, prumery.dist as top10 from
-		(SELECT walker_id, avg(distance) as dist
-		FROM (SELECT *, rank() OVER (PARTITION BY walker_id ORDER BY distance DESC)
-		FROM
-		(select * from results where walker_id in
-		(select walker_id from results
-		group by walker_id
-		having count(*)>6)
-		order by walker_id) as results12
-		) as foo
-		WHERE rank < 7 and rank >1
-		group by walker_id) as prumery,walkers where prumery.walker_id=walkers.id
-		order by dist desc")
+		@top10s = ActiveRecord::Base.connection.exec_query(IO.read("DBscripts/top10.sql"))
+		@top5s = ActiveRecord::Base.connection.exec_query(IO.read("DBscripts/top5.sql"))
 	end
 	
 	def dc_results
