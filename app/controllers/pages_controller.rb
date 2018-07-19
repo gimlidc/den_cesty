@@ -104,7 +104,7 @@ class PagesController < ApplicationController
 		WHERE rank < 12 and rank >1
 		group by walker_id) as prumery,walkers where prumery.walker_id=walkers.id
 		order by dist desc")
-		@top5s = ActiveRecord::Base.connection.exec_query("select name as name, surname as surname, prumery.dist as top10 from
+		@top5s = ActiveRecord::Base.connection.exec_query("select name as name, surname as surname, prumery.dist as top5 from
 		(SELECT walker_id, avg(distance) as dist
 		FROM (SELECT *, rank() OVER (PARTITION BY walker_id ORDER BY distance DESC)
 		FROM
