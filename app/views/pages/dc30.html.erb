@@ -1,0 +1,38 @@
+<div style="width:500px">
+  <p>
+    Den cesty je teréní závod na 24h během něhož, závodníkům není poskytována jakákoli podpora. Tedy žádné občerstvovací
+    stanice, záchytné hospody ani odvoz účastníků, pokud už nemohou. Trasu navrhujeme tak, aby byla co nejpřímější a
+    závodníci měli možnost poznat co nejpestřejší krajiny České Republiky.
+  </p>
+  <br />
+  <h1 color="red"><%= $dc.id %>. Den cesty</h1>
+  <h6 align="center"><%= $dc.name_cs %></h6>
+  <p>
+    30. Den cesty bude jiný než předchozí. Zvykem bývá mít start, výstřel z pistole a pak už nic. Slovy
+    klasika:<br/><br/>
+    <div style="text-align: center">"Žádný guláš, žádné ovace, na startu sraz, na konci nic."</div>
+    <div align="right">Milan Koudelka</div>
+    <br/><br/>
+    Tentokrát jsme se rozhodli, že to bude obráceně; a když už, tak všechno. Takže popořadě:
+  <ul>
+    <li>Start nebude, cíl ano</li>
+    <li>Trasu nevybírá organizátor, ale účastníci</li>
+    <li>Ovace i guláš budou :)</li>
+  </ul>
+  </p>
+  <p>Teď možná někoho napadne, že to je dost divný závod ... to byl ale DC vždycky :)
+    Sestavíte si vlastní trasu, nebo se přidáte k někomu jinému. Na závod bude klasických 24h, během kterých Vámi zvolenou trasu budete muset zdolat. Cíl bude v Ústí nad Orlicí (konečnou a přesnou lokalitu zjišťujeme).</p>
+  <h2>A jak na to?</h2>
+  <h4>Trasa</h4>
+  <p>
+    V rámci závodu si můžete vybrat naprosto jakoukoli trasu, která splňuje požadavky na trasu DC, tj. je co nejpřímější (žádné okruhy schvalovat nebudeme), vede z větší části na území ČR a končí v Ústí nad Orlicí. Trasu směřujte na autobusové nádraží. Můžete využívat pozemní komunikace, turistické trasy, lesní a polní cesty. Trasu neplánujte přes soukromé pozemky, nebezpečné úseky (velké vodní toky, skály, atd.).
+  </p>
+  <p>
+  Vámi připravenou trasu naklikejte na mapy.cz (buď pomocí měření vzdálenosti, nebo jako trasu z -> do) a link nám pošlete emailem na info@dencesty.cz. My ji převedeme do GPX a vystavíme zde na webu (pro další zájemce).
+  </p>
+  <h4>Start</h4>
+  Start závodu bude ve vámi zvoleném místě kdykoli od <%= $dc.start_time.localtime.strftime("%H:%M %d/%m/%Y") %> (tj.
+  není problém naplánovat si závod na 20 kilometrů a startovat až v 16h 27.4.).
+  <h4>Hodnocení</h4>
+  Obdobně jako u klasických DC budeme hodnotit pouze ujitou vzdálenost. Nové pravidlo, které si koncept vynucuje, je dosažení cíle do <%= $dc.start_time.localtime.strftime("%H:%M") %>. Kdo stanovený čas nedodrží bude diskvalifikován, takže plánujte dobře tak, abyste svůj záměr stihli (za libovolných atmosferických podmínek).
+</div>
