@@ -23,4 +23,5 @@ Gemfile.lock
 bin
 config/secrets.yml
 db/schema.rb
-
+.DS_Store
+app/views/.DS_Store
