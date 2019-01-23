@@ -26,7 +26,7 @@ body {
 	margin: 0px;
 	position:relative;	/* This fixes the IE7 overflow hidden bug */
 	clear:both;
-	width:100%;			/* width of whole page */	
+	width:100%;			/* width of whole page */
 }
 
 .main-content {

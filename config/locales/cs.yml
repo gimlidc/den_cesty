@@ -4,12 +4,18 @@ cs:
       walker:
         signed_up_but_unconfirmed: "Dočasné přihlášení, pro plnou funkcionalitu postupujte dle instrukcí odeslaných na uvedený email"
   activerecord:
+    attributes:
+      registration:
+        goal:
+          one: "Trasa: "
     errors:
       models:
         registration:
           attributes:
+            trail:
+              blank: "Vyber si prosím trasu. Pokud máš pocit, že v seznamu chybí, napiš (zatím) její požadovanou délku."
             goal:
-              blank: "Vyplň prosím svůj cíl - pomáhá nám to odhadnout, kde závodníci končí, či zda se máme starat jestli přežili."
+              blank: "Vyber prosím trasu. Pokud máš pocit, že v seznamu chybí, napiš (zatím) její požadovanou délku."
             bw_map:
               blank: "cannot be blank."
       messages:

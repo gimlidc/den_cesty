@@ -1,4 +1,4 @@
-<div style="width:500px">
+<div id="div-dc-30">
   <p>
     Den cesty je teréní závod na 24h během něhož, závodníkům není poskytována jakákoli podpora. Tedy žádné občerstvovací
     stanice, záchytné hospody ani odvoz účastníků, pokud už nemohou. Trasu navrhujeme tak, aby byla co nejpřímější a
@@ -20,31 +20,129 @@
     <li>Ovace i guláš budou :)</li>
   </ul>
   </p>
-  <p>Teď možná někoho napadne, že to je dost divný závod ... to byl ale DC vždycky :)
-    Sestavíte si vlastní trasu, nebo se přidáte k někomu jinému. Na závod bude klasických 24h, během kterých Vámi zvolenou trasu budete muset zdolat. Cíl bude v Ústí nad Orlicí (konečnou a přesnou lokalitu zjišťujeme).</p>
-  <h2>A jak na to?</h2>
-  <h4>Trasa</h4>
   <p>
-    V rámci závodu si můžete vybrat naprosto jakoukoli trasu, která splňuje požadavky na trasu DC, tj. je co nejpřímější (žádné okruhy schvalovat nebudeme), vede z větší části na území ČR a končí v místě cíle (viz níže). Můžete využívat pozemní komunikace, turistické trasy, lesní a polní cesty. Trasu neplánujte přes soukromé pozemky, nebezpečné úseky (velké vodní toky, skály, atd.).
+    Teď možná někoho napadne, že to je dost divný závod ... Ano je, je to totiž závod výroční a jde o to, se bavit, trochu se zničit a společně to oslavit.
   </p>
   <p>
-  Vámi připravenou trasu naklikejte na mapy.cz (buď pomocí měření vzdálenosti, nebo jako trasu z -> do) a link nám pošlete emailem na info@dencesty.cz. My ji převedeme do GPX a vystavíme zde na webu (pro další zájemce).
+    <b>TLDR:</b> Sestavíte si vlastní trasu, nebo se přidáte k někomu jinému. Na závod bude klasických 24h, během kterých Vámi zvolenou trasu budete muset zdolat. Cíl bude v TJ Sokol Kerhartice ... to je tady: <a href="https://en.mapy.cz/s/3lR5Y">https://en.mapy.cz/s/3lR5Y</a>.
   </p>
   <p>
-    Trasu je nutné připravit nejpozději do 1.4., aby byl čas ještě na schvalovací proces. A také aby ostatní závodníci měli dost času si z vytvořených tras vybrat.
+    Jo a vemte si sebou kámoše, ať je to pěkně veselej výroční závod!
   </p>
-  <h4>Start</h4>
-  Start závodu bude ve vámi zvoleném místě kdykoli od <%= $dc.start_time.localtime.strftime("%H:%M %d/%m/%Y") %> (tj.
-  není problém naplánovat si závod na 20 kilometrů a startovat až v 16h 27.4.).
-  <h4>Hodnocení</h4>
-  Obdobně jako u klasických DC budeme hodnotit pouze ujitou vzdálenost. Nové pravidlo, které si koncept vynucuje, je dosažení cíle do <%= $dc.start_time.localtime.strftime("%H:%M") %>. Kdo stanovený čas nedodrží bude diskvalifikován, takže plánujte dobře tak, abyste svůj záměr stihli (za libovolných atmosferických podmínek).
-  <h4>Cíl</h4>
-  Cíl bude v TJ Sokol Kerhartice - mapa. Zde bude i možnost přespání cca do neděle 11h.
-  <h4>Balík na poštu - Ústí nad Orlicí 1</h4>
+  <h2>Podrobné instrukce (aka Jak na to?)</h2>
+  <h3>Trasa</h3>
+  <span class="section" onclick="expand('#own_trail')" id="own_trail_section">
+    <span class="title">Chci vlastní trasu</span>
+  </span>
+  <div id="own_trail">
+    <p>
+      V rámci závodu si můžete vybrat naprosto jakoukoli trasu, která splňuje požadavky na trasu DC, tj. je co nejpřímější (žádné okruhy schvalovat nebudeme), vede z větší části na území ČR a končí v místě cíle (viz níže). Můžete využívat pozemní komunikace, turistické trasy, lesní a polní cesty. Trasu neplánujte přes soukromé pozemky, nebezpečné úseky (velké vodní toky, skály, atd.).
+    </p>
+    <p>
+    Vámi připravenou trasu naklikejte na mapy.cz (buď pomocí měření vzdálenosti, nebo jako trasu z -> do) a link nám pošlete emailem na info@dencesty.cz. My ji převedeme do GPX a vystavíme v seznamu níže (pro další zájemce).
+    </p>
+    <p>
+      Trasu je nutné připravit nejpozději do 1.4., aby byl čas ještě na schvalovací proces. A také aby ostatní závodníci měli dost času si z vytvořených tras vybrat.
+</p>
+  </div>
+  <span class="section" onclick="expand('#no_own_trail')" id="no_own_trail_section">
+    <span class="title">Chci se k někomu přidat</span>
+  </span>
+  <div id="no_own_trail">
+    <p>
+      Pokud se na vlastní trasu necítíte, vyberte si jednu ze zde uvedeného seznamu. Není nutné dodržet místo startu (tj. můžete začít kdekoli na trase), je ale nutné dodržet:
+      <ul>
+        <li>Časový limit 24h</li>
+        <li>Směr trasy</li>
+        <li>Cíl trasy v časovém limitu</li>
+      </ul>
+    </p>
+  </div>
+  <span class="section" onclick="expand('#trails')" id="trails_section">
+    <span class="title">Seznam tras 30. Dne cesty</span>
+  </span>
+  <div id="trails">
+    <p>
+      je zatím prázdný ... Můžeš být první, jehož trasa tu bude viset :)
+    </p>
+  </div>
+  <h3>Propozice</h3>
+  <span class="section" onclick="expand('#start')" id="start_section">
+    <span class="title">Start</span>
+  </span>
+  <div id="start">
+    <p>
+    Start závodu je potřeba si zvolit a to jak místo, tak čas.
+    </p>
+      <ul>
+        <li>Místem startu může být buď začátek nějaké trasy, ale také libovolný bod na některé z tras.</li>
+        <li>Startovat můžete kdykoli od <%= $dc.start_time.localtime.strftime("%H:%M %d/%m/%Y") %></li>
+      </ul>
+    <p>
+    Tedy není problém naplánovat si závod na 20 kilometrů a startovat až v <%= ($dc.start_time + 14.hours).localtime.strftime("%-H:%M %d.") %>.
+    </p>
+  </div>
+  <span class="section" onclick="expand('#finish')" id="finish_section">
+    <span class="title">Cíl</span>
+  </span>
+  <div id="finish">
+    <p>
+  Cíl bude v Sokolovně <a href="https://en.mapy.cz/s/3lR5Y">TJ Sokol Kerhartice</a>. Do cíle je nutné dorazit nejpozdějí do <%= ($dc.start_time + 1.day).localtime.strftime("%H:%M %d/%m/%Y") %>. Zde bude i možnost přespání cca do neděle 11h.
+    </p>
+  </div>
+  <span class="section" onclick="expand('#evaluation')" id="evaluation_section">
+    <span class="title">Hodnocení</span>
+  </span>
+  <div id="evaluation">
+    <p>
+  Obdobně jako u klasických DC budeme hodnotit pouze ujitou vzdálenost. Nové pravidlo, které si koncept vynucuje, je dosažení cíle do <%= ($dc.start_time + 1.day).localtime.strftime("%H:%M") %>. Kdo stanovený čas nedodrží bude diskvalifikován, takže plánujte dobře tak, abyste svůj záměr stihli (za libovolných atmosferických podmínek).
+    </p>
+  </div>
+  <span class="section" onclick="expand('#backpack')" id="backpack_section">
+    <span class="title">Nechci táhnout bagáž na přespání!</span>
+  </span>
+  <div id="backpack">
+  <p><i>Jako fajn, mi tě chápeme. Jenže, ... každej začne jinde, takže svážet to asi nepude ... počkat ... <b>Balík na poštu - Ústí nad Orlicí 1!</b></i></p>
   <p>
   Protože je pravděpodobné, že chcete v cíli nejen sprchu, ale taky ručník (a spacák) je plán následující: Každý účastník bude mít možnost poslat si věci pomocí služby balík na poštu na pobočku české pošty <a href="https://www.postaonline.cz/detail-pobocky/-/pobocky/detail/56201">Ústí nad Orlicí 1</a>, kde balíky v sobotu ráno vyzvedneme. Prosíme, pokud máte pěnovou karimatku, dodržte způsob balení - karimatka tvořící obal, věci uvnitř. Balík bude mít tedy tvar válce o výšce shodné se šířkou karimatky. Usnadní se nám převoz i dohledávání.
   </p>
   <p>
-    Balík je nutné vybavit identifikací adresáta, ovšem nezáleží na něm, pro vyzvednutí je potřeba pouze kód. Pokud uvedete náš email info@dencesty.cz a telefon 776009870 budeme mít jak kód, tak info o putování balíku. V případě, že chcete mít balík pod kontrolou sami, je nutné nám pro vyzvednutí poslat kód (ideálně 24 hodin předem, tj. v pátek 8:00 ráno). Pozor, pošta v Ústí má otevřeno pouze do 11h, tj. sami si asi balík vyzvednout nestihnete.
+    Balík je nutné vybavit identifikací adresáta, ovšem nezáleží na něm, pro vyzvednutí je potřeba pouze kód. Pokud uvedete náš email info@dencesty.cz a telefon 776009870 budeme mít jak kód, tak info o putování balíku. V případě, že chcete mít balík pod kontrolou sami, je nutné nám pro vyzvednutí poslat kód. Kód pošlete do pátku 8:00 ráno. Pozor, pošta v Ústí má otevřeno pouze do 11h, tj. sami si asi balík vyzvednout nestihnete.
+  </p>
+  </div>
+</div>
+<div>
+  <h4><%= t 'actual.registered' %></h4>&nbsp;(<%= @registered_walkers.size %>
+    /<span class="red"><%= $dc.limit %></span>):
+  <p>
+    <% if !@registered_walkers.nil? && !@registered_walkers.empty? %>
+      <table width="100%" border="1" cellpadding="3">
+        <tr>
+          <th>Závodník</th>
+          <th>poslední změna</th>
+          <th>nejlepší výkon na DC</th>
+          <th>Zaplaceno</th>
+        </tr>
+        <% @registered.each do |reg| %>
+          <tr <% if !reg.nil? && walker_signed_in? && reg["id"].to_f == current_walker.id %> class="bold" <% end %>>
+            <td><%= reg["name"] %> <%= reg["surname"] %></td>
+            <td align="right"><%= DateTime.parse(reg["updated_at"]).strftime("%d.%m %Y")%></td>
+            <td align="center">
+              <% if !reg["official"].nil? %>
+                <%= reg["official"] %>km
+              <% else %>
+                DNS
+              <% end %>
+            </td>
+            <td align="center">
+              <% if reg["confirmed"] == "t" %>
+                ano
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    ...
   </p>
 </div>

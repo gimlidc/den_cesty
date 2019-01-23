@@ -1,0 +1,35 @@
+#div-dc-30 .section {
+  display: block;
+  background-color: ghostwhite;
+  border: 1px solid gray;
+  line-height: 26px;
+  padding: 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: -1px;
+}
+
+#div-dc-30 .section .title {
+  font-weight: bold;
+  font-size: 10pt;
+
+}
+
+#div-dc-30 .section::after {
+  content: "\25BD";
+  margin-right: 0px;
+  float:right;
+  margin-right: 5px;
+}
+
+#div-dc-30 .section.expand::after {
+  content: "\25B3";
+}
+
+#div-dc-30 .section + div {
+  display: none;
+}
+
+h2 {
+  text-align: center;
+}

@@ -7,3 +7,18 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+
+function expand(id) {
+    console.log("Toggle event: " + id);
+    elm = $(id);
+    if (!elm) {
+        return
+    }
+    if (!elm.is(":hidden")) {
+        elm.hide(500);
+    } else {
+        elm.show(500);
+    }
+    $(id + "_section").toggleClass("expand")
+}
