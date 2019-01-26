@@ -27,9 +27,9 @@ class PagesController < ApplicationController
 
 	def rules
 		if I18n.locale == :cs
-			render "pravidla.html.erb"
+			render "pravidla30.html.erb"
 		else
-			render "rules.html.erb"
+			render "rules30.html.erb"
 		end
 	end
 
