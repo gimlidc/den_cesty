@@ -127,6 +127,7 @@
           <th>Závodník</th>
           <th>poslední změna</th>
           <th>nejlepší výkon na DC</th>
+          <th>Trasa (vzdálenost)</th>
           <th>Zaplaceno</th>
         </tr>
         <% @registered.each do |reg| %>
@@ -139,6 +140,9 @@
               <% else %>
                 DNS
               <% end %>
+            </td>
+            <td>
+              <%= reg["goal"] %>
             </td>
             <td align="center">
               <% if reg["confirmed"] == "t" %>
