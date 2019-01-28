@@ -56,7 +56,7 @@ SimpleNavigation::Configuration.run do |navigation|
     
     # A big group of buttons available only for logged users
     if walker_signed_in? 
-      if (registration_for_current_exist?) && ((has_valid_registration?($dc.id) && $dc.start_time > Time.now) || Time.now < $registration_deadline)
+      if ($dc.id.modulo(10) != 0 || races_finished >= 0 || registration_for_current_exist?) && ((has_valid_registration?($dc.id) && $dc.start_time > Time.now) || Time.now < $registration_deadline)
         top.item :registration, I18n.t('Registration') do |registration|
           registration.dom_class = "walker-menu"
           if has_valid_registration?($dc.id)
