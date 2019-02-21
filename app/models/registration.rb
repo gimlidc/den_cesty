@@ -15,7 +15,6 @@ class Registration < ActiveRecord::Base
 	validates :phone, :presence => true, :allow_blank => false
 	attr_accessible :walker_id, :dc_id, :bw_map, :colour_map, :shirt_size, :shirt_polyester, :scarf, :goal, :phone, :canceled, :confirmed, :created_at
 	validates :phone, :presence => true, :allow_blank => false
-	alias_attribute :trail, :goal
 	
 	def has_textile?
 	  if self.scarf || self.shirt_size != "NO" || self.shirt_polyester != "NO"

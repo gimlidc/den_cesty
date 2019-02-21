@@ -7,6 +7,7 @@
   <br />
   <h1 color="red"><%= $dc.id %>. Den cesty</h1>
   <h6 align="center"><%= $dc.name_cs %></h6>
+  <h4 align="center"><%= $dc.start_time.localtime.strftime("%d/%m/%Y") %></h4>
   <p>
     30. Den cesty bude jiný než předchozí. Zvykem bývá mít start, výstřel z pistole a pak už nic.
     Tentokrát jsme se rozhodli, že to bude obráceně; a když už, tak všechno. Takže popořadě:
@@ -59,7 +60,18 @@
   </span>
   <div id="trails">
     <p>
-      je zatím prázdný ... Můžeš být první, jehož trasa tu bude viset :)
+      <ul>
+        <li><a href="https://mapy.cz/s/3mCZs">Havlíčkův Brod</a> (115km) - Vojta Šroller</li>
+        <li><a href="https://mapy.cz/s/3mFsB">Jeseník</a> (111km) - Filip Drazdík</li>
+        <li><a href="https://en.mapy.cz/s/3nBdJ">Hradec Králové</a> (93km) - Aleš Jahelka</li>
+        <li><a href="https://mapy.cz/s/3nKYw">Litovel</a> (93km) - Tomáš Štec</li>
+        <li><a href="https://mapy.cz/s/3nRVl">Ždár nad Sázavou</a> (105km) - Pavel Rossner</li>
+        <li><a href="https://mapy.cz/turisticka?planovani-trasy&x=16.0934620&y=49.8567167&z=11&rc=9j.mcxVkvVlNg3H.iI1xVrclka1mhRhfniScfLNiGfVnhph3ONxW63Hh30xW-dG9kW2WxWj4t9k3icmEp9l24CxXNQxijLj1Fgd0hg-ja5kfWmUZfWMmoNcZKlc1ble&rs=coor&rs=stre&rs=coor&rs=coor&rs=coor&rs=coor&rs=stre&rs=coor&rs=coor&rs=coor&rs=coor&rs=coor&rs=coor&rs=coor&rs=coor&rs=coor&rs=coor&rs=stre&ri=&ri=88022&ri=&ri=&ri=&ri=&ri=91319&ri=&ri=&ri=&ri=&ri=&ri=&ri=&ri=&ri=&ri=&ri=137107&mrp=%7B%22c%22%3A131%7D&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&rt=&xc=%5B%5D">Ždírec nad Doubravou</a> (72km) - Petr Bulíček</li>
+        <li><a href="https://en.mapy.cz/s/3nWXw">Brněnec</a> (56km) - Matt van Order</li>
+        <li><a href="https://en.mapy.cz/s/3ocUy">Teplice nad Metují</a> (108km) - Jakub Zíta, Martin Provazník</li>
+        <li><a href="https://mapy.cz/s/3od4e">Žacléř</a> (127km) - Dušan Klíma</li>
+        <li><a href="https://www.dencesty.cz/map/42">Čebinka</a> (106km) - Blanka Šafránková, Ivana Čahojová, Eduard Hečko</li>
+      </ul>
     </p>
   </div>
   <h3>Propozice</h3>
@@ -83,7 +95,7 @@
   </span>
   <div id="finish">
     <p>
-  Cíl bude v Sokolovně <a href="https://en.mapy.cz/s/3lR5Y">TJ Sokol Kerhartice</a>. Do cíle je nutné dorazit nejpozdějí do <%= ($dc.start_time + 1.day).localtime.strftime("%H:%M %d/%m/%Y") %>. Zde bude i možnost přespání cca do neděle 11h.
+  Cíl bude v Sokolovně <a href="https://en.mapy.cz/s/3lR5Y">TJ Sokol Kerhartice</a>. Do cíle je nutné dorazit nejpozdějí do <%= ($dc.start_time + 1.day).localtime.strftime("%H:%M %d/%m/%Y") %>. Cíl bude otevřen od 18h (do této doby vyčkávejte třeba v přilehlé hospodě :). V tělocvičně bude možnost přespání cca do neděle 11h.
     </p>
   </div>
   <span class="section" onclick="expand('#price')" id="price_section">
@@ -91,7 +103,9 @@
   </span>
   <div id="price">
     <p>
-      Startovné bude klasicky 50 Kč a zahrnuje v cíli sprchu a přespání v tělocvičně. Volitelné položky bavlněné či funkční výroční tričko (350 Kč).
+      Startovné je stanoveno na <b><%= $dc.reg_price %>Kč</b> (zahrnuje sprchu a přespání v tělocvičně).
+      Volitelné položky jsou: bavlněné tričko (<%= $dc.shirt_price %>Kč), funkční tričko
+      (<%= $dc.polyester_shirt_price %>Kč), šátek (<%= $dc.scarf_price %>Kč). Textil bude v bílé barvě.
     </p>
   </div>
   <span class="section" onclick="expand('#evaluation')" id="evaluation_section">
@@ -125,6 +139,7 @@
           <th>Závodník</th>
           <th>poslední změna</th>
           <th>nejlepší výkon na DC</th>
+          <th>Trasa (vzdálenost)</th>
           <th>Zaplaceno</th>
         </tr>
         <% @registered.each do |reg| %>
@@ -137,6 +152,9 @@
               <% else %>
                 DNS
               <% end %>
+            </td>
+            <td>
+              <%= reg["goal"] %>
             </td>
             <td align="center">
               <% if reg["confirmed"] == "t" %>

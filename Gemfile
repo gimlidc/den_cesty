@@ -37,7 +37,7 @@ end
 # gem 'ruby-debug'
 
 # XML processing
-gem 'nokogiri', '1.6.7.2'
+gem 'nokogiri'
 
 gem "bcrypt-ruby", :require => "bcrypt"
 
