@@ -7,8 +7,7 @@ gem 'rails'
 
 gem 'pg', '~>0.18.4'
 gem 'execjs', '~>2.6.0'
-gem 'therubyracer'
-gem 'devise', '~>3.5.6'
+gem 'devise', '~>4.4.3'
 gem 'simple-navigation'
 
 gem 'json', '~>1.8.3'

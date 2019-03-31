@@ -32,6 +32,8 @@ cs:
       timeout: 'Vaše relace vypršela, přihlašte se prosím znovu, pak můžete pokračovat.'
       inactive: 'Váš účet ještě nebyl aktivován.'
       already_authenticated: 'Přihlášení již proběhlo.'
+      walker:
+        not_found_in_database: 'Přihlášení se nezdařilo, zkontrolujte prosím zadané údaje.'
     sessions:
       signed_in: 'Přihlášení úspěšné.'
       signed_out: 'Odhlášení úspěšné.'
