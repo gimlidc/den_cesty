@@ -98,9 +98,14 @@
         <li><a href="https://en.mapy.cz/s/3qpUT">Horka nad Moravou</a>(106km) - Bedřich Hak</li>
         <li><a href="https://mapy.cz/s/3qnI7">Žďár nad Sázavou</a>(95km) - Martin Dungl II</li>
         <li><a href="https://en.mapy.cz/s/3qptQ">Hajnice</a>(98km) - Zdeněk Jarůšek</li>
-        <li><a href="https://en.mapy.cz/s/3qpXC">Markokušovice</a>(145km) - Erik Krumphanzl</li>
+        <li><a href="https://en.mapy.cz/s/3qpXC">Markoušovice</a>(145km) - Erik Krumphanzl</li>
         <li><a href="https://mapy.cz/s/3qpXZ">Brno II</a>(140km) - Karel Bílek</li>
         <li><a href="https://en.mapy.cz/s/3qrLT">Hajnice II</a> - Zdeněk Jarůšek II</li>
+      </ul>
+      <ul>
+        <% @dc_routes.each do |route| %>
+          <li><a href="https://dencesty.cz/map/<%= route.id %>"><%= route.name_cs[8..-1] %></a> (<%= "%.1f" % (route.length_in_meters/1000) %>km) - <%= route.name_en %></li>
+        <% end %>
       </ul>
     </p>
   </div>
