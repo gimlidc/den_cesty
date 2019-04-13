@@ -9,14 +9,17 @@
 //= require_tree .
 
 $(document).ready(function() {
-    ids = JSON.parse($.cookie("expandSection"));
-    console.log(ids);
-    if (ids && Array.isArray(ids)) {
-        ids.forEach(id => {
-            elm = $(id);
-            $(id + "_section").toggleClass("expand");
-            elm.show(500)
-        });
+    data = $.cookie("expandSection");
+    if (data) {
+        ids = JSON.parse(data);
+        console.log(ids);
+        if (ids && Array.isArray(ids)) {
+            ids.forEach(id => {
+                elm = $(id);
+                $(id + "_section").toggleClass("expand");
+                elm.show(500)
+            });
+        }
     }
 });
 
@@ -25,9 +28,14 @@ function expand(id) {
     if (!elm) {
         return
     }
-    sections = JSON.parse($.cookie("expandSection"));
-    if (!sections || !Array.isArray(sections)) {
+    data = $.cookie("expandSection");
+    if (!data) {
         sections = []
+    } else {
+        sections = JSON.parse(data);
+        if (!sections || !Array.isArray(sections)) {
+            sections = []
+        }
     }
     if (!elm.is(":hidden")) {
         idx = sections.indexOf(id);
