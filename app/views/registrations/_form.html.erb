@@ -10,7 +10,8 @@
 
   <% if $dc.id == 30 %>
     <div>Zvolená trasa<br />
-      <%= f.select :goal, options_from_collection_for_select(@dc_routes, "id", "dc_select", @reg.goal.to_i) %></div>
+      <%= f.select :goal, options_from_collection_for_select(
+          @dc_routes, "id", "dc_select", (@reg && @reg.goal) ? @reg.goal.to_i : 0 ) %></div>
   <% else %>
     <div><%= f.label t :goal %><br />
 	  <%= f.text_field :goal %></div>
