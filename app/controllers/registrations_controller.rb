@@ -18,6 +18,7 @@ class RegistrationsController < ApplicationController
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("sign_up_dc")
 		@action = "create"
+		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:id)
 	end
 
 	def create
@@ -50,6 +51,7 @@ class RegistrationsController < ApplicationController
 		if walker_signed_in?
 			@registration = Registration.joins(:walker).where(:canceled => false, :dc_id => $dc.id).order(:surname)
 			@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+			@dc_route = Race.find(@reg.goal)
 
       qrstring = "SPD*1.0*ACC:" << $IBAN
       qrstring = qrstring << "*AM:" << price(@reg).to_s << "*CC:CZK"
@@ -77,6 +79,7 @@ class RegistrationsController < ApplicationController
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("Save")
 		@action = "update"
+		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:id)
 	end
 
 # @param reg created registration
@@ -104,7 +107,15 @@ class RegistrationsController < ApplicationController
             reg.scarf = params[:registration][:scarf]
           end
         end
-        
+
+				@routes_ids = Race.where("name_cs LIKE '%[DC30]%'").pluck(:id)
+				puts(@routes_ids)
+				if not @routes_ids.include? params[:registration][:goal].to_i
+					flash.notice = 'Trasa není žádnou ze schválených, prosím vyber si některou z nich.'
+					redirect_to :action => 'edit'
+					return
+				end
+
 				reg.goal = params[:registration][:goal]
 				reg.phone = params[:registration][:phone]
 				reg.canceled = false				

@@ -6,6 +6,14 @@ class Race < ActiveRecord::Base
 
   attr_accessible :name_cs, :name_en, :start_time, :finish_time, :visible
 
+  def dc_select
+    dc_name + " (" + "%.1f" % (length_in_meters/1000) + "km)"
+  end
+
+  def dc_name
+    name_cs[8..-1]
+  end
+
   def length_in_meters
     latlons = []
     checkpoints.each do |checkpoint|
