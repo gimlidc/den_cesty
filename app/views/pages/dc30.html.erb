@@ -148,7 +148,15 @@
               <% end %>
             </td>
             <td>
-              <%= reg["goal"] %>
+              <% if reg["goal"].match(/^[0-9]*$/) && reg["goal"].to_i >= 42 && reg["goal"].to_i <= 78 %>
+                <% @dc_routes.each do |route| %>
+                  <% if route.id == reg["goal"].to_i %>
+                    <%= route.dc_select %><span style="color: darkgreen">✓</span>
+                  <% end %>
+                <% end %>
+              <% else %>
+                  <span style="text-decoration: line-through"><%= reg["goal"] %></span>
+              <% end %>
             </td>
             <td align="center">
               <% if reg["confirmed"] == "t" %>
