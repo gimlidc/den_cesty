@@ -39,11 +39,11 @@ function expand(id) {
     }
     if (!elm.is(":hidden")) {
         idx = sections.indexOf(id);
-        sections.splice(idx, 1)
+        sections.splice(idx, 1);
         $.cookie("expandSection", JSON.stringify(sections));
         elm.hide(500);
     } else {
-        sections.push(id)
+        sections.push(id);
         $.cookie("expandSection", JSON.stringify(sections));
         elm.show(500);
     }
