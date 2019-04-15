@@ -18,7 +18,7 @@ class RegistrationsController < ApplicationController
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("sign_up_dc")
 		@action = "create"
-		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:id)
+		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:name_cs)
 	end
 
 	def create
@@ -79,7 +79,7 @@ class RegistrationsController < ApplicationController
 		@walker = Walker.find(current_walker[:id])
 		@store_string = I18n.t("Save")
 		@action = "update"
-		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:id)
+		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:name_cs)
 	end
 
 # @param reg created registration
