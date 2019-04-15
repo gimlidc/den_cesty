@@ -148,7 +148,7 @@
               <% end %>
             </td>
             <td>
-              <% if reg["goal"].match(/^[0-9]*$/) && reg["goal"].to_i >= 42 && reg["goal"].to_i <= 78 %>
+              <% if reg["goal"].match(/^[0-9]*$/) && reg["goal"].to_i >= 42 && reg["goal"].to_i <= 79 %>
                 <% @dc_routes.each do |route| %>
                   <% if route.id == reg["goal"].to_i %>
                     <%= route.dc_select %><span style="color: darkgreen">✓</span>
