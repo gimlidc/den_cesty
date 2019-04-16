@@ -26,7 +26,7 @@ class WalkerMailer < ActionMailer::Base
     @walker = registration.walker
     @reg = registration
     @svg = createQrCode(@reg)
-    if @reg["goal"].match(/^[0-9]*$/) && @reg["goal"].to_i >= 42 && @reg["goal"].to_i <= 79
+    if @reg["goal"].match(/^[0-9]*$/) && @reg["goal"].to_i >= 42 && @reg["goal"].to_i <= $dc30_route_id_max
       @dc_route = Race.find(@reg.goal)
     end
     mail(to: registration.walker.email, subject: I18n.t("registration payment notification"))
@@ -36,7 +36,7 @@ class WalkerMailer < ActionMailer::Base
     @walker = registration.walker
     @reg = registration
     @svg = createQrCode(@reg)
-    if @reg["goal"].match(/^[0-9]*$/) && @reg["goal"].to_i >= 42 && @reg["goal"].to_i <= 79
+    if @reg["goal"].match(/^[0-9]*$/) && @reg["goal"].to_i >= 42 && @reg["goal"].to_i <= $dc30_route_id_max
       @dc_route = Race.find(@reg.goal)
     end
     mail(to: registration.walker.email, subject: I18n.t("registration updated"))
