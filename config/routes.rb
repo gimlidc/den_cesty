@@ -2,6 +2,7 @@ DenCesty::Application.routes.draw do
 
   get "outgrowths/show"
   get "outgrowths/race_record" => 'outgrowths/race_record', :as => :gpx, via: [:get]
+	get "races/race_record" => 'races/race_record', :as => :route_gpx, via: [:get]
 
   resources :dcs
 

@@ -63,7 +63,10 @@
     <p>
       <ul>
         <% @dc_routes.each do |route| %>
-          <li><a href="https://dencesty.cz/map/<%= route.id %>"><%= route.dc_name %></a> (<%= "%.1f" % (route.length_in_meters/1000) %>km) - <%= route.name_en %></li>
+          <li>
+            <a href="https://dencesty.cz/map/<%= route.id %>"><%= route.dc_name %></a> (<%= "%.1f" % (route.length_in_meters/1000) %>km) - <%= route.name_en %>
+            <%= link_to 'GPX', :controller => 'races', :action => 'race_record', :format => :gpx, :race_id => route.id %>
+          </li>
         <% end %>
       </ul>
     </p>
