@@ -32,7 +32,11 @@ class ApiController < ApplicationController
 
   # /api/races(.json)
   def races
-    races = Race.where(:visible => true).order('finish_time DESC')
+    if is_admin?
+      races = Race.all().order('finish_time DESC')
+    else
+      races = Race.where(:visible => true).order('finish_time DESC')
+    end
     render :json => races
   end
 
@@ -41,7 +45,7 @@ class ApiController < ApplicationController
     race = Race.find(params[:id])
 
     show_time = Time.now + 1.hours  # allow only one hour before start or later
-    if (race.start_time < show_time && race.visible?)
+    if (race.start_time < show_time && (race.visible? || is_admin?))
       checkpoints = race.checkpoints.order(:checkid)
       walkers_score = Scoreboard.where(:race_id => race.id, :walker_id => params[:walker_id]).first
       if !walkers_score.present?
@@ -58,16 +62,25 @@ class ApiController < ApplicationController
   # /api/scoreboard/:id(.json)?walker_id=:walker_id
   def scoreboard
     race_id = params[:id]
+    race_range_min = 81
+    race_range_max = 82
     walker_id = params[:walker_id]
     walkers_score = Scoreboard.where(:race_id => race_id, :walker_id => walker_id).first
 
   	if walkers_score
-
-      numWalkersAhead = Scoreboard.where(:race_id => race_id).count(:conditions => "distance > " + walkers_score.distance.to_s)
-      numWalkersBehind = Scoreboard.where(:race_id => race_id).count(:conditions => "distance <= " + walkers_score.distance.to_s + " AND walker_id <> " + walkers_score.walker.id.to_s)
-      numWalkersEnded = Scoreboard.where(:race_id => race_id).count(:conditions => "\"raceState\" = 2 AND walker_id <> " + walkers_score.walker.id.to_s)
-      walkersAheadDB = Scoreboard.where("race_id = ? AND distance > ?", race_id, walkers_score.distance).order("distance DESC")
-      walkersBehindDB = Scoreboard.where("race_id = ? AND distance <= ? AND walker_id <> ?", race_id, walkers_score.distance, walkers_score.walker.id.to_s).order("distance DESC")
+      if race_id >= race_range_min && race_id <= race_range_max
+        numWalkersAhead = Scoreboard.all().count(:conditions => "race_id <=" + race_range_max + " AND " + "race_id >=" + race_range_min + " AND " + "distance > " + walkers_score.distance.to_s)
+        numWalkersBehind = Scoreboard.all().count(:conditions => "race_id <=" + race_range_max + " AND " + "race_id >=" + race_range_min + " AND " + "distance <= " + walkers_score.distance.to_s + " AND walker_id <> " + walkers_score.walker.id.to_s)
+        numWalkersEnded = Scoreboard.all().count(:conditions => "race_id <=" + race_range_max + " AND " + "race_id >=" + race_range_min + " AND " + "\"raceState\" = 2 AND walker_id <> " + walkers_score.walker.id.to_s)
+        walkersAheadDB = Scoreboard.where("race_id <= ? AND race_id >= ? AND distance > ?", race_range_max, race_range_min, walkers_score.distance).order("distance DESC")
+        walkersBehindDB = Scoreboard.where("race_id <= ? AND race_id >= ? AND distance <= ? AND walker_id <> ?", race_range_max, race_range_min, walkers_score.distance, walkers_score.walker.id.to_s).order("distance DESC")
+      else
+        numWalkersAhead = Scoreboard.where(:race_id => race_id).count(:conditions => "distance > " + walkers_score.distance.to_s)
+        numWalkersBehind = Scoreboard.where(:race_id => race_id).count(:conditions => "distance <= " + walkers_score.distance.to_s + " AND walker_id <> " + walkers_score.walker.id.to_s)
+        numWalkersEnded = Scoreboard.where(:race_id => race_id).count(:conditions => "\"raceState\" = 2 AND walker_id <> " + walkers_score.walker.id.to_s)
+        walkersAheadDB = Scoreboard.where("race_id = ? AND distance > ?", race_id, walkers_score.distance).order("distance DESC")
+        walkersBehindDB = Scoreboard.where("race_id = ? AND distance <= ? AND walker_id <> ?", race_id, walkers_score.distance, walkers_score.walker.id.to_s).order("distance DESC")
+      end
 
       walkersAhead = []
       walkersAheadDB.each do |wa|
@@ -203,6 +216,7 @@ class ApiController < ApplicationController
       else
         # if new, set location to Race start location (checkpoint 0)
         start = Checkpoint.where(:race_id => event.race_id, :checkid => 0).first
+        # TODO: find nearest checkpoint or zero
         score.latitude = start.latitude
         score.longitude = start.longitude
         score.save
