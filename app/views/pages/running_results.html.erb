@@ -28,7 +28,7 @@ Vysvětlivky:
     <td><%= entry.avgSpeed %></td>
     <td><%= entry.updated_at %></td>
     <td><%= raceStatePretty(entry.raceState) %></td>
-    <td><%= link_to "GPX", :controller => "outgrowths", :action => "race_record", :format => :gpx, :walker_id => entry.walker.id, :race_id => @race.id %></td>
+    <td><%= link_to "GPX", :controller => "outgrowths", :action => "route", :format => :gpx, :walker_id => entry.walker.id, :race_id => @race.id %></td>
   </tr>
 <% end %>
 </table>

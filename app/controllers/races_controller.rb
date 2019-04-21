@@ -1,7 +1,8 @@
 class RacesController < ApplicationController
 
-  skip_before_filter :check_admin?
-  before_filter :check_admin?, :except => [:race_record]
+  skip_before_filter :check_admin?, :check_logged_in?
+  before_filter :check_admin?, :except => [:route, :track]
+  before_filter :check_logged_in?, :except => [:route, :track]
 
   def index
     @races = Race.order('id DESC')
@@ -51,13 +52,24 @@ class RacesController < ApplicationController
     redirect_to(:action => 'index')
   end
 
-  def race_record
+  def route
     @race = Race.find_by_id(params[:race_id])
     @route = Checkpoint.where(:race_id => params[:race_id]).order(:checkid)
 
     respond_to do |format|
       format.gpx do
-        headers['Content-Disposition'] = 'attachment;filename="rece_record.gpx"'
+        headers['Content-Disposition'] = 'attachment;filename="route.gpx"'
+      end
+    end
+  end
+
+  def track
+    @race = Race.find_by_id(params[:race_id])
+    @route = Checkpoint.where(:race_id => params[:race_id]).order(:checkid)
+
+    respond_to do |format|
+      format.gpx do
+        headers['Content-Disposition'] = 'attachment;filename="track.gpx"'
       end
     end
   end
