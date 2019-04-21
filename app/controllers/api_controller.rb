@@ -71,7 +71,7 @@ class ApiController < ApplicationController
       if race_id.to_i >= race_range_min && race_id.to_i <= race_range_max
         numWalkersAhead = Scoreboard.where("race_id <= ? AND race_id >= ? AND " + "distance > ?", race_range_max, race_range_min, walkers_score.distance.to_s).count()
         numWalkersBehind = Scoreboard.where("race_id <= ? AND race_id >= ? AND distance <= ? AND walker_id <> ?", race_range_max, race_range_min, walkers_score.distance.to_s, walkers_score.walker.id.to_s).count()
-        numWalkersEnded = Scoreboard.where("race_id <= ? AND race_id >= ? AND \"raceState\" = 2 AND walker_id <> ?" + race_range_max, race_range_min, walkers_score.walker.id.to_s).count()
+        numWalkersEnded = Scoreboard.where("race_id <= ? AND race_id >= ? AND \"raceState\" = 2 AND walker_id <> ?", race_range_max, race_range_min, walkers_score.walker.id.to_s).count()
         walkersAheadDB = Scoreboard.where("race_id <= ? AND race_id >= ? AND distance > ?", race_range_max, race_range_min, walkers_score.distance).order("distance DESC")
         walkersBehindDB = Scoreboard.where("race_id <= ? AND race_id >= ? AND distance <= ? AND walker_id <> ?", race_range_max, race_range_min, walkers_score.distance, walkers_score.walker.id.to_s).order("distance DESC")
       else
