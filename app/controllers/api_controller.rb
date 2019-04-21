@@ -68,7 +68,7 @@ class ApiController < ApplicationController
     walkers_score = Scoreboard.where(:race_id => race_id, :walker_id => walker_id).first
 
   	if walkers_score
-      if race_id >= race_range_min && race_id <= race_range_max
+      if race_id.to_i >= race_range_min && race_id.to_i <= race_range_max
         numWalkersAhead = Scoreboard.all().count(:conditions => "race_id <=" + race_range_max + " AND " + "race_id >=" + race_range_min + " AND " + "distance > " + walkers_score.distance.to_s)
         numWalkersBehind = Scoreboard.all().count(:conditions => "race_id <=" + race_range_max + " AND " + "race_id >=" + race_range_min + " AND " + "distance <= " + walkers_score.distance.to_s + " AND walker_id <> " + walkers_score.walker.id.to_s)
         numWalkersEnded = Scoreboard.all().count(:conditions => "race_id <=" + race_range_max + " AND " + "race_id >=" + race_range_min + " AND " + "\"raceState\" = 2 AND walker_id <> " + walkers_score.walker.id.to_s)
