@@ -53,7 +53,8 @@ class AdminController < ApplicationController
 	  walker_id = "#{params[:id]}"
     @walker = Walker.find(walker_id)
     @registration = Registration.where(:walker_id => walker_id, :dc_id => $dc.id).first
-    
+    @dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:name_cs)
+
     if @registration.nil?
       @registration = Registration.new
       @new_registration = true

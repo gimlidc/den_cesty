@@ -28,7 +28,10 @@
   <%= f.hidden_field :walker_id, :value => @walker.id %>
   <%= f.hidden_field :dc_id, :value => $dc.id %>
   <div><%= f.text_field :phone %><%= f.label "telefon" %></div>
-  <div><%= f.text_field :goal %><%= f.label "cíl" %></div>
+  <div>
+    <%= f.select :goal, options_from_collection_for_select(
+        @dc_routes, "id", "dc_select", (@registration && @registration.goal) ? @registration.goal.to_i : 0 ) %></div>
+
   <div><%= f.check_box :bw_map %>
 	<%= f.label t :bw_map %></div>
   <div><%= f.check_box :colour_map %>
