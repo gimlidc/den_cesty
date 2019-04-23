@@ -85,7 +85,7 @@ class RegistrationsController < ApplicationController
 # @param reg created registration
 # @param walker owning the registration
   def update_db(reg, walker)
-		if (Time.now > $registration_deadline)
+		if (Time.now > $registration_edit_deadline)
 			flash.notice = "It's after deadline for registration, changes was not accepted."
 			redirect_to :action => :show
 		else
