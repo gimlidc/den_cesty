@@ -81,6 +81,7 @@ class ApplicationController < ActionController::Base
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $map_deadline = ($dc.start_time - 6.days).end_of_day
       $registration_deadline = ($dc.start_time - 4.days).end_of_day
+      $registration_edit_deadline = ($dc.start_time - 5.hours)
       $registration_starts = true
       $report_deadline = ($dc.start_time + 1.month).end_of_day
       $dc30_route_id_max = 80

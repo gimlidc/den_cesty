@@ -61,8 +61,8 @@ SimpleNavigation::Configuration.run do |navigation|
           registration.dom_class = "walker-menu"
           if has_valid_registration?($dc.id)
             registration.item :show_registration, I18n.t('Show registration'), registration_path
-            registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path, if: -> { Time.now < $registration_deadline }            
-            registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path, if: -> { registration_payed? && $dc.id.modulo(10) != 0 }            
+            registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path, if: -> { Time.now < $registration_edit_deadline }
+            registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path, if: -> { registration_payed? && Time.now < $registration_edit_deadline }
             registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?")
           else
             registration.item :new_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path, if: -> { Time.now < $registration_deadline }

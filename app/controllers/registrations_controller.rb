@@ -7,29 +7,39 @@ class RegistrationsController < ApplicationController
   include RegistrationsHelper
 
 	def new
-		@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
-		if !@reg.nil?
-			if (!@reg.canceled)
-				flash.notice = "You are already registered."
+		if (Time.now > $registration_deadline)
+			flash.notice = "It's after deadline for registration, registration creation is not allowed."
+			redirect_to :controller => :pages, :action => :actual
+		else
+			@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+			if !@reg.nil?
+				if (!@reg.canceled)
+					flash.notice = "You are already registered."
+				end
+				redirect_to :action => :edit
 			end
-			redirect_to :action => :edit
+			@registration = Registration.new
+			@walker = Walker.find(current_walker[:id])
+			@store_string = I18n.t("sign_up_dc")
+			@action = "create"
+			@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:name_cs)
 		end
-		@registration = Registration.new
-		@walker = Walker.find(current_walker[:id])
-		@store_string = I18n.t("sign_up_dc")
-		@action = "create"
-		@dc_routes = Race.where("name_cs LIKE '%[DC30]%'").order(:name_cs)
 	end
 
 	def create
-	  @reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
-	  if @reg.nil?
-		  @reg = Registration.new
+		if (Time.now > $registration_deadline)
+			flash.notice = "It's after deadline for registration, registration creation is not allowed."
+			redirect_to :controller => :pages, :action => :actual
+		else
+			@reg = Registration.where(:walker_id => current_walker[:id], :dc_id => $dc.id).first
+			if @reg.nil?
+				@reg = Registration.new
+			end
+			@reg.walker_id = current_walker[:id]
+			@walker = Walker.find(current_walker[:id])
+			@reg.dc_id = $dc.id
+			update_db(@reg, @walker)
 		end
-		@reg.walker_id = current_walker[:id]
-		@walker = Walker.find(current_walker[:id])
-		@reg.dc_id = $dc.id
-		update_db(@reg, @walker)
   end
 
   def confirm
@@ -85,7 +95,7 @@ class RegistrationsController < ApplicationController
 # @param reg created registration
 # @param walker owning the registration
   def update_db(reg, walker)
-		if (Time.now > $registration_deadline)
+		if (Time.now > $registration_edit_deadline)
 			flash.notice = "It's after deadline for registration, changes was not accepted."
 			redirect_to :action => :show
 		else
