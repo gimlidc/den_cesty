@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
       $dc_app_end =   $dc.start_time + 12.hours + 10.minutes
       $shirt_deadline = ($dc.start_time - 17.days).end_of_day
       $map_deadline = ($dc.start_time - 6.days).end_of_day
-      $registration_deadline = ($dc.start_time - 4.days).end_of_day
+      $registration_deadline = $dc.start_time - 1.days - 6.hours - 30.minutes
       $registration_edit_deadline = ($dc.start_time - 5.hours)
       $registration_starts = true
       $report_deadline = ($dc.start_time + 1.month).end_of_day

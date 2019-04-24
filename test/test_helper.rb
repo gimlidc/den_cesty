@@ -14,8 +14,8 @@ class ActiveSupport::TestCase
   def loadDcTest
     $dc = dcs(:two)
     $shirt_deadline = ($dc.start_time - 17.days).end_of_day
-    $registration_deadline = ($dc.start_time - 4.days).end_of_day
-    $registration_edit_deadline = $dc.start_time - 4.hours
+    $registration_deadline = $dc.start_time - 1.days - 6.hours - 30.minutes
+    $registration_edit_deadline = ($dc.start_time - 5.hours)
     $registration_starts = true
     $report_deadline = ($dc.start_time + 1.month).end_of_day
   end
