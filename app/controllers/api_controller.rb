@@ -62,8 +62,8 @@ class ApiController < ApplicationController
   # /api/scoreboard/:id(.json)?walker_id=:walker_id
   def scoreboard
     race_id = params[:id]
-    race_range_min = 81
-    race_range_max = 82
+    race_range_min = 42
+    race_range_max = 80
     walker_id = params[:walker_id]
     walkers_score = Scoreboard.where(:race_id => race_id, :walker_id => walker_id).first
 
