@@ -14,8 +14,8 @@ class PagesController < ApplicationController
 
   def actual
     # print results if the newest race was already started
-    if (Time.now > $dc.start_time)
-		  @results = Result.where(:dc_id => $dc.id).order('official DESC, distance DESC').all		
+    if ((Time.now > $dc.start_time) && ($dc.id !=30)) || (($dc.id ==30) && (Time.now > $dc.start_time + 1.days))
+		  @results = Result.where(:dc_id => $dc.id).order('official DESC, distance DESC').all
 		else # otherwise print proposition of the current race
 		  @registered_walkers = Registration.includes(:walker)
 																.where(:dc_id => $dc.id, :canceled => false)
