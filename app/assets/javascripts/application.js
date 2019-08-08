@@ -7,3 +7,46 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(document).ready(function() {
+    data = $.cookie("expandSection");
+    if (data) {
+        ids = JSON.parse(data);
+        console.log(ids);
+        if (ids && Array.isArray(ids)) {
+            ids.forEach(id => {
+                elm = $(id);
+                $(id + "_section").toggleClass("expand");
+                elm.show(500)
+            });
+        }
+    }
+});
+
+function expand(id) {
+    elm = $(id);
+    if (!elm) {
+        return
+    }
+    data = $.cookie("expandSection");
+    if (!data) {
+        sections = []
+    } else {
+        sections = JSON.parse(data);
+        if (!sections || !Array.isArray(sections)) {
+            sections = []
+        }
+    }
+    if (!elm.is(":hidden")) {
+        idx = sections.indexOf(id);
+        sections.splice(idx, 1);
+        $.cookie("expandSection", JSON.stringify(sections));
+        elm.hide(500);
+    } else {
+        sections.push(id);
+        $.cookie("expandSection", JSON.stringify(sections));
+        elm.show(500);
+    }
+    console.log(sections);
+    $(id + "_section").toggleClass("expand")
+}

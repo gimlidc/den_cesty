@@ -1,5 +1,9 @@
 class RacesController < ApplicationController
 
+  skip_before_filter :check_admin?, :check_logged_in?
+  before_filter :check_admin?, :except => [:track]
+  before_filter :check_logged_in?, :except => [:track]
+
   def index
     @races = Race.order('id DESC')
   end
@@ -46,5 +50,16 @@ class RacesController < ApplicationController
     race = Race.find(params[:id]).destroy
     flash[:notice] = "Race '#{race.name_cs}' destroyed successfully."
     redirect_to(:action => 'index')
+  end
+
+  def track
+    @race = Race.find_by_id(params[:race_id])
+    @route = Checkpoint.where(:race_id => params[:race_id]).order(:checkid)
+
+    respond_to do |format|
+      format.gpx do
+        headers['Content-Disposition'] = 'attachment;filename="track.gpx"'
+      end
+    end
   end
 end
