@@ -7,7 +7,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-(function($) {
+//= require jquery
+//= require jquery_ujs
+//= require_tree .
+
+(function($) {+
     $(document).ready(function () {
         data = $.cookie("expandSection");
         if (data) {
