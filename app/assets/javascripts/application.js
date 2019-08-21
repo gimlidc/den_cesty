@@ -11,7 +11,7 @@
 //= require jquery_ujs
 //= require_tree .
 
-(function($) {+
+(function($) {
     $(document).ready(function () {
         data = $.cookie("expandSection");
         if (data) {
