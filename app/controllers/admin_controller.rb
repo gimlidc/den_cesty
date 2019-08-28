@@ -138,7 +138,8 @@ class AdminController < ApplicationController
   end
 
   def payments_download
-    json = RestClient.get 'https://www.fio.cz/ib_api/rest/periods/caN5ovDtmvByjU5V6s1AnSnCHZb1KAvF590C6ALh7CcOwumCHy2Frz9796CkQH3i/2019-08-01/2019-09-30/transactions.json'
+    json = RestClient.get 'https://www.fio.cz/ib_api/rest/periods/95EXD0vTvuF7VUkXia6x8RdLiKZ045cIYpWhq68BxWzXl9pcXM4S6MfiBszGf52c/2019-08-01/2019-09-30/transactions.json'
+
     data = JSON.parse(json)
     added = []
     badVS = []
