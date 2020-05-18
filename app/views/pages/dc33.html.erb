@@ -22,8 +22,16 @@
     <%= t 'actual.limit', :race_limit => "#{$dc.limit}" %>
   </p>
   <br/>
-
-      <h4>Registrace byla zastavena. Čekáme na vhodný termín.</h4>
+  <%
+    remains = $registration_deadline - Time.now
+    if remains < 60 * 60 * 24 * 7 && remains > 0
+  %>
+    <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
+  <% else
+       if remains < 0 %>
+      <h4>Registrace byla ukončena</h4>
+    <% end %>
+  <% end %>
   <div align="center"><b><%= link_to "Výsledky", dc_results_path(:dc_id => 32) %> proběhlého 32. Dne cesty a <%= link_to "reporty", report_list_path(:id => 32) %> účastníků.</b></div>
   <table id="summary">
     <tbody>
@@ -37,7 +45,7 @@
     </tr>
     <tr>
       <th class="title"><%= t 'actual.date' %>:</th>
-      <td><span class="red">Čekáme na uvolnění opatření v souvislosti s COVID-19. Pokud se tak nestane do 30.6. vracíme startovné a závod bude zrušen bez náhrady</span></td>
+      <td><%= $dc.start_time.localtime.strftime("%H:%M %d/%m/%Y") %></td>
     </tr>
     <tr>
       <th class="title"><%= t 'actual.where' %>:</th>
