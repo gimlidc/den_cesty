@@ -56,19 +56,19 @@ SimpleNavigation::Configuration.run do |navigation|
     
     # A big group of buttons available only for logged users
     if walker_signed_in?
-      #if ($dc.id.modulo(10) != 0 || races_finished >= 0 || registration_for_current_exist?) && ((has_valid_registration?($dc.id) && $dc.start_time > Time.now) || Time.now < $registration_deadline)
-      #  top.item :registration, I18n.t('Registration') do |registration|
-      #    registration.dom_class = "walker-menu"
-      #    if has_valid_registration?($dc.id)
-      #      registration.item :show_registration, I18n.t('Show registration'), registration_path
-      #      registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path, if: -> { Time.now < $registration_deadline }
-      #      registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path, if: -> { registration_payed? && $dc.id.modulo(10) != 0 }
-      #      registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?")
-      #    else
-      #      registration.item :new_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path, if: -> { Time.now < $registration_deadline }
-      #    end
-      #  end
-      #end
+      if ($dc.id.modulo(10) != 0 || races_finished >= 0 || registration_for_current_exist?) && ((has_valid_registration?($dc.id) && $dc.start_time > Time.now) || Time.now < $registration_deadline)
+        top.item :registration, I18n.t('Registration') do |registration|
+          registration.dom_class = "walker-menu"
+          if has_valid_registration?($dc.id)
+            registration.item :show_registration, I18n.t('Show registration'), registration_path
+            registration.item :edit_registration, I18n.t('Manage registration'), edit_registration_path, if: -> { Time.now < $registration_deadline }            
+            registration.item :change_owner, I18n.t('Transfer registration'), change_owner_path, if: -> { registration_payed? && $dc.id.modulo(10) != 0 }            
+            registration.item :delete_registration, link_to(I18n.t("Sign_out"), {:controller => "registrations", :action => "destroy"}, :method => "delete", :confirm => "Pozor, při odhlášení startovné nevracíme. Opravdu se chceš odhlásit?")
+          else
+            registration.item :new_registration, I18n.t('Sign_in').concat(' (').concat($dc.id.to_s).concat('.DC)'), new_registration_path, if: -> { Time.now < $registration_deadline }
+          end
+        end
+      end
       if races_finished > 0
         top.item :outgrowths, I18n.t('My results'), outgrowths_path
       end
