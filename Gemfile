@@ -8,7 +8,7 @@ gem 'rails'
 gem 'pg', '~>0.18.4'
 gem 'execjs', '~>2.6.0'
 gem 'therubyracer'
-gem 'devise', '~>3.5.6'
+gem 'devise', git: 'https://github.com/plataformatec/devise'
 gem 'simple-navigation'
 
 gem 'json', '~>1.8.3'
@@ -44,3 +44,5 @@ gem "bcrypt-ruby", :require => "bcrypt"
 gem 'rqrcode'
 
 gem 'rest-client'
+
+gem 'bigdecimal', '1.3.5'

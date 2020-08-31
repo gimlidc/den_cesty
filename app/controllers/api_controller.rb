@@ -32,7 +32,7 @@ class ApiController < ApplicationController
 
   # /api/races(.json)
   def races
-    races = Race.where(:visible => true).order('finish_time DESC')
+    races = Race.where(:visible => true, :owner => [0, current_walker.id]).order('finish_time DESC')
     render :json => races
   end
 

@@ -1,13 +1,26 @@
 class CheckpointsController < ApplicationController
-  
+
+  skip_before_filter :check_admin?
+  before_filter :check_logged_in?
+
+  def check_ownership?
+    race = Race.find(params[:race_id])
+    if race.owner != current_walker.id or is_admin?
+      redirect_to(:controller => 'admin', :action => :unauthorized)
+      return
+    end
+  end
+
   # GET /races/:race_id/checkpoints
   def index
+    check_ownership?
     @race = Race.find(params[:race_id])
     @checkpoints = @race.checkpoints
   end
 
   # GET /races/:race_id/checkpoints/new
   def new
+    check_ownership?
     race = Race.find(params[:race_id])
     @checkpoint = race.checkpoints.build
     @checkpoint.race = race
@@ -16,8 +29,8 @@ class CheckpointsController < ApplicationController
 
   # POST /races/:race_id/checkpoints
   def create
+    check_ownership?
     race = Race.find(params[:race_id])
-
     # Instantiate a new object using form parameters
     @checkpoint = race.checkpoints.create(params[:checkpoint].permit(:checkid, :meters, :latitude, :longitude, :race_id))
     # Save the object
@@ -33,12 +46,14 @@ class CheckpointsController < ApplicationController
 
   # GET /races/:race_id/checkpoints/:id/edit
   def edit
+    check_ownership?
     race = Race.find(params[:race_id])
     @checkpoint = race.checkpoints.find(params[:id])
   end
 
   # PUT /races/:race_id/checkpoints/:id
   def update
+    check_ownership?
     race = Race.find(params[:race_id])
 
     # Find an existing object using form parameters
@@ -56,6 +71,7 @@ class CheckpointsController < ApplicationController
 
   # DELETE /races/:race_id/checkpoints/:id
   def destroy
+    check_ownership?
     race = Race.find(params[:race_id])
 
     @checkpoint = race.checkpoints.find(params[:id])
@@ -67,9 +83,12 @@ class CheckpointsController < ApplicationController
 
   # GET /races/:race_id/checkpoints/import
   def import
+    check_ownership?
   end
 
   def upload
+    check_ownership?
+
     file_name = params[:file]
     file = File.open(file_name.path)
     doc = Nokogiri::XML(file) do |config|

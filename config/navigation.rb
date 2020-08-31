@@ -138,6 +138,8 @@ SimpleNavigation::Configuration.run do |navigation|
         manages.item :print_list, I18n.t('Presentation list'), admin_print_list_path
         manages.item :dcs, "Přehled DC", dcs_path 
       end
+    end
+    if walker_signed_in?
       top.item :races, "Mobilní aplikace", races_path, html: { class: 'admin_menu' }
     end
     

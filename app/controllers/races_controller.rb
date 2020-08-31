@@ -1,22 +1,35 @@
 class RacesController < ApplicationController
 
   skip_before_filter :check_admin?, :check_logged_in?
-  before_filter :check_admin?, :except => [:track]
+  # before_filter :check_admin?, :except => [:track]
   before_filter :check_logged_in?, :except => [:track]
 
   def index
-    @races = Race.order('id DESC')
+    if is_admin?
+      @races = Race.order('id DESC')
+    else
+      @races = Race.where(:owner => current_walker.id)
+    end
   end
 
   def new
     @race = Race.new
     @race.start_time = Time.now.change(:min => 0)
     @race.finish_time = @race.start_time + 12.hours
+    @race.owner = current_walker.id
+    unless is_admin?
+      @race.visible = true
+    end
   end
 
   def create
     # Instantiate a new object using form parameters
     @race = Race.new(params[:race].permit(:name_cs, :name_en, :start_time, :finish_time))
+    # Set the owner as a current user (logged in)
+    @race.owner = current_walker.id
+    unless is_admin?
+      @race.visible = true
+    end
     # Save the object
     if @race.save
       # If save succeeds, redirect to the index action
@@ -29,12 +42,22 @@ class RacesController < ApplicationController
   end
 
   def edit
-    @race = Race.find(params[:id])
+    race = Race.find(params[:id])
+    if race.owner != current_walker.id
+      redirect_to(:controller => 'admin', :action => :unauthorized)
+      return
+    end
+    @race = race
   end
 
   def update
     # Find an existing object using form parameters
     @race = Race.find(params[:id])
+
+    if @race.owner != current_walker.id
+      redirect_to(:controller => 'admin', :action => :unauthorized)
+      return
+    end
     # Update the object
     if @race.update_attributes(params[:race].permit(:name_cs, :name_en, :start_time, :finish_time, :visible))
       # If update succeeds, redirect to the index action
@@ -47,7 +70,12 @@ class RacesController < ApplicationController
   end
 
   def destroy
-    race = Race.find(params[:id]).destroy
+    race = Race.find_by_id(params[:id])
+    if race.owner != current_walker.id or not is_admin?
+      redirect_to(:controller => 'admin', :action => :unauthorized)
+      return
+    end
+    race.destroy
     flash[:notice] = "Race '#{race.name_cs}' destroyed successfully."
     redirect_to(:action => 'index')
   end
