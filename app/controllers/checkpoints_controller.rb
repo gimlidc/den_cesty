@@ -5,7 +5,7 @@ class CheckpointsController < ApplicationController
 
   def check_ownership?
     race = Race.find(params[:race_id])
-    if race.owner != current_walker.id or is_admin?
+    if race.owner != current_walker.id and !is_admin?
       redirect_to(:controller => 'admin', :action => :unauthorized)
       return
     end

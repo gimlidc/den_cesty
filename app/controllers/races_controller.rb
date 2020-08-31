@@ -71,7 +71,7 @@ class RacesController < ApplicationController
 
   def destroy
     race = Race.find_by_id(params[:id])
-    if race.owner != current_walker.id or not is_admin?
+    if race.owner != current_walker.id and !is_admin?
       redirect_to(:controller => 'admin', :action => :unauthorized)
       return
     end
