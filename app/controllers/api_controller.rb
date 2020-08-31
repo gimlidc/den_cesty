@@ -32,13 +32,13 @@ class ApiController < ApplicationController
 
   # /api/races(.json)
   def races
-    races = Race.select("name_cs, name_en, start_time, finish_time, visible, created_at, updated_at, length").where(:visible => true).order('finish_time DESC')
+    races = Race.select("id, name_cs, name_en, start_time, finish_time, visible, created_at, updated_at, length").where(:visible => true).order('finish_time DESC')
     render :json => races
   end
 
   # /api/race_data/:id(.json)?walker_id=:walker_id
   def race_data
-    race = Race.select("name_cs, name_en, start_time, finish_time, visible, created_at, updated_at, length").find_by_id(params[:id])
+    race = Race.select("id, name_cs, name_en, start_time, finish_time, visible, created_at, updated_at, length").find_by_id(params[:id])
 
     show_time = Time.now + 1.hours  # allow only one hour before start or later
     if (race.start_time < show_time && race.visible?)
