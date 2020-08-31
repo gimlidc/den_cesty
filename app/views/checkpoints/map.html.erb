@@ -4,10 +4,11 @@
 <% end %>
 
 
-<h1>Checkpoints of "<%= @race.name_cs %>"</h1>
+<h1>Průchozí body "<%= @race.name_cs %>"</h1>
 <p>
-  <%= link_to "<< Back to Checkpoints List", race_checkpoints_path %>
+  <%= link_to "<< Zpět na seznam průchozích bodů", race_checkpoints_path %>
 </p>
+<p>Mapa níže ukazuje nahranou trasu. Zde můžeš zkontrolovat, že je vše jak má.</p>
 
 <div id="map"></div>
 <script type="text/javascript">

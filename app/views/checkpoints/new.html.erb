@@ -1,6 +1,8 @@
-<h1>Create New Checkpoint</h1>
+<h1>Vytvořit nový průchozí bod</h1>
 
-<%= link_to "<< Back to List", race_checkpoints_path(@checkpoint.race) %>
+<%= link_to "<< Zpět na seznam průchozích bodů", race_checkpoints_path(@checkpoint.race) %>
+
+<p>Zde můžeš nahrát nový průchozí bod. Je ale lepší celou trasu naklikat například na mapy.cz a nahrát ji sem pomocí gpx souboru, který Ti mapy.cz vyexportují.</p>
 
 <div>
 
@@ -8,15 +10,15 @@
 
   <table summary="Checkpoint form fields">
   	<tr>
-      <th><%= f.label(:race, "Race") %></th>
+      <th><%= f.label(:race, "Trasa") %></th>
       <td><%= @checkpoint.race.name_cs %></td>
     </tr>
     <tr>
-      <th><%= f.label(:checkid, "Position") %></th>
+      <th><%= f.label(:checkid, "Pozice") %></th>
       <td><%= f.text_field :checkid, :readonly => true %></td>
     </tr>
     <tr>
-      <th><%= f.label(:meters, "Meters") %></th>
+      <th><%= f.label(:meters, "Vzdálenost (m)") %></th>
       <td><%= f.text_field(:meters) %></td>
     </tr>
     <tr>
@@ -30,7 +32,7 @@
   </table>
 
   <div>
-    <%= submit_tag("Create Checkpoint") %>
+    <%= submit_tag("Vytvořit průchozí bod") %>
   </div>
 
   <% end %>

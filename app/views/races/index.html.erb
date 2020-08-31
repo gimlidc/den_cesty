@@ -1,15 +1,20 @@
-<h1>Listing races</h1>
+<h1>Trasy</h1>
+<p>
+  Zde si můžeš vytvořit vlastní trasu pro testování aplikace a také vytvořené trasy spravovat.
+</p>
 
-<%= link_to 'Create New Race', new_race_url %>
+<%= link_to 'Vytvořit novou trasu', new_race_url %>
 
 <table>
   <tr>
     <th>#</th>
-    <th>Name cs</th>
-    <th>Name en</th>
-    <th>Start time</th>
-    <th>Finish time</th>
+    <th>Jméno trasy</th>
+    <th>Popis trasy</th>
+    <th>Začátek závodu</th>
+    <th>Konec závodu</th>
+    <% if is_admin? %>
     <th>Visible</th>
+    <% end %>
     <th></th>
     <th></th>
     <th></th>
@@ -23,11 +28,13 @@
     <td><%= race.name_en %></td>
     <td><%= race.start_time %></td>
     <td><%= race.finish_time %></td>
+    <% if is_admin? %>
     <td><%= race.visible %></td>
-    <td><%= link_to 'Checkpoints', race_checkpoints_path(race) %></td>
-    <td><%= link_to 'Scoreboard', race_scoreboard_index_path(race) %></td>
-    <td><%= link_to 'Edit', edit_race_path(race) %></td>
-    <td><%= link_to 'Destroy', race, :confirm => "Are you sure you want to delete race '#{race.name_cs}'?", :method => :delete %></td>
+    <% end %>
+    <td><%= link_to 'Průchozí body', race_checkpoints_path(race) %></td>
+    <td><%= link_to 'Výsledky', race_scoreboard_index_path(race) %></td>
+    <td><%= link_to 'Upravit', edit_race_path(race) %></td>
+    <td><%= link_to 'Destroy', race, :confirm => "Chcete opravdu smazat trasu: '#{race.name_cs}'?", :method => :delete %></td>
   </tr>
 <% end %>
 </table>

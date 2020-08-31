@@ -1,6 +1,6 @@
-<h1>Create New Race</h1>
+<h1>Tvorba nové trasy</h1>
 
-<%= link_to "<< Back to List", races_url %>
+<%= link_to "<< Zpět na seznam tras", races_url %>
 
 <div>
 
@@ -8,30 +8,32 @@
 
   <table summary="Race form fields">
     <tr>
-      <th><%= f.label(:name_cs, "Name (cs)") %></th>
+      <th><%= f.label(:name_cs, "Jméno trasy") %></th>
       <td><%= f.text_field(:name_cs) %></td>
     </tr>
     <tr>
-      <th><%= f.label(:name_en, "Name (en)") %></th>
+      <th><%= f.label(:name_en, "Upřesnění, nebo anglický název") %></th>
       <td><%= f.text_field(:name_en) %></td>
     </tr>
     <tr>
-      <th><%= f.label(:start_time) %></th>
+      <th><%= f.label(:start_time, "začátek závodu") %></th>
       <td><%= f.datetime_select(:start_time) %> UTC</td>
     </tr>
     <tr>
-      <th><%= f.label(:finish_time) %></th>
+      <th><%= f.label(:finish_time, "konec závodu") %></th>
       <td><%= f.datetime_select(:finish_time) %> UTC</td>
     </tr>
-    <!--<tr>
+    <% if is_admin? %>
+    <tr>
       <th><%= f.label(:visible) %></th>
       <td><%= f.check_box(:visible) %></td>
-    </tr>-->
+    </tr>
+    <% end %>
     
 	</table>
 
 	<div>
-    <%= submit_tag("Create Race") %>
+    <%= submit_tag("Vytvořit trasu") %>
   </div>
 
   <% end %>

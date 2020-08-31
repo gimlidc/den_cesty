@@ -1,18 +1,19 @@
-<h1>Checkpoints of "<%= @race.name_cs %>"</h1>
+<h1>Průchozí body: "<%= @race.name_cs %>"</h1>
+<p>
+Zde je možné nahrát GPX záznam a tím vytvořit trasu. Naklikej si mapu na mapy.cz, dej exportovat a vzniklý soubor zde nahraj.
+</p>
+<%= link_to "<< Zpět na seznam", races_path %>
+ |
+<%= link_to 'Nahrát GPX soubor', import_race_checkpoint_path %>
+ | 
+<%= link_to 'Mapa', map_race_checkpoints_path %>
 
-<%= link_to "<< Back to Race List", races_path %>
- | 
-<%= link_to 'Create New Checkpoint', new_race_checkpoint_path %>
- | 
-<%= link_to 'Import GPX file', import_race_checkpoint_path %>
- | 
-<%= link_to 'Show on map', map_race_checkpoints_path %>
-
+<% unless @checkpoints.empty? %>
 <table summary="Checkpoints of selected Race">
     <tr>
       <th>#</th>
-      <th>Meters</th>
-      <th>Coordinates</th>
+      <th>Vzdálenost (m)</th>
+      <th>GPS body</th>
       <th></th>
       <th></th>
     </tr>
@@ -26,3 +27,4 @@
     </tr>
     <% end %>
 </table>
+<% end %>
