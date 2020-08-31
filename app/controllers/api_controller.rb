@@ -65,7 +65,7 @@ class ApiController < ApplicationController
 
       numWalkersAhead = Scoreboard.where("race_id = ? AND distance > ?", race_id, walkers_score.distance).count()
       numWalkersBehind = Scoreboard.where("race_id = ? AND distance <= ? AND walker_id <> ?", race_id, walkers_score.distance, walkers_score.walker.id).count()
-      numWalkersEnded = Scoreboard.where("race_id = ? AND \"raceState\" = 2 AND walker_id <> ?", :race_id, walkers_score.id).count()
+      numWalkersEnded = Scoreboard.where("race_id = ? AND \"raceState\" = 2 AND walker_id <> ?", race_id, walkers_score.id).count()
       walkersAheadDB = Scoreboard.where("race_id = ? AND distance > ?", race_id, walkers_score.distance).order("distance DESC")
       walkersBehindDB = Scoreboard.where("race_id = ? AND distance <= ? AND walker_id <> ?", race_id, walkers_score.distance, walkers_score.walker.id.to_s).order("distance DESC")
 
