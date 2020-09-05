@@ -43,7 +43,7 @@ class RacesController < ApplicationController
 
   def edit
     race = Race.find(params[:id])
-    if race.owner != current_walker.id
+    if race.owner != current_walker.id and !is_admin?
       redirect_to(:controller => 'admin', :action => :unauthorized)
       return
     end
@@ -54,7 +54,7 @@ class RacesController < ApplicationController
     # Find an existing object using form parameters
     @race = Race.find(params[:id])
 
-    if @race.owner != current_walker.id
+    if @race.owner != current_walker.id and !is_admin?
       redirect_to(:controller => 'admin', :action => :unauthorized)
       return
     end
