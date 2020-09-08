@@ -28,7 +28,7 @@ class WalkersController < Devise::RegistrationsController
         respond_with resource, :location => after_sign_up_path_for(resource)
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
-        expire_session_data_after_sign_in!
+        expire_data_after_sign_in!
         respond_with resource, :location => after_inactive_sign_up_path_for(resource)
       end
     else
@@ -75,7 +75,7 @@ class WalkersController < Devise::RegistrationsController
   # cancel oauth signing in/up in the middle of the process,
   # removing all OAuth session data.
   def cancel
-    expire_session_data_after_sign_in!
+    expire_data_after_sign_in!
     redirect_to new_registration_path(resource_name)
   end
 
