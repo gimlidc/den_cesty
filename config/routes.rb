@@ -22,7 +22,8 @@ DenCesty::Application.routes.draw do
   match 'races/:race_id/checkpoints/import' => 'checkpoints#import', :as => :import_race_checkpoint, via: [:get]
   match 'races/:race_id/checkpoints/upload' => 'checkpoints#upload', via: [:post]
   match 'races/:race_id/checkpoints/map' => 'checkpoints#map', :as => :map_race_checkpoints, via: [:get]
-  resources :map, :only => [:show]
+	match "races/:race_id/walker/:walker_id" => 'outgrowths#race_map', :as => :race_map, via: [:get]
+  resources :map, :only => [:show], :as => 'map', via: [:get]
 
 	#match 'walkers/edit' => "walkers#edit", :as => :edit_walker
 	#match 'walkers/:id' => 'walkers#show', :as => :show_walker, via: [:get]

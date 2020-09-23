@@ -3,11 +3,12 @@
   <script>Loader.load()</script>
 <% end %>
 
-<h1>Průběh závodu "<%= @race.name_cs %>"</h1>
+<h1><%= @walker.name + " " + @walker.surname %> - záznam závodu "<%= @race.name_cs %>"</h1>
 
 <div id="map"></div>
 <script type="text/javascript">
     let checkpoints = [<%= raw @checkpoints.to_json %>];
+    let trks = <%= raw @trks %>;
 
     let center = SMap.Coords.fromWGS84(
         <%=
@@ -58,27 +59,23 @@
     let polyline = new SMap.Geometry(SMap.GEOMETRY_POLYLINE, null, all_coords, polyline_options);
     polyline_layer.addGeometry(polyline);
 
+    // ADD WALKER LAYER
 
-    // Walkers:
-    let walkers = [<%= raw @scoreboard.to_json %>];
+    let walker_polyline_layer = new SMap.Layer.Geometry();
+    m.addLayer(walker_polyline_layer);
+    walker_polyline_layer.enable();
 
-    let walkers_layer = new SMap.Layer.Marker();
+    let walker_coords = trks.map(trk => SMap.Coords.fromWGS84(trk["longitude"], trk["latitude"]))
 
-    for (var i = 0; i < <%= @scoreboard.size %>; i++) {
-        var lon = walkers[0][i].longitude;
-        var lat = walkers[0][i].latitude;
-        var coords = SMap.Coords.fromWGS84(lon, lat);
-        var marker = new SMap.Marker(coords);
+    let walker_layer_options = {
+        color: "#f00",
+        width: 2
+    };
 
-        var card = new SMap.Card();
-        card.getHeader().innerHTML = "<strong>" + walkers[0][i].name + " " + walkers[0][i].surname + "</strong>";
-        card.getBody().innerHTML = walkers[0][i].distance + " m";
-        marker.decorate(SMap.Marker.Feature.Card, card);
+    let polyline2 = new SMap.Geometry(SMap.GEOMETRY_POLYLINE, null, walker_coords, walker_layer_options);
+    walker_polyline_layer.addGeometry(polyline2);
 
-        layer.addMarker(marker);
-    }
 
-    m.addLayer(layer);
-    layer.enable();
+
 
 </script>

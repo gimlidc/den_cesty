@@ -29,6 +29,30 @@ class OutgrowthsController < ApplicationController
     end
   end
 
+  def race_map
+    @walker = Walker.find_by_id(params[:walker_id])
+    @race = Race.find_by_id(params[:race_id])
+
+    @checkpoints = @race.checkpoints.select([:latitude, :longitude])
+
+    events = Event.where(:race_id => params[:race_id], :walker_id => params[:walker_id]).order(:id)
+        .select([:eventData])
+
+    trks = []
+    events.each do |event|
+      data = JSON.parse event.eventData.to_s.gsub('=>', ':')
+      if (data["latitude"].nil?)
+        next
+      end
+      trk = {}
+      trk[:latitude] = data["latitude"]
+      trk[:longitude] = data["longitude"]
+      trk[:time] = data["timestamp"]
+      trks << trk
+    end
+    @trks = JSON.dump(trks)
+  end
+
   def show
     @stats = statistics(current_walker)
     @diploms = Dc.select('id, diplom_path').order('id DESC')

@@ -14,6 +14,7 @@ class PagesController < ApplicationController
 
   def actual
     # print results if the newest race was already started
+		@race = Race.find($race_id)
     if (Time.now > $dc.start_time)
 		  @results = Result.where(:dc_id => $dc.id).order('official DESC, distance DESC').all		
 		else # otherwise print proposition of the current race
