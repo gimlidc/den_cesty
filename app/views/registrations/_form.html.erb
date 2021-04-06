@@ -10,6 +10,7 @@
   
   <div><%= f.label t :goal %><br />
 	<%= f.text_field :goal %></div>
+  <% if $dc.map_color_price != -1 or $dc.map_bw_price != -1 %>
   <h4>Mapy:&nbsp;</h4>
   <div><%= f.check_box :bw_map, :disabled => disabled %>
 	<%= f.label t :bw_map %> (<%= $dc.map_bw_price %>Kč)</div>
@@ -17,6 +18,7 @@
   <div><%= f.check_box :colour_map, :disabled => (disabled || Time.now > $map_deadline) %>
 	<%= f.label t :colour_map %> (<%= $dc.map_color_price %>Kč) (<%= t 'change possible until', :deadline => I18n.l($map_deadline, :format => :date) %>)</div>
   <p />
+  <% end %>
   <% if scarf? || shirt? || pes_shirt? %>
   <b>Textil:&nbsp;</b><i>(<%= t 'change possible until', :deadline => I18n.l($shirt_deadline, :format => :date) %>)</i><br />
   <ul>
