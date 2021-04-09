@@ -1,34 +1,30 @@
 <h2>Trackování na telefonu během (nejen) ultratrailových závodů</h2>
 
-Během závodů CSUT, CUTT a dalších je možné nechat se trackovat naší aplikací. <b>Pozor: použití trackovací aplikace nenahrazuje klasické kontroly v závodě</b>, stejně tak nezaručujeme 100% funkčnost (aplikace je teprve ve vývoji).
+Během vašich závodů je možné nechat se trackovat naší aplikací. <b>Pozor: použití trackovací aplikace nenahrazuje klasické kontroly v závodě</b>, stejně tak nezaručujeme 100% funkčnost (aplikace není 100% spolehlivá a zejména špatně funguje na "vracečkách").
 
-Trackování se účastní (účastnilo):
+Průběžné (i konečné) výsledky závodu lze sledovat na mapě, nebo ve výsledkovce. Můžete si jí linkovat z vašeho webu. URL bude vypadat nějak takto:
+
 <ul>
-  <li>23. Den cesty - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/8' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/8' %> závodu</li>
-  <li><%= link_to 'Jarním Šluknovskem', 'http://jarnim-sluknovskem.webnode.cz/' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/6' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/6' %> závodu</li>
-  <li><%= link_to 'Lazová stovka', 'http://www.lazovka.wbl.sk/2014News.html' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/10' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/10' %> závodu</li>
-  <li><%= link_to 'Jesenická stovka', 'http://www.jesenickastovka.cz/' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/12' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/12' %> závodu</li>
-  <li><%= link_to 'CUTT Jeseníky 2015', 'http://www.cutt.cz/' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/14' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/14' %> závodu</li>
-  <li><%= link_to 'Volkswagen Maraton Praha', 'http://www.runczech.com/…/zav…/volkswagen-maraton-praha/index.shtml' %> - pozor trackování je zcela neoficiální a zcela a pouze pro účely sbírání testovacích dat pro zlepšení naší aplikace. Je pravděpodobné, že na tomto závodě aplikace nebude fungovat moc dobře. Budeme ale rádi za každou testerskou duši. <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/13' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/13' %> závodu</li>
-  <li><%= link_to 'Brněnské vokruch vokolo Štatlu', 'http://www.pochod.vyskovnice.cz/index_mot.html' %> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/16' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/16' %> závodu</li>
-  <li><%= link_to 'Krakonošova stovka (K100)', 'http://k100.ddmvrchlabi.cz/cz/trasy/k100' %> - (NEOFICIÁLNÍ) <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/19' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/19' %> závodu</li>
-  <li>24. Den cesty - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/20' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/20' %> závodu</li>
-  <li>Loučení s turistickým rokem - Etapa 1 (EKUT) <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/21' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/21' %> závodu</li>
-  <li>Loučení s turistickým rokem - Etapa 2 (EKUT) <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/22' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/22' %> závodu</li>
-  <li>25. Den cesty - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/26' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/26' %> závodu</li>
-  <li>26. Den cesty - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/28' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/28' %> závodu</li>
-  <li>BLK - stomílovka - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/29' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/29' %> závodu</li>
-  <li>28. Loučení s turistickým rokem - 1.etapa EKUT 53km - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/30' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/30' %> závodu</li>
-  <li>28. Loučení s turistickým rokem - 2.etapa EKUT 125km - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/31' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/31' %> závodu</li>
-  <li>Pražská stovka(EKUT) Trans BRDY 150km - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/32' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/32' %> závodu</li>
-  <li>Pražská stovka - Trasy 23, 41, 62 a 84km - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/33' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/33' %> závodu</li>
-  <li>27. Den cesty - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/34' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/34' %> závodu</li>
-  <li>Štefánik trail 2017 - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/35' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/35' %> závodu</li>
-  <li><b>30. Loučení s turistickým rokem - 1.etapa EKUT 55km</b> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/37' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/37' %> závodu</li>
-  <li><b>30. Loučení s turistickým rokem - 2.etapa EKUT 118km</b> - <%= link_to 'výsledkovka', 'http://www.dencesty.cz/running_results/38' %> a <%= link_to 'mapa', 'http://www.dencesty.cz/map/38' %> závodu</li>
-
-  <li>... máte-li zájem o trackování právě na vašem závodě, napište nám na info@dencesty.cz</li>
+  <li><a href="http://dencesty.cz/running_results/8">http://dencesty.cz/running_results/{ID}</a></li>
+  <li><a href="http://www.dencesty.cz/map/8">http://www.dencesty.cz/map/{ID}</a></li>
 </ul>
+{ID} jen nahradíte IDčkem, které dostal Váš závod.
+
+<h4>Jak závod vytvořit?</h4>
+<ol>
+  <li>Přihlas se na webu Dencesty.cz. Pokud zde nemáš účet, musíš si nejprve udělat registraci.</li>
+
+  <li>Po přihlášení se ti v hlavním menu vlevo dole objeví nová položka "Mobilní aplikace" (viz printscreen). Klikni na ni, pak vyber možnost "Vytvořit novou trasu".</li>
+  <%= image_tag "cvicna1.jpg", width: "100%" %>
+
+  <li>Zadej potřebné náležitosti testovací trasy, včetně názvu a časového rozmezí, kdy je třeba trasu absolvovat.</li>
+  <%= image_tag "cvicna2.jpg", width: "100%" %>
+
+  <li>Poté je třeba naimportovat GPX soubor s vedením trasy. Vytvořit ho můžeš tak, že trasu naklikáš na serveru Mapy.cz, pak si ho odtamtud vyexportuješ a následně naimportuješ k údajům o trase na Dencesty.cz (kliknutím na "Průchozí body" a následným výběrem "Nahrát GPX soubor").</li>
+  <%= image_tag "cvicna3.jpg", width: "100%" %>
+
+  <li>Pak už se ti testovací trasa objeví v mobilní aplikaci. Vyber příslušný závod, klikni na "Start závodu" a můžeš vyrazit. :-)</li>
+</ol>
 
 <h4>Proč aplikaci vyzkoušet</h4>
 
