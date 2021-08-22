@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
 
   def loadDcParams
     if ENV["RAILS_ENV"] != "test"
-      $dc = Dc.find(35)
+      $dc = Dc.find(36)
       $race_id = 117
       $dc_app_start = $dc.start_time - 10.minutes
       $dc_app_end =   $dc.start_time + 12.hours + 10.minutes
