@@ -1,0 +1,114 @@
+<div>
+  <h1 color="red"><%= $dc.id %>. Den cesty</h1>
+  <h6 align="center"><%= $dc.name_cs %></h6>
+  <p>
+    Den cesty je teréní závod na 24h během něhož, závodníkům není poskytována jakákoli podpora. Tedy žádné občerstvovací
+    stanice, záchytné hospody ani odvoz účastníků, pokud už nemohou. Trasu navrhujeme tak, aby byla co nejpřímější a
+    závodníci měli možnost poznat co nejpestřejší krajiny České Republiky.
+  </p>
+  <p><%= link_to 'Pravidla', pages_rules_path %></b> (cokoli není zatím zakázáno,
+    je povoleno).
+  </p>
+  <p>
+    Povinnou výbavou je telefon s operačním systémem Android nebo iOS a zapnutou trackovací aplikací. Jak na to
+    najdete v <%= link_to 'návodu', tracker_info_path %>. Pozor: Nelze použít jiné trackovací zařízení (hodinky, nebo GPS navigaci).
+  </p>
+  <p>
+    <%= t 'actual.limit', :race_limit => "#{$dc.limit}" %>
+  </p>
+  <br/>
+  <%
+    remains = $registration_deadline - Time.now
+    if remains < 60 * 24 && remains > 0
+  %>
+    <h4>Registrace končí za <%= time_remaining_to_now_in_czech($registration_deadline) %></h4>
+  <% else
+       if remains < 0 %>
+      <h4>Registrace byla ukončena</h4>
+    <% end %>
+  <% end %>
+  <div align="center"><b><%= link_to "Výsledky", dc_results_path(:dc_id => $dc.id-1) %> proběhlého <%= $dc.id-1 %>. Dne cesty a
+    <%= link_to "reporty", report_list_path(:id => $dc.id-1) %> účastníků.</b></div>
+  <table id="summary">
+    <tbody>
+    <tr>
+      <th class="title"><%= t 'actual.intro' %>:</th>
+      <td>Pokusíme se udržet v nastaveném kurzu "trackování pomocí aplikace". Tentokráte se složitější trasou. Prosím buďte důslednější v kontrole aplikace (ideálně každých 5km), tentokráte bude případné zkracování podle záznamu bolet víc (trasa je klikatější).
+      </td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.date' %>:</th>
+      <td>Start závodu <%= $dc.start_time.localtime.strftime("%H:%M %d/%m/%Y") %></td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.where' %>:</th>
+      <td>Palackého nám. Dačice</td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.registration_workflow' %>:</th>
+      <td>Pro přihlášení na závod je třeba mít účet na těchto stránkách. Po přihlášení se Ti zobrazí menu potřebná pro
+        registraci.
+      </td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.fees' %>:</th>
+      <td>Startovné je tentokráte stanoveno na <%= $dc.reg_price %>Kč, je možné objednat si papírovou mapu se zakreslenou trasou (černobílou: <%= $dc.map_bw_price %>Kč, barevnou <%= $dc.map_color_price %>Kč)
+      </td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.conditions' %>:</th>
+      <td>Mladší 18 let potřebují souhlas zákonného zástupce s účastí na závodě a doprovod zletilé osoby po celou dobu
+        závodu. Povinností závodníka je ukončení trackování v momentě ukončení závodu.
+      </td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.route' %>:</th>
+      <td>Trasa povede z Dačic do Stráže nad Nežárkou, Českých Velenic, Kaplice a Vyššího Brodu.
+        Detaily budeme upřesňovat právě na tomto místě.
+        <!--
+          <%= link_to 'GPX', '2021_podzim.gpx' %> a <%= link_to 'PDF', '2021_podzim.pdf' %>
+        -->
+      </td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.equipment' %>:</th>
+      <td>Povinnou výbavou je telefon s operačním systémem Android nebo iOS a běžící trackovací aplikací. Další povinné
+        vybavení sice nedefinujeme, ale zejména pokud se snažíte běžet hodně na lehko, přibalte si termofólii
+        a nezapomeňte na čelovku a náhradní baterie. Doporučujeme vybavit se powerbankou s alespoň 10Ah.
+      </td>
+    </tr>
+    <tr>
+      <th class="title"><%= t 'actual.registered' %>&nbsp;(<%= @registered_walkers.size %>
+        /<span class="red"><%= $dc.limit %></span>):
+      </th>
+      <td>
+        <% if !@registered_walkers.nil? && !@registered_walkers.empty? %>
+          <table width="100%" border="1" cellpadding="3">
+            <tr>
+              <th>Závodník</th>
+              <th>poslední změna</th>
+              <th>nejlepší výkon na DC</th>
+            </tr>
+            <% @registered.each do |reg| %>
+              <tr <% if !reg.nil? && walker_signed_in? && reg["id"].to_f == current_walker.id %> class="bold" <% end %>>
+                <td><%= reg["name"] %> <%= reg["surname"] %></td>
+                <td align="right"><%= DateTime.parse(reg["updated_at"]).strftime("%d.%m %Y")%></td>
+                <td align="center">
+                  <% if !reg["official"].nil? %>
+                    <%= reg["official"] %>km
+                  <% else %>
+                    DNS
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+        ...
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br/>
+  <%= render :file => "pages/commertial.html.erb" %>
+</div>
