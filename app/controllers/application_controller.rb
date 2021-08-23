@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
       $race_id = 180
       $dc_app_start = $dc.start_time - 10.minutes
       $dc_app_end =   $dc.start_time + 12.hours + 10.minutes
-      $shirt_deadline = ($dc.start_time - 11.days).end_of_day
+      $shirt_deadline = ($dc.start_time - 12.days).end_of_day - 12.hours
       $map_deadline = ($dc.start_time - 6.days).end_of_day
       $registration_deadline = ($dc.start_time - 1.days)
       $registration_starts = true
