@@ -138,7 +138,7 @@ class AdminController < ApplicationController
   end
 
   def payments_download
-    json = RestClient.get 'https://www.fio.cz/ib_api/rest/periods/95EXD0vTvuF7VUkXia6x8RdLiKZ045cIYpWhq68BxWzXl9pcXM4S6MfiBszGf52c/2020-08-01/2020-09-25/transactions.json'
+    json = RestClient.get 'https://www.fio.cz/ib_api/rest/periods/95EXD0vTvuF7VUkXia6x8RdLiKZ045cIYpWhq68BxWzXl9pcXM4S6MfiBszGf52c/2021-08-20/2021-09-25/transactions.json'
 
     data = JSON.parse(json)
     added = []
