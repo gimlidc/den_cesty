@@ -195,6 +195,3 @@ DEPENDENCIES
   simple-navigation
   therubyracer
   uglifier (~> 3.0.0)
-
-BUNDLED WITH
-   1.17.2
