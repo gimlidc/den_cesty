@@ -102,3 +102,12 @@
   display: block;
   margin: auto;
 }
+
+.red-overlay {
+  position: absolute;
+  font-size: 50pt;
+  margin: auto;
+  top: 400px;
+  transform: rotate(45deg);
+  color: red;
+}
